@@ -1,3 +1,5 @@
+import 'package:cyber/model/user.dart';
+import 'package:cyber/view/profile_created.dart';
 import 'package:flutter/material.dart';
 
 import 'k_colors.dart';
@@ -6,6 +8,8 @@ import 'k_styles.dart';
 
 class SignUpUsername extends StatefulWidget {
   const SignUpUsername({Key? key}) : super(key: key);
+  static final routeName= '/SignUpUsername';
+
 
   @override
   State<SignUpUsername> createState() => _SignUpUsernameState();
@@ -38,6 +42,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as List<String>;
     return Scaffold(
       //By doing this you use the color specified in the app colorScheme
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -89,8 +94,11 @@ class _SignUpUsernameState extends State<SignUpUsername> {
                       height: 54,
                       width: 358,
                       child: ElevatedButton(
-                        onPressed: () => print(_controllerUsername.value),
-                        child: Text('Next', style: normalText),
+                        onPressed: () {
+                          User userCreated=User(args[0],args[1],_controllerUsername.text);
+                          Navigator.pushNamed(context, ProfileCreated.routeName, arguments: userCreated);
+                        },
+                        child: Text('Next', style: normalTextStyle),
                         style: largeGreyButtonStyle,
                       )),
                 ),

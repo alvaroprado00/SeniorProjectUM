@@ -30,8 +30,13 @@ const TextStyle headingStyle = TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.w300);
 
-const TextStyle normalText = TextStyle(
+const TextStyle normalTextStyle = TextStyle(
     color: primaryColor,
+    fontFamily: fontFamily,
+    fontSize: 20,
+    fontWeight: FontWeight.w400);
+const TextStyle normalTextStyleWhite = TextStyle(
+    color: tertiaryColor,
     fontFamily: fontFamily,
     fontSize: 20,
     fontWeight: FontWeight.w400);

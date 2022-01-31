@@ -1,3 +1,4 @@
+import 'package:cyber/view/sign_up_3.dart';
 import 'package:flutter/material.dart';
 
 import 'k_colors.dart';
@@ -7,6 +8,8 @@ import 'k_styles.dart';
 class SignUpPassword extends StatefulWidget {
   const SignUpPassword({Key? key}) : super(key: key);
 
+  static final routeName= '/SignUpPassword';
+
   @override
   State<SignUpPassword> createState() => _SignUpPasswordState();
 }
@@ -15,6 +18,9 @@ class _SignUpPasswordState extends State<SignUpPassword> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _controllerPassword;
   bool _isObscure = true;
+
+
+
 
   //When the widget is created we initialize the text form fields controllers
   @override
@@ -32,6 +38,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
 
   @override
   Widget build(BuildContext context) {
+    final email = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       //By doing this you use the color specified in the app colorScheme
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -89,8 +96,10 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                       height: 54,
                       width: 358,
                       child: ElevatedButton(
-                        onPressed: () => print(_controllerPassword.value),
-                        child: Text('Next', style: normalText),
+                        onPressed: () {
+                          Navigator.pushNamed(context, SignUpUsername.routeName, arguments: [email,_controllerPassword.text]);
+                        },
+                        child: Text('Next', style: normalTextStyle),
                         style: largeGreyButtonStyle,
                       )),
                 ),

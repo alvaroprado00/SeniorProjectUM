@@ -1,5 +1,6 @@
 import 'package:cyber/view/k_colors.dart';
 import 'package:cyber/view/k_components.dart';
+import 'package:cyber/view/sign_up_1.dart';
 import 'package:flutter/material.dart';
 import 'k_styles.dart';
 
@@ -89,7 +90,7 @@ class _LogInPageState extends State<LogInPage> {
                         width: 358,
                         child: ElevatedButton(
                           onPressed: () => print('popo'),
-                          child: Text('Log In', style: normalText),
+                          child: Text('Log In', style: normalTextStyle),
                           style: largeYellowButtonStyle,
                         )),
                     Padding(
@@ -106,8 +107,8 @@ class _LogInPageState extends State<LogInPage> {
                         height: 54,
                         width: 358,
                         child: ElevatedButton(
-                          onPressed: () => print('popo'),
-                          child: Text('Sign Up', style: normalText),
+                          onPressed: () {Navigator.pushNamed(context, SignUpEmail.routeName);},
+                          child: Text('Sign Up', style: normalTextStyle),
                           style: largeGreyButtonStyle,
                         )),
                   ],

@@ -2,14 +2,19 @@
 
  */
 
+import 'package:cyber/view/sign_up_2.dart';
 import 'package:flutter/material.dart';
 
 import 'k_colors.dart';
 import 'k_components.dart';
 import 'k_styles.dart';
 
+
+
 class SignUpEmail extends StatefulWidget {
   const SignUpEmail({Key? key}) : super(key: key);
+
+  static final String routeName='/signUpEmail';
 
   @override
   State<SignUpEmail> createState() => _SignUpEmailState();
@@ -72,8 +77,10 @@ class _SignUpEmailState extends State<SignUpEmail> {
                     height: 54,
                     width: 358,
                     child: ElevatedButton(
-                      onPressed: () => print(_controllerEmail.value),
-                      child: Text('Next', style: normalText),
+                      onPressed: () {
+                        Navigator.pushNamed(context, SignUpPassword.routeName, arguments: _controllerEmail.text);
+                      },
+                      child: Text('Next', style: normalTextStyle),
                       style: largeGreyButtonStyle,
                     )),
               ),
