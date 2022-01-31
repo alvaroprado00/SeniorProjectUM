@@ -1,9 +1,11 @@
+import 'package:cyber/view/join_group_sign_up.dart';
 import 'package:cyber/view/k_colors.dart';
 import 'package:cyber/view/log_in_page.dart';
 import 'package:cyber/view/profile_created.dart';
 import 'package:cyber/view/sign_up_1.dart';
 import 'package:cyber/view/sign_up_2.dart';
 import 'package:cyber/view/sign_up_3.dart';
+import 'package:cyber/view/summary_sign_up.dart';
 import 'package:flutter/material.dart';
 
 
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const LogInPage(),
+        '/': (context) => const SignUpSummary(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         SignUpEmail.routeName: (context) => const SignUpEmail(),
         SignUpPassword.routeName: (context) => const SignUpPassword(),

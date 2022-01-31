@@ -1,0 +1,7 @@
+
+
+Day 1/31/2022
+
+There is a function to inmediately create the back button. Since our app does not include an appbar
+I created an IconButton with always the same functionality in the onPressed() function. For more
+details see decription in method (k_components)
