@@ -10,7 +10,6 @@ class SignUpUsername extends StatefulWidget {
   const SignUpUsername({Key? key}) : super(key: key);
   static final routeName= '/SignUpUsername';
 
-
   @override
   State<SignUpUsername> createState() => _SignUpUsernameState();
 }
@@ -26,14 +25,12 @@ class _SignUpUsernameState extends State<SignUpUsername> {
       fontSize: 16,
       color: secondaryColor);
 
-  //When the widget is created we initialize the text form fields controllers
   @override
   void initState() {
     super.initState();
     _controllerUsername = TextEditingController();
   }
 
-  //Here we free the memory
   @override
   void dispose() {
     _controllerUsername.dispose();
@@ -43,23 +40,34 @@ class _SignUpUsernameState extends State<SignUpUsername> {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as List<String>;
+
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    var padding=MediaQuery.of(context).padding;
+    height=height-padding.top;
+
+
     return Scaffold(
-      //By doing this you use the color specified in the app colorScheme
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
-        //This is to solve the problem of the overflow caused by the keyboard
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+
+                Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: getBackButton(
+                        context: context, heightOfScreen: height)),
+
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 184, 0, 0),
+                  padding: EdgeInsets.only(top:0.2*height, bottom:0.025*height, left: 0.03*width, right: 0.03*width),
                   child: Text('Enter a username.', style: subheadingStyleWhite),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(25, 11, 25, 0),
+                    padding: EdgeInsets.only(bottom:0.025*height, left: 0.05*width, right: 0.05*width),
                   //This is a widget that helps us to have a text with different styles
                   child: RichText(
                     textAlign: TextAlign.center,
@@ -74,7 +82,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.fromLTRB(16,23, 16, 0),
+                  padding: EdgeInsets.only(bottom:0.37*height, left: 0.03*width, right: 0.03*width),
                   child: TextFormField(
                     validator: validatorForEmptyTextField,
                     controller: _controllerUsername,
@@ -88,23 +96,20 @@ class _SignUpUsernameState extends State<SignUpUsername> {
                   ),
                 ),
 
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0,250, 0, 0),
-                  child: SizedBox(
-                      height: 54,
-                      width: 358,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          User userCreated=User(args[0],args[1],_controllerUsername.text);
-                          Navigator.pushNamed(context, ProfileCreated.routeName, arguments: userCreated);
-                        },
-                        child: Text('Next', style: normalTextStyle),
-                        style: largeGreyButtonStyle,
-                      )),
-                ),
+                SizedBox(
+                    height: getHeightOfLargeButton(heightOfScreen: height),
+                    width: getWidthOfLargeButton(widthOfScreen: width),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        User userCreated=User(args[0],args[1],_controllerUsername.text);
+                        Navigator.pushNamed(context, ProfileCreated.routeName, arguments: userCreated);
+                      },
+                      child: Text('Next', style: normalTextStyle),
+                      style: largeGreyButtonStyle,
+                    )),
 
                 Padding(
-                  padding: EdgeInsets.fromLTRB(0,16, 0, 35),
+                  padding: EdgeInsets.only(top: 0.03*height),
                   child: getCirclesProgressBar(position:3, numberOfCircles: 5),
                 ),
               ],

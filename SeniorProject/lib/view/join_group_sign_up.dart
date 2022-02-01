@@ -33,14 +33,13 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
 
   @override
   Widget build(BuildContext context) {
-
     //This is how I get all the dimensions of the screen.
-    //The height needs to be updated since we need to substract the top padding of the status bar
+    //The height needs to be updated since we need to subtract the top padding of the status bar
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     var padding = MediaQuery.of(context).viewPadding;
-    double height2 = height - padding.top;
+    height = height - padding.top;
 
     return Scaffold(
       //By doing this you use the color specified in the app colorScheme
@@ -55,14 +54,15 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
               children: [
                 Align(
                     alignment: AlignmentDirectional.centerStart,
-                    child: getBackButton(context: context, heightOfScreen: height2)),
+                    child: getBackButton(
+                        context: context, heightOfScreen: height)),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: (0.01 * height2), bottom: (0.001 * height2)),
+                      top: (0.01 * height), bottom: (0.001 * height)),
                   child: Icon(
                     Icons.groups,
                     color: secondaryColor,
-                    size: 0.12 * height2,
+                    size: 0.12 * height,
                   ),
                 ),
                 Text(
@@ -70,7 +70,10 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                   style: subheadingStyleWhite,
                 ),
                 Padding(
-                    padding: EdgeInsets.only(top: (0.02 * height2),left: width*0.1, right: width*0.1),
+                    padding: EdgeInsets.only(
+                        top: (0.02 * height),
+                        left: width * 0.1,
+                        right: width * 0.1),
                     child: Text(
                       'Join a group with your friends to learn together.',
                       style: smallTextStyle,
@@ -78,8 +81,8 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                     )),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: (0.05 * height2),
-                      bottom: (0.03 * height2),
+                      top: (0.05 * height),
+                      bottom: (0.03 * height),
                       left: 0.025 * width,
                       right: 0.025 * width),
                   child: TextFormField(
@@ -94,7 +97,7 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                   ),
                 ),
                 SizedBox(
-                    height: 0.07 * height2,
+                    height: 0.07 * height,
                     width: 0.95 * width,
                     child: ElevatedButton(
                       onPressed: () {},
@@ -102,34 +105,37 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                       style: largeYellowButtonStyle,
                     )),
                 Padding(
-                    padding: EdgeInsets.fromLTRB(width*0.18, height2*0.15, width*0.18, height2*0.03,),
+                    padding: EdgeInsets.fromLTRB(
+                      width * 0.18,
+                      height * 0.15,
+                      width * 0.18,
+                      height * 0.03,
+                    ),
                     child: Text(
                       'Don\'t have a group yet?',
                       style: subheadingStyleWhite,
                     )),
-
-
                 Padding(
-                    padding: EdgeInsets.only(bottom: height2*0.05,left: width*0.07, right: width*0.07),
+                    padding: EdgeInsets.only(
+                        bottom: height * 0.05,
+                        left: width * 0.07,
+                        right: width * 0.07),
                     child: Text(
                       'Don\'t worry you can create one later or create one of your own.',
                       style: smallTextStyle,
                       textAlign: TextAlign.center,
                     )),
-
                 SizedBox(
-                    height: 0.07 * height2,
+                    height: 0.07 * height,
                     width: 0.95 * width,
                     child: ElevatedButton(
                       onPressed: () {},
                       child: Text('Skip', style: normalTextStyle),
                       style: largeGreyButtonStyle,
                     )),
-
-
-
                 Padding(
-                  padding: EdgeInsets.only(top: height2*0.02, bottom: 0.03*height2),
+                  padding: EdgeInsets.only(
+                      top: height * 0.02, bottom: 0.03 * height),
                   child: getCirclesProgressBar(position: 5, numberOfCircles: 5),
                 ),
               ],

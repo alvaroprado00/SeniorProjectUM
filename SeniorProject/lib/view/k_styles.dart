@@ -6,6 +6,16 @@ import 'k_colors.dart';
 
 const String fontFamily = 'roboto';
 
+
+double getHeightOfLargeButton({required double heightOfScreen}){
+  return heightOfScreen*0.07;
+}
+
+double getWidthOfLargeButton({required double widthOfScreen}){
+  return 0.94*widthOfScreen;
+}
+
+
 const TextStyle textFieldStyle = TextStyle(
     color: quaternaryColor,
     fontFamily: fontFamily,
