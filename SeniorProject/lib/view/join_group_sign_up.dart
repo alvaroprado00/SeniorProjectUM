@@ -67,7 +67,7 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                 ),
                 Text(
                   'Groups',
-                  style: subheadingStyleWhite,
+                  style: getSubheadingStyleWhite(widthOfScreen: width),
                 ),
                 Padding(
                     padding: EdgeInsets.only(
@@ -76,7 +76,7 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                         right: width * 0.1),
                     child: Text(
                       'Join a group with your friends to learn together.',
-                      style: smallTextStyle,
+                      style: getSmallTextStyle(widthOfScreen: width),
                       textAlign: TextAlign.center,
                     )),
                 Padding(
@@ -89,11 +89,13 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                     validator: validatorForEmptyTextField,
                     controller: _controllerGroupCode,
                     decoration: getInputDecoration(
+                      widthOfScreen: width,
                         hintText: 'Group Code',
                         icon: Icon(
                           Icons.lock,
                           color: secondaryColor,
                         )),
+
                   ),
                 ),
                 SizedBox(
@@ -101,7 +103,7 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                     width: 0.95 * width,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: Text('Join', style: normalTextStyle),
+                      child: Text('Join', style: getNormalTextStyleBlue(widthOfScreen: width)),
                       style: largeYellowButtonStyle,
                     )),
                 Padding(
@@ -113,7 +115,7 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                     ),
                     child: Text(
                       'Don\'t have a group yet?',
-                      style: subheadingStyleWhite,
+                      style: getSubheadingStyleWhite(widthOfScreen: width),
                     )),
                 Padding(
                     padding: EdgeInsets.only(
@@ -122,7 +124,7 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                         right: width * 0.07),
                     child: Text(
                       'Don\'t worry you can create one later or create one of your own.',
-                      style: smallTextStyle,
+                      style: getSmallTextStyle(widthOfScreen: width),
                       textAlign: TextAlign.center,
                     )),
                 SizedBox(
@@ -130,13 +132,13 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                     width: 0.95 * width,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: Text('Skip', style: normalTextStyle),
+                      child: Text('Skip', style: getNormalTextStyleBlue(widthOfScreen: width)),
                       style: largeGreyButtonStyle,
                     )),
                 Padding(
                   padding: EdgeInsets.only(
                       top: height * 0.02, bottom: 0.03 * height),
-                  child: getCirclesProgressBar(position: 5, numberOfCircles: 5),
+                  child: getCirclesProgressBar(position: 5, numberOfCircles: 5, widthOfScreen: width),
                 ),
               ],
             ),

@@ -15,46 +15,58 @@ double getWidthOfLargeButton({required double widthOfScreen}){
   return 0.94*widthOfScreen;
 }
 
+TextStyle getTexFieldTextStyle({required double widthOfScreen}){
+  return TextStyle(
+      color: quaternaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.05*widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
+TextStyle getSubheadingStyleYellow({required double widthOfScreen}){
+  return TextStyle(
+      color: secondaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.05*widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
+TextStyle getSubheadingStyleWhite({required double widthOfScreen}){
+  return TextStyle(
+      color: tertiaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.05*widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
+TextStyle getHeadingStyleWhite({required double widthOfScreen}){
+  return TextStyle(
+      color: tertiaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.08*widthOfScreen,
+      fontWeight: FontWeight.w300);
+}
 
-const TextStyle textFieldStyle = TextStyle(
-    color: quaternaryColor,
-    fontFamily: fontFamily,
-    fontSize: 20,
-    fontWeight: FontWeight.w400);
+TextStyle getNormalTextStyleBlue({required double widthOfScreen}){
+  return TextStyle(
+      color: primaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.045*widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
 
-const TextStyle subheadingStyleYellow = TextStyle(
-    color: secondaryColor,
-    fontFamily: fontFamily,
-    fontSize: 24,
-    fontWeight: FontWeight.w400);
+TextStyle getNormalTextStyleWhite({required double widthOfScreen}){
+  return TextStyle(
+      color: tertiaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.045*widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
 
-const TextStyle subheadingStyleWhite = TextStyle(
-    color: tertiaryColor,
-    fontFamily: fontFamily,
-    fontSize: 24,
-    fontWeight: FontWeight.w400);
-
-const TextStyle headingStyle = TextStyle(
-    color: tertiaryColor,
-    fontFamily: fontFamily,
-    fontSize: 32,
-    fontWeight: FontWeight.w300);
-
-const TextStyle normalTextStyle = TextStyle(
-    color: primaryColor,
-    fontFamily: fontFamily,
-    fontSize: 20,
-    fontWeight: FontWeight.w400);
-const TextStyle normalTextStyleWhite = TextStyle(
-    color: tertiaryColor,
-    fontFamily: fontFamily,
-    fontSize: 20,
-    fontWeight: FontWeight.w400);
-const TextStyle smallTextStyle = TextStyle(
-    fontWeight: FontWeight.w400,
-    fontFamily: fontFamily,
-    fontSize: 16,
-    color: tertiaryColor);
+TextStyle getSmallTextStyle({required double widthOfScreen}){
+  return TextStyle(
+      color: tertiaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.04*widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
 
 ButtonStyle largeYellowButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(secondaryColor),

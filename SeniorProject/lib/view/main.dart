@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const SignUpEmail(),
+        '/': (context) => const LogInPage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         SignUpEmail.routeName: (context) => const SignUpEmail(),
         SignUpPassword.routeName: (context) => const SignUpPassword(),

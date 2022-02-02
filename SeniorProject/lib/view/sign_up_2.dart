@@ -52,16 +52,14 @@ class _SignUpPasswordState extends State<SignUpPassword> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-
                 Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: getBackButton(
                         context: context, heightOfScreen: height)),
-
                 Padding(
                   padding: EdgeInsets.only(top:0.27*height, bottom:0.05*height, left: 0.03*width, right: 0.03*width),
                   child:
-                      Text('Enter your password.', style: subheadingStyleWhite),
+                      Text('Enter your password.', style: getSubheadingStyleWhite(widthOfScreen: width)),
                 ),
                 Padding(
                   padding: EdgeInsets.only(bottom:0.35*height, left: 0.03*width, right: 0.03*width),
@@ -73,6 +71,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                         filled: true,
                         fillColor: tertiaryColor,
                         hintText: 'Password',
+                        contentPadding: EdgeInsets.only(top:0.08*width ,left: 0.08*width),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(
@@ -95,7 +94,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                             });
                           },
                         ),
-                        hintStyle: textFieldStyle,
+                        hintStyle: getTexFieldTextStyle(widthOfScreen: width)
                       )),
                 ),
 
@@ -106,13 +105,13 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                       onPressed: () {
                         Navigator.pushNamed(context, SignUpUsername.routeName, arguments: [email,_controllerPassword.text]);
                       },
-                      child: Text('Next', style: normalTextStyle),
+                      child: Text('Next', style:  getNormalTextStyleBlue(widthOfScreen: width)),
                       style: largeGreyButtonStyle,
                     )),
 
                 Padding(
                   padding: EdgeInsets.only(top: 0.03*height),
-                  child: getCirclesProgressBar(position: 2, numberOfCircles: 5),
+                  child: getCirclesProgressBar(position: 2, numberOfCircles: 5, widthOfScreen: width),
                 ),
               ],
             ),

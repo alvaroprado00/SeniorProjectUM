@@ -65,7 +65,7 @@ class _SignUpEmailState extends State<SignUpEmail> {
 
                 Padding(
                   padding: EdgeInsets.only(top:0.27*height, bottom:0.05*height, left: 0.03*width, right: 0.03*width),
-                  child: Text('Enter your email.', style: subheadingStyleWhite),
+                  child: Text('Enter your email.', style: getSubheadingStyleWhite(widthOfScreen: width)),
                 ),
 
               Padding(
@@ -74,6 +74,7 @@ class _SignUpEmailState extends State<SignUpEmail> {
                   validator: validatorForEmptyTextField,
                   controller: _controllerEmail,
                   decoration: getInputDecoration(
+                      widthOfScreen: width,
                       hintText: 'email',
                       icon: Icon(
                         Icons.email,
@@ -87,15 +88,15 @@ class _SignUpEmailState extends State<SignUpEmail> {
                   width: getWidthOfLargeButton(widthOfScreen: width),
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, SignUpPassword.routeName, arguments: _controllerEmail.text);
+                      Navigator.pushNamed(context, SignUpPassword.routeName, arguments: _controllerEmail.text,);
                     },
-                    child: Text('Next', style: normalTextStyle),
+                    child: Text('Next', style: getNormalTextStyleBlue(widthOfScreen: width)),
                     style: largeGreyButtonStyle,
                   )),
 
               Padding(
                 padding: EdgeInsets.only(top: 0.03*height),
-                child: getCirclesProgressBar(position:1, numberOfCircles: 5),
+                child: getCirclesProgressBar(position:1, numberOfCircles: 5, widthOfScreen: width),
               ),
               ],
             )

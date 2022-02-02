@@ -36,7 +36,7 @@ class SignUpSummary extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'You are here to learn.',
-                  style: subheadingStyleWhite,
+                  style: getSubheadingStyleWhite(widthOfScreen: width),
                 ),
               ),
             ),
@@ -47,7 +47,7 @@ class SignUpSummary extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Take Courses. Or save them for later.',
-                  style: subheadingStyleWhite,
+                  style: getSubheadingStyleWhite(widthOfScreen: width),
                 ),
               ),
             ),
@@ -66,7 +66,7 @@ class SignUpSummary extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Browse courses in four different categories.',
-                  style: subheadingStyleWhite,
+                  style: getSubheadingStyleWhite(widthOfScreen: width),
                 ),
               ),
             ),
