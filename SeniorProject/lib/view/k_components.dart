@@ -1,5 +1,9 @@
+import 'dart:math';
+
+import 'package:cyber/view/k_values.dart';
 import 'package:flutter/material.dart';
 
+import 'avatar.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
 
@@ -17,34 +21,41 @@ String? validatorForEmptyTextField(value) {
  * Function to get an Input Decoration for a text field providing the Icon and the hint Text wanted
  */
 InputDecoration getInputDecoration(
-    {required String hintText, required Icon icon, required double widthOfScreen}) {
+    {required String hintText,
+    required Icon icon,
+    required double widthOfScreen}) {
   return InputDecoration(
-    filled: true,
-    fillColor: tertiaryColor,
-    hintText: hintText,
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5),
-      borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
-    ),
-    prefixIcon: icon,
-    hintStyle: getTexFieldTextStyle(widthOfScreen: widthOfScreen),
-    contentPadding: EdgeInsets.only(top:0.08*widthOfScreen ,left: 0.08*widthOfScreen)
-  );
+      filled: true,
+      fillColor: tertiaryColor,
+      hintText: hintText,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
+      ),
+      prefixIcon: icon,
+      hintStyle: getTexFieldTextStyle(),
+      contentPadding: EdgeInsets.only(
+          top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen));
 }
 
 /**
  * Function to create a row of dots. The number specified in position will be colored yellow.
  * Used as a progress Indicator
+ * Uses the function getCircle()
  */
 Widget getCirclesProgressBar(
-    {required int position, required int numberOfCircles, required double widthOfScreen}) {
+    {required int position,
+    required int numberOfCircles,
+    required double widthOfScreen}) {
   final children = <Widget>[];
 
   for (var i = 1; i <= numberOfCircles; i++) {
     if (position == i) {
-      children.add(getCircle(color: secondaryColor, widthOfScreen: widthOfScreen));
+      children
+          .add(getCircle(color: secondaryColor, widthOfScreen: widthOfScreen));
     } else {
-      children.add(getCircle(color: quinaryColor, widthOfScreen: widthOfScreen));
+      children
+          .add(getCircle(color: quinaryColor, widthOfScreen: widthOfScreen));
     }
   }
   return Row(
@@ -57,8 +68,8 @@ Widget getCircle({required Color color, required double widthOfScreen}) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
     child: SizedBox(
-      width: 0.02*widthOfScreen,
-      height: 0.02*widthOfScreen,
+      width: 0.02 * widthOfScreen,
+      height: 0.02 * widthOfScreen,
       child: Container(
         decoration: BoxDecoration(color: color, shape: BoxShape.circle),
       ),
@@ -85,10 +96,21 @@ IconButton getBackButton(
       ));
 }
 
+/**
+ * This function Retrieves a card with the name of the course specified.
+ *
+ * Yoy need to Specify the width of the card as well as the height of the sized
+ * box containing the text. Be careful to think about the height of the card
+ * you need to include the row containg the icon
+ *
+ * For now the card does nothing when clicked however in the future we should
+ * be able to redirect the user to the course using the nameOfCourse
+ */
+
 Card getCardForUnsavedCourse(
     {required String nameOfCourse,
-    required double width,
-    required double height}) {
+    required double widthOfCard,
+    required double heightOfCard}) {
   return Card(
     color: primaryColor,
     borderOnForeground: true,
@@ -100,26 +122,30 @@ Card getCardForUnsavedCourse(
       onTap: () {
         debugPrint('Card tapped.');
       },
-      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        SizedBox(
-            width: width,
-            child:
-                Align(alignment: Alignment.centerRight, child: SaveButton())),
-        SizedBox(
-          width: width,
-          height: height,
-          child: Padding(
-            padding: EdgeInsets.only(left: 0.05 * width, bottom: height * 0.05),
+      child: SizedBox(
+        height: heightOfCard,
+        width: widthOfCard,
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Align(alignment: Alignment.centerRight, child: SaveButton()),
+          Padding(
+            padding: EdgeInsets.only(
+                left: 0.05 * widthOfCard, bottom: heightOfCard * 0.05),
             child: Align(
                 alignment: Alignment.bottomLeft,
-                child: Text('$nameOfCourse', style: getNormalTextStyleBlue(widthOfScreen: width))),
+                child: Text('$nameOfCourse',
+                    style:
+                        getNormalTextStyleWhite())),
           ),
-        ),
-      ]),
+        ]),
+      ),
     ),
   );
 }
 
+/**
+ * This class defines the save button of the course cards. Logic for saving/unsaving courses has not yet been implemented
+ * V1.0 (2/2/2022) just changes state
+ */
 class SaveButton extends StatefulWidget {
   const SaveButton({Key? key}) : super(key: key);
 
@@ -150,4 +176,81 @@ class _SaveButtonState extends State<SaveButton> {
             ),
     );
   }
+}
+
+Card getCardForCategory(
+    {required String nameOfCategory,
+    required double widthOfCard,
+    required double heightOfCard}) {
+  return Card(
+    color: primaryColor,
+    borderOnForeground: true,
+    shape: new RoundedRectangleBorder(
+        side: new BorderSide(color: tertiaryColor, width: 1.0),
+        borderRadius: BorderRadius.circular(10.0)),
+    child: InkWell(
+      splashColor: secondaryColor,
+      onTap: () {
+        debugPrint('Redirected to category bla bla.');
+      },
+      child: SizedBox(
+        width: widthOfCard,
+        height: heightOfCard,
+        child: Align(
+            alignment: Alignment.center,
+            child: Text('$nameOfCategory',
+                style:
+                    getNormalTextStyleWhite())),
+      ),
+    ),
+  );
+}
+
+
+
+Card getCardForNotification(
+    {required String username,
+    required String nameOfCourse,
+    required double widthOfCard,
+    required double heightOfCard}) {
+  return Card(
+    color: primaryColor,
+    borderOnForeground: true,
+    shape: new RoundedRectangleBorder(
+        side: new BorderSide(color: tertiaryColor, width: 1.0),
+        borderRadius: BorderRadius.circular(10.0)),
+    child: InkWell(
+      splashColor: secondaryColor,
+      onTap: () {
+        debugPrint('Redirected to course bla bla.');
+      },
+      child: SizedBox(
+          width: widthOfCard,
+          height: heightOfCard,
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Padding(
+              padding:EdgeInsets.only(left:0.025*widthOfCard ,right:0.025*widthOfCard ),
+              child: Avatar(
+                  url: 'https://robohash.org/$username',
+                  size: widthOfScreen * 0.1),
+            ),
+
+            Flexible(
+              child: Text('$username just completed a course on $nameOfCourse. ${getRandomEncouragingMessage()}',
+                  style:
+                  getNormalTextStyleWhite()),
+            ),
+            
+           Padding(
+             padding:EdgeInsets.only(left:0.025*widthOfCard ,right:0.025*widthOfCard ),
+             child: Icon(Icons.password, color: secondaryColor,),
+           ),
+
+          ])),
+    ),
+  );
+}
+
+String? getRandomEncouragingMessage(){
+return encouragingMessages[Random().nextInt(encouragingMessages.length-1)];
 }

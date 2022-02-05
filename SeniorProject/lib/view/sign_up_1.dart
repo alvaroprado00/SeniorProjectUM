@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'k_colors.dart';
 import 'k_components.dart';
 import 'k_styles.dart';
+import 'k_values.dart';
 
 
 
@@ -42,10 +43,6 @@ class _SignUpEmailState extends State<SignUpEmail> {
   @override
   Widget build(BuildContext context) {
 
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    var padding=MediaQuery.of(context).padding;
-    height=height-padding.top;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -61,20 +58,20 @@ class _SignUpEmailState extends State<SignUpEmail> {
               Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: getBackButton(
-                      context: context, heightOfScreen: height)),
+                      context: context, heightOfScreen: heightOfScreen)),
 
                 Padding(
-                  padding: EdgeInsets.only(top:0.27*height, bottom:0.05*height, left: 0.03*width, right: 0.03*width),
-                  child: Text('Enter your email.', style: getSubheadingStyleWhite(widthOfScreen: width)),
+                  padding: EdgeInsets.only(top:0.27*heightOfScreen, bottom:0.05*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
+                  child: Text('Enter your email.', style: getSubheadingStyleWhite()),
                 ),
 
               Padding(
-                padding: EdgeInsets.only(bottom:0.35*height, left: 0.03*width, right: 0.03*width),
+                padding: EdgeInsets.only(bottom:0.35*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                 child: TextFormField(
                   validator: validatorForEmptyTextField,
                   controller: _controllerEmail,
                   decoration: getInputDecoration(
-                      widthOfScreen: width,
+                      widthOfScreen: widthOfScreen,
                       hintText: 'email',
                       icon: Icon(
                         Icons.email,
@@ -84,19 +81,19 @@ class _SignUpEmailState extends State<SignUpEmail> {
               ),
 
               SizedBox(
-                  height: getHeightOfLargeButton(heightOfScreen: height),
-                  width: getWidthOfLargeButton(widthOfScreen: width),
+                  height: getHeightOfLargeButton(),
+                  width: getWidthOfLargeButton(),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, SignUpPassword.routeName, arguments: _controllerEmail.text,);
                     },
-                    child: Text('Next', style: getNormalTextStyleBlue(widthOfScreen: width)),
+                    child: Text('Next', style: getNormalTextStyleBlue()),
                     style: largeGreyButtonStyle,
                   )),
 
               Padding(
-                padding: EdgeInsets.only(top: 0.03*height),
-                child: getCirclesProgressBar(position:1, numberOfCircles: 5, widthOfScreen: width),
+                padding: EdgeInsets.only(top: 0.03*heightOfScreen),
+                child: getCirclesProgressBar(position:1, numberOfCircles: 5, widthOfScreen: widthOfScreen),
               ),
               ],
             )

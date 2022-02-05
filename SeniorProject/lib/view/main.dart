@@ -16,9 +16,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+
+
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Cyber',
 
@@ -31,7 +35,8 @@ class MyApp extends StatelessWidget {
         SignUpPassword.routeName: (context) => const SignUpPassword(),
         SignUpUsername.routeName: (context) => const SignUpUsername(),
         ProfileCreated.routeName: (context) => const ProfileCreated(),
-
+        SignUpJoinGroup.routeName: (context) => const SignUpJoinGroup(),
+        SignUpSummary.routeName: (context) => const SignUpSummary(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -41,6 +46,7 @@ class MyApp extends StatelessWidget {
           secondary: MaterialColor(0xFFFCA311, secondaryYellow),
         ),
       ),
+
 
     );
   }

@@ -56,7 +56,7 @@ class _AvatarState extends State<Avatar> {
           shape: BoxShape.circle,
           border: new Border.all(
             color: secondaryColor,
-            width: 3.0,
+            width: 2.0,
           ),
           gradient: LinearGradient(
               begin: Alignment.topCenter,

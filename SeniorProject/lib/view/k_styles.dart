@@ -3,40 +3,41 @@
  */
 import 'package:flutter/material.dart';
 import 'k_colors.dart';
+import 'k_values.dart';
 
 const String fontFamily = 'roboto';
 
 
-double getHeightOfLargeButton({required double heightOfScreen}){
+double getHeightOfLargeButton(){
   return heightOfScreen*0.07;
 }
 
-double getWidthOfLargeButton({required double widthOfScreen}){
+double getWidthOfLargeButton(){
   return 0.94*widthOfScreen;
 }
 
-TextStyle getTexFieldTextStyle({required double widthOfScreen}){
+TextStyle getTexFieldTextStyle(){
   return TextStyle(
       color: quaternaryColor,
       fontFamily: fontFamily,
       fontSize: 0.05*widthOfScreen,
       fontWeight: FontWeight.w400);
 }
-TextStyle getSubheadingStyleYellow({required double widthOfScreen}){
+TextStyle getSubheadingStyleYellow(){
   return TextStyle(
       color: secondaryColor,
       fontFamily: fontFamily,
       fontSize: 0.05*widthOfScreen,
       fontWeight: FontWeight.w400);
 }
-TextStyle getSubheadingStyleWhite({required double widthOfScreen}){
+TextStyle getSubheadingStyleWhite(){
   return TextStyle(
       color: tertiaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.05*widthOfScreen,
+      fontSize: 0.06*widthOfScreen,
       fontWeight: FontWeight.w400);
 }
-TextStyle getHeadingStyleWhite({required double widthOfScreen}){
+TextStyle getHeadingStyleWhite(){
   return TextStyle(
       color: tertiaryColor,
       fontFamily: fontFamily,
@@ -44,7 +45,7 @@ TextStyle getHeadingStyleWhite({required double widthOfScreen}){
       fontWeight: FontWeight.w300);
 }
 
-TextStyle getNormalTextStyleBlue({required double widthOfScreen}){
+TextStyle getNormalTextStyleBlue(){
   return TextStyle(
       color: primaryColor,
       fontFamily: fontFamily,
@@ -52,7 +53,7 @@ TextStyle getNormalTextStyleBlue({required double widthOfScreen}){
       fontWeight: FontWeight.w400);
 }
 
-TextStyle getNormalTextStyleWhite({required double widthOfScreen}){
+TextStyle getNormalTextStyleWhite(){
   return TextStyle(
       color: tertiaryColor,
       fontFamily: fontFamily,
@@ -60,7 +61,7 @@ TextStyle getNormalTextStyleWhite({required double widthOfScreen}){
       fontWeight: FontWeight.w400);
 }
 
-TextStyle getSmallTextStyle({required double widthOfScreen}){
+TextStyle getSmallTextStyle(){
   return TextStyle(
       color: tertiaryColor,
       fontFamily: fontFamily,

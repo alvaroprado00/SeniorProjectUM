@@ -1,8 +1,10 @@
+import 'package:cyber/view/summary_sign_up.dart';
 import 'package:flutter/material.dart';
 
 import 'k_colors.dart';
 import 'k_components.dart';
 import 'k_styles.dart';
+import 'k_values.dart';
 
 class SignUpJoinGroup extends StatefulWidget {
   const SignUpJoinGroup({Key? key}) : super(key: key);
@@ -33,13 +35,6 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
 
   @override
   Widget build(BuildContext context) {
-    //This is how I get all the dimensions of the screen.
-    //The height needs to be updated since we need to subtract the top padding of the status bar
-
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    var padding = MediaQuery.of(context).viewPadding;
-    height = height - padding.top;
 
     return Scaffold(
       //By doing this you use the color specified in the app colorScheme
@@ -55,41 +50,41 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                 Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: getBackButton(
-                        context: context, heightOfScreen: height)),
+                        context: context, heightOfScreen: heightOfScreen)),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: (0.01 * height), bottom: (0.001 * height)),
+                      top: (0.01 * heightOfScreen), bottom: (0.001 * heightOfScreen)),
                   child: Icon(
                     Icons.groups,
                     color: secondaryColor,
-                    size: 0.12 * height,
+                    size: 0.12 * heightOfScreen,
                   ),
                 ),
                 Text(
                   'Groups',
-                  style: getSubheadingStyleWhite(widthOfScreen: width),
+                  style: getSubheadingStyleWhite(),
                 ),
                 Padding(
                     padding: EdgeInsets.only(
-                        top: (0.02 * height),
-                        left: width * 0.1,
-                        right: width * 0.1),
+                        top: (0.02 * heightOfScreen),
+                        left: widthOfScreen * 0.1,
+                        right: widthOfScreen * 0.1),
                     child: Text(
                       'Join a group with your friends to learn together.',
-                      style: getSmallTextStyle(widthOfScreen: width),
+                      style: getSmallTextStyle(),
                       textAlign: TextAlign.center,
                     )),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: (0.05 * height),
-                      bottom: (0.03 * height),
-                      left: 0.025 * width,
-                      right: 0.025 * width),
+                      top: (0.05 * heightOfScreen),
+                      bottom: (0.03 * heightOfScreen),
+                      left: 0.025 * widthOfScreen,
+                      right: 0.025 * widthOfScreen),
                   child: TextFormField(
                     validator: validatorForEmptyTextField,
                     controller: _controllerGroupCode,
                     decoration: getInputDecoration(
-                      widthOfScreen: width,
+                      widthOfScreen: widthOfScreen,
                         hintText: 'Group Code',
                         icon: Icon(
                           Icons.lock,
@@ -99,46 +94,46 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                   ),
                 ),
                 SizedBox(
-                    height: 0.07 * height,
-                    width: 0.95 * width,
+                    height: 0.07 * heightOfScreen,
+                    width: 0.95 * widthOfScreen,
                     child: ElevatedButton(
                       onPressed: () {},
-                      child: Text('Join', style: getNormalTextStyleBlue(widthOfScreen: width)),
+                      child: Text('Join', style: getNormalTextStyleBlue()),
                       style: largeYellowButtonStyle,
                     )),
                 Padding(
                     padding: EdgeInsets.fromLTRB(
-                      width * 0.18,
-                      height * 0.15,
-                      width * 0.18,
-                      height * 0.03,
+                      widthOfScreen * 0.18,
+                      heightOfScreen * 0.15,
+                      widthOfScreen * 0.18,
+                      heightOfScreen * 0.03,
                     ),
                     child: Text(
                       'Don\'t have a group yet?',
-                      style: getSubheadingStyleWhite(widthOfScreen: width),
+                      style: getSubheadingStyleWhite(),
                     )),
                 Padding(
                     padding: EdgeInsets.only(
-                        bottom: height * 0.05,
-                        left: width * 0.07,
-                        right: width * 0.07),
+                        bottom: heightOfScreen * 0.06,
+                        left: widthOfScreen * 0.07,
+                        right: widthOfScreen * 0.07),
                     child: Text(
                       'Don\'t worry you can create one later or create one of your own.',
-                      style: getSmallTextStyle(widthOfScreen: width),
+                      style: getSmallTextStyle(),
                       textAlign: TextAlign.center,
                     )),
                 SizedBox(
-                    height: 0.07 * height,
-                    width: 0.95 * width,
+                    height: 0.07 * heightOfScreen,
+                    width: 0.95 * widthOfScreen,
                     child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text('Skip', style: getNormalTextStyleBlue(widthOfScreen: width)),
+                      onPressed: () {Navigator.pushNamed(context, SignUpSummary.routeName);},
+                      child: Text('Skip', style: getNormalTextStyleBlue()),
                       style: largeGreyButtonStyle,
                     )),
+
                 Padding(
-                  padding: EdgeInsets.only(
-                      top: height * 0.02, bottom: 0.03 * height),
-                  child: getCirclesProgressBar(position: 5, numberOfCircles: 5, widthOfScreen: width),
+                  padding: EdgeInsets.only(top: 0.03*heightOfScreen),
+                  child: getCirclesProgressBar(position:5, numberOfCircles: 5,widthOfScreen: widthOfScreen),
                 ),
               ],
             ),

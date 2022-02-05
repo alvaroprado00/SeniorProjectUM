@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'k_colors.dart';
 import 'k_components.dart';
 import 'k_styles.dart';
+import 'k_values.dart';
 
 class SignUpPassword extends StatefulWidget {
   const SignUpPassword({Key? key}) : super(key: key);
@@ -37,12 +38,8 @@ class _SignUpPasswordState extends State<SignUpPassword> {
   @override
   Widget build(BuildContext context) {
 
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    var padding=MediaQuery.of(context).padding;
-    height=height-padding.top;
-
     final email = ModalRoute.of(context)!.settings.arguments as String;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
@@ -55,14 +52,14 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                 Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: getBackButton(
-                        context: context, heightOfScreen: height)),
+                        context: context, heightOfScreen: heightOfScreen)),
                 Padding(
-                  padding: EdgeInsets.only(top:0.27*height, bottom:0.05*height, left: 0.03*width, right: 0.03*width),
+                  padding: EdgeInsets.only(top:0.27*heightOfScreen, bottom:0.05*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                   child:
-                      Text('Enter your password.', style: getSubheadingStyleWhite(widthOfScreen: width)),
+                      Text('Enter your password.', style: getSubheadingStyleWhite()),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom:0.35*height, left: 0.03*width, right: 0.03*width),
+                  padding: EdgeInsets.only(bottom:0.35*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                   child: TextFormField(
                       obscureText: _isObscure,
                       validator: validatorForEmptyTextField,
@@ -71,7 +68,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                         filled: true,
                         fillColor: tertiaryColor,
                         hintText: 'Password',
-                        contentPadding: EdgeInsets.only(top:0.08*width ,left: 0.08*width),
+                        contentPadding: EdgeInsets.only(top:0.08*widthOfScreen ,left: 0.08*widthOfScreen),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                           borderSide: const BorderSide(
@@ -94,24 +91,24 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                             });
                           },
                         ),
-                        hintStyle: getTexFieldTextStyle(widthOfScreen: width)
+                        hintStyle: getTexFieldTextStyle()
                       )),
                 ),
 
                 SizedBox(
-                    height: getHeightOfLargeButton(heightOfScreen: height),
-                    width: getWidthOfLargeButton(widthOfScreen: width),
+                    height: getHeightOfLargeButton(),
+                    width: getWidthOfLargeButton(),
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.pushNamed(context, SignUpUsername.routeName, arguments: [email,_controllerPassword.text]);
                       },
-                      child: Text('Next', style:  getNormalTextStyleBlue(widthOfScreen: width)),
+                      child: Text('Next', style:  getNormalTextStyleBlue()),
                       style: largeGreyButtonStyle,
                     )),
 
                 Padding(
-                  padding: EdgeInsets.only(top: 0.03*height),
-                  child: getCirclesProgressBar(position: 2, numberOfCircles: 5, widthOfScreen: width),
+                  padding: EdgeInsets.only(top: 0.03*heightOfScreen),
+                  child: getCirclesProgressBar(position: 2, numberOfCircles: 5, widthOfScreen: widthOfScreen),
                 ),
               ],
             ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'k_colors.dart';
 import 'k_components.dart';
 import 'k_styles.dart';
+import 'k_values.dart';
 
 class SignUpUsername extends StatefulWidget {
   const SignUpUsername({Key? key}) : super(key: key);
@@ -39,12 +40,8 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as List<String>;
 
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    var padding=MediaQuery.of(context).padding;
-    height=height-padding.top;
+    final args = ModalRoute.of(context)!.settings.arguments as List<String>;
 
 
     return Scaffold(
@@ -60,19 +57,19 @@ class _SignUpUsernameState extends State<SignUpUsername> {
                 Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: getBackButton(
-                        context: context, heightOfScreen: height)),
+                        context: context, heightOfScreen: heightOfScreen)),
 
                 Padding(
-                  padding: EdgeInsets.only(top:0.2*height, bottom:0.025*height, left: 0.03*width, right: 0.03*width),
-                  child: Text('Enter a username.', style: getSubheadingStyleWhite(widthOfScreen: width)),
+                  padding: EdgeInsets.only(top:0.2*heightOfScreen, bottom:0.025*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
+                  child: Text('Enter a username.', style: getSubheadingStyleWhite()),
                 ),
                 Padding(
-                    padding: EdgeInsets.only(bottom:0.025*height, left: 0.05*width, right: 0.05*width),
+                    padding: EdgeInsets.only(bottom:0.025*heightOfScreen, left: 0.05*widthOfScreen, right: 0.05*widthOfScreen),
                   //This is a widget that helps us to have a text with different styles
                   child: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      style:getSmallTextStyle(widthOfScreen: width),
+                      style:getSmallTextStyle(),
                       children: [
                         TextSpan(text: 'We will use your username to get your initial avatar from '),
                         TextSpan(text: 'ROBOHASH', style: smallTextStyleYellow),
@@ -82,12 +79,12 @@ class _SignUpUsernameState extends State<SignUpUsername> {
                 ),
 
                 Padding(
-                  padding: EdgeInsets.only(bottom:0.37*height, left: 0.03*width, right: 0.03*width),
+                  padding: EdgeInsets.only(bottom:0.37*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                   child: TextFormField(
                     validator: validatorForEmptyTextField,
                     controller: _controllerUsername,
                     decoration: getInputDecoration(
-                        widthOfScreen: width,
+                        widthOfScreen: widthOfScreen,
                         hintText: 'username',
                         icon: Icon(
                           Icons.person,
@@ -98,20 +95,20 @@ class _SignUpUsernameState extends State<SignUpUsername> {
                 ),
 
                 SizedBox(
-                    height: getHeightOfLargeButton(heightOfScreen: height),
-                    width: getWidthOfLargeButton(widthOfScreen: width),
+                    height: getHeightOfLargeButton(),
+                    width: getWidthOfLargeButton(),
                     child: ElevatedButton(
                       onPressed: () {
                         User userCreated=User(args[0],_controllerUsername.text,args[1],);
                         Navigator.pushNamed(context, ProfileCreated.routeName, arguments: userCreated);
                       },
-                      child: Text('Next', style:  getNormalTextStyleBlue(widthOfScreen: width)),
+                      child: Text('Next', style:  getNormalTextStyleBlue()),
                       style: largeGreyButtonStyle,
                     )),
 
                 Padding(
-                  padding: EdgeInsets.only(top: 0.03*height),
-                  child: getCirclesProgressBar(position:3, numberOfCircles: 5,widthOfScreen: width),
+                  padding: EdgeInsets.only(top: 0.03*heightOfScreen),
+                  child: getCirclesProgressBar(position:3, numberOfCircles: 5,widthOfScreen: widthOfScreen),
                 ),
               ],
             )

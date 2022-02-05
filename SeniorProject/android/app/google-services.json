@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "69412001281",
+    "project_id": "fir-seniorproject",
+    "storage_bucket": "fir-seniorproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69412001281:android:9d12fe34c43e1780d95200",
+        "android_client_info": {
+          "package_name": "com.example.cyber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "69412001281-otsdglp4mv6hgrvlsf86fas4lbohkvk7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdl0j7cN2DKH8hnlYd3DzzsK7YP9749Z4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "69412001281-otsdglp4mv6hgrvlsf86fas4lbohkvk7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "69412001281-9qbj4eqpeok4n97ds6qocrps8vbjuukc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.cyber"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

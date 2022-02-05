@@ -1,10 +1,12 @@
 import 'package:cyber/model/user.dart';
 import 'package:cyber/view/avatar.dart';
+import 'package:cyber/view/join_group_sign_up.dart';
 import 'package:cyber/view/k_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'k_colors.dart';
 import 'k_components.dart';
+import 'k_values.dart';
 
 
 class ProfileCreated extends StatelessWidget {
@@ -16,12 +18,6 @@ class ProfileCreated extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-    var padding = MediaQuery.of(context).viewPadding;
-    height = height - padding.top;
-
     final userCreated = ModalRoute.of(context)!.settings.arguments as User;
 
     return Scaffold(
@@ -32,47 +28,47 @@ class ProfileCreated extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
-                padding: EdgeInsets.only(top:0.05*height, bottom:0.05*height),
-              child: Align(child: Text('Say hello to yourself.', style: getSubheadingStyleWhite(widthOfScreen: width),))
+                padding: EdgeInsets.only(top:0.05*heightOfScreen, bottom:0.05*heightOfScreen),
+              child: Align(child: Text('Say hello to yourself.', style: getSubheadingStyleWhite(),))
             ),
             
-            Avatar(url: 'https://robohash.org/${userCreated.username}', size: width*0.5),
+            Avatar(url: 'https://robohash.org/${userCreated.username}', size: widthOfScreen*0.5),
 
             Padding(
-              padding: EdgeInsets.only(top:0.05*height, bottom:0.05*height),
-                child: Align(child: Text(userCreated.username, style: getSubheadingStyleWhite(widthOfScreen: width),)),
+              padding: EdgeInsets.only(top:0.05*heightOfScreen, bottom:0.05*heightOfScreen),
+                child: Align(child: Text(userCreated.username, style: getSubheadingStyleWhite(),)),
             ),
 
-            Divider(indent: width*0.025, endIndent: width*0.025, color: secondaryColor,thickness: 1,),
+            Divider(indent: widthOfScreen*0.025, endIndent: widthOfScreen*0.025, color: secondaryColor,thickness: 1,),
 
             Padding(
-              padding: EdgeInsets.only( left: 0.1*width , top:0.03*height, bottom:0.03*height),
+              padding: EdgeInsets.only( left: 0.1*widthOfScreen , top:0.03*heightOfScreen, bottom:0.03*heightOfScreen),
               child: Row(children:[Icon(Icons.mail, color: secondaryColor,), Padding(
                 padding: const EdgeInsets.only(left: 24),
-                child: Text(userCreated.email, style: getSmallTextStyle(widthOfScreen: width),),
+                child: Text(userCreated.email, style: getSmallTextStyle(),),
               )]),
             ),
 
             Padding(
-              padding: EdgeInsets.only( left: 0.1*width,  bottom:0.17*height),
+              padding: EdgeInsets.only( left: 0.1*widthOfScreen,  bottom:0.17*heightOfScreen),
               child: Row(children:[Icon(Icons.lock, color: secondaryColor,), Padding(
                 padding: const EdgeInsets.only(left: 24),
-                child: Text('********', style: getSmallTextStyle(widthOfScreen: width), ),
+                child: Text('********', style: getSmallTextStyle(), ),
               )]),
             ),
 
             SizedBox(
-                height: 54,
-                width: 358,
+                height: getHeightOfLargeButton(),
+                width: getWidthOfLargeButton(),
                 child: ElevatedButton(
-                  onPressed: () => print('popo'),
-                  child: Text('Next', style: getNormalTextStyleBlue(widthOfScreen: width)),
+                  onPressed: () => print(Navigator.pushNamed(context, SignUpJoinGroup.routeName)),
+                  child: Text('Next', style: getNormalTextStyleBlue()),
                   style: largeGreyButtonStyle,
                 )),
 
             Padding(
-              padding: EdgeInsets.only(top: 0.03*height),
-              child: getCirclesProgressBar(position:4, numberOfCircles: 5,widthOfScreen: width),
+              padding: EdgeInsets.only(top: 0.03*heightOfScreen),
+              child: getCirclesProgressBar(position:4, numberOfCircles: 5,widthOfScreen: widthOfScreen),
             ),
           ],
         ),

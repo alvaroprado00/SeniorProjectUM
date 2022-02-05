@@ -3,6 +3,7 @@ import 'package:cyber/view/k_components.dart';
 import 'package:cyber/view/sign_up_1.dart';
 import 'package:flutter/material.dart';
 import 'k_styles.dart';
+import 'k_values.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _LogInPageState extends State<LogInPage> {
   late TextEditingController _controllerUser;
   late TextEditingController _controllerPassword;
   final _formKey = GlobalKey<FormState>();
+
 
   //When the widget is created we initialize the text form fields controllers
   @override
@@ -38,12 +40,13 @@ class _LogInPageState extends State<LogInPage> {
   @override
   Widget build(BuildContext context) {
 
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
+    widthOfScreen = MediaQuery.of(context).size.width;
+    heightOfScreen = MediaQuery.of(context).size.height;
+
     var padding=MediaQuery.of(context).padding;
     //I update the height by subtracting the status bar height
 
-    height=height-padding.top;
+    heightOfScreen=heightOfScreen-padding.top;
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -55,22 +58,22 @@ class _LogInPageState extends State<LogInPage> {
                 children: [
                   Image.asset(
                     'assets/images/logoNoText.png',
-                    width: 0.2*width,
-                    height: 0.08*height,
+                    width: 0.2*widthOfScreen,
+                    height: 0.08*heightOfScreen,
                   ),
                   Padding(
-                    padding:EdgeInsets.only(top:0.025*height, bottom:0.01*height),
-                    child: Text('Cyber', style: getHeadingStyleWhite(widthOfScreen: width)),
+                    padding:EdgeInsets.only(top:0.025*heightOfScreen, bottom:0.01*heightOfScreen),
+                    child: Text('Cyber', style: getHeadingStyleWhite()),
                   ),
 
                   Text('Learn to be safe.',
-                      style: getSubheadingStyleYellow(widthOfScreen: width)),
+                      style: getSubheadingStyleYellow()),
                   Padding(
-                    padding: EdgeInsets.only(top:0.1*height, bottom:0.015*height, left: 0.03*width, right: 0.03*width),
+                    padding: EdgeInsets.only(top:0.1*heightOfScreen, bottom:0.015*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                     child: TextFormField(
                       validator: validatorForEmptyTextField,
                       decoration: getInputDecoration(
-                          widthOfScreen: width,
+                          widthOfScreen: widthOfScreen,
                           hintText: 'username',
                           icon: Icon(
                             Icons.person,
@@ -79,11 +82,11 @@ class _LogInPageState extends State<LogInPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(bottom:0.015*height, left: 0.03*width, right: 0.03*width),
+                    padding: EdgeInsets.only(bottom:0.015*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                     child: TextFormField(
                       validator: validatorForEmptyTextField,
                       decoration: getInputDecoration(
-                          widthOfScreen: width,
+                          widthOfScreen: widthOfScreen,
                           hintText: 'password',
                           icon: Icon(
                             Icons.lock,
@@ -93,30 +96,30 @@ class _LogInPageState extends State<LogInPage> {
                   ),
 
                   SizedBox(
-                      height: getHeightOfLargeButton(heightOfScreen: height),
-                      width: getWidthOfLargeButton(widthOfScreen: width),
+                      height: getHeightOfLargeButton(),
+                      width: getWidthOfLargeButton(),
                       child: ElevatedButton(
                         onPressed: () => print('popo'),
-                        child: Text('Login', style: getNormalTextStyleBlue(widthOfScreen:width)),
+                        child: Text('Login', style: getNormalTextStyleBlue()),
                         style: largeYellowButtonStyle,
                       )),
 
                   Padding(
-                    padding: EdgeInsets.only(left:0.03*width,top:0.28*height,bottom: 0.03*width),
+                    padding: EdgeInsets.only(left:0.03*widthOfScreen,top:0.28*heightOfScreen,bottom: 0.03*widthOfScreen),
                     child: Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
                         'Don\'t have an account?',
-                        style: getSmallTextStyle(widthOfScreen: width),
+                        style: getSmallTextStyle(),
                       ),
                     ),
                   ),
                   SizedBox(
-                      height: getHeightOfLargeButton(heightOfScreen: height),
-                      width: getWidthOfLargeButton(widthOfScreen: width),
+                      height: getHeightOfLargeButton(),
+                      width: getWidthOfLargeButton(),
                       child: ElevatedButton(
                         onPressed: () {Navigator.pushNamed(context, SignUpEmail.routeName);},
-                        child: Text('Sign Up', style: getNormalTextStyleBlue(widthOfScreen: width)),
+                        child: Text('Sign Up', style: getNormalTextStyleBlue()),
                         style: largeGreyButtonStyle,
                       )),
                 ],
