@@ -1,4 +1,5 @@
-import 'package:cyber/model/user.dart';
+import 'package:cyber/controller/user_controller.dart';
+import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/join_group_sign_up.dart';
 import 'package:cyber/view/k_styles.dart';
@@ -10,15 +11,15 @@ import 'k_values.dart';
 
 
 class ProfileCreated extends StatelessWidget {
+
   const ProfileCreated({Key? key}) : super(key: key);
 
   static final routeName= '/ProfileCreated';
 
-
   @override
   Widget build(BuildContext context) {
 
-    final userCreated = ModalRoute.of(context)!.settings.arguments as User;
+    final userCreated = ModalRoute.of(context)!.settings.arguments as UserCustom;
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,

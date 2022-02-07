@@ -37,12 +37,28 @@ TextStyle getSubheadingStyleWhite(){
       fontSize: 0.06*widthOfScreen,
       fontWeight: FontWeight.w400);
 }
+
+TextStyle getSubheadingStyleBlue(){
+  return TextStyle(
+      color: primaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.06*widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
+
 TextStyle getHeadingStyleWhite(){
   return TextStyle(
       color: tertiaryColor,
       fontFamily: fontFamily,
       fontSize: 0.08*widthOfScreen,
       fontWeight: FontWeight.w300);
+}
+TextStyle getHeadingStyleBlue(){
+  return TextStyle(
+      color: primaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.07*widthOfScreen,
+      fontWeight: FontWeight.w400);
 }
 
 TextStyle getNormalTextStyleBlue(){
@@ -56,6 +72,13 @@ TextStyle getNormalTextStyleBlue(){
 TextStyle getNormalTextStyleWhite(){
   return TextStyle(
       color: tertiaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.045*widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
+TextStyle getNormalTextStyleYellow(){
+  return TextStyle(
+      color: secondaryColor,
       fontFamily: fontFamily,
       fontSize: 0.045*widthOfScreen,
       fontWeight: FontWeight.w400);
@@ -82,3 +105,10 @@ ButtonStyle largeGreyButtonStyle = ButtonStyle(
         RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     )));
+
+ButtonStyle largeBlueButtonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(primaryColor),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        )));

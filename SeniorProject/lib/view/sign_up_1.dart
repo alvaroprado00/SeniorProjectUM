@@ -58,7 +58,7 @@ class _SignUpEmailState extends State<SignUpEmail> {
               Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: getBackButton(
-                      context: context, heightOfScreen: heightOfScreen)),
+                      context: context)),
 
                 Padding(
                   padding: EdgeInsets.only(top:0.27*heightOfScreen, bottom:0.05*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
@@ -71,7 +71,6 @@ class _SignUpEmailState extends State<SignUpEmail> {
                   validator: validatorForEmptyTextField,
                   controller: _controllerEmail,
                   decoration: getInputDecoration(
-                      widthOfScreen: widthOfScreen,
                       hintText: 'email',
                       icon: Icon(
                         Icons.email,

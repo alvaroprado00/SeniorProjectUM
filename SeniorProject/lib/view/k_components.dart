@@ -19,11 +19,11 @@ String? validatorForEmptyTextField(value) {
 
 /**
  * Function to get an Input Decoration for a text field providing the Icon and the hint Text wanted
+ * It is used for any other TextFormField different than the password one
  */
 InputDecoration getInputDecoration(
     {required String hintText,
-    required Icon icon,
-    required double widthOfScreen}) {
+    required Icon icon}) {
   return InputDecoration(
       filled: true,
       fillColor: tertiaryColor,
@@ -37,6 +37,68 @@ InputDecoration getInputDecoration(
       contentPadding: EdgeInsets.only(
           top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen));
 }
+
+
+/**
+ * Class that defines the behaviour of a TextFormField for the password. Since it is used more than once and has
+ * stateful behaviour, a different class was created. You need to specify the controller for the text field
+ */
+
+class TextFormFieldForPassword extends StatefulWidget {
+
+  const TextFormFieldForPassword(this.controller);
+
+  final TextEditingController controller;
+
+  @override
+  _TextFormFieldForPasswordState createState() => _TextFormFieldForPasswordState();
+}
+
+class _TextFormFieldForPasswordState extends State<TextFormFieldForPassword> {
+
+  bool _isObscure=true;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+
+        obscureText: _isObscure,
+
+        validator: validatorForEmptyTextField,
+        controller: widget.controller,
+        decoration: InputDecoration(
+            hintStyle: getTexFieldTextStyle(),
+            filled: true,
+            fillColor: tertiaryColor,
+            hintText: 'password',
+            contentPadding: EdgeInsets.only(top:0.08*widthOfScreen ,left: 0.08*widthOfScreen),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5),
+              borderSide: const BorderSide(
+                  color: tertiaryColor, width: 1.0),
+            ),
+            prefixIcon: Icon(
+              Icons.lock,
+              color: secondaryColor,
+            ),
+            suffixIcon:IconButton(
+              icon: Icon(
+                _isObscure
+                    ? Icons.visibility
+                    : Icons.visibility_off,
+                color: secondaryColor,
+              ),
+              onPressed: () {
+                setState(() {
+                  _isObscure = !_isObscure;
+                });
+              },
+            )),
+
+        );
+  }
+}
+
 
 /**
  * Function to create a row of dots. The number specified in position will be colored yellow.
@@ -52,10 +114,10 @@ Widget getCirclesProgressBar(
   for (var i = 1; i <= numberOfCircles; i++) {
     if (position == i) {
       children
-          .add(getCircle(color: secondaryColor, widthOfScreen: widthOfScreen));
+          .add(getCircle(color: secondaryColor));
     } else {
       children
-          .add(getCircle(color: quinaryColor, widthOfScreen: widthOfScreen));
+          .add(getCircle(color: quinaryColor));
     }
   }
   return Row(
@@ -64,7 +126,7 @@ Widget getCirclesProgressBar(
   );
 }
 
-Widget getCircle({required Color color, required double widthOfScreen}) {
+Widget getCircle({required Color color}) {
   return Padding(
     padding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
     child: SizedBox(
@@ -84,7 +146,7 @@ Widget getCircle({required Color color, required double widthOfScreen}) {
  */
 
 IconButton getBackButton(
-    {required BuildContext context, required double heightOfScreen}) {
+    {required BuildContext context}) {
   return IconButton(
       onPressed: () {
         Navigator.pop(context);
@@ -254,3 +316,4 @@ Card getCardForNotification(
 String? getRandomEncouragingMessage(){
 return encouragingMessages[Random().nextInt(encouragingMessages.length-1)];
 }
+

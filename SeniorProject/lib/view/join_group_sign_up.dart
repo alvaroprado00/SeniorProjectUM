@@ -50,7 +50,7 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                 Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: getBackButton(
-                        context: context, heightOfScreen: heightOfScreen)),
+                        context: context)),
                 Padding(
                   padding: EdgeInsets.only(
                       top: (0.01 * heightOfScreen), bottom: (0.001 * heightOfScreen)),
@@ -84,7 +84,6 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                     validator: validatorForEmptyTextField,
                     controller: _controllerGroupCode,
                     decoration: getInputDecoration(
-                      widthOfScreen: widthOfScreen,
                         hintText: 'Group Code',
                         icon: Icon(
                           Icons.lock,

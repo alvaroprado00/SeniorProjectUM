@@ -22,7 +22,7 @@ class SignUpSummary extends StatelessWidget {
               Align(
                   alignment: AlignmentDirectional.centerStart,
                   child: getBackButton(
-                      context: context, heightOfScreen: heightOfScreen)),
+                      context: context)),
               Padding(
                 padding: EdgeInsets.only(
                     top: (0.015 * heightOfScreen),
