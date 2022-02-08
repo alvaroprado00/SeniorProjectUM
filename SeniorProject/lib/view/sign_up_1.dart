@@ -6,7 +6,7 @@ import 'package:cyber/view/sign_up_2.dart';
 import 'package:flutter/material.dart';
 
 import 'k_colors.dart';
-import 'k_components.dart';
+import 'components.dart';
 import 'k_styles.dart';
 import 'k_values.dart';
 

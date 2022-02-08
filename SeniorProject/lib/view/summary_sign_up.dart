@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'k_components.dart';
+import 'components.dart';
 import 'k_styles.dart';
 import 'k_values.dart';
 

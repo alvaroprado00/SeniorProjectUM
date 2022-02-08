@@ -1,3 +1,7 @@
+/**
+ * Constant values in the app that are not related to colors or config files
+ */
+
 late double widthOfScreen;
 late double heightOfScreen;
 

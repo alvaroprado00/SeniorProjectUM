@@ -17,27 +17,6 @@ String? validatorForEmptyTextField(value) {
   return null;
 }
 
-/**
- * Function to get an Input Decoration for a text field providing the Icon and the hint Text wanted
- * It is used for any other TextFormField different than the password one
- */
-InputDecoration getInputDecoration(
-    {required String hintText,
-    required Icon icon}) {
-  return InputDecoration(
-      filled: true,
-      fillColor: tertiaryColor,
-      hintText: hintText,
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5),
-        borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
-      ),
-      prefixIcon: icon,
-      hintStyle: getTexFieldTextStyle(),
-      contentPadding: EdgeInsets.only(
-          top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen));
-}
-
 
 /**
  * Class that defines the behaviour of a TextFormField for the password. Since it is used more than once and has
@@ -140,9 +119,8 @@ Widget getCircle({required Color color}) {
 }
 
 /**
- * Function that returns an back button. You need to specify the context so the
- * function in the onPressed parm makes sense. You also need to provide the height
- * of the Screen
+ * Function that returns a back button. You need to specify the context so the
+ * function in the onPressed param makes sense.
  */
 
 IconButton getBackButton(
@@ -158,12 +136,12 @@ IconButton getBackButton(
       ));
 }
 
+
 /**
  * This function Retrieves a card with the name of the course specified.
  *
  * Yoy need to Specify the width of the card as well as the height of the sized
- * box containing the text. Be careful to think about the height of the card
- * you need to include the row containg the icon
+ * box containing everything
  *
  * For now the card does nothing when clicked however in the future we should
  * be able to redirect the user to the course using the nameOfCourse
@@ -240,6 +218,12 @@ class _SaveButtonState extends State<SaveButton> {
   }
 }
 
+/**
+ * Gets a tapable card with the name of the category. You have to specify the
+ * width and the height.
+ *
+ * V 1.0 (2/8/22) Does nothing when tapped
+ */
 Card getCardForCategory(
     {required String nameOfCategory,
     required double widthOfCard,
@@ -269,6 +253,11 @@ Card getCardForCategory(
 }
 
 
+/**
+ * Getter fot a notification card. We need to specify de username and the course
+ * he has completed so it appears as the info displayed. Width and height need
+ * to be specified.
+ */
 
 Card getCardForNotification(
     {required String username,
@@ -313,6 +302,11 @@ Card getCardForNotification(
   );
 }
 
+/**
+ * This function returns a random String contained in a map defined in
+ * k_values. This maps contains a fixed amount of encouraging messages to create
+ * the notification cards
+ */
 String? getRandomEncouragingMessage(){
 return encouragingMessages[Random().nextInt(encouragingMessages.length-1)];
 }

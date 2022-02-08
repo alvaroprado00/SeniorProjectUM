@@ -1,5 +1,6 @@
 /**
- * This class is only used for storing purposes in order to create a user
+ * This class is to manage our users with all their info relevant
+ * Not the password since it shouldnt be stored
  */
 class UserCustom{
 

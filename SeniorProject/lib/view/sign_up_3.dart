@@ -1,11 +1,10 @@
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/model/user_custom.dart';
-import 'package:cyber/view/log_in_page.dart';
 import 'package:cyber/view/profile_created.dart';
 import 'package:flutter/material.dart';
 
 import 'k_colors.dart';
-import 'k_components.dart';
+import 'components.dart';
 import 'k_styles.dart';
 import 'k_values.dart';
 import 'main.dart';
@@ -22,7 +21,6 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _controllerUsername;
-  final UserController userController=UserController();
 
   get smallTextStyleYellow => TextStyle(
       fontWeight: FontWeight.w400,
@@ -104,7 +102,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
                         //Before going to the next page we create the user
 
-                        await userController.addUserToAuthAndFirestore(u: userCreated, password: args[1]).then((value) {
+                        await UserController.addUserToAuthAndFirestore(u: userCreated, password: args[1]).then((value) {
 
 
                           //I make the screen hold for 2s before using navigator so the user is able to read the message

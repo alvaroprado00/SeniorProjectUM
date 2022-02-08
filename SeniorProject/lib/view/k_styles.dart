@@ -1,6 +1,11 @@
-/*
-  File used to specify different styles used throughout the whole app (text styles, button styles...)
+/**
+ * In this file you can find different getters for TextStyles, ButtonStyles and
+ * inputStyles.
+ *
+ * They cant be constants since they depend on the variable widthOfScreen,
+ * heightOfScreen or even both
  */
+
 import 'package:flutter/material.dart';
 import 'k_colors.dart';
 import 'k_values.dart';
@@ -112,3 +117,25 @@ ButtonStyle largeBlueButtonStyle = ButtonStyle(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         )));
+
+
+/**
+ * Function to get an Input Decoration for a text field providing the Icon and the hint Text wanted
+ * It is used for any other TextFormField different than the password one
+ */
+InputDecoration getInputDecoration(
+    {required String hintText,
+      required Icon icon}) {
+  return InputDecoration(
+      filled: true,
+      fillColor: tertiaryColor,
+      hintText: hintText,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
+      ),
+      prefixIcon: icon,
+      hintStyle: getTexFieldTextStyle(),
+      contentPadding: EdgeInsets.only(
+          top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen));
+}

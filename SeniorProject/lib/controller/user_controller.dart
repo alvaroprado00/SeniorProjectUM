@@ -2,11 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/config/k_collection_names_firebase.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+
+/**
+ * Class that includes static methods to interact with users in DB
+ */
 
 class UserController {
 
-  Future loginWithEmailAndPassword(
+  /**
+   * Method to login into Auth DB provided an email and a Password
+   * If the credentials are OK it returns the user credentials and changes
+   * the state of the user to loggedIn. In case the credentials are KO returns
+   * a String with the reason of the error
+   */
+
+  static Future loginWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
       UserCredential userCredential =
@@ -25,7 +35,11 @@ class UserController {
     }
   }
 
-  Future addUserToAuthAndFirestore(
+  /**
+   * Method to add a User to Auth DB. If it suceeds then we call
+   * a method to also create a user in the Firestore collection
+   */
+  static Future addUserToAuthAndFirestore(
       {required UserCustom u, required String password}) async {
 
     //First we upload the user in Auth DB
@@ -53,7 +67,11 @@ class UserController {
     }
   }
 
-  Future addUserToFireStore(
+  /**
+   * Method to add a user to the userCollection in Firestore.
+   * The document created will be named with the userId from the AuthDB
+   */
+  static Future addUserToFireStore(
       {required UserCustom userCustom, required String userId}) {
     // Call the user's CollectionReference
     CollectionReference users =
@@ -70,6 +88,10 @@ class UserController {
 
   }
 
+  /**
+   * This method returns the user that is active in the app in case there is
+   * one
+   */
   static Future getActiveUser() async {
     CollectionReference users =
     FirebaseFirestore.instance.collection(userCollectionName);

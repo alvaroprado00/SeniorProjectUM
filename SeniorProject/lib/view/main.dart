@@ -14,10 +14,9 @@ import 'package:provider/provider.dart';
 import 'k_values.dart';
 import 'log_in_page.dart';
 
-
-
 void main() {
   runApp(
+    //The notifier provider provides an instance of ApplicationState to all its descendants
     ChangeNotifierProvider(
       create: (context) => ApplicationState(),
       builder: (context, _) => MyApp(),
@@ -25,37 +24,30 @@ void main() {
   );
 }
 
-enum ApplicationLoginState{
-  loggedIn,
-  loggedOut
-}
+enum ApplicationLoginState { loggedIn, loggedOut }
 
 class ApplicationState extends ChangeNotifier {
-
   //We need to initialize this variable so we suppose the user is loggedOut
-  ApplicationLoginState _loginState=ApplicationLoginState.loggedOut;
+  ApplicationLoginState _loginState = ApplicationLoginState.loggedOut;
 
   ApplicationState() {
     init();
   }
 
   Future<void> init() async {
-
     //With this method we initialize our app
-    await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    await Firebase.initializeApp();
 
     //Now we create a listener of the user state and after this we know the state of the user
-    FirebaseAuth.instance.userChanges().listen((user){
-      if(user==null){
-
-        _loginState=ApplicationLoginState.loggedOut;
-      }else{
-        _loginState=ApplicationLoginState.loggedIn;
+    FirebaseAuth.instance.userChanges().listen((user) {
+      if (user == null) {
+        _loginState = ApplicationLoginState.loggedOut;
+      } else {
+        _loginState = ApplicationLoginState.loggedIn;
       }
       notifyListeners();
     });
   }
-
 }
 
 class MyApp extends StatelessWidget {
@@ -65,17 +57,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Cyber',
-
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const HomePage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         SignUpEmail.routeName: (context) => const SignUpEmail(),
-        HomePage.routeName:(context) => const HomePage(),
+        HomePage.routeName: (context) => const HomePage(),
         SignUpPassword.routeName: (context) => const SignUpPassword(),
         SignUpUsername.routeName: (context) => const SignUpUsername(),
         ProfileCreated.routeName: (context) => const ProfileCreated(),
@@ -90,8 +80,6 @@ class MyApp extends StatelessWidget {
           secondary: MaterialColor(0xFFFCA311, secondaryYellow),
         ),
       ),
-
-
     );
   }
 }
@@ -99,33 +87,35 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  static final routeName='/HomePage';
+  static final routeName = '/HomePage';
+
   @override
   Widget build(BuildContext context) {
-
     //In this page I get the information of the screen and I initialize it in variables stored in other file
     widthOfScreen = MediaQuery.of(context).size.width;
     heightOfScreen = MediaQuery.of(context).size.height;
-    var padding=MediaQuery.of(context).padding;
+    var padding = MediaQuery.of(context).padding;
 
     //I update the height by subtracting the status bar height
-    heightOfScreen=heightOfScreen-padding.top;
+    heightOfScreen = heightOfScreen - padding.top;
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Consumer<ApplicationState>(builder: (context, appState, _){
-        switch(appState._loginState){
-          case ApplicationLoginState.loggedIn:{
+    //The builder from the consumer will be called everytime the Application state notifies its listeners
+
+    return Consumer<ApplicationState>(builder: (context, appState, _) {
+      switch (appState._loginState) {
+        case ApplicationLoginState.loggedIn:
+          {
             return SignUpSummary();
           }
-          case ApplicationLoginState.loggedOut:{
+        case ApplicationLoginState.loggedOut:
+          {
             return LogInPage();
           }
-          default:{
-            return LogInPage();
+        default:
+          {
+            return CircularProgressIndicator();
           }
-        }
-      })
-    );
+      }
+    });
   }
 }

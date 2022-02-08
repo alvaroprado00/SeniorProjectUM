@@ -1,5 +1,3 @@
-
-
 Day 1/31/2022
 
 There is a function to inmediately create the back button. Since our app does not include an appbar

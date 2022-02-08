@@ -1,10 +1,10 @@
-/*
-  Code collected from:
-  https://github.com/bizz84/coding-with-flutter-robohash-demo/blob/master/lib/avatar.dart
-
-  It defines a class to be able to fetch the robohash page and get an avatar picture
-  It works using Future Builder which means that while you wait for Robohash response it displays a progress indicator
- */
+/**
+ *   Code collected from:
+ *   https://github.com/bizz84/coding-with-flutter-robohash-demo/blob/master/lib/avatar.dart
+ *
+ *   It defines a class to be able to fetch the robohash page and get an avatar picture
+ *   It works using Future Builder which means that while you wait for Robohash response it displays a progress indicator
+*/
 
 import 'dart:async';
 import 'dart:typed_data';
@@ -39,7 +39,7 @@ class _AvatarState extends State<Avatar> {
               child: new Text('❌', style: TextStyle(fontSize: 72.0)));
         } else {
           return new Container(
-            padding: EdgeInsets.all((widget.size - 50.0) / 2.0),
+            padding: EdgeInsets.all((widget.size) / 2.0), //-50
             child: new CircularProgressIndicator(),
           );
         }

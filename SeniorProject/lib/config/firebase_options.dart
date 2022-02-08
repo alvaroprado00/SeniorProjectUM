@@ -1,3 +1,8 @@
+/**
+ * This file contains a class used to configure the options of the Firebase instance
+ * initialized when we run the app. The options depend on the platform that
+ * is running the app. In our case iOS and Android
+ */
 
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
