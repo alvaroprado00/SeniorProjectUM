@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SeniorProject/ios/Podfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SeniorProject/ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/ios/Flutter/Debug.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/ios/Flutter/Debug.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/ios/Flutter/Release.xcconfig" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/ios/Flutter/Release.xcconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/ios/Runner.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/ios/Runner.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/ios/Runner.xcworkspace/contents.xcworkspacedata" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/ios/Runner.xcworkspace/contents.xcworkspacedata" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/profile/profile.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -20,6 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text("Hello"),
+            // hello
             Avatar(
                 url: 'https://robohash.org/beltran',
                 size: 200), // userCreated.username
