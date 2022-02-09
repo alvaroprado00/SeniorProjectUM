@@ -1,6 +1,8 @@
-/*
-  File used to store all the colors used in the app
+/**
+ * File used to store color maps to use theme for the app's theme
+ * It also contains constants defining the color palette used in the project
  */
+
 import 'package:flutter/material.dart';
 
 // These maps are required to use the ColorScheme in the main.dart

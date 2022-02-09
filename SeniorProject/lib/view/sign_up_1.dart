@@ -6,8 +6,9 @@ import 'package:cyber/view/sign_up_2.dart';
 import 'package:flutter/material.dart';
 
 import 'k_colors.dart';
-import 'k_components.dart';
+import 'components.dart';
 import 'k_styles.dart';
+import 'k_values.dart';
 
 
 
@@ -41,8 +42,9 @@ class _SignUpEmailState extends State<SignUpEmail> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
-      //By doing this you use the color specified in the app colorScheme
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         //This is to solve the problem of the overflow caused by the keyboard
@@ -52,13 +54,19 @@ class _SignUpEmailState extends State<SignUpEmail> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
             children: [
+
+              Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: getBackButton(
+                      context: context)),
+
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 218, 0, 0),
-                  child: Text('Enter your email.', style: subheadingStyleWhite),
+                  padding: EdgeInsets.only(top:0.27*heightOfScreen, bottom:0.05*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
+                  child: Text('Enter your email.', style: getSubheadingStyleWhite()),
                 ),
 
               Padding(
-                padding: EdgeInsets.fromLTRB(16,38, 16, 0),
+                padding: EdgeInsets.only(bottom:0.35*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                 child: TextFormField(
                   validator: validatorForEmptyTextField,
                   controller: _controllerEmail,
@@ -71,23 +79,20 @@ class _SignUpEmailState extends State<SignUpEmail> {
                 ),
               ),
 
-              Padding(
-                padding: EdgeInsets.fromLTRB(0,250, 0, 0),
-                child: SizedBox(
-                    height: 54,
-                    width: 358,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SignUpPassword.routeName, arguments: _controllerEmail.text);
-                      },
-                      child: Text('Next', style: normalTextStyle),
-                      style: largeGreyButtonStyle,
-                    )),
-              ),
+              SizedBox(
+                  height: getHeightOfLargeButton(),
+                  width: getWidthOfLargeButton(),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, SignUpPassword.routeName, arguments: _controllerEmail.text,);
+                    },
+                    child: Text('Next', style: getNormalTextStyleBlue()),
+                    style: largeGreyButtonStyle,
+                  )),
 
               Padding(
-                padding: EdgeInsets.fromLTRB(0,16, 0, 35),
-                child: getCirclesProgressBar(position:1, numberOfCircles: 5),
+                padding: EdgeInsets.only(top: 0.03*heightOfScreen),
+                child: getCirclesProgressBar(position:1, numberOfCircles: 5, widthOfScreen: widthOfScreen),
               ),
               ],
             )
