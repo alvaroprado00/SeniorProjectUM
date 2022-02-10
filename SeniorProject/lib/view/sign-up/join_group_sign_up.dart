@@ -1,10 +1,9 @@
-import 'package:cyber/view/summary_sign_up.dart';
+import 'package:cyber/view/sign-up/summary_sign_up.dart';
+import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/k_colors.dart';
+import 'package:cyber/view/useful/k_styles.dart';
+import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
-
-import 'k_colors.dart';
-import 'components.dart';
-import 'k_styles.dart';
-import 'k_values.dart';
 
 class SignUpJoinGroup extends StatefulWidget {
   const SignUpJoinGroup({Key? key}) : super(key: key);

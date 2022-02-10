@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:cyber/view/k_values.dart';
 import 'package:flutter/material.dart';
 
-import 'avatar.dart';
+import '../avatar.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
+import 'k_values.dart';
 
 /**
  * Validator for TextFormField. It verifies the value is not empty

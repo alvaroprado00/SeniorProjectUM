@@ -1,13 +1,15 @@
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/model/user_custom.dart';
-import 'package:cyber/view/profile_created.dart';
+import 'package:cyber/view/sign-up/profile_created.dart';
+import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/k_colors.dart';
+import 'package:cyber/view/useful/k_styles.dart';
+import 'package:cyber/view/useful/k_values.dart';
+
 import 'package:flutter/material.dart';
 
-import 'k_colors.dart';
-import 'components.dart';
-import 'k_styles.dart';
-import 'k_values.dart';
-import 'main.dart';
+import '../main.dart';
+
 
 class SignUpUsername extends StatefulWidget {
   const SignUpUsername({Key? key}) : super(key: key);

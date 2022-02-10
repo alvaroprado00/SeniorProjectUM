@@ -1,8 +1,8 @@
+import 'package:cyber/view/useful/k_styles.dart';
+import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
-import 'components.dart';
-import 'k_styles.dart';
-import 'k_values.dart';
+import '../useful/components.dart';
 
 class SignUpSummary extends StatelessWidget {
   const SignUpSummary({Key? key}) : super(key: key);

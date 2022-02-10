@@ -2,13 +2,12 @@
 
  */
 
-import 'package:cyber/view/sign_up_2.dart';
+import 'package:cyber/view/sign-up/sign_up_2.dart';
+import 'package:cyber/view/useful/k_colors.dart';
+import 'package:cyber/view/useful/k_styles.dart';
+import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
-
-import 'k_colors.dart';
-import 'components.dart';
-import 'k_styles.dart';
-import 'k_values.dart';
+import '../useful/components.dart';
 
 
 

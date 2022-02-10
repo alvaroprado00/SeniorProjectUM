@@ -1,13 +1,12 @@
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
-import 'package:cyber/view/join_group_sign_up.dart';
-import 'package:cyber/view/k_styles.dart';
+import 'package:cyber/view/sign-up/join_group_sign_up.dart';
+import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/k_colors.dart';
+import 'package:cyber/view/useful/k_styles.dart';
+import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
-
-import 'k_colors.dart';
-import 'components.dart';
-import 'k_values.dart';
 
 
 class ProfileCreated extends StatelessWidget {

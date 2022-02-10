@@ -1,21 +1,23 @@
-import 'package:cyber/config/firebase_options.dart';
-import 'package:cyber/view/join_group_sign_up.dart';
-import 'package:cyber/view/k_colors.dart';
-import 'package:cyber/view/profile_created.dart';
-import 'package:cyber/view/sign_up_1.dart';
-import 'package:cyber/view/sign_up_2.dart';
-import 'package:cyber/view/sign_up_3.dart';
-import 'package:cyber/view/summary_sign_up.dart';
+import 'package:cyber/view/courses/course_description.dart';
+import 'package:cyber/view/sign-up/join_group_sign_up.dart';
+import 'package:cyber/view/sign-up/profile_created.dart';
+import 'package:cyber/view/sign-up/sign_up_1.dart';
+import 'package:cyber/view/sign-up/sign_up_2.dart';
+import 'package:cyber/view/sign-up/sign_up_3.dart';
+import 'package:cyber/view/sign-up/summary_sign_up.dart';
+import 'package:cyber/view/useful/k_colors.dart';
+import 'package:cyber/view/useful/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'k_values.dart';
 import 'log_in_page.dart';
 
-void main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
+
     //The notifier provider provides an instance of ApplicationState to all its descendants
     ChangeNotifierProvider(
       create: (context) => ApplicationState(),
@@ -35,8 +37,6 @@ class ApplicationState extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    //With this method we initialize our app
-    await Firebase.initializeApp();
 
     //Now we create a listener of the user state and after this we know the state of the user
     FirebaseAuth.instance.userChanges().listen((user) {
@@ -84,8 +84,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//Hola beltran
-
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -107,11 +105,13 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-            return SignUpSummary();
+            //return SignUpSummary();
+            return CourseDescription(courseTitle: 'Passwords',);
+
           }
         case ApplicationLoginState.loggedOut:
           {
-            return LogInPage();
+            return CourseDescription(courseTitle: 'Passwords',);
           }
         default:
           {

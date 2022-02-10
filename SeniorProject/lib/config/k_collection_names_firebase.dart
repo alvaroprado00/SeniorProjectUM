@@ -3,3 +3,4 @@
  */
 
 const String userCollectionName='userCollection';
+const String courseCollectionName='courseCollection';

@@ -1,11 +1,11 @@
-import 'package:cyber/view/k_colors.dart';
-import 'package:cyber/view/components.dart';
+import 'package:cyber/view/useful/components.dart';
 import 'package:cyber/view/main.dart';
-import 'package:cyber/view/sign_up_1.dart';
+import 'package:cyber/view/sign-up/sign_up_1.dart';
+import 'package:cyber/view/useful/k_colors.dart';
+import 'package:cyber/view/useful/k_styles.dart';
+import 'package:cyber/view/useful/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'k_styles.dart';
-import 'k_values.dart';
 import 'package:cyber/controller/user_controller.dart';
 
 class LogInPage extends StatefulWidget {
