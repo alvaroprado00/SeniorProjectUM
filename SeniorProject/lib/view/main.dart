@@ -26,6 +26,7 @@ main() async {
   );
 }
 
+
 enum ApplicationLoginState { loggedIn, loggedOut }
 
 class ApplicationState extends ChangeNotifier {
@@ -105,13 +106,11 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-            //return SignUpSummary();
-            return CourseDescription(courseTitle: 'Passwords',);
-
+            return SignUpSummary();
           }
         case ApplicationLoginState.loggedOut:
           {
-            return CourseDescription(courseTitle: 'Passwords',);
+            return LogInPage();
           }
         default:
           {
