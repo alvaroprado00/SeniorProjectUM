@@ -121,12 +121,12 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
                       },
                       child: Text('Next', style:  getNormalTextStyleBlue()),
-                      style: largeGreyButtonStyle,
+                      style: greyButtonStyle,
                     )),
 
                 Padding(
                   padding: EdgeInsets.only(top: 0.03*heightOfScreen),
-                  child: getCirclesProgressBar(position:3, numberOfCircles: 5,widthOfScreen: widthOfScreen),
+                  child: getCirclesProgressBar(position:3, numberOfCircles: 5,),
                 ),
               ],
             )

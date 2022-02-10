@@ -148,7 +148,7 @@ class CourseDescriptionContent extends StatelessWidget {
                     print('popo');
                   },
                   child: Text('Begin', style:  getNormalTextStyleWhite()),
-                  style: largeBlueButtonStyle,
+                  style: blueButtonStyle,
                 )),
           ),
         ],
@@ -170,7 +170,7 @@ getContentForOutcomes({required List<String> outcomes}) {
 
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            getCircle(color: secondaryColor),
+            getCircle(color: secondaryColor, size: 0.02 * widthOfScreen,),
             SizedBox(
               width: 0.03 * widthOfScreen,
             ),

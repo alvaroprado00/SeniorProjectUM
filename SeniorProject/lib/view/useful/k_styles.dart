@@ -21,6 +21,14 @@ double getWidthOfLargeButton(){
   return 0.94*widthOfScreen;
 }
 
+double getHeightOfSmallButton(){
+  return heightOfScreen*0.07;
+}
+
+double getWidthOfSmallButton(){
+  return 0.43*widthOfScreen;
+}
+
 TextStyle getTexFieldTextStyle(){
   return TextStyle(
       color: quaternaryColor,
@@ -32,7 +40,7 @@ TextStyle getSubheadingStyleYellow(){
   return TextStyle(
       color: secondaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.05*widthOfScreen,
+      fontSize: 0.06*widthOfScreen,
       fontWeight: FontWeight.w400);
 }
 TextStyle getSubheadingStyleWhite(){
@@ -97,21 +105,21 @@ TextStyle getSmallTextStyle(){
       fontWeight: FontWeight.w400);
 }
 
-ButtonStyle largeYellowButtonStyle = ButtonStyle(
+ButtonStyle yellowButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(secondaryColor),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     )));
 
-ButtonStyle largeGreyButtonStyle = ButtonStyle(
+ButtonStyle greyButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(quinaryColor),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     )));
 
-ButtonStyle largeBlueButtonStyle = ButtonStyle(
+ButtonStyle blueButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(primaryColor),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(

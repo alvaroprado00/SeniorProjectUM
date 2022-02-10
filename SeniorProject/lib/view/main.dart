@@ -1,4 +1,5 @@
 import 'package:cyber/view/courses/course_description.dart';
+import 'package:cyber/view/courses/multiple_option_question.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
 import 'package:cyber/view/sign-up/sign_up_1.dart';
@@ -106,15 +107,18 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-            return SignUpSummary();
+            //return SignUpSummary();
+            return MultOptQuestion();
           }
         case ApplicationLoginState.loggedOut:
           {
-            return LogInPage();
+            //return LogInPage();
+            return MultOptQuestion();
+
           }
         default:
           {
-            return CircularProgressIndicator();
+            return MultOptQuestion();
           }
       }
     });

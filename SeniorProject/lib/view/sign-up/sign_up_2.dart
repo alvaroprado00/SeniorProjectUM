@@ -70,12 +70,12 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                         Navigator.pushNamed(context, SignUpUsername.routeName, arguments: [email,_controllerPassword.text]);
                       },
                       child: Text('Next', style:  getNormalTextStyleBlue()),
-                      style: largeGreyButtonStyle,
+                      style: greyButtonStyle,
                     )),
 
                 Padding(
                   padding: EdgeInsets.only(top: 0.03*heightOfScreen),
-                  child: getCirclesProgressBar(position: 2, numberOfCircles: 5, widthOfScreen: widthOfScreen),
+                  child: getCirclesProgressBar(position: 2, numberOfCircles: 5, ),
                 ),
               ],
             ),

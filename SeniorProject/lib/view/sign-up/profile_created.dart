@@ -63,12 +63,12 @@ class ProfileCreated extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () => print(Navigator.pushNamed(context, SignUpJoinGroup.routeName)),
                   child: Text('Next', style: getNormalTextStyleBlue()),
-                  style: largeGreyButtonStyle,
+                  style: greyButtonStyle,
                 )),
 
             Padding(
               padding: EdgeInsets.only(top: 0.03*heightOfScreen),
-              child: getCirclesProgressBar(position:4, numberOfCircles: 5,widthOfScreen: widthOfScreen),
+              child: getCirclesProgressBar(position:4, numberOfCircles: 5,),
             ),
           ],
         ),

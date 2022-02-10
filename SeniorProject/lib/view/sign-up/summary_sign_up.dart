@@ -127,7 +127,7 @@ class SignUpSummary extends StatelessWidget {
                       onPressed: () {
                       },
                       child: Text('Finish', style: getNormalTextStyleBlue()),
-                      style: largeYellowButtonStyle,
+                      style: yellowButtonStyle,
                     )),
               ),
 
