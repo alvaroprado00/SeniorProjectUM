@@ -1,5 +1,6 @@
+import 'package:cyber/model/multiple_choice_question.dart';
 import 'package:cyber/view/courses/course_description.dart';
-import 'package:cyber/view/courses/multiple_option_question.dart';
+import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
 import 'package:cyber/view/sign-up/sign_up_1.dart';
@@ -12,7 +13,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'log_in_page.dart';
+
+
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -73,6 +75,7 @@ class MyApp extends StatelessWidget {
         ProfileCreated.routeName: (context) => const ProfileCreated(),
         SignUpJoinGroup.routeName: (context) => const SignUpJoinGroup(),
         SignUpSummary.routeName: (context) => const SignUpSummary(),
+        MultipleChoiceQuestionPage.routeName: (context)=> const MultipleChoiceQuestionPage(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -108,17 +111,16 @@ class HomePage extends StatelessWidget {
         case ApplicationLoginState.loggedIn:
           {
             //return SignUpSummary();
-            return MultOptQuestion();
+            return CourseDescription(courseTitle: 'Passwords');
           }
         case ApplicationLoginState.loggedOut:
           {
             //return LogInPage();
-            return MultOptQuestion();
-
+            return CourseDescription(courseTitle: 'Passwords');
           }
         default:
           {
-            return MultOptQuestion();
+            return CircularProgressIndicator();
           }
       }
     });

@@ -82,6 +82,16 @@ TextStyle getNormalTextStyleBlue(){
       fontWeight: FontWeight.w400);
 }
 
+TextStyle getNormalTextStyleBlueItalicBold(){
+  return TextStyle(
+      color: primaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.045*widthOfScreen,
+      fontStyle: FontStyle.italic,
+      fontWeight: FontWeight.w500);
+
+}
+
 TextStyle getNormalTextStyleWhite(){
   return TextStyle(
       color: tertiaryColor,
@@ -125,6 +135,14 @@ ButtonStyle blueButtonStyle = ButtonStyle(
         RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         )));
+
+ButtonStyle whiteButtonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(tertiaryColor),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        )));
+
 
 
 /**

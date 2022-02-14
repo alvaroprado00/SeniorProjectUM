@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../avatar.dart';
 import 'k_colors.dart';
@@ -105,8 +106,35 @@ Widget getCirclesProgressBarForPauseMenu(
   final children = <Widget>[];
 
   for (var i = 1; i <= numberOfCircles; i++) {
-    if (i<position) {
+    if (i<=position) {
       children.add(getCircle(color: secondaryColor, size: 0.04*widthOfScreen));
+    } else {
+      children.add(getCircle(color: quinaryColor, size: 0.04*widthOfScreen));
+    }
+  }
+
+  return Container(
+    height: 0.05*heightOfScreen,
+    width: 0.8*widthOfScreen,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: children,
+    ),
+  );
+  return Wrap(
+    children: children,
+  );
+}
+
+Widget getCirclesProgressBarForCourseProgression(
+    {required List<bool> answers,
+      required int numberOfCircles}) {
+
+  final children = <Widget>[];
+
+  for (var i = 0; i <= numberOfCircles; i++) {
+    if (i<=answers.length) {
+      children.add(getCircle(color: answers[i]? Colors.green: Colors.red, size: 0.04*widthOfScreen));
     } else {
       children.add(getCircle(color: quinaryColor, size: 0.04*widthOfScreen));
     }
@@ -116,6 +144,7 @@ Widget getCirclesProgressBarForPauseMenu(
     children: children,
   );
 }
+
 
 
 Widget getCircle({required Color color, required double size}) {
@@ -390,4 +419,22 @@ Widget getOptionsButton(
               );
             });
       });
+}
+
+/**
+ * Function that returns a grey box with rounded corners containing a child
+ * specified in the param. Used in the app to display different types of
+ * text
+ */
+Widget getGreyTextHolderContainer({required Widget child}){
+  return Container(
+    padding: EdgeInsets.all(widthOfScreen*0.02),
+    decoration: new BoxDecoration(
+
+        color: quinaryColor,
+        borderRadius: new BorderRadius.all(
+          Radius.circular(0.05 * widthOfScreen),
+        )),
+    child: child,
+  );
 }

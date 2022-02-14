@@ -6,7 +6,10 @@
  */
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/controller/course_controller.dart';
+import 'package:cyber/globals.dart' as globals;
 import 'package:cyber/model/course.dart';
+import 'package:cyber/model/multiple_choice_question.dart';
+import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/useful/components.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
@@ -15,9 +18,15 @@ import 'package:flutter/material.dart';
 
 class CourseDescription extends StatelessWidget {
 
+  /**
+   * This Page is created by specifying the name of the course that is going to
+   * show
+   */
+
   const CourseDescription({required String this.courseTitle});
 
   final String courseTitle;
+
   @override
   Widget build(BuildContext context) {
     widthOfScreen = MediaQuery.of(context).size.width;
@@ -26,21 +35,28 @@ class CourseDescription extends StatelessWidget {
 
     //I update the height by subtracting the status bar height
     heightOfScreen = heightOfScreen - padding.top;
+
+    //I need to have an instance of the Course controller to use the methods
+    //defined in that class
     final courseController=CourseController();
 
+    // Before building the page I need to get the course from the DB
     return Scaffold(
       backgroundColor: tertiaryColor,
       body:FutureBuilder(
         future: courseController.getCourse(title: courseTitle),
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if (snapshot.hasData) {
+              //Once I get the course I assign its value to a global variable
+              // so I can access the info from other pages easily
+              globals.activeCourse=snapshot.data.data();
               return CourseDescriptionContent(course: snapshot.data.data());
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error: ${snapshot.error}', style: getHeadingStyleWhite(),),
+              child: Text('Error: ${snapshot.error}', style: getHeadingStyleBlue(),),
             );
           }else{
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         },
       )
@@ -123,16 +139,7 @@ class CourseDescriptionContent extends StatelessWidget {
                   endIndent:0,
                   thickness: 1,
                 ),
-                Container(
-                  padding: EdgeInsets.all(widthOfScreen*0.02),
-                  decoration: new BoxDecoration(
-
-                      color: quinaryColor,
-                      borderRadius: new BorderRadius.all(
-                        Radius.circular(0.05 * widthOfScreen),
-                      )),
-                  child: getContentForOutcomes(outcomes: course.outcomes),
-                ),
+                getGreyTextHolderContainer(child: getContentForOutcomes(outcomes: course.outcomes)),
               ],
             ),
           ),
@@ -145,7 +152,9 @@ class CourseDescriptionContent extends StatelessWidget {
                 width: getWidthOfLargeButton(),
                 child: ElevatedButton(
                   onPressed: () {
-                    print('popo');
+                    //In the future we need to see what type of question the first one is
+                    //In order to call to the correct page
+                    Navigator.pushNamed(context, MultipleChoiceQuestionPage.routeName, arguments:MultipleChoiceQuestion.getMultipleChoiceQuestion() ) ;
                   },
                   child: Text('Begin', style:  getNormalTextStyleWhite()),
                   style: blueButtonStyle,
