@@ -87,7 +87,24 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
                       onPressed: () {
-                        print('popo');
+                        int i=1;
+                        int optSelected=1;
+                        //With this loop I get what option the user has selected
+                       for(bool selected in ToggleButtonOptions.isSelected){
+                         if(selected){
+                           optSelected=i;
+                         }
+                         i++;
+                       }
+                        bool isRight=false;
+                       if(optSelected==question.rightOption){
+                        isRight=true;
+                       }
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return QuestionFeedback(args: FeedbackArguments(isRight, question.longFeedback, question.shortFeedback));
+                            });
                       },
                       child: Text('Submit', style: getNormalTextStyleWhite()),
                       style: blueButtonStyle,
@@ -105,7 +122,7 @@ class ToggleButtonOptions extends StatefulWidget {
   ToggleButtonOptions({required List<String> this.options});
 
   final List<String> options;
-  final List<bool> isSelected = [true, false, false, false];
+  static List<bool> isSelected = [true, false, false, false];
 
   @override
   _ToggleButtonOptionsState createState() => _ToggleButtonOptionsState();
@@ -116,21 +133,22 @@ class _ToggleButtonOptionsState extends State<ToggleButtonOptions> {
   Widget build(BuildContext context) {
     return ToggleButtons(
       children: getWidgetsForOptions(widget.options),
-      isSelected: widget.isSelected,
+      isSelected: ToggleButtonOptions.isSelected,
       borderRadius: BorderRadius.circular(0.05 * widthOfScreen),
       fillColor: secondaryColor,
       renderBorder: false,
       direction: Axis.vertical,
       onPressed: (int index) {
+
         setState(() {
           for (int buttonIndex = 0;
-              buttonIndex < widget.isSelected.length;
+              buttonIndex < ToggleButtonOptions.isSelected.length;
               buttonIndex++) {
             if (buttonIndex == index) {
-              widget.isSelected[buttonIndex] = true;
+              ToggleButtonOptions.isSelected[buttonIndex] = true;
               optionSelected = buttonIndex;
             } else {
-              widget.isSelected[buttonIndex] = false;
+              ToggleButtonOptions.isSelected[buttonIndex] = false;
             }
           }
         });
@@ -190,25 +208,29 @@ class ButtonForOption extends StatelessWidget {
 
 class QuestionFeedback extends StatefulWidget {
 
-  const QuestionFeedback({required bool this.isRight, required String this.shortFeedback, required String this.longFeedback});
+  const QuestionFeedback({required this.args});
 
-  final bool isRight;
-  final String longFeedback;
-  final String shortFeedback;
+  final FeedbackArguments args;
 
   @override
   State<QuestionFeedback> createState() => _QuestionFeedbackState();
 }
 
 class _QuestionFeedbackState extends State<QuestionFeedback> {
+
+  // First we set the learnMore to false to show the content for short feedback
   bool learnMore=false;
   String messageInButton='More';
 
   @override
   Widget build(BuildContext context) {
+
+
     return AlertDialog(
-      content: learnMore? getLearnMoreContent(longFeedBack: widget.longFeedback): getFeedback(isRight: widget.isRight),
+      content: learnMore? getLearnMoreContent(longFeedBack: widget.args.longFeedback): getFeedback(isRight: widget.args.isRight, shortFeeback: widget.args.shortFeedback),
+      insetPadding: EdgeInsets.all(10),
       actions: <Widget>[
+
         SizedBox(
             height: getHeightOfSmallButton(),
             width: getWidthOfSmallButton(),
@@ -246,16 +268,20 @@ class _QuestionFeedbackState extends State<QuestionFeedback> {
 Widget getLearnMoreContent({required String longFeedBack}){
 
   return Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Text('Explained', style: getSubheadingStyleBlue(),),
-      Divider(indent: 0.1*widthOfScreen,endIndent: 0.1*widthOfScreen,),
-      SingleChildScrollView(child: Text(longFeedBack,style: getNormalTextStyleBlue(),)),
+      Divider(indent: 0.01*widthOfScreen, endIndent: 0.01*widthOfScreen, color: primaryColor,thickness: 0.002*widthOfScreen, ),
+      SizedBox(height: 0.2*heightOfScreen,child: SingleChildScrollView(child: Text(longFeedBack,style: getNormalTextStyleBlue(),))),
     ],
   );
 
 }
-Widget getFeedback({required bool isRight}){
+Widget getFeedback({required bool isRight, required String shortFeeback}){
   return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    mainAxisSize: MainAxisSize.min,
     children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -266,7 +292,7 @@ Widget getFeedback({required bool isRight}){
             color: Colors.green,
           ),
           SizedBox(
-            width: widthOfScreen * 0.1,
+            width: widthOfScreen * 0.05,
           ),
           Text(
             'Right',
@@ -279,11 +305,11 @@ Widget getFeedback({required bool isRight}){
         ]
             : [
           Icon(
-            Icons.border_clear_rounded,
+            Icons.clear_rounded,
             color: Colors.red,
           ),
           SizedBox(
-            width: widthOfScreen * 0.1,
+            width: widthOfScreen * 0.05,
           ),
           Text(
             'Wrong',
@@ -295,9 +321,19 @@ Widget getFeedback({required bool isRight}){
           )
         ],
       ),
-      Divider(indent: 0, endIndent: 0, color: secondaryColor,),
+      Divider(indent: 0.01*widthOfScreen, endIndent: 0.01*widthOfScreen, color: primaryColor,thickness: 0.002*widthOfScreen, ),
       getCirclesProgressBarForCourseProgression(answers: [true, true, false], numberOfCircles: activeCourse!.numberOfQuestions),
+      SizedBox(height: 0.05*heightOfScreen,),
+      Text(shortFeeback, style: getNormalTextStyleBlue(),),
 
     ],
   );
+}
+
+class FeedbackArguments {
+  final bool isRight;
+  final String longFeedback;
+  final String shortFeedback;
+
+  FeedbackArguments(this.isRight, this.longFeedback, this.shortFeedback);
 }

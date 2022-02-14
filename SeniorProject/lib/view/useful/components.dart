@@ -121,9 +121,7 @@ Widget getCirclesProgressBarForPauseMenu(
       children: children,
     ),
   );
-  return Wrap(
-    children: children,
-  );
+
 }
 
 Widget getCirclesProgressBarForCourseProgression(
@@ -133,15 +131,19 @@ Widget getCirclesProgressBarForCourseProgression(
   final children = <Widget>[];
 
   for (var i = 0; i <= numberOfCircles; i++) {
-    if (i<=answers.length) {
+    if (i<answers.length) {
       children.add(getCircle(color: answers[i]? Colors.green: Colors.red, size: 0.04*widthOfScreen));
     } else {
       children.add(getCircle(color: quinaryColor, size: 0.04*widthOfScreen));
     }
   }
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: children,
+  return Container(
+    height: 0.05*heightOfScreen,
+    width: 0.8*widthOfScreen,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: children,
+    ),
   );
 }
 
