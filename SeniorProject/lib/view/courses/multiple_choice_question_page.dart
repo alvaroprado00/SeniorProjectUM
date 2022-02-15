@@ -102,6 +102,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                        }
                         showDialog(
                             context: context,
+                            barrierDismissible: false,
                             builder: (_) {
                               return QuestionFeedback(args: FeedbackArguments(isRight, question.longFeedback, question.shortFeedback));
                             });
