@@ -1,3 +1,7 @@
+import 'package:cyber/view/admin/new_course_page_1.dart';
+import 'package:cyber/view/admin/new_course_page_2.dart';
+import 'package:cyber/view/admin/new_course_page_3.dart';
+import 'package:cyber/view/admin/new_question_page.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
@@ -77,6 +81,11 @@ class MyApp extends StatelessWidget {
         SignUpSummary.routeName: (context) => const SignUpSummary(),
         MultipleChoiceQuestionPage.routeName: (context)=> const MultipleChoiceQuestionPage(),
         FillInTheBlanksQuestionPage.routeName:(context)=> const FillInTheBlanksQuestionPage(),
+        NewCoursePage.routeName:(context)=> const NewCoursePage(),
+        NewCourseOutcomesPage.routeName:(context)=> const NewCourseOutcomesPage(),
+        NewCourseDescriptionPage.routeName:(context)=> const NewCourseDescriptionPage(),
+        NewQuestionPage.routeName:(context)=> const NewQuestionPage(),
+
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -112,12 +121,12 @@ class HomePage extends StatelessWidget {
         case ApplicationLoginState.loggedIn:
           {
             //return SignUpSummary();
-            return CourseDescription(courseTitle: 'Passwords');
+            return NewCoursePage();
           }
         case ApplicationLoginState.loggedOut:
           {
             //return LogInPage();
-            return CourseDescription(courseTitle: 'Passwords');
+            return NewCoursePage();
           }
         default:
           {

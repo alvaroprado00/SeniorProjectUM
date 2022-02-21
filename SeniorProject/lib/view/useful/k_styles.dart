@@ -165,3 +165,14 @@ InputDecoration getInputDecoration(
       contentPadding: EdgeInsets.only(
           top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen));
 }
+
+final InputDecoration inputDecorationForLongText=
+  InputDecoration(
+      filled: true,
+      fillColor: tertiaryColor,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5),
+        borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
+      ),
+      contentPadding: EdgeInsets.only(
+          top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen));

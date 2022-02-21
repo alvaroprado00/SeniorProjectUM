@@ -180,6 +180,23 @@ IconButton getBackButton({required BuildContext context}) {
 }
 
 /**
+ * Function that returns an exit button for the admin pages to return from any
+ * of them to the actions page.
+ */
+
+IconButton getExitButtonAdmin({required BuildContext context}) {
+  return IconButton(
+      onPressed: () {
+        //Not implemented yet
+      },
+      icon: Icon(
+        Icons.clear,
+        color: secondaryColor,
+        size: 0.05 * heightOfScreen,
+      ));
+}
+
+/**
  * This function Retrieves a card with the name of the course specified.
  *
  * Yoy need to Specify the width of the card as well as the height of the sized
@@ -440,3 +457,19 @@ Widget getGreyTextHolderContainer({required Widget child}){
     child: child,
   );
 }
+
+/**
+ * Function that returns the Next Button. You need to specify
+ * the build context and where to go
+ */
+Widget getNextButton({required void Function() todo, required bool large}){
+  return SizedBox(
+      height:large? getHeightOfLargeButton(): getHeightOfSmallButton(),
+      width: large? getWidthOfLargeButton():getWidthOfSmallButton(),
+      child: ElevatedButton(
+        onPressed: todo,
+        child: Text('Next', style: getNormalTextStyleBlue()),
+        style: greyButtonStyle,
+      ));
+}
+
