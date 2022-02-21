@@ -130,7 +130,7 @@ Widget getCirclesProgressBarForCourseProgression(
 
   final children = <Widget>[];
 
-  for (var i = 0; i <= numberOfCircles; i++) {
+  for (var i = 0; i < numberOfCircles; i++) {
     if (i<answers.length) {
       children.add(getCircle(color: answers[i]? Colors.green: Colors.red, size: 0.04*widthOfScreen));
     } else {

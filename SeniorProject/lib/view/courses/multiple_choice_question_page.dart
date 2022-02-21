@@ -1,5 +1,6 @@
-import 'package:cyber/globals.dart';
+import 'package:cyber/globals.dart' as globals;
 import 'package:cyber/model/multiple_choice_question.dart';
+import 'package:cyber/view/courses/question_feedback.dart';
 import 'package:cyber/view/useful/components.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
@@ -37,7 +38,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                     width: widthOfScreen * 0.4,
                   ),
                   Text(
-                    '${question.number} of ${activeCourse?.numberOfQuestions}',
+                    '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
                     style: getNormalTextStyleBlue(),
                   ),
                   SizedBox(
@@ -45,10 +46,10 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                   ),
                   getOptionsButton(
                       context: context,
-                      courseTitle: activeCourse!.title,
-                      categoryTitle: stringFromCategory[activeCourse!.category]?? 'No category found',
+                      courseTitle: globals.activeCourse!.title,
+                      categoryTitle: stringFromCategory[globals.activeCourse!.category]?? 'No category found',
                       question: question.number,
-                      numberOfQuestions: activeCourse!.numberOfQuestions)
+                      numberOfQuestions: globals.activeCourse!.numberOfQuestions)
                 ],
               ),
               Container(
@@ -87,8 +88,8 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
                       onPressed: () {
-                        int i=1;
-                        int optSelected=1;
+                        int i=0;
+                        int optSelected=0;
                         //With this loop I get what option the user has selected
                        for(bool selected in ToggleButtonOptions.isSelected){
                          if(selected){
@@ -100,11 +101,16 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                        if(optSelected==question.rightOption){
                         isRight=true;
                        }
+
+                       //I update the global variables once answer submitted
+                       globals.userProgress!.add(isRight);
+                       globals.activeQuestionNum=globals.activeQuestionNum!+1;
+
                         showDialog(
                             context: context,
                             barrierDismissible: false,
                             builder: (_) {
-                              return QuestionFeedback(args: FeedbackArguments(isRight, question.longFeedback, question.shortFeedback));
+                              return QuestionFeedback(args: FeedbackArguments(isRight, question.longFeedback, question.getSolutionAsString()));
                             });
                       },
                       child: Text('Submit', style: getNormalTextStyleWhite()),
@@ -190,7 +196,7 @@ class ButtonForOption extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                matchingMap[order] ?? 'X',
+                numberToOptionLetter[order] ?? 'X',
                 style: getNormalTextStyleBlue(),
               ),
               SizedBox(
@@ -207,134 +213,4 @@ class ButtonForOption extends StatelessWidget {
   }
 }
 
-class QuestionFeedback extends StatefulWidget {
 
-  const QuestionFeedback({required this.args});
-
-  final FeedbackArguments args;
-
-  @override
-  State<QuestionFeedback> createState() => _QuestionFeedbackState();
-}
-
-class _QuestionFeedbackState extends State<QuestionFeedback> {
-
-  // First we set the learnMore to false to show the content for short feedback
-  bool learnMore=false;
-  String messageInButton='More';
-
-  @override
-  Widget build(BuildContext context) {
-
-
-    return AlertDialog(
-      content: learnMore? getLearnMoreContent(longFeedBack: widget.args.longFeedback): getFeedback(isRight: widget.args.isRight, shortFeeback: widget.args.shortFeedback),
-      insetPadding: EdgeInsets.all(10),
-      actions: <Widget>[
-
-        SizedBox(
-            height: getHeightOfSmallButton(),
-            width: getWidthOfSmallButton(),
-            child: ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  learnMore=!learnMore;
-                  if(learnMore){
-                    messageInButton='Back';
-                  }else{
-                    messageInButton='More';
-                  }
-                });
-              },
-              child: Text(messageInButton, style: getNormalTextStyleBlue()),
-              style: greyButtonStyle,
-            )),
-        SizedBox(
-            height: getHeightOfSmallButton(),
-            width: getWidthOfSmallButton(),
-            child: ElevatedButton(
-              onPressed: () {
-                print('popo');
-              },
-              child: Text('Next', style: getNormalTextStyleWhite()),
-              style: blueButtonStyle,
-            )),
-      ],
-    );
-  }
-
-
-}
-
-Widget getLearnMoreContent({required String longFeedBack}){
-
-  return Column(
-    mainAxisSize: MainAxisSize.min,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text('Explained', style: getSubheadingStyleBlue(),),
-      Divider(indent: 0.01*widthOfScreen, endIndent: 0.01*widthOfScreen, color: primaryColor,thickness: 0.002*widthOfScreen, ),
-      SizedBox(height: 0.2*heightOfScreen,child: SingleChildScrollView(child: Text(longFeedBack,style: getNormalTextStyleBlue(),))),
-    ],
-  );
-
-}
-Widget getFeedback({required bool isRight, required String shortFeeback}){
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: isRight
-            ? [
-          Icon(
-            Icons.check_rounded,
-            color: Colors.green,
-          ),
-          SizedBox(
-            width: widthOfScreen * 0.05,
-          ),
-          Text(
-            'Right',
-            style: TextStyle(
-                fontSize: 24,
-                fontFamily: fontFamily,
-                fontWeight: FontWeight.bold,
-                color: Colors.green),
-          )
-        ]
-            : [
-          Icon(
-            Icons.clear_rounded,
-            color: Colors.red,
-          ),
-          SizedBox(
-            width: widthOfScreen * 0.05,
-          ),
-          Text(
-            'Wrong',
-            style: TextStyle(
-                fontSize: 24,
-                fontFamily: fontFamily,
-                fontWeight: FontWeight.bold,
-                color: Colors.red),
-          )
-        ],
-      ),
-      Divider(indent: 0.01*widthOfScreen, endIndent: 0.01*widthOfScreen, color: primaryColor,thickness: 0.002*widthOfScreen, ),
-      getCirclesProgressBarForCourseProgression(answers: [true, true, false], numberOfCircles: activeCourse!.numberOfQuestions),
-      SizedBox(height: 0.05*heightOfScreen,),
-      Text(shortFeeback, style: getNormalTextStyleBlue(),),
-
-    ],
-  );
-}
-
-class FeedbackArguments {
-  final bool isRight;
-  final String longFeedback;
-  final String shortFeedback;
-
-  FeedbackArguments(this.isRight, this.longFeedback, this.shortFeedback);
-}

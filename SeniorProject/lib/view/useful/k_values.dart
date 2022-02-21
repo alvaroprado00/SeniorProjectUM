@@ -13,7 +13,7 @@ const Map<int, String> encouragingMessages={
   4: 'It seems like a nice course...'
 };
 
-Map<int, String> matchingMap = {
+Map<int, String> numberToOptionLetter = {
   0: 'A',
   1: 'B',
   2: 'C',
@@ -22,6 +22,7 @@ Map<int, String> matchingMap = {
 
 enum TypeOfQuestion{
   multipleChoice,
+  fillInTheBlanks,
 }
 
 enum Category{
@@ -44,3 +45,14 @@ Map <String, Category> categoryFromString={
   'Info': Category.info,
   'Web': Category.web,
 };
+
+Map <TypeOfQuestion, String> stringFromTypeOfQuestion={
+  TypeOfQuestion.multipleChoice: 'Multiple Choice',
+  TypeOfQuestion.fillInTheBlanks: 'Fill in the Blanks',
+};
+
+Map <String, TypeOfQuestion> typeOfQuestionFromString={
+  'Multiple Choice':TypeOfQuestion.multipleChoice,
+  'Fill in the Blanks': TypeOfQuestion.fillInTheBlanks,
+};
+

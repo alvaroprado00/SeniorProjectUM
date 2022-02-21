@@ -1,3 +1,4 @@
+import 'package:cyber/model/question.dart';
 import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,7 @@ class Course {
   int experiencePoints;
   String description;
   List<String> outcomes;
+  List<Question> questions;
 
   Course({
     required this.imageURL,
@@ -18,6 +20,7 @@ class Course {
     required this.experiencePoints,
     required this.description,
     required this.outcomes,
+    required this.questions,
   });
 
   factory Course.fromJson(Map<String, dynamic> json){
@@ -28,7 +31,8 @@ class Course {
       experiencePoints: json['experiencePoints'],
       numberOfQuestions: json['numberOfQuestions'],
       description: json['description'],
-      outcomes: List.castFrom(json['outcomes'])
+      outcomes: List.castFrom(json['outcomes']),
+      questions: [],
     );
   }
 

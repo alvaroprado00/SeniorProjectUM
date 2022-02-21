@@ -4,17 +4,20 @@
  * the name of the course should be provided when calling the constructor
  * so we can build the course by calling the database for that specific course
  */
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart' as globals;
 import 'package:cyber/model/course.dart';
-import 'package:cyber/model/multiple_choice_question.dart';
+import 'package:cyber/model/fill_in_the_blanks_question.dart';
+import 'package:cyber/model/question.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
+
+import 'fill_in_the_blanks_question_page.dart';
 
 class CourseDescription extends StatelessWidget {
 
@@ -49,8 +52,11 @@ class CourseDescription extends StatelessWidget {
           if (snapshot.hasData) {
               //Once I get the course I assign its value to a global variable
               // so I can access the info from other pages easily
-              globals.activeCourse=snapshot.data.data();
-              return CourseDescriptionContent(course: snapshot.data.data());
+              globals.activeCourse=snapshot.data;
+              globals.activeQuestionNum=1;
+              globals.userProgress=[];
+
+              return CourseDescriptionContent(course: snapshot.data);
           } else if (snapshot.hasError) {
             return Center(
               child: Text('Error: ${snapshot.error}', style: getHeadingStyleBlue(),),
@@ -151,11 +157,7 @@ class CourseDescriptionContent extends StatelessWidget {
                 height: getHeightOfLargeButton(),
                 width: getWidthOfLargeButton(),
                 child: ElevatedButton(
-                  onPressed: () {
-                    //In the future we need to see what type of question the first one is
-                    //In order to call to the correct page
-                    Navigator.pushNamed(context, MultipleChoiceQuestionPage.routeName, arguments:MultipleChoiceQuestion.getMultipleChoiceQuestion() ) ;
-                  },
+                  onPressed:(){nextQuestion(context);},
                   child: Text('Begin', style:  getNormalTextStyleWhite()),
                   style: blueButtonStyle,
                 )),

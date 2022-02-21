@@ -1,4 +1,3 @@
-import 'package:cyber/model/multiple_choice_question.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
@@ -13,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'courses/fill_in_the_blanks_question_page.dart';
 
 
 
@@ -76,6 +76,7 @@ class MyApp extends StatelessWidget {
         SignUpJoinGroup.routeName: (context) => const SignUpJoinGroup(),
         SignUpSummary.routeName: (context) => const SignUpSummary(),
         MultipleChoiceQuestionPage.routeName: (context)=> const MultipleChoiceQuestionPage(),
+        FillInTheBlanksQuestionPage.routeName:(context)=> const FillInTheBlanksQuestionPage(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
