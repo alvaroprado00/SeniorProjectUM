@@ -1,5 +1,6 @@
 import 'package:cyber/view/sign-up/summary_sign_up.dart';
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';

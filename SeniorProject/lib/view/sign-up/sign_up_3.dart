@@ -2,6 +2,7 @@ import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';

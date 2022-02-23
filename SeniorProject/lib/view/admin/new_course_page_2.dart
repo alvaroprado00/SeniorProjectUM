@@ -1,4 +1,5 @@
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
@@ -43,59 +44,61 @@ class _NewCourseOutcomesPageState extends State<NewCourseOutcomesPage> {
         child: Form(
           key: _formKey,
 
-        child:Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                getBackButton(
-                    context: context),
-                Text('Outcomes',style: getSubheadingStyleWhite()),
-                getExitButtonAdmin(context: context),
+        child:SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  getBackButton(
+                      context: context),
+                  Text('Outcomes',style: getSubheadingStyleWhite()),
+                  getExitButtonAdmin(context: context),
 
-              ],
-            ),
-
-            SizedBox( height:0.3*heightOfScreen),
-            Text('Outcome ${_outcomeNumber+1}', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
-
-
-            Padding(
-              padding: EdgeInsets.only( top: 0.025*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
-              child: TextFormField(
-                validator: validatorForEmptyTextField,
-                controller: _controllerOutcome,
-                maxLines: 5,
-                decoration: inputDecorationForLongText,
+                ],
               ),
-            ),
 
-            SizedBox(height: 0.23*heightOfScreen,),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                SizedBox(
-                    height: getHeightOfSmallButton(),
-                    width: getWidthOfSmallButton(),
-                    child: ElevatedButton(
-                      onPressed: () {
-                      },
-                      child: Text('Add', style:  getNormalTextStyleBlue()),
-                      style: yellowButtonStyle,
-                    )),
-
-                getNextButton(todo:(){Navigator.pushNamed(context, NewCourseDescriptionPage.routeName);},large: false)
-              ],
-            ),
-
-            SizedBox( height:0.04*heightOfScreen),
-            getCirclesProgressBar(position: 2, numberOfCircles: 3),
+              SizedBox( height:0.25*heightOfScreen),
+              Text('Outcome ${_outcomeNumber+1}', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
 
 
-          ],
+              Padding(
+                padding: EdgeInsets.only( top: 0.025*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
+                child: TextFormField(
+                  validator: validatorForEmptyTextField,
+                  controller: _controllerOutcome,
+                  maxLines: 3,
+                  decoration: inputDecorationForLongText,
+                ),
+              ),
+
+              SizedBox(height: 0.3*heightOfScreen,),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(
+                      height: getHeightOfSmallButton(),
+                      width: getWidthOfSmallButton(),
+                      child: ElevatedButton(
+                        onPressed: () {
+                        },
+                        child: Text('Add', style:  getNormalTextStyleBlue()),
+                        style: yellowButtonStyle,
+                      )),
+
+                  getNextButton(todo:(){Navigator.pushNamed(context, NewCourseDescriptionPage.routeName);},large: false)
+                ],
+              ),
+
+              SizedBox( height:0.04*heightOfScreen),
+              getCirclesProgressBar(position: 2, numberOfCircles: 3),
+
+
+            ],
+          ),
         )
 
         ),

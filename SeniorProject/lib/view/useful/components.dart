@@ -4,19 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../avatar.dart';
+import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
 import 'k_values.dart';
 
-/**
- * Validator for TextFormField. It verifies the value is not empty
- */
-String? validatorForEmptyTextField(value) {
-  if (value == null || value.isEmpty) {
-    return 'Please enter some text';
-  }
-  return null;
-}
+
 
 /**
  * Class that defines the behaviour of a TextFormField for the password. Since it is used more than once and has
@@ -460,7 +453,7 @@ Widget getGreyTextHolderContainer({required Widget child}){
 
 /**
  * Function that returns the Next Button. You need to specify
- * the build context and where to go
+ * the function to execute when pressing it
  */
 Widget getNextButton({required void Function() todo, required bool large}){
   return SizedBox(
@@ -473,3 +466,18 @@ Widget getNextButton({required void Function() todo, required bool large}){
       ));
 }
 
+/**
+ * Function that returns the Add question Button.
+ */
+
+Widget getAddQuestionButton(){
+  return SizedBox(
+      height: getHeightOfLargeButton(),
+      width: getWidthOfLargeButton(),
+      child: ElevatedButton(
+        onPressed: () {
+        },
+        child: Text('Add Question', style:  getNormalTextStyleBlue()),
+        style: yellowButtonStyle,
+      ));
+}

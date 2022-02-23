@@ -1,3 +1,6 @@
+import 'package:cyber/model/course.dart';
+import 'package:cyber/view/courses/course_description.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:flutter/foundation.dart';
@@ -23,6 +26,7 @@ class _NewCoursePageState extends State<NewCoursePage> {
   late TextEditingController _controllerImage;
   late TextEditingController _controllerXP;
 
+  // The following list is used for the dropdown button
   static final List<k_values.Category> items =[
     k_values.Category.socialMedia,
     k_values.Category.info,
@@ -30,9 +34,10 @@ class _NewCoursePageState extends State<NewCoursePage> {
     k_values.Category.web,
   ];
 
+  //Default option in the dropdown button
   k_values.Category value=items.first;
 
-  //When the widget is created we initialize the text form fields controllers
+  //Initialization of text form field controllers
   @override
   void initState() {
     super.initState();
@@ -42,7 +47,7 @@ class _NewCoursePageState extends State<NewCoursePage> {
 
   }
 
-  //Here we free the memory
+  //Free memory
   @override
   void dispose() {
     _controllerTitle.dispose();
@@ -54,10 +59,36 @@ class _NewCoursePageState extends State<NewCoursePage> {
   @override
   Widget build(BuildContext context) {
 
+    //I define the function to be used when submitting the form
+    void Function() updateCourseFields=(){
+
+      //Returns true if the form is valid
+      if (_formKey.currentState!.validate()) {
+
+        //I create a course with dummy values
+
+        Course newCourse=Course(imageURL: '', title: '', category: k_values.Category.info, numberOfQuestions:1 , experiencePoints:1, description: '', outcomes: [], questions:[]);
+
+        //I update the fields
+        newCourse.title=_controllerTitle.text;
+        newCourse.experiencePoints=int.parse(_controllerXP.text);
+        newCourse.category=value;
+        newCourse.imageURL=_controllerImage.text;
+
+        Navigator.pushNamed(context, NewCourseOutcomesPage.routeName, arguments: newCourse);
+      }
+    };
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: AppBar(
+        leading: getBackButton(context: context),
+        title:Text('New Course', style: getSubheadingStyleWhite(),),
+        centerTitle: true,
+        elevation: 0,
+      ),
       body: SafeArea(
-        //This is to solve the problem of the overflow caused by the keyboard
+        //This widget solves the problem of the overflow caused by the keyboard
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -66,21 +97,8 @@ class _NewCoursePageState extends State<NewCoursePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    getBackButton(
-                      context: context),
-                    SizedBox(width: 0.22*k_values.widthOfScreen,),
-                    Text('New Course',style: getSubheadingStyleWhite()),
-
-                  ],
-                ),
-
                 SizedBox( height:0.05*k_values.heightOfScreen),
                 Text('Enter a Title.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
-
 
                 Padding(
                   padding: EdgeInsets.only( top: 0.025*k_values.heightOfScreen, left: 0.03*k_values.widthOfScreen, right: 0.03*k_values.widthOfScreen),
@@ -107,7 +125,7 @@ class _NewCoursePageState extends State<NewCoursePage> {
                 Padding(
                   padding: EdgeInsets.only( top: 0.025*k_values.heightOfScreen, left: 0.03*k_values.widthOfScreen, right: 0.03*k_values.widthOfScreen),
                   child: TextFormField(
-                    validator: validatorForEmptyTextField,
+                    validator: validatorForURL,
                     controller: _controllerImage,
                     decoration: getInputDecoration(
                         hintText: 'Image URL',
@@ -124,7 +142,7 @@ class _NewCoursePageState extends State<NewCoursePage> {
                 Padding(
                   padding: EdgeInsets.only( top: 0.025*k_values.heightOfScreen, left: 0.35*k_values.widthOfScreen, right: 0.35*k_values.widthOfScreen),
                   child: TextFormField(
-                    validator: validatorForEmptyTextField,
+                    validator: validatorForExp,
                     keyboardType: TextInputType.number,
                     controller: _controllerXP,
                     decoration: getInputDecoration(
@@ -138,15 +156,12 @@ class _NewCoursePageState extends State<NewCoursePage> {
 
                 SizedBox( height:0.055*k_values.heightOfScreen),
 
-                getNextButton(todo:(){Navigator.pushNamed(context, NewCourseOutcomesPage.routeName);}, large: true),
+
+
+                getNextButton(todo:updateCourseFields, large: true),
                 SizedBox( height:0.04*k_values.heightOfScreen),
 
                 getCirclesProgressBar(position: 1, numberOfCircles: 3),
-
-
-
-
-
 
               ],
             )
@@ -157,6 +172,8 @@ class _NewCoursePageState extends State<NewCoursePage> {
       ),
     );
   }
+
+
 
 Widget buildDropdown() => Container(
   width: 0.94*k_values.widthOfScreen,
@@ -185,3 +202,4 @@ Widget buildDropdown() => Container(
   ),
 );
 }
+

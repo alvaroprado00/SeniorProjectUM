@@ -1,6 +1,10 @@
 import 'package:cyber/view/admin/new_course_page_1.dart';
 import 'package:cyber/view/admin/new_course_page_2.dart';
 import 'package:cyber/view/admin/new_course_page_3.dart';
+import 'package:cyber/view/admin/new_fill_blanks_page_1.dart';
+import 'package:cyber/view/admin/new_fill_blanks_page_2.dart';
+import 'package:cyber/view/admin/new_multiple_choice_page_1.dart';
+import 'package:cyber/view/admin/long_feedback_page.dart';
 import 'package:cyber/view/admin/new_question_page.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
@@ -16,6 +20,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'admin/new_multiple_choice_page_2.dart';
 import 'courses/fill_in_the_blanks_question_page.dart';
 
 
@@ -85,6 +90,14 @@ class MyApp extends StatelessWidget {
         NewCourseOutcomesPage.routeName:(context)=> const NewCourseOutcomesPage(),
         NewCourseDescriptionPage.routeName:(context)=> const NewCourseDescriptionPage(),
         NewQuestionPage.routeName:(context)=> const NewQuestionPage(),
+        MultipleChoiceDescription.routeName:(context)=> const MultipleChoiceDescription(),
+        MultipleChoiceOptions.routeName:(context)=> const MultipleChoiceOptions(),
+        LongFeedbackPage.routeName:(context)=> const LongFeedbackPage(),
+        LongFeedbackPage.routeName:(context)=> const LongFeedbackPage(),
+        FillInBlanksText.routeName:(context)=> const FillInBlanksText(),
+        FillInBlanksOptions.routeName:(context)=> const FillInBlanksOptions(),
+
+
 
       },
       theme: ThemeData(

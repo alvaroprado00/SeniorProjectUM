@@ -1,5 +1,6 @@
 import 'package:cyber/view/admin/new_question_page.dart';
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
@@ -63,12 +64,12 @@ class _NewCourseDescriptionPageState extends State<NewCourseDescriptionPage> {
                   child: TextFormField(
                     validator: validatorForEmptyTextField,
                     controller: _controllerDescription,
-                    maxLines: 12,
+                    maxLines: 10,
                     decoration: inputDecorationForLongText,
                   ),
                 ),
 
-                SizedBox(height: 0.17*heightOfScreen,),
+                SizedBox(height: 0.16*heightOfScreen,),
 
                 getNextButton(todo:(){Navigator.pushNamed(context, NewQuestionPage.routeName);} ,large: true),
                 SizedBox( height:0.04*heightOfScreen),
