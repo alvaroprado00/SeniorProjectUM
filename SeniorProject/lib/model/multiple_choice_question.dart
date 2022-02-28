@@ -3,11 +3,11 @@ import 'package:cyber/view/useful/k_values.dart';
 
 class MultipleChoiceQuestion extends Question {
 
-  final String description;
+  String description;
   final List<String> options;
-  final int rightOption;
+  int rightOption;
 
-  const MultipleChoiceQuestion(
+ MultipleChoiceQuestion(
       {required int number,
       required String this.description,
       required TypeOfQuestion typeOfQuestion,

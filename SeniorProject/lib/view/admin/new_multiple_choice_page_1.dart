@@ -1,3 +1,6 @@
+import 'package:cyber/globals.dart';
+import 'package:cyber/model/multiple_choice_question.dart';
+import 'package:cyber/model/question.dart';
 import 'package:cyber/view/admin/new_multiple_choice_page_2.dart';
 import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_styles.dart';
@@ -35,6 +38,27 @@ class _MultipleChoiceDescriptionState extends State<MultipleChoiceDescription> {
 
   @override
   Widget build(BuildContext context) {
+    //I define the function to do when clicking the button
+
+    void Function() setQuestionDescription = () async {
+      //I validate the form
+
+      if (_formKey.currentState!.validate()) {
+        //I create a Multiple Choice Question
+        Question newQuestion = MultipleChoiceQuestion(
+            number: newQuestionNum!,
+            description: _controllerDescription.text,
+            typeOfQuestion: TypeOfQuestion.multipleChoice,
+            longFeedback: '',
+            options: [],
+            rightOption: 1);
+
+        //Some fields are initialized to random variables
+        Navigator.pushNamed(context, MultipleChoiceOptions.routeName,
+            arguments: newQuestion);
+      }
+    };
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -74,14 +98,10 @@ class _MultipleChoiceDescriptionState extends State<MultipleChoiceDescription> {
                   ),
                 ),
                 SizedBox(height: 0.29 * heightOfScreen),
-                getNextButton(
-                    todo: () {
-                      Navigator.pushNamed(
-                          context, MultipleChoiceOptions.routeName);
-                    },
-                    large: true),
+                getNextButton(todo: setQuestionDescription, large: true),
                 SizedBox(height: 0.04 * heightOfScreen),
                 getCirclesProgressBar(position: 1, numberOfCircles: 3),
+                SizedBox(height: 0.01 * heightOfScreen),
               ],
             ),
           ),

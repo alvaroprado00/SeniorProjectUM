@@ -1,3 +1,5 @@
+import 'package:cyber/globals.dart';
+import 'package:cyber/model/fill_in_the_blanks_question.dart';
 import 'package:cyber/view/admin/new_fill_blanks_page_2.dart';
 import 'package:cyber/view/admin/new_multiple_choice_page_2.dart';
 import 'package:cyber/view/useful/functions.dart';
@@ -36,6 +38,20 @@ class _FillInBlanksTextState extends State<FillInBlanksText> {
 
   @override
   Widget build(BuildContext context) {
+
+    //I define the function to execute
+
+    void Function() addText=(){
+
+      if(_formKey.currentState!.validate()){
+
+        //Create a new Fill In the blanks Question
+        FillInTheBlanksQuestion newQuestion= FillInTheBlanksQuestion(longFeedback: '', number: newQuestionNum!, typeOfQuestion: TypeOfQuestion.fillInTheBlanks, text: _controllerText.text, solution: {}, options: []);
+
+        //Navigate to next page
+        Navigator.pushNamed(context, FillInBlanksOptions.routeName, arguments: newQuestion);
+      }
+    };
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -82,13 +98,11 @@ class _FillInBlanksTextState extends State<FillInBlanksText> {
                 ),
                 SizedBox(height: 0.33 * heightOfScreen),
                 getNextButton(
-                    todo: () {
-                      Navigator.pushNamed(
-                          context, FillInBlanksOptions.routeName);
-                    },
+                    todo: addText,
                     large: true),
                 SizedBox(height: 0.04 * heightOfScreen),
                 getCirclesProgressBar(position: 1, numberOfCircles: 3),
+                SizedBox(height: 0.01 * heightOfScreen),
               ],
             ),
           ),

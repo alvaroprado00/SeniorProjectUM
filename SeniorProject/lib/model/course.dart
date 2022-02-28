@@ -6,9 +6,11 @@ class Course {
   String imageURL;
   String title;
   Category category;
+  int positionInCategory;
   int numberOfQuestions;
   int experiencePoints;
   String description;
+  String badgeIcon;
   List<String> outcomes;
   List<Question> questions;
 
@@ -16,9 +18,11 @@ class Course {
     required this.imageURL,
     required this.title,
     required this.category,
+    required this.positionInCategory,
     required this.numberOfQuestions,
     required this.experiencePoints,
     required this.description,
+    required this.badgeIcon,
     required this.outcomes,
     required this.questions,
   });
@@ -34,6 +38,8 @@ class Course {
       description: json['description'],
       outcomes: List.castFrom(json['outcomes']),
       questions: [],
+      badgeIcon: '',
+      positionInCategory: 1,
     );
   }
 

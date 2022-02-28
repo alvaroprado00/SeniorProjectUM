@@ -180,8 +180,51 @@ IconButton getBackButton({required BuildContext context}) {
 IconButton getExitButtonAdmin({required BuildContext context}) {
   return IconButton(
       onPressed: () {
-        //Not implemented yet
-      },
+        showModalBottomSheet<void>(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            context: context,
+            builder: (BuildContext context) {
+              return Container(
+                height: 0.25*heightOfScreen,
+                child: Column(
+
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text('Are you sure you want to exit?',style:getSubheadingStyleYellow(),),
+                    Text('Your progress will not be saved', style: getNormalTextStyleBlue(),),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [SizedBox(
+                        height: getHeightOfSmallButton(),
+                        width: getWidthOfSmallButton(),
+                        child: ElevatedButton(
+                          style: yellowButtonStyle,
+                          child:Text('No', style: getNormalTextStyleBlue(),),
+                          onPressed: () {Navigator.pop(context);},
+                        ),
+                      ),
+                        SizedBox(
+                          height: getHeightOfSmallButton(),
+                          width: getWidthOfSmallButton(),
+                          child: ElevatedButton(
+                            style: greyButtonStyle,
+                            child:Text('Yes', style: getNormalTextStyleBlue(),),
+                            onPressed: () => print('popo'),
+                          ),
+                        ),],
+                    )
+                  ],
+
+                ),
+              );
+            }
+        );
+      }
+      ,
       icon: Icon(
         Icons.clear,
         color: secondaryColor,
@@ -360,6 +403,11 @@ String? getRandomEncouragingMessage() {
   return encouragingMessages[Random().nextInt(encouragingMessages.length - 1)];
 }
 
+/**
+ * This widget is the optionButton used in the course flow
+ * Which allows the user to exit the course saving the progress
+ * or exit it whithout saving the progress
+ */
 Widget getOptionsButton(
 {required BuildContext context, required String courseTitle, required String categoryTitle, required int question, required int numberOfQuestions}) {
   return IconButton(
@@ -433,6 +481,8 @@ Widget getOptionsButton(
       });
 }
 
+
+
 /**
  * Function that returns a grey box with rounded corners containing a child
  * specified in the param. Used in the app to display different types of
@@ -470,13 +520,12 @@ Widget getNextButton({required void Function() todo, required bool large}){
  * Function that returns the Add question Button.
  */
 
-Widget getAddQuestionButton(){
+Widget getAddQuestionButton({required void Function() todo}){
   return SizedBox(
       height: getHeightOfLargeButton(),
       width: getWidthOfLargeButton(),
       child: ElevatedButton(
-        onPressed: () {
-        },
+        onPressed: todo,
         child: Text('Add Question', style:  getNormalTextStyleBlue()),
         style: yellowButtonStyle,
       ));

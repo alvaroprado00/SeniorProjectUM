@@ -1,9 +1,8 @@
 import 'package:cyber/model/course.dart';
-import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
-import 'package:flutter/foundation.dart';
+import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 import '../useful/components.dart';
 import 'package:cyber/view/useful/k_values.dart' as k_values;
@@ -67,7 +66,7 @@ class _NewCoursePageState extends State<NewCoursePage> {
 
         //I create a course with dummy values
 
-        Course newCourse=Course(imageURL: '', title: '', category: k_values.Category.info, numberOfQuestions:1 , experiencePoints:1, description: '', outcomes: [], questions:[]);
+        Course newCourse=Course(imageURL: '', title: '', category: k_values.Category.info, positionInCategory: 1, numberOfQuestions:1 , experiencePoints:1, description: '',badgeIcon:'', outcomes: [], questions:[]);
 
         //I update the fields
         newCourse.title=_controllerTitle.text;
@@ -89,16 +88,17 @@ class _NewCoursePageState extends State<NewCoursePage> {
       ),
       body: SafeArea(
         //This widget solves the problem of the overflow caused by the keyboard
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
+
               children: [
 
                 SizedBox( height:0.05*k_values.heightOfScreen),
-                Text('Enter a Title.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
+                Text('Title.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
 
                 Padding(
                   padding: EdgeInsets.only( top: 0.025*k_values.heightOfScreen, left: 0.03*k_values.widthOfScreen, right: 0.03*k_values.widthOfScreen),
@@ -115,12 +115,12 @@ class _NewCoursePageState extends State<NewCoursePage> {
                 ),
 
                 SizedBox( height:0.05*k_values.heightOfScreen),
-                Text('Enter a Category.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
+                Text('Category.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
                 SizedBox( height:0.025*k_values.heightOfScreen),
                 buildDropdown(),
 
                 SizedBox( height:0.05*k_values.heightOfScreen),
-                Text('Enter an image.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
+                Text('Image.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
 
                 Padding(
                   padding: EdgeInsets.only( top: 0.025*k_values.heightOfScreen, left: 0.03*k_values.widthOfScreen, right: 0.03*k_values.widthOfScreen),
@@ -128,7 +128,7 @@ class _NewCoursePageState extends State<NewCoursePage> {
                     validator: validatorForURL,
                     controller: _controllerImage,
                     decoration: getInputDecoration(
-                        hintText: 'Image URL',
+                        hintText: 'Enter valid URL',
                         icon: Icon(
                           Icons.photo,
                           color: secondaryColor,
@@ -137,7 +137,7 @@ class _NewCoursePageState extends State<NewCoursePage> {
                 ),
 
                 SizedBox( height:0.05*k_values.heightOfScreen),
-                Text('Enter XP.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
+                Text('XP.', style: getNormalTextStyleWhite(), textAlign: TextAlign.center,),
 
                 Padding(
                   padding: EdgeInsets.only( top: 0.025*k_values.heightOfScreen, left: 0.35*k_values.widthOfScreen, right: 0.35*k_values.widthOfScreen),
@@ -162,12 +162,12 @@ class _NewCoursePageState extends State<NewCoursePage> {
                 SizedBox( height:0.04*k_values.heightOfScreen),
 
                 getCirclesProgressBar(position: 1, numberOfCircles: 3),
+                SizedBox(height: 0.01 * heightOfScreen),
 
               ],
-            )
-            ,
-          ),
-
+            ),
+          )
+          ,
         ),
       ),
     );

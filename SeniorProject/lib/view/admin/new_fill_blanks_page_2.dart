@@ -1,5 +1,6 @@
+import 'package:cyber/model/fill_in_the_blanks_question.dart';
 import 'package:cyber/view/admin/long_feedback_page.dart';
-import 'package:cyber/view/admin/new_multiple_choice_page_2.dart';
+
 import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
@@ -20,8 +21,8 @@ class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
   final _formKey = GlobalKey<FormState>();
 
   late TextEditingController _controllerOption;
-  final _optionNumber=0;
-  final _blankNumber=0;
+  int _optionNumber = 1;
+  int _blankNumber = 1;
 
   @override
   void initState() {
@@ -38,6 +39,68 @@ class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
 
   @override
   Widget build(BuildContext context) {
+    //First of all I take the question from the arguments
+
+    final newQuestion =
+        ModalRoute.of(context)!.settings.arguments as FillInTheBlanksQuestion;
+
+    //Define the snackbar
+    SnackBar getSnackBar({required String message}) {
+      return SnackBar(
+        content: Text(
+          message,
+          style: getNormalTextStyleBlue(),
+        ),
+        backgroundColor: secondaryColor,
+      );
+    }
+
+    ;
+
+    //Here I define the function to execute
+    void Function() addOption = () {
+      if (_formKey.currentState!.validate()) {
+        newQuestion.options.add(_controllerOption.text);
+
+        //Update counter
+        setState(() {
+          _optionNumber++;
+        });
+      }
+    };
+
+    void Function() addSolution = () {
+      if (_formKey.currentState!.validate()) {
+        if (newQuestion.text.split('X').length - 1 >= _blankNumber) {
+          newQuestion.solution[_blankNumber] = _controllerOption.text;
+
+          //After adding solution increment counter
+          setState(() {
+            _blankNumber++;
+            _optionNumber++;
+          });
+        } else {
+          SnackBar snBar =
+              getSnackBar(message: 'You exceeded the number of blanks');
+          ScaffoldMessenger.of(context).showSnackBar(snBar);
+        }
+      }
+    };
+
+    void Function() navigate = () {
+      //Before navigating to the long feedback page I have to verify
+      //That the number of solutions is equal to the number of blanks
+      //in the text
+
+      if (newQuestion.text.split('X').length - 1 == (_blankNumber - 1)) {
+        Navigator.pushNamed(context, LongFeedbackPage.routeName,
+            arguments: newQuestion);
+      } else {
+        SnackBar snBar =
+            getSnackBar(message: 'No matching between blanks and solutions');
+        ScaffoldMessenger.of(context).showSnackBar(snBar);
+      }
+    };
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
@@ -73,8 +136,7 @@ class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
                     validator: validatorForEmptyTextField,
                     controller: _controllerOption,
                     decoration: getInputDecoration(
-                        hintText:
-                        'Option $_optionNumber',
+                        hintText: 'Option $_optionNumber',
                         icon: Icon(
                           Icons.view_list,
                           color: secondaryColor,
@@ -82,34 +144,33 @@ class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
                   ),
                 ),
                 SizedBox(height: 0.29 * heightOfScreen),
-
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children:[SizedBox(
-                      height: getHeightOfSmallButton(),
-                      width: getWidthOfSmallButton(),
-                      child: ElevatedButton(
-                        onPressed: () {
-                        },
-                        child: Text('Add as Option ${_optionNumber+1}', style:  getNormalTextStyleBlue()),
-                        style: greyButtonStyle,
-                      )),
-                    SizedBox(
-                        height: getHeightOfSmallButton(),
-                        width: getWidthOfSmallButton(),
-                        child: ElevatedButton(
-                          onPressed: () {
-                          },
-                          child: Text('Add as Answer ${_blankNumber+1}', style:  getNormalTextStyleBlue()),
-                          style: yellowButtonStyle,
-                        )),
-
-                  ]
-                ),
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SizedBox(
+                          height: getHeightOfSmallButton(),
+                          width: getWidthOfSmallButton(),
+                          child: ElevatedButton(
+                            onPressed: addOption,
+                            child: Text('Add as Option ${_optionNumber}',
+                                style: getNormalTextStyleBlue()),
+                            style: greyButtonStyle,
+                          )),
+                      SizedBox(
+                          height: getHeightOfSmallButton(),
+                          width: getWidthOfSmallButton(),
+                          child: ElevatedButton(
+                            onPressed: addSolution,
+                            child: Text('Add as Answer ${_blankNumber}',
+                                style: getNormalTextStyleBlue()),
+                            style: yellowButtonStyle,
+                          )),
+                    ]),
                 SizedBox(height: 0.04 * heightOfScreen),
-                getNextButton(todo: (){Navigator.pushNamed(context, LongFeedbackPage.routeName);}, large: true),
+                getNextButton(todo: navigate, large: true),
                 SizedBox(height: 0.04 * heightOfScreen),
                 getCirclesProgressBar(position: 2, numberOfCircles: 3),
+                SizedBox(height: 0.01 * heightOfScreen),
               ],
             ),
           ),

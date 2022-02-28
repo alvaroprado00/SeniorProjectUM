@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/config/k_collection_names_firebase.dart';
+import 'package:cyber/globals.dart';
 import 'package:cyber/model/course.dart';
 import 'package:cyber/model/fill_in_the_blanks_question.dart';
 import 'package:cyber/model/multiple_choice_question.dart';
 import 'package:cyber/model/question.dart';
-import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
 import 'package:cyber/view/useful/k_values.dart';
 
 class CourseController {
@@ -36,7 +38,10 @@ class CourseController {
           }).catchError((error)=> print('Could not find a course with that name'));
   }
 
-
+  /**
+   * This function is used by the function getCourse to be able to get
+   * the subcollection of questions of the course and add them to the object
+   */
   Future getQuestionsForCourse(
       {required Course course, required String courseId}) async {
 
@@ -76,4 +81,89 @@ class CourseController {
     }).catchError((error)=> print('Could not get the questions for the course specified'));
 
   }
+
+  /**
+   * Function to add the course that has been filled in the adming pages
+   * to firebase.
+   */
+
+  Future addCourseToFirebase(){
+
+    //Since the course is stored as a global variable we dont need to get it
+    //as a param
+    CollectionReference courses = FirebaseFirestore.instance.collection(
+        courseCollectionName);
+
+    return courses.add({
+      'category': stringFromCategory[newCourse!.category],
+      'description': newCourse!.description,
+      'experiencePoints': newCourse!.experiencePoints,
+      'imageURL':newCourse!.imageURL,
+      'numberOfQuestions': newCourse!.numberOfQuestions,
+      'outcomes': newCourse!.outcomes,
+      'title': newCourse!.title,
+      'badgeIcon':newCourse!.badgeIcon,
+      'positionInCategory':newCourse!.positionInCategory,
+    }).then((value) async {
+      //Once I have added the course I need to add the questions
+     // await addQuestionsToFirebase(courseId:value.id);
+      String s='';
+
+      print('Course created');
+      try{
+        await addQuestionsToFirebase(courseId: value.id).then((value){s=value;});
+      }catch(e){
+        s=e.toString();
+      }
+      print(s);
+      return s;
+    }).catchError((error){
+      print('Course NOT created');
+      return 'Error: course not created';
+    });
+  }
+
+  /**
+   * Function used by addCourseToFirebase to create a subcollection of questions
+   * in the document of the course
+   */
+  Future addQuestionsToFirebase({required String courseId}){
+
+    CollectionReference questions = FirebaseFirestore.instance.collection(
+        courseCollectionName).doc(courseId).collection(questionCollectionName);
+
+
+    for (Question q in newCourse!.questions){
+
+      if(q is MultipleChoiceQuestion){
+        questions.add({
+          'longFeedback': q.longFeedback,
+          'number': q.number,
+          'options': q.options,
+          'rightOption': q.rightOption,
+          'description': q.description,
+          'typeOfQuestion': stringFromTypeOfQuestion[q.typeOfQuestion],
+        });
+      }else if(q is FillInTheBlanksQuestion){
+
+        questions.add({
+        'longFeedback': q.longFeedback,
+        'number': q.number,
+        'options': q.options,
+        'solution': Map.from(q.solution.map((key,value){
+         return MapEntry(
+               key.toString(),
+               value);
+          })),
+        'typeOfQuestion': stringFromTypeOfQuestion[q.typeOfQuestion],
+          'text':q.text,
+        });
+      }
+    }
+
+    print('Questions added');
+    return Future<String>.value('Complete course added');
+
+  }
 }
+

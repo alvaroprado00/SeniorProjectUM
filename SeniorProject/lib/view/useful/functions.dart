@@ -48,15 +48,48 @@ String? validatorForURL(value) {
 }
 
 /**
- * Validator for URL. It checks if the textFormField is not empty and
- * the value that holds is a valid URL
+ * Validator for EXP points. It checks if the textFormField is not empty and
+ * the value is a int between 0 and 1000
  */
 String? validatorForExp(value) {
-  if (value == null || value.isEmpty) {
-    return 'Please enter a number';
+  value=int.tryParse(value);
+  if (value == null ) {
+    return 'Number';
 
   }else if(value<0 || value >1000){
-    return 'Enter a number in the range [0-1000]';
+    return '[0-1000]';
+  }
+  return null;
+}
+
+/**
+ * Validator for any text form field that needs a positive number to be
+ * the input
+ */
+
+String? validatorForPositiveNumber(value) {
+
+  value=int.tryParse(value);
+  if (value == null ) {
+    return 'Please enter a number';
+  }else if(value<0){
+    return 'Enter a positive number';
+  }
+  return null;
+}
+
+/**
+ * Validator for the text form field where the right question of a multiple
+ * choice is specified. It requires the input to be an int within the range
+ * [1-4]
+ */
+String? validatorForRightOption(value) {
+  value=int.tryParse(value);
+  if (value == null ) {
+    return 'Please enter a number';
+
+  }else if(value<1 || value>4){
+    return 'The right option must be between [1-4]';
   }
   return null;
 }

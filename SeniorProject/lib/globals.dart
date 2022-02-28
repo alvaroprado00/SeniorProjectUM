@@ -9,3 +9,7 @@ Course? activeCourse;
 int? activeQuestionNum;
 
 List<bool>? userProgress;
+
+int? newQuestionNum;
+
+Course? newCourse;

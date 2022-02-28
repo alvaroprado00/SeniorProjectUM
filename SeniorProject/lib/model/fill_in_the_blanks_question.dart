@@ -7,7 +7,7 @@ class FillInTheBlanksQuestion extends Question {
   final Map<int, String> solution;
   final List<String> options;
 
-  const FillInTheBlanksQuestion(
+   FillInTheBlanksQuestion(
       {required int number,
         required TypeOfQuestion typeOfQuestion,
         required String longFeedback,
