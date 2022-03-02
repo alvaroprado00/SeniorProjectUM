@@ -2,6 +2,7 @@ import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
@@ -121,12 +122,12 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
                       },
                       child: Text('Next', style:  getNormalTextStyleBlue()),
-                      style: largeGreyButtonStyle,
+                      style: greyButtonStyle,
                     )),
 
                 Padding(
                   padding: EdgeInsets.only(top: 0.03*heightOfScreen),
-                  child: getCirclesProgressBar(position:3, numberOfCircles: 5,widthOfScreen: widthOfScreen),
+                  child: getCirclesProgressBar(position:3, numberOfCircles: 5,),
                 ),
               ],
             )

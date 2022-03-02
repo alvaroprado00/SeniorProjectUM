@@ -4,20 +4,32 @@
  * the name of the course should be provided when calling the constructor
  * so we can build the course by calling the database for that specific course
  */
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/controller/course_controller.dart';
+import 'package:cyber/globals.dart' as globals;
 import 'package:cyber/model/course.dart';
+import 'package:cyber/model/fill_in_the_blanks_question.dart';
+import 'package:cyber/model/question.dart';
+import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
+import 'fill_in_the_blanks_question_page.dart';
+
 class CourseDescription extends StatelessWidget {
+
+  /**
+   * This Page is created by specifying the name of the course that is going to
+   * show
+   */
 
   const CourseDescription({required String this.courseTitle});
 
   final String courseTitle;
+
   @override
   Widget build(BuildContext context) {
     widthOfScreen = MediaQuery.of(context).size.width;
@@ -26,21 +38,31 @@ class CourseDescription extends StatelessWidget {
 
     //I update the height by subtracting the status bar height
     heightOfScreen = heightOfScreen - padding.top;
+
+    //I need to have an instance of the Course controller to use the methods
+    //defined in that class
     final courseController=CourseController();
 
+    // Before building the page I need to get the course from the DB
     return Scaffold(
       backgroundColor: tertiaryColor,
       body:FutureBuilder(
         future: courseController.getCourse(title: courseTitle),
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if (snapshot.hasData) {
-              return CourseDescriptionContent(course: snapshot.data.data());
+              //Once I get the course I assign its value to a global variable
+              // so I can access the info from other pages easily
+              globals.activeCourse=snapshot.data;
+              globals.activeQuestionNum=1;
+              globals.userProgress=[];
+
+              return CourseDescriptionContent(course: snapshot.data);
           } else if (snapshot.hasError) {
             return Center(
-              child: Text('Error: ${snapshot.error}', style: getHeadingStyleWhite(),),
+              child: Text('Error: ${snapshot.error}', style: getHeadingStyleBlue(),),
             );
           }else{
-            return CircularProgressIndicator();
+            return Center(child: CircularProgressIndicator());
           }
         },
       )
@@ -123,16 +145,7 @@ class CourseDescriptionContent extends StatelessWidget {
                   endIndent:0,
                   thickness: 1,
                 ),
-                Container(
-                  padding: EdgeInsets.all(widthOfScreen*0.02),
-                  decoration: new BoxDecoration(
-
-                      color: quinaryColor,
-                      borderRadius: new BorderRadius.all(
-                        Radius.circular(0.05 * widthOfScreen),
-                      )),
-                  child: getContentForOutcomes(outcomes: course.outcomes),
-                ),
+                getGreyTextHolderContainer(child: getContentForOutcomes(outcomes: course.outcomes)),
               ],
             ),
           ),
@@ -144,11 +157,9 @@ class CourseDescriptionContent extends StatelessWidget {
                 height: getHeightOfLargeButton(),
                 width: getWidthOfLargeButton(),
                 child: ElevatedButton(
-                  onPressed: () {
-                    print('popo');
-                  },
+                  onPressed:(){nextQuestion(context);},
                   child: Text('Begin', style:  getNormalTextStyleWhite()),
-                  style: largeBlueButtonStyle,
+                  style: blueButtonStyle,
                 )),
           ),
         ],
@@ -170,7 +181,7 @@ getContentForOutcomes({required List<String> outcomes}) {
 
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            getCircle(color: secondaryColor),
+            getCircle(color: secondaryColor, size: 0.02 * widthOfScreen,),
             SizedBox(
               width: 0.03 * widthOfScreen,
             ),

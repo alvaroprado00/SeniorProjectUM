@@ -12,120 +12,145 @@ import 'k_values.dart';
 
 const String fontFamily = 'roboto';
 
-
-double getHeightOfLargeButton(){
-  return heightOfScreen*0.07;
+double getHeightOfLargeButton() {
+  return heightOfScreen * 0.07;
 }
 
-double getWidthOfLargeButton(){
-  return 0.94*widthOfScreen;
+double getWidthOfLargeButton() {
+  return 0.94 * widthOfScreen;
 }
 
-TextStyle getTexFieldTextStyle(){
+double getHeightOfSmallButton() {
+  return heightOfScreen * 0.07;
+}
+
+double getWidthOfSmallButton() {
+  return 0.43 * widthOfScreen;
+}
+
+TextStyle getTexFieldTextStyle() {
   return TextStyle(
       color: quaternaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.05*widthOfScreen,
+      fontSize: 0.05 * widthOfScreen,
       fontWeight: FontWeight.w400);
 }
-TextStyle getSubheadingStyleYellow(){
+
+TextStyle getSubheadingStyleYellow() {
   return TextStyle(
       color: secondaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.05*widthOfScreen,
-      fontWeight: FontWeight.w400);
-}
-TextStyle getSubheadingStyleWhite(){
-  return TextStyle(
-      color: tertiaryColor,
-      fontFamily: fontFamily,
-      fontSize: 0.06*widthOfScreen,
+      fontSize: 0.06 * widthOfScreen,
       fontWeight: FontWeight.w400);
 }
 
-TextStyle getSubheadingStyleBlue(){
+TextStyle getSubheadingStyleWhite() {
+  return TextStyle(
+      color: tertiaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.06 * widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
+
+TextStyle getSubheadingStyleBlue() {
   return TextStyle(
       color: primaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.06*widthOfScreen,
+      fontSize: 0.06 * widthOfScreen,
       fontWeight: FontWeight.w400);
 }
 
-TextStyle getHeadingStyleWhite(){
+TextStyle getHeadingStyleWhite() {
   return TextStyle(
       color: tertiaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.08*widthOfScreen,
+      fontSize: 0.08 * widthOfScreen,
       fontWeight: FontWeight.w300);
 }
-TextStyle getHeadingStyleBlue(){
+
+TextStyle getHeadingStyleBlue() {
   return TextStyle(
       color: primaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.07*widthOfScreen,
+      fontSize: 0.07 * widthOfScreen,
       fontWeight: FontWeight.w400);
 }
 
-TextStyle getNormalTextStyleBlue(){
+TextStyle getNormalTextStyleBlue() {
   return TextStyle(
       color: primaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.045*widthOfScreen,
+      fontSize: 0.045 * widthOfScreen,
       fontWeight: FontWeight.w400);
 }
 
-TextStyle getNormalTextStyleWhite(){
+TextStyle getNormalTextStyleBlueItalicBold() {
+  return TextStyle(
+      color: primaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.045 * widthOfScreen,
+      fontStyle: FontStyle.italic,
+      fontWeight: FontWeight.w500);
+}
+
+TextStyle getNormalTextStyleWhite() {
   return TextStyle(
       color: tertiaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.045*widthOfScreen,
+      fontSize: 0.045 * widthOfScreen,
       fontWeight: FontWeight.w400);
 }
-TextStyle getNormalTextStyleYellow(){
+
+TextStyle getNormalTextStyleYellow() {
   return TextStyle(
       color: secondaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.045*widthOfScreen,
+      fontSize: 0.045 * widthOfScreen,
       fontWeight: FontWeight.w400);
 }
 
-TextStyle getSmallTextStyle(){
+TextStyle getSmallTextStyle() {
   return TextStyle(
       color: tertiaryColor,
       fontFamily: fontFamily,
-      fontSize: 0.04*widthOfScreen,
+      fontSize: 0.04 * widthOfScreen,
       fontWeight: FontWeight.w400);
 }
 
-ButtonStyle largeYellowButtonStyle = ButtonStyle(
+ButtonStyle yellowButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(secondaryColor),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     )));
 
-ButtonStyle largeGreyButtonStyle = ButtonStyle(
+ButtonStyle greyButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(quinaryColor),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10.0),
     )));
 
-ButtonStyle largeBlueButtonStyle = ButtonStyle(
+ButtonStyle blueButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(primaryColor),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        )));
+      borderRadius: BorderRadius.circular(10.0),
+    )));
 
+ButtonStyle whiteButtonStyle = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all(tertiaryColor),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10.0),
+    )));
 
 /**
  * Function to get an Input Decoration for a text field providing the Icon and the hint Text wanted
  * It is used for any other TextFormField different than the password one
  */
 InputDecoration getInputDecoration(
-    {required String hintText,
-      required Icon icon}) {
+    {required String hintText, required Icon icon}) {
   return InputDecoration(
       filled: true,
       fillColor: tertiaryColor,
@@ -139,3 +164,12 @@ InputDecoration getInputDecoration(
       contentPadding: EdgeInsets.only(
           top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen));
 }
+
+final InputDecoration inputDecorationForLongText = InputDecoration(
+    filled: true,
+    fillColor: tertiaryColor,
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5),
+      borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
+    ),
+    contentPadding: EdgeInsets.all(0.08 * widthOfScreen));

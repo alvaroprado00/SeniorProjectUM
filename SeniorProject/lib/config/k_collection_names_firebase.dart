@@ -4,3 +4,4 @@
 
 const String userCollectionName='userCollection';
 const String courseCollectionName='courseCollection';
+const String questionCollectionName='questions';

@@ -1,8 +1,5 @@
-/*
-
- */
-
 import 'package:cyber/view/sign-up/sign_up_2.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
@@ -86,12 +83,12 @@ class _SignUpEmailState extends State<SignUpEmail> {
                       Navigator.pushNamed(context, SignUpPassword.routeName, arguments: _controllerEmail.text,);
                     },
                     child: Text('Next', style: getNormalTextStyleBlue()),
-                    style: largeGreyButtonStyle,
+                    style: greyButtonStyle,
                   )),
 
               Padding(
                 padding: EdgeInsets.only(top: 0.03*heightOfScreen),
-                child: getCirclesProgressBar(position:1, numberOfCircles: 5, widthOfScreen: widthOfScreen),
+                child: getCirclesProgressBar(position:1, numberOfCircles: 5, ),
               ),
               ],
             )

@@ -1,5 +1,6 @@
 import 'package:cyber/view/sign-up/summary_sign_up.dart';
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
@@ -97,7 +98,7 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                     child: ElevatedButton(
                       onPressed: () {},
                       child: Text('Join', style: getNormalTextStyleBlue()),
-                      style: largeYellowButtonStyle,
+                      style: yellowButtonStyle,
                     )),
                 Padding(
                     padding: EdgeInsets.fromLTRB(
@@ -126,12 +127,12 @@ class _SignUpJoinGroupState extends State<SignUpJoinGroup> {
                     child: ElevatedButton(
                       onPressed: () {Navigator.pushNamed(context, SignUpSummary.routeName);},
                       child: Text('Skip', style: getNormalTextStyleBlue()),
-                      style: largeGreyButtonStyle,
+                      style: greyButtonStyle,
                     )),
 
                 Padding(
                   padding: EdgeInsets.only(top: 0.03*heightOfScreen),
-                  child: getCirclesProgressBar(position:5, numberOfCircles: 5,widthOfScreen: widthOfScreen),
+                  child: getCirclesProgressBar(position:5, numberOfCircles: 5,),
                 ),
               ],
             ),

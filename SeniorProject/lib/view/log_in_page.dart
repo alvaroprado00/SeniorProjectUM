@@ -1,6 +1,7 @@
 import 'package:cyber/view/useful/components.dart';
 import 'package:cyber/view/main.dart';
 import 'package:cyber/view/sign-up/sign_up_1.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
@@ -107,7 +108,7 @@ class _LogInPageState extends State<LogInPage> {
                             }
                           },
                           child: Text('Login', style: getNormalTextStyleBlue()),
-                          style: largeYellowButtonStyle,
+                          style: yellowButtonStyle,
                         )),
 
                     Padding(
@@ -126,7 +127,7 @@ class _LogInPageState extends State<LogInPage> {
                         child: ElevatedButton(
                           onPressed: () {Navigator.pushNamed(context, SignUpEmail.routeName);},
                           child: Text('Sign Up', style: getNormalTextStyleBlue()),
-                          style: largeGreyButtonStyle,
+                          style: greyButtonStyle,
                         )),
                   ],
                 ),
