@@ -5,7 +5,6 @@ import 'package:cyber/view/useful/components.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //Global variables to be filled when user interacts with buttons

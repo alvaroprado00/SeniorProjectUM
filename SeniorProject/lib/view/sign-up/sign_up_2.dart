@@ -37,9 +37,22 @@ class _SignUpPasswordState extends State<SignUpPassword> {
   @override
   Widget build(BuildContext context) {
 
+    //I get the email from the previous page
     final email = ModalRoute.of(context)!.settings.arguments as String;
 
+    //Function executed when button pressed
+    void Function() goToFinalSignUpPage=(){
+      if(_formKey.currentState!.validate()){
+        Navigator.pushNamed(context, SignUpUsername.routeName, arguments: [email,_controllerPassword.text]);
+
+      }
+    };
+
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        leading: getBackButton(context: context),
+      ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -48,10 +61,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: getBackButton(
-                        context: context, )),
+
                 Padding(
                   padding: EdgeInsets.only(top:0.27*heightOfScreen, bottom:0.05*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                   child:
@@ -66,9 +76,7 @@ class _SignUpPasswordState extends State<SignUpPassword> {
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SignUpUsername.routeName, arguments: [email,_controllerPassword.text]);
-                      },
+                      onPressed:goToFinalSignUpPage,
                       child: Text('Next', style:  getNormalTextStyleBlue()),
                       style: greyButtonStyle,
                     )),

@@ -7,9 +7,6 @@
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart' as globals;
 import 'package:cyber/model/course.dart';
-import 'package:cyber/model/fill_in_the_blanks_question.dart';
-import 'package:cyber/model/question.dart';
-import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/useful/components.dart';
 import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
@@ -17,7 +14,7 @@ import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
-import 'fill_in_the_blanks_question_page.dart';
+
 
 class CourseDescription extends StatelessWidget {
 

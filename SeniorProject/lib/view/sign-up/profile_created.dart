@@ -1,4 +1,3 @@
-import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';

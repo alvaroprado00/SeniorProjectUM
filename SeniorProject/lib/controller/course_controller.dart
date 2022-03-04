@@ -9,6 +9,7 @@ import 'package:cyber/model/multiple_choice_question.dart';
 import 'package:cyber/model/question.dart';
 import 'package:cyber/view/useful/k_values.dart';
 
+
 class CourseController {
 
 
@@ -164,6 +165,28 @@ class CourseController {
     print('Questions added');
     return Future<String>.value('Complete course added');
 
+  }
+
+  /**
+   * Function that retrieves a list of strings with the names
+   * of the courses from a certain category. If not any then the
+   * list will be empty.
+   */
+  Future getCourseNamesFromCategory({required String nameOfCategory}){
+    CollectionReference courses = FirebaseFirestore.instance.collection(
+        courseCollectionName);
+    List<String> courseNames=[];
+
+    return courses
+        .where('category', isEqualTo: nameOfCategory)
+        .get()
+        .then((snapshot) {
+
+          snapshot.docs.forEach((doc) {
+            courseNames.add(doc['title']);
+          });
+      return courseNames;
+    }).catchError((error)=> print('Error when looking for a category'));
   }
 }
 

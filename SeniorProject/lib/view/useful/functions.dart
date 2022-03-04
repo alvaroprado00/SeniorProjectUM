@@ -34,6 +34,19 @@ String? validatorForEmptyTextField(value) {
 }
 
 /**
+ * Validator for TextFormField. It verifies the value is not empty
+ */
+String? validatorForEmail(String? val){
+  if (val==null|| val.isEmpty) {
+    return 'Field is required';
+  }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val)){
+    return 'Please use a valid email';
+  }else{
+    return null;
+  }
+}
+
+/**
  * Validator for URL. It checks if the textFormField is not empty and
  * the value that holds is a valid URL
  */

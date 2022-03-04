@@ -46,9 +46,52 @@ class _SignUpUsernameState extends State<SignUpUsername> {
   @override
   Widget build(BuildContext context) {
 
+    //Here I get the email and the password as a List of String
     final args = ModalRoute.of(context)!.settings.arguments as List<String>;
+
+    //Here I define the function to execute when the button is pressed
+    void Function() signUpUser=()async{
+
+      if(_formKey.currentState!.validate()) {
+
+        //Once validated the form we create the user
+
+        UserCustom userCreated = UserCustom(email: args[0],
+            username: _controllerUsername.text,
+            currentXP: 0,
+            profilePictureActive: _controllerUsername.text,
+            collectedAvatars: [],
+            collectedBadges: [],
+            coursesSaved: [],
+            completedCourses: []);
+
+        //We have to persist the info
+
+        await UserController.addUserToAuthAndFirestore(
+            u: userCreated, password: args[1]).then((value) {
+          //I make the screen hold for 2s before using navigator so the user is able to read the message
+          Future.delayed(Duration(seconds: 2));
+
+          if (value is UserCustom) {
+            Navigator.pushNamed(
+                context, ProfileCreated.routeName, arguments: value);
+          } else {
+            SnackBar snBar = SnackBar(
+              content: Text(value, style: getNormalTextStyleBlue(),),
+              backgroundColor: secondaryColor,);
+            ScaffoldMessenger.of(context).showSnackBar(snBar);
+            Navigator.pushNamed(context, HomePage.routeName);
+          }
+        });
+      }
+    };
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: AppBar(
+        elevation: 0,
+        leading: getBackButton(context: context),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Form(
@@ -56,12 +99,6 @@ class _SignUpUsernameState extends State<SignUpUsername> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-
-                Align(
-                    alignment: AlignmentDirectional.centerStart,
-                    child: getBackButton(
-                        context: context)),
-
                 Padding(
                   padding: EdgeInsets.only(top:0.2*heightOfScreen, bottom:0.025*heightOfScreen, left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
                   child: Text('Enter a username.', style: getSubheadingStyleWhite()),
@@ -100,27 +137,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
-                      onPressed: () async {
-                        UserCustom userCreated=UserCustom(args[0],_controllerUsername.text);
-
-                        //Before going to the next page we create the user
-
-                        await UserController.addUserToAuthAndFirestore(u: userCreated, password: args[1]).then((value) {
-
-
-                          //I make the screen hold for 2s before using navigator so the user is able to read the message
-                          Future.delayed(Duration(seconds: 2));
-
-                          if(value is UserCustom){
-                            Navigator.pushNamed(context, ProfileCreated.routeName, arguments: value);
-                          }else{
-                            SnackBar snBar= SnackBar(content: Text(value, style: getNormalTextStyleBlue(),), backgroundColor: secondaryColor,);
-                            ScaffoldMessenger.of(context).showSnackBar(snBar);
-                            Navigator.pushNamed(context, HomePage.routeName);
-                          }
-                        });
-
-                      },
+                      onPressed: signUpUser,
                       child: Text('Next', style:  getNormalTextStyleBlue()),
                       style: greyButtonStyle,
                     )),

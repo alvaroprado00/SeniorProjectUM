@@ -1,7 +1,6 @@
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/fill_in_the_blanks_question.dart';
 import 'package:cyber/view/admin/new_fill_blanks_page_2.dart';
-import 'package:cyber/view/admin/new_multiple_choice_page_2.dart';
 import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
