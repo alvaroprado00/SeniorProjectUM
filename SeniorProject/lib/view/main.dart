@@ -136,7 +136,6 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-
             return DashboardPage();
           }
         case ApplicationLoginState.loggedOut:

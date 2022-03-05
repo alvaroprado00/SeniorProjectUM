@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'active_course.dart';
 import 'badge.dart';
 import 'completed_course.dart';
 
@@ -20,6 +21,8 @@ class UserCustom {
   List<Badge> collectedBadges;
   List<String> coursesSaved;
   List<CompletedCourse> completedCourses;
+  ActiveCourse? activeCourse;
+  bool isAdmin;
 
 
   UserCustom({
@@ -31,6 +34,8 @@ class UserCustom {
     required List<Badge> this.collectedBadges,
     required List<String> this.coursesSaved,
     required List<CompletedCourse> this.completedCourses,
+    required ActiveCourse? this.activeCourse,
+    required bool this.isAdmin
   });
 
   factory UserCustom.fromJson(Map<String, dynamic> json) => _$UserCustomFromJson(json);
@@ -57,7 +62,10 @@ getFakeUser() {
       currentXP: 470,
       collectedAvatars: fakeCollectedAvatars,
       completedCourses: fakeCompletedCourses,
-      coursesSaved: fakeCoursesSaved);
+      coursesSaved: fakeCoursesSaved,
+      activeCourse: null,
+      isAdmin: false,
+  );
 }
 
 List<Badge> fakeCollectedBadges = [
@@ -99,8 +107,7 @@ List<String> fakeCollectedAvatars = ["hello", "good morning", "hey"];
 
 List<CompletedCourse> fakeCompletedCourses = [
   CompletedCourse(
-      numOfQuestionsWrong: 3,
-      questionNumbers: [1, 2, 3],
+      answers: [false, false, false],
       experiencePointsEarned: 600,
       dateCompleted: DateTime.parse("2022-11-20"),
       courseID: "Password")

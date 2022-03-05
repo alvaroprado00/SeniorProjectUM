@@ -4,15 +4,20 @@ part 'completed_course.g.dart';
 
 @JsonSerializable()
 class CompletedCourse {
-  final int numOfQuestionsWrong;
-  final List<int> questionNumbers;
+
+  //To see how the user has done on the course we will use the attribute answers
+  // Number of answers: answers.lenght() To see which ones are wrong look for
+  // the position of false inside list. Note that lists in dart are ordered
+
+  final List<bool> answers;
   final int experiencePointsEarned;
   final DateTime dateCompleted;
   final String courseID;
 
+
   const CompletedCourse(
-      {required int this.numOfQuestionsWrong,
-      required List<int> this.questionNumbers,
+      {
+      required List<bool> this.answers,
       required int this.experiencePointsEarned,
       required DateTime this.dateCompleted,
       required String this.courseID});

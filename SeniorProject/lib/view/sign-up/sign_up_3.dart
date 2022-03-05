@@ -60,10 +60,14 @@ class _SignUpUsernameState extends State<SignUpUsername> {
             username: _controllerUsername.text,
             currentXP: 0,
             profilePictureActive: _controllerUsername.text,
-            collectedAvatars: [],
+            collectedAvatars: [_controllerUsername.text],
             collectedBadges: [],
             coursesSaved: [],
-            completedCourses: []);
+            completedCourses: [],
+        activeCourse: null,
+        isAdmin: false);
+
+
 
         //We have to persist the info
 

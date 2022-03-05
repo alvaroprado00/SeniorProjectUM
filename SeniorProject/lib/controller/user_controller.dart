@@ -19,7 +19,7 @@ class UserController {
       {required String email, required String password}) async {
     try {
       UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -43,7 +43,7 @@ class UserController {
     //First we upload the user in Auth DB
     try {
       UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: u.email,
         password: password,
       );
@@ -51,8 +51,8 @@ class UserController {
       //If we succeed in creating the user in the Auth DB, then we create the entry for the other info in the separate collection
       // That separate collection is were we will have our custom info of the user
 
-      return addUserToFireStore(userCustom: u, userId: userCredential.user!.uid);
-
+      return addUserToFireStore(
+          userCustom: u, userId: userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'The password provided is too weak.';
@@ -72,7 +72,7 @@ class UserController {
       {required UserCustom userCustom, required String userId}) {
     // Call the user's CollectionReference
     CollectionReference users =
-        FirebaseFirestore.instance.collection(userCollectionName);
+    FirebaseFirestore.instance.collection(userCollectionName);
     //Access specific entry and set info
     return users.doc(userId).set(userCustom.toJson()).then((value) {
       print("USER CREATED");
@@ -87,16 +87,29 @@ class UserController {
    * This method returns the user that is active in the app in case there is
    * one
    */
-  static Future getActiveUser() async {
+  static Future getActiveUser() {
     CollectionReference users =
-        FirebaseFirestore.instance.collection(userCollectionName);
+    FirebaseFirestore.instance.collection(userCollectionName);
 
     //I can get the uid of the active user with the following method
 
     String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
-    await users.doc(uidOfActiveUser).get().then((snapshot) {
-      Map<String, dynamic> json = snapshot.data as Map<String, dynamic>;
+    return users.doc(uidOfActiveUser).get().then((snapshot) {
+
+      Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
+
       return UserCustom.fromJson(json);
+    }).catchError((error) {
+      print('Failed to get User: ${error.toString()}');
     });
+  }
+
+  static Future getUsername() async {
+    try {
+      UserCustom u = await getActiveUser();
+      return u.username;
+    } catch (error) {
+      throw Exception('');
+    }
   }
 }

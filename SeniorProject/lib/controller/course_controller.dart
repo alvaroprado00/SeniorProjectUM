@@ -12,15 +12,14 @@ import 'package:cyber/view/useful/k_values.dart';
 
 class CourseController {
 
+  CollectionReference courses = FirebaseFirestore.instance.collection(
+      courseCollectionName);
 
   /**
    * Function to get a Course from the database when the title is specified
    */
   Future getCourse({required String title}) async {
     //First of all I create a reference to the collection of courses
-
-    CollectionReference courses = FirebaseFirestore.instance.collection(
-        courseCollectionName);
 
     return courses
           .where('title', isEqualTo: title)
@@ -49,8 +48,7 @@ class CourseController {
     //I create a reference to the subcollection of questions in the document
     //of the course
 
-    CollectionReference questions = FirebaseFirestore.instance.collection(
-        courseCollectionName).doc(courseId).collection(questionCollectionName);
+    CollectionReference questions = courses.doc(courseId).collection(questionCollectionName);
 
     Question q;
     return questions.get().then((snapshot) {
@@ -90,11 +88,6 @@ class CourseController {
 
   Future addCourseToFirebase(){
 
-    //Since the course is stored as a global variable we dont need to get it
-    //as a param
-    CollectionReference courses = FirebaseFirestore.instance.collection(
-        courseCollectionName);
-
     return courses.add({
       'category': stringFromCategory[newCourse!.category],
       'description': newCourse!.description,
@@ -130,8 +123,7 @@ class CourseController {
    */
   Future addQuestionsToFirebase({required String courseId}){
 
-    CollectionReference questions = FirebaseFirestore.instance.collection(
-        courseCollectionName).doc(courseId).collection(questionCollectionName);
+    CollectionReference questions = courses.doc(courseId).collection(questionCollectionName);
 
 
     for (Question q in newCourse!.questions){
@@ -173,8 +165,7 @@ class CourseController {
    * list will be empty.
    */
   Future getCourseNamesFromCategory({required String nameOfCategory}){
-    CollectionReference courses = FirebaseFirestore.instance.collection(
-        courseCollectionName);
+
     List<String> courseNames=[];
 
     return courses
@@ -187,6 +178,34 @@ class CourseController {
           });
       return courseNames;
     }).catchError((error)=> print('Error when looking for a category'));
+  }
+
+  Future getCourseByID({required String id}) {
+
+    return courses.doc(id).get().then((snapshot){
+      Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
+      return Course.fromJson(json);
+    }).catchError((error){
+      throw Exception('Course not found');
+    });
+  }
+
+  Future getRecommendedCourse() {
+
+    CollectionReference recommendedCollection= FirebaseFirestore.instance.collection(recommendedCollectionName);
+
+    return recommendedCollection.doc(recommendedDocName).get().then((snapshot) async {
+      Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
+      try{
+        Course c=await getCourseByID(id: json['courseID']);
+        return c;
+      }catch(error){
+        throw Exception('Did not found course with that ID');
+      }
+    }).catchError((error){
+      throw Exception('Not recommended course found');
+    });
+
   }
 }
 
