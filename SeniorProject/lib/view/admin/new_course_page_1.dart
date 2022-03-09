@@ -189,7 +189,7 @@ Widget buildDropdown() => Container(
       items: items
           .map((item) => DropdownMenuItem<k_values.Category>(
         child: Text(
-          k_values.stringFromCategory[item]?? 'No category',
+          k_values.categoryToString[item]?? 'No category',
           style: getNormalTextStyleBlue(),
         ),
         value: item,

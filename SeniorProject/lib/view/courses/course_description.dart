@@ -1,9 +1,3 @@
-/**
- * This page builds a course description page for an specific course
- * Now I get the course form a method in the model package. In the future
- * the name of the course should be provided when calling the constructor
- * so we can build the course by calling the database for that specific course
- */
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart' as globals;
 import 'package:cyber/model/course.dart';
@@ -18,23 +12,15 @@ import 'package:flutter/material.dart';
 
 class CourseDescription extends StatelessWidget {
 
-  /**
-   * This Page is created by specifying the name of the course that is going to
-   * show
-   */
+  const CourseDescription({Key? key}) : super(key: key);
 
-  const CourseDescription({required String this.courseTitle});
-
-  final String courseTitle;
+  static final routeName='/courseDescription';
 
   @override
   Widget build(BuildContext context) {
-    widthOfScreen = MediaQuery.of(context).size.width;
-    heightOfScreen = MediaQuery.of(context).size.height;
-    var padding = MediaQuery.of(context).padding;
 
-    //I update the height by subtracting the status bar height
-    heightOfScreen = heightOfScreen - padding.top;
+    final String courseID = ModalRoute.of(context)!.settings.arguments as String;
+
 
     //I need to have an instance of the Course controller to use the methods
     //defined in that class
@@ -44,9 +30,10 @@ class CourseDescription extends StatelessWidget {
     return Scaffold(
       backgroundColor: tertiaryColor,
       body:FutureBuilder(
-        future: courseController.getCourse(title: courseTitle),
+        future: courseController.getCourseByID(id: courseID),
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if (snapshot.hasData) {
+
               //Once I get the course I assign its value to a global variable
               // so I can access the info from other pages easily
               globals.activeCourse=snapshot.data;
@@ -67,7 +54,10 @@ class CourseDescription extends StatelessWidget {
   }
 }
 
-
+/**
+ * This class is built specifying a course in its constructor.
+ * When built, it shows the info from the course
+ */
 class CourseDescriptionContent extends StatelessWidget {
 
   const CourseDescriptionContent({required Course this.course});
@@ -165,6 +155,10 @@ class CourseDescriptionContent extends StatelessWidget {
   }
 }
 
+/**
+ * Function to get the outcomes of the course in the format that
+ * we have designed
+ */
 getContentForOutcomes({required List<String> outcomes}) {
   List<Widget> childrenForColumn = [];
 

@@ -15,15 +15,13 @@ class SignUpSummary extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
-        //This is to solve the problem of the overflow caused by the keyboard
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Align(
                   alignment: AlignmentDirectional.centerStart,
-                  child: getBackButton(
-                      context: context)),
+                  child: getBackButton(context: context)),
               Padding(
                 padding: EdgeInsets.only(
                     top: (0.015 * heightOfScreen),
@@ -56,9 +54,11 @@ class SignUpSummary extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: getCardForUnsavedCourse(
-                      nameOfCourse: 'Passwords',
+                      context: context,
+                      title: 'Passwords',
                       heightOfCard: 0.11 * heightOfScreen,
-                      widthOfCard: 0.4 * widthOfScreen),
+                      widthOfCard: 0.4 * widthOfScreen,
+                      isTemplate: true),
                 ),
               ),
               Padding(
@@ -82,32 +82,44 @@ class SignUpSummary extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       getCardForCategory(
-                          nameOfCategory: 'Social Media',
+                          context: context,
+                          category: Category.socialMedia,
                           widthOfCard: 0.4 * widthOfScreen,
-                          heightOfCard: 0.09 * heightOfScreen),
+                          heightOfCard: 0.09 * heightOfScreen,
+                          isTemplate: true),
                       getCardForCategory(
-                          nameOfCategory: 'Web',
+                          context: context,
+                          category: Category.info,
                           widthOfCard: 0.4 * widthOfScreen,
-                          heightOfCard: 0.09 * heightOfScreen),
+                          heightOfCard: 0.09 * heightOfScreen,
+                          isTemplate: true),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       getCardForCategory(
-                          nameOfCategory: 'Devices',
+                          context: context,
+                          category: Category.web,
                           widthOfCard: 0.4 * widthOfScreen,
-                          heightOfCard: 0.09 * heightOfScreen),
+                          heightOfCard: 0.09 * heightOfScreen,
+                          isTemplate: true),
                       getCardForCategory(
-                          nameOfCategory: 'Information',
+                          context: context,
+                          category: Category.info,
                           widthOfCard: 0.4 * widthOfScreen,
-                          heightOfCard: 0.09 * heightOfScreen),
+                          heightOfCard: 0.09 * heightOfScreen,
+                          isTemplate: true),
                     ],
                   )
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(top:0.03*heightOfScreen, left: widthOfScreen * 0.08, right:  widthOfScreen * 0.1, bottom:0.03*heightOfScreen ),
+                padding: EdgeInsets.only(
+                    top: 0.03 * heightOfScreen,
+                    left: widthOfScreen * 0.08,
+                    right: widthOfScreen * 0.1,
+                    bottom: 0.03 * heightOfScreen),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
@@ -116,11 +128,14 @@ class SignUpSummary extends StatelessWidget {
                   ),
                 ),
               ),
-
-              getCardForNotification(username:'Alvaro', nameOfCourse: 'Passwords', widthOfCard: 0.9*widthOfScreen, heightOfCard: 0.13*heightOfScreen),
-
+              getCardForNotification(
+                  username: 'Alvaro',
+                  nameOfCourse: 'Passwords',
+                  widthOfCard: 0.9 * widthOfScreen,
+                  heightOfCard: 0.13 * heightOfScreen),
               Padding(
-                padding: EdgeInsets.only(top:0.03*heightOfScreen, bottom:0.03*heightOfScreen ),
+                padding: EdgeInsets.only(
+                    top: 0.03 * heightOfScreen, bottom: 0.03 * heightOfScreen),
                 child: SizedBox(
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
@@ -132,8 +147,6 @@ class SignUpSummary extends StatelessWidget {
                       style: yellowButtonStyle,
                     )),
               ),
-
-
             ],
           ),
         ),

@@ -18,7 +18,7 @@ class CourseController {
   /**
    * Function to get a Course from the database when the title is specified
    */
-  Future getCourse({required String title}) async {
+  Future getCourseByTitle({required String title}) async {
     //First of all I create a reference to the collection of courses
 
     return courses
@@ -89,7 +89,7 @@ class CourseController {
   Future addCourseToFirebase(){
 
     return courses.add({
-      'category': stringFromCategory[newCourse!.category],
+      'category': categoryToString[newCourse!.category],
       'description': newCourse!.description,
       'experiencePoints': newCourse!.experiencePoints,
       'imageURL':newCourse!.imageURL,
@@ -164,29 +164,46 @@ class CourseController {
    * of the courses from a certain category. If not any then the
    * list will be empty.
    */
-  Future getCourseNamesFromCategory({required String nameOfCategory}){
+  Future getCoursesFromCategory({required Category category}){
 
-    List<String> courseNames=[];
+    Map<String, String> coursesInCategory={};
 
     return courses
-        .where('category', isEqualTo: nameOfCategory)
+        .where('category', isEqualTo: categoryToString[category]!)
         .get()
         .then((snapshot) {
 
           snapshot.docs.forEach((doc) {
-            courseNames.add(doc['title']);
+            coursesInCategory[doc.id]=doc['title'];
           });
-      return courseNames;
-    }).catchError((error)=> print('Error when looking for a category'));
+      return coursesInCategory;
+    }).catchError((error){
+
+      print('Error when looking for a category');
+
+      throw Exception('No courses in ${categoryToString[category]!}');
+    });
   }
 
+  /**
+   * This method returns a course from the DB. The param id is the courses' id
+   * It will also be filled with its questions.
+   */
   Future getCourseByID({required String id}) {
 
-    return courses.doc(id).get().then((snapshot){
+    return courses.doc(id).get().then((snapshot) async {
       Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
-      return Course.fromJson(json);
+      Course course= Course.fromJson(json);
+
+      try{
+        Course courseFilled= await getQuestionsForCourse(course: course, courseId:id);
+        return courseFilled;
+
+      }catch(error){
+        throw Exception('Failed when getting questions for course');
+      }
     }).catchError((error){
-      throw Exception('Course not found');
+      throw Exception(error.toString());
     });
   }
 
@@ -207,5 +224,8 @@ class CourseController {
     });
 
   }
+
+
+
 }
 

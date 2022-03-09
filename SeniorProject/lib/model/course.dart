@@ -46,7 +46,7 @@ class Course {
     return {
       'imageURL': imageURL,
       'title': title,
-      'category': stringFromCategory[category],
+      'category': categoryToString[category],
       'experiencePoints': experiencePoints,
       'numberOfQuestions': numberOfQuestions,
       'description': description,

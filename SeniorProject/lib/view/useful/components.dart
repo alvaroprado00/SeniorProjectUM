@@ -1,14 +1,14 @@
 import 'dart:math';
 
+import 'package:cyber/view/courses/course_description.dart';
 import 'package:flutter/material.dart';
 
 import '../avatar.dart';
+import '../courses/category.dart';
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
 import 'k_values.dart';
-
-
 
 /**
  * Class that defines the behaviour of a TextFormField for the password. Since it is used more than once and has
@@ -69,16 +69,23 @@ class _TextFormFieldForPasswordState extends State<TextFormFieldForPassword> {
  * Used as a progress Indicator in the sign-up flow
  * Uses the function getCircle()
  */
-Widget getCirclesProgressBar(
-    {required int position,
-    required int numberOfCircles,}) {
+Widget getCirclesProgressBar({
+  required int position,
+  required int numberOfCircles,
+}) {
   final children = <Widget>[];
 
   for (var i = 1; i <= numberOfCircles; i++) {
     if (position == i) {
-      children.add(getCircle(color: secondaryColor, size: 0.02 * widthOfScreen,));
+      children.add(getCircle(
+        color: secondaryColor,
+        size: 0.02 * widthOfScreen,
+      ));
     } else {
-      children.add(getCircle(color: quinaryColor, size: 0.02 * widthOfScreen,));
+      children.add(getCircle(
+        color: quinaryColor,
+        size: 0.02 * widthOfScreen,
+      ));
     }
   }
   return Row(
@@ -93,53 +100,52 @@ Widget getCirclesProgressBar(
  * Uses the function getCircle()
  */
 Widget getCirclesProgressBarForPauseMenu(
-    {required int position,
-      required int numberOfCircles}) {
+    {required int position, required int numberOfCircles}) {
   final children = <Widget>[];
 
   for (var i = 1; i <= numberOfCircles; i++) {
-    if (i<=position) {
-      children.add(getCircle(color: secondaryColor, size: 0.04*widthOfScreen));
+    if (i < position) {
+      children
+          .add(getCircle(color: secondaryColor, size: 0.04 * widthOfScreen));
     } else {
-      children.add(getCircle(color: quinaryColor, size: 0.04*widthOfScreen));
+      children.add(getCircle(color: quinaryColor, size: 0.04 * widthOfScreen));
     }
   }
 
   return Container(
-    height: 0.05*heightOfScreen,
-    width: 0.8*widthOfScreen,
+    height: 0.05 * heightOfScreen,
+    width: 0.8 * widthOfScreen,
+    alignment: Alignment.center,
     child: ListView(
+      shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       children: children,
     ),
   );
-
 }
 
 Widget getCirclesProgressBarForCourseProgression(
-    {required List<bool> answers,
-      required int numberOfCircles}) {
-
+    {required List<bool> answers, required int numberOfCircles}) {
   final children = <Widget>[];
 
   for (var i = 0; i < numberOfCircles; i++) {
-    if (i<answers.length) {
-      children.add(getCircle(color: answers[i]? Colors.green: Colors.red, size: 0.04*widthOfScreen));
+    if (i < answers.length) {
+      children.add(getCircle(
+          color: answers[i] ? Colors.green : Colors.red,
+          size: 0.04 * widthOfScreen));
     } else {
-      children.add(getCircle(color: quinaryColor, size: 0.04*widthOfScreen));
+      children.add(getCircle(color: quinaryColor, size: 0.04 * widthOfScreen));
     }
   }
   return Container(
-    height: 0.05*heightOfScreen,
-    width: 0.8*widthOfScreen,
+    height: 0.05 * heightOfScreen,
+    width: 0.8 * widthOfScreen,
     child: ListView(
       scrollDirection: Axis.horizontal,
       children: children,
     ),
   );
 }
-
-
 
 Widget getCircle({required Color color, required double size}) {
   return Padding(
@@ -186,44 +192,55 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
             context: context,
             builder: (BuildContext context) {
               return Container(
-                height: 0.25*heightOfScreen,
+                height: 0.25 * heightOfScreen,
                 child: Column(
-
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('Are you sure you want to exit?',style:getSubheadingStyleYellow(),),
-                    Text('Your progress will not be saved', style: getNormalTextStyleBlue(),),
-
+                    Text(
+                      'Are you sure you want to exit?',
+                      style: getSubheadingStyleYellow(),
+                    ),
+                    Text(
+                      'Your progress will not be saved',
+                      style: getNormalTextStyleBlue(),
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [SizedBox(
-                        height: getHeightOfSmallButton(),
-                        width: getWidthOfSmallButton(),
-                        child: ElevatedButton(
-                          style: yellowButtonStyle,
-                          child:Text('No', style: getNormalTextStyleBlue(),),
-                          onPressed: () {Navigator.pop(context);},
+                      children: [
+                        SizedBox(
+                          height: getHeightOfSmallButton(),
+                          width: getWidthOfSmallButton(),
+                          child: ElevatedButton(
+                            style: yellowButtonStyle,
+                            child: Text(
+                              'No',
+                              style: getNormalTextStyleBlue(),
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
                         ),
-                      ),
                         SizedBox(
                           height: getHeightOfSmallButton(),
                           width: getWidthOfSmallButton(),
                           child: ElevatedButton(
                             style: greyButtonStyle,
-                            child:Text('Yes', style: getNormalTextStyleBlue(),),
+                            child: Text(
+                              'Yes',
+                              style: getNormalTextStyleBlue(),
+                            ),
                             onPressed: () => print('popo'),
                           ),
-                        ),],
+                        ),
+                      ],
                     )
                   ],
-
                 ),
               );
-            }
-        );
-      }
-      ,
+            });
+      },
       icon: Icon(
         Icons.clear,
         color: secondaryColor,
@@ -237,14 +254,23 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
  * Yoy need to Specify the width of the card as well as the height of the sized
  * box containing everything
  *
- * For now the card does nothing when clicked however in the future we should
- * be able to redirect the user to the course using the nameOfCourse
+ * It is necessary to specify if the card is or not a template. In case it is not
+ * then using the argument context and the courseId, when pressed it will
+ * redirect the user to the page CourseDescription
  */
 
 Card getCardForUnsavedCourse(
-    {required String nameOfCourse,
+    {String courseId = '',
+    required BuildContext context,
+    required String title,
     required double widthOfCard,
-    required double heightOfCard}) {
+    required double heightOfCard,
+    required bool isTemplate}) {
+  void Function() navigateToCourse = () {
+    Navigator.pushNamed(context, CourseDescription.routeName,
+        arguments: courseId);
+  };
+
   return Card(
     color: primaryColor,
     borderOnForeground: true,
@@ -253,9 +279,11 @@ Card getCardForUnsavedCourse(
         borderRadius: BorderRadius.circular(10.0)),
     child: InkWell(
       splashColor: secondaryColor,
-      onTap: () {
-        debugPrint('Card tapped.');
-      },
+      onTap: isTemplate
+          ? () {
+              print('This is a template');
+            }
+          : navigateToCourse,
       child: SizedBox(
         height: heightOfCard,
         width: widthOfCard,
@@ -266,7 +294,7 @@ Card getCardForUnsavedCourse(
                 left: 0.05 * widthOfCard, bottom: heightOfCard * 0.05),
             child: Align(
                 alignment: Alignment.bottomLeft,
-                child: Text('$nameOfCourse', style: getNormalTextStyleWhite())),
+                child: Text('$title', style: getNormalTextStyleWhite())),
           ),
         ]),
       ),
@@ -315,11 +343,28 @@ class _SaveButtonState extends State<SaveButton> {
  * width and the height.
  *
  * V 1.0 (2/8/22) Does nothing when tapped
+ *
+ * V 2.0 (3/8/22) Now when the card is tapped is navigates to the category itself
+ * You also need to specify if it is a template Card. In case this param is set
+ * to true, the card does nothing when tapped.
+ *
+ * Param: context. If the card is not a template we need a build context
+ * from which we navigate from. Even stated that we only use it when template is
+ * false, we have to make it required because its nature makes unable to assign
+ * null as a value
  */
+
 Card getCardForCategory(
-    {required String nameOfCategory,
+    {required BuildContext context,
+    required Category category,
     required double widthOfCard,
-    required double heightOfCard}) {
+    required double heightOfCard,
+    required bool isTemplate}) {
+  //Function to be executed if the card is not a template
+  void Function() navigateToCategory = () {
+    Navigator.pushNamed(context, CategoryPage.routeName, arguments: category);
+  };
+
   return Card(
     color: primaryColor,
     borderOnForeground: true,
@@ -328,15 +373,18 @@ Card getCardForCategory(
         borderRadius: BorderRadius.circular(10.0)),
     child: InkWell(
       splashColor: secondaryColor,
-      onTap: () {
-        debugPrint('Redirected to category bla bla.');
-      },
+      onTap: isTemplate
+          ? () {
+              print('Does nothing');
+            }
+          : navigateToCategory,
       child: SizedBox(
         width: widthOfCard,
         height: heightOfCard,
         child: Align(
             alignment: Alignment.center,
-            child: Text('$nameOfCategory', style: getNormalTextStyleWhite())),
+            child: Text(categoryToString[category]!,
+                style: getNormalTextStyleWhite())),
       ),
     ),
   );
@@ -408,7 +456,11 @@ String? getRandomEncouragingMessage() {
  * or exit it whithout saving the progress
  */
 Widget getOptionsButton(
-{required BuildContext context, required String courseTitle, required String categoryTitle, required int question, required int numberOfQuestions}) {
+    {required BuildContext context,
+    required String courseTitle,
+    required String categoryTitle,
+    required int question,
+    required int numberOfQuestions}) {
   return IconButton(
       icon: Icon(
         Icons.menu,
@@ -422,9 +474,9 @@ Widget getOptionsButton(
             context: context,
             builder: (BuildContext context) {
               return Container(
-                padding: EdgeInsets.only(top: 0.1*widthOfScreen, bottom: 0.1*widthOfScreen),
-                height: 0.4*heightOfScreen,
-
+                padding: EdgeInsets.only(
+                    top: 0.1 * widthOfScreen, bottom: 0.1 * widthOfScreen),
+                height: 0.4 * heightOfScreen,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
@@ -436,40 +488,49 @@ Widget getOptionsButton(
                       courseTitle,
                       style: getSubheadingStyleYellow(),
                     ),
-                    getCirclesProgressBarForPauseMenu(position: question, numberOfCircles: numberOfQuestions),
-
+                    getCirclesProgressBarForPauseMenu(
+                        position: question, numberOfCircles: numberOfQuestions),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-
                       children: [
                         SizedBox(
                           height: getHeightOfSmallButton(),
                           width: getWidthOfSmallButton(),
                           child: ElevatedButton(
                             style: yellowButtonStyle,
-                            child:Text('Save', style: getNormalTextStyleBlue(),),
+                            child: Text(
+                              'Save',
+                              style: getNormalTextStyleBlue(),
+                            ),
                             onPressed: () => print('popo'),
                           ),
                         ),
-                        SizedBox(width: 0.06*widthOfScreen,),
+                        SizedBox(
+                          width: 0.06 * widthOfScreen,
+                        ),
                         SizedBox(
                           height: getHeightOfSmallButton(),
                           width: getWidthOfSmallButton(),
                           child: ElevatedButton(
                             style: greyButtonStyle,
-                            child: Text('Exit', style: getNormalTextStyleBlue(),),
+                            child: Text(
+                              'Exit',
+                              style: getNormalTextStyleBlue(),
+                            ),
                             onPressed: () => print('popo'),
                           ),
                         )
                       ],
                     ),
-
                     SizedBox(
                       height: getHeightOfLargeButton(),
                       width: getWidthOfLargeButton(),
                       child: ElevatedButton(
                         style: blueButtonStyle,
-                        child:Text('Resume', style: getNormalTextStyleWhite(),),
+                        child: Text(
+                          'Resume',
+                          style: getNormalTextStyleWhite(),
+                        ),
                         onPressed: () => print('popo'),
                       ),
                     )
@@ -480,18 +541,15 @@ Widget getOptionsButton(
       });
 }
 
-
-
 /**
  * Function that returns a grey box with rounded corners containing a child
  * specified in the param. Used in the app to display different types of
  * text
  */
-Widget getGreyTextHolderContainer({required Widget child}){
+Widget getGreyTextHolderContainer({required Widget child}) {
   return Container(
-    padding: EdgeInsets.all(widthOfScreen*0.02),
+    padding: EdgeInsets.all(widthOfScreen * 0.02),
     decoration: new BoxDecoration(
-
         color: quinaryColor,
         borderRadius: new BorderRadius.all(
           Radius.circular(0.05 * widthOfScreen),
@@ -504,10 +562,10 @@ Widget getGreyTextHolderContainer({required Widget child}){
  * Function that returns the Next Button. You need to specify
  * the function to execute when pressing it
  */
-Widget getNextButton({required void Function() todo, required bool large}){
+Widget getNextButton({required void Function() todo, required bool large}) {
   return SizedBox(
-      height:large? getHeightOfLargeButton(): getHeightOfSmallButton(),
-      width: large? getWidthOfLargeButton():getWidthOfSmallButton(),
+      height: large ? getHeightOfLargeButton() : getHeightOfSmallButton(),
+      width: large ? getWidthOfLargeButton() : getWidthOfSmallButton(),
       child: ElevatedButton(
         onPressed: todo,
         child: Text('Next', style: getNormalTextStyleBlue()),
@@ -519,13 +577,13 @@ Widget getNextButton({required void Function() todo, required bool large}){
  * Function that returns the Add question Button.
  */
 
-Widget getAddQuestionButton({required void Function() todo}){
+Widget getAddQuestionButton({required void Function() todo}) {
   return SizedBox(
       height: getHeightOfLargeButton(),
       width: getWidthOfLargeButton(),
       child: ElevatedButton(
         onPressed: todo,
-        child: Text('Add Question', style:  getNormalTextStyleBlue()),
+        child: Text('Add Question', style: getNormalTextStyleBlue()),
         style: yellowButtonStyle,
       ));
 }

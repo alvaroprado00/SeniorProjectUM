@@ -53,7 +53,7 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
                       getOptionsButton(
                           context: context,
                           courseTitle: globals.activeCourse!.title,
-                          categoryTitle: stringFromCategory[globals.activeCourse!.category]?? 'No category found',
+                          categoryTitle: categoryToString[globals.activeCourse!.category]?? 'No category found',
                           question: question.number,
                           numberOfQuestions: globals.activeCourse!.numberOfQuestions)
                     ],

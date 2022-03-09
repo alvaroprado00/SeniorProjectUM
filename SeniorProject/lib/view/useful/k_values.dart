@@ -32,7 +32,7 @@ enum Category{
   info,
 }
 
-Map <Category, String> stringFromCategory={
+Map <Category, String> categoryToString={
   Category.socialMedia: 'Social Media',
   Category.devices: 'Devices',
   Category.info:'Info',

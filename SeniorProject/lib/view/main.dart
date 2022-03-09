@@ -6,6 +6,7 @@ import 'package:cyber/view/admin/new_fill_blanks_page_2.dart';
 import 'package:cyber/view/admin/new_multiple_choice_page_1.dart';
 import 'package:cyber/view/admin/long_feedback_page.dart';
 import 'package:cyber/view/admin/new_question_page.dart';
+import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
@@ -20,6 +21,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'admin/new_multiple_choice_page_2.dart';
+import 'courses/category.dart';
 import 'courses/fill_in_the_blanks_question_page.dart';
 import 'dashboard/dashboard.dart';
 import 'log_in_page.dart';
@@ -98,6 +100,10 @@ class MyApp extends StatelessWidget {
         FillInBlanksText.routeName:(context)=> const FillInBlanksText(),
         FillInBlanksOptions.routeName:(context)=> const FillInBlanksOptions(),
         DashboardPage.routeName:(context)=> const DashboardPage(),
+        CategoryPage.routeName:(context)=> const CategoryPage(),
+        CourseDescription.routeName:(context)=> const CourseDescription(),
+
+
 
 
 

@@ -24,37 +24,25 @@ class UserCustom {
   ActiveCourse? activeCourse;
   bool isAdmin;
 
+  UserCustom(
+      {required String this.email,
+      required String this.username,
+      required int this.currentXP,
+      required String this.profilePictureActive,
+      required List<String> this.collectedAvatars,
+      required List<Badge> this.collectedBadges,
+      required List<String> this.coursesSaved,
+      required List<CompletedCourse> this.completedCourses,
+      required ActiveCourse? this.activeCourse,
+      required bool this.isAdmin});
 
-  UserCustom({
-    required String this.email,
-    required String this.username,
-    required int this.currentXP,
-    required String this.profilePictureActive,
-    required List<String> this.collectedAvatars,
-    required List<Badge> this.collectedBadges,
-    required List<String> this.coursesSaved,
-    required List<CompletedCourse> this.completedCourses,
-    required ActiveCourse? this.activeCourse,
-    required bool this.isAdmin
-  });
-
-  factory UserCustom.fromJson(Map<String, dynamic> json) => _$UserCustomFromJson(json);
+  factory UserCustom.fromJson(Map<String, dynamic> json) =>
+      _$UserCustomFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserCustomToJson(this);
 
-}
-
-  //I delete them since is the same to do userCustom.completedCourses.length.toString()
-/*
-  String getNumOfCompletedCourses() {
-    return completedCourses.length.toString();
-  }
-*/
-
-
-
-getFakeUser() {
-  return UserCustom(
+  getFakeUser() {
+    return UserCustom(
       email: 'Fake@gmail.com',
       username: 'FakeUser',
       profilePictureActive: 'FakeUser',
@@ -65,8 +53,40 @@ getFakeUser() {
       coursesSaved: fakeCoursesSaved,
       activeCourse: null,
       isAdmin: false,
-  );
+    );
+  }
+
+  int getCompletedCoursesInCategory({required List<String> courseIDs}) {
+    int i = 0;
+
+    for (CompletedCourse completed in this.completedCourses) {
+      if (courseIDs.contains(completed.courseID)) {
+        i++;
+      }
+    }
+
+    return i;
+  }
+
+  int getXPInCategory({required List<String> courseIDs}) {
+
+    int i=0;
+
+    for(CompletedCourse completed in this.completedCourses){
+      if(courseIDs.contains(completed.courseID)){
+        i=i+completed.experiencePointsEarned;
+      }
+    }
+    return i;
+  }
 }
+
+//I delete them since is the same to do userCustom.completedCourses.length.toString()
+/*
+  String getNumOfCompletedCourses() {
+    return completedCourses.length.toString();
+  }
+*/
 
 List<Badge> fakeCollectedBadges = [
   Badge(

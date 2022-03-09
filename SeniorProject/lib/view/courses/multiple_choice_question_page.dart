@@ -47,7 +47,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                   getOptionsButton(
                       context: context,
                       courseTitle: globals.activeCourse!.title,
-                      categoryTitle: stringFromCategory[globals.activeCourse!.category]?? 'No category found',
+                      categoryTitle: categoryToString[globals.activeCourse!.category]?? 'No category found',
                       question: question.number,
                       numberOfQuestions: globals.activeCourse!.numberOfQuestions)
                 ],
@@ -56,7 +56,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: LinearProgressIndicator(
                     color: secondaryColor,
-                    value: 0.1,
+                    value: (question.number.toDouble()/globals.activeCourse!.numberOfQuestions.toDouble()),
                   )),
               SizedBox(
                 height: 0.05 * heightOfScreen,

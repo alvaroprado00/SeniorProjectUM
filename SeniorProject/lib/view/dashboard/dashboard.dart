@@ -22,6 +22,10 @@ class DashboardPage extends StatelessWidget {
           future: UserController.getActiveUser(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
+
+              //This is the moment to save our active user in the global variable
+
+              activeUser=snapshot.data;
               return ContentForDashboard(user: snapshot.data);
             } else if (snapshot.hasError) {
               return Center(
@@ -37,6 +41,11 @@ class DashboardPage extends StatelessWidget {
         ));
   }
 }
+
+/**
+ * Class to show the info for the Dashboard. It receives the active user as a
+ * param since the content varies depending on the user.
+ */
 
 class ContentForDashboard extends StatelessWidget {
   const ContentForDashboard({required UserCustom this.user});
@@ -57,7 +66,6 @@ class ContentForDashboard extends StatelessWidget {
                 'Welcome ${user.username}!',
                 style: getSubheadingStyleBlue(),
               ),
-
               user.activeCourse == null
                   ? SizedBox(
                       height: 0,
@@ -107,19 +115,19 @@ class _RecommendedCourseContentState extends State<RecommendedCourseContent> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            Text('Recommended', style: getNormalTextStyleBlue()),
-            Divider(
-              color: primaryColor,
-              thickness: 2,
-            ),
-            ContainerForCourse(
-                description: snapshot.data.description,
-                nameOfCourse: snapshot.data.title,
-                isResume: false),
-          ]);
+                Text('Recommended', style: getNormalTextStyleBlue()),
+                Divider(
+                  color: primaryColor,
+                  thickness: 2,
+                ),
+                ContainerForCourse(
+                    description: snapshot.data.description,
+                    nameOfCourse: snapshot.data.title,
+                    isResume: false),
+              ]);
         } else if (snapshot.hasError) {
           return Center(
             child: Text(
@@ -191,7 +199,7 @@ class _ResumeCourseContentState extends State<ResumeCourseContent> {
 /**
  * This class builds an special container shown in the dashboard.
  * It has been built to show both the recommended course and the
- * active course. In case the curse is the active one we need to
+ * active course. In case the course is the active one we need to
  * provide the optional param percentage
  */
 class ContainerForCourse extends StatelessWidget {
@@ -279,6 +287,11 @@ class ContainerForCourse extends StatelessWidget {
   }
 }
 
+/**
+ * This class when built shows a grid with 4 cards. One for each
+ * category
+ */
+
 class CategoryCards extends StatelessWidget {
   const CategoryCards({Key? key}) : super(key: key);
 
@@ -290,31 +303,37 @@ class CategoryCards extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             getCardForCategory(
-                nameOfCategory: 'Devices',
+                context: context,
+                category: Category.devices,
                 widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen),
+                heightOfCard: 0.2 * heightOfScreen,
+                isTemplate: false),
             getCardForCategory(
-                nameOfCategory: 'Info',
+                context: context,
+                category: Category.info,
                 widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen),
+                heightOfCard: 0.2 * heightOfScreen,
+                isTemplate: false),
           ],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             getCardForCategory(
-                nameOfCategory: 'Social Media',
+                context: context,
+                category: Category.socialMedia,
                 widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen),
+                heightOfCard: 0.2 * heightOfScreen,
+                isTemplate: false),
             getCardForCategory(
-                nameOfCategory: 'Web',
+                context: context,
+                category: Category.web,
                 widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen),
+                heightOfCard: 0.2 * heightOfScreen,
+                isTemplate: false),
           ],
         )
       ],
     );
   }
 }
-
-
