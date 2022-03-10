@@ -41,4 +41,15 @@ class MultipleChoiceQuestion extends Question {
       rightOption: json['rightOption'],
     );
   }
+
+  Map<String, Object?> toJson() {
+    return {
+      'longFeedback': longFeedback,
+      'number': number,
+      'options': options,
+      'rightOption': rightOption,
+      'description': description,
+      'typeOfQuestion': stringFromTypeOfQuestion[typeOfQuestion],
+    };
+  }
 }

@@ -1,18 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'active_course.dart';
+part of 'current_course.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ActiveCourse _$ActiveCourseFromJson(Map<String, dynamic> json) => ActiveCourse(
+CurrentCourse _$CurrentCourseFromJson(Map<String, dynamic> json) =>
+    CurrentCourse(
       courseID: json['courseID'] as String,
       progress:
           (json['progress'] as List<dynamic>).map((e) => e as bool).toList(),
     );
 
-Map<String, dynamic> _$ActiveCourseToJson(ActiveCourse instance) =>
+Map<String, dynamic> _$CurrentCourseToJson(CurrentCourse instance) =>
     <String, dynamic>{
       'courseID': instance.courseID,
       'progress': instance.progress,

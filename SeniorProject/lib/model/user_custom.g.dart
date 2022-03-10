@@ -23,9 +23,10 @@ UserCustom _$UserCustomFromJson(Map<String, dynamic> json) => UserCustom(
       completedCourses: (json['completedCourses'] as List<dynamic>)
           .map((e) => CompletedCourse.fromJson(e as Map<String, dynamic>))
           .toList(),
-      activeCourse: json['activeCourse'] == null
+      currentCourse: json['currentCourse'] == null
           ? null
-          : ActiveCourse.fromJson(json['activeCourse'] as Map<String, dynamic>),
+          : CurrentCourse.fromJson(
+              json['currentCourse'] as Map<String, dynamic>),
       isAdmin: json['isAdmin'] as bool,
     );
 
@@ -36,9 +37,11 @@ Map<String, dynamic> _$UserCustomToJson(UserCustom instance) =>
       'currentXP': instance.currentXP,
       'profilePictureActive': instance.profilePictureActive,
       'collectedAvatars': instance.collectedAvatars,
-      'collectedBadges': instance.collectedBadges,
+      'collectedBadges':
+          instance.collectedBadges.map((e) => e.toJson()).toList(),
       'coursesSaved': instance.coursesSaved,
-      'completedCourses': instance.completedCourses,
-      'activeCourse': instance.activeCourse,
+      'completedCourses':
+          instance.completedCourses.map((e) => e.toJson()).toList(),
+      'currentCourse': instance.currentCourse?.toJson(),
       'isAdmin': instance.isAdmin,
     };

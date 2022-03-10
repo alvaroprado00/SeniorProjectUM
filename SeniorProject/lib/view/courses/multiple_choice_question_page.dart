@@ -103,7 +103,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                        }
 
                        //I update the global variables once answer submitted
-                       globals.userProgress!.add(isRight);
+                       globals.userProgress.add(isRight);
                        globals.activeQuestionNum=globals.activeQuestionNum!+1;
 
                         showDialog(

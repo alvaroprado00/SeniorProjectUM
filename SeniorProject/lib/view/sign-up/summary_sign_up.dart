@@ -3,6 +3,7 @@ import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
+import '../useful/cards.dart';
 import '../useful/components.dart';
 
 class SignUpSummary extends StatelessWidget {

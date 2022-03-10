@@ -9,7 +9,7 @@ Course? activeCourse;
 
 int? activeQuestionNum;
 
-List<bool>? userProgress;
+List<bool> userProgress=[];
 
 int? newQuestionNum;
 

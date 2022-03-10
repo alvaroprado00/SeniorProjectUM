@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:cyber/model/question.dart';
 import 'package:cyber/globals.dart' as globals;
-import 'package:cyber/view/courses/category.dart';
 import 'package:flutter/material.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
@@ -106,4 +107,13 @@ String? validatorForRightOption(value) {
     return 'The right option must be between [1-4]';
   }
   return null;
+}
+
+/**
+ * This function returns a random String contained in a map defined in
+ * k_values. This maps contains a fixed amount of encouraging messages to create
+ * the notification cards
+ */
+String? getRandomEncouragingMessage() {
+  return encouragingMessages[Random().nextInt(encouragingMessages.length - 1)];
 }

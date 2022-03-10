@@ -1,6 +1,8 @@
+import 'package:cyber/controller/user_controller.dart';
+import 'package:cyber/globals.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'active_course.dart';
+import 'current_course.dart';
 import 'badge.dart';
 import 'completed_course.dart';
 
@@ -11,7 +13,7 @@ part 'user_custom.g.dart';
  * Not the password since it should not be stored
  */
 
-@JsonSerializable()
+@JsonSerializable(explicitToJson: true)
 class UserCustom {
   String email;
   String username;
@@ -21,7 +23,7 @@ class UserCustom {
   List<Badge> collectedBadges;
   List<String> coursesSaved;
   List<CompletedCourse> completedCourses;
-  ActiveCourse? activeCourse;
+  CurrentCourse? currentCourse;
   bool isAdmin;
 
   UserCustom(
@@ -33,7 +35,7 @@ class UserCustom {
       required List<Badge> this.collectedBadges,
       required List<String> this.coursesSaved,
       required List<CompletedCourse> this.completedCourses,
-      required ActiveCourse? this.activeCourse,
+      required CurrentCourse? this.currentCourse,
       required bool this.isAdmin});
 
   factory UserCustom.fromJson(Map<String, dynamic> json) =>
@@ -51,7 +53,7 @@ class UserCustom {
       collectedAvatars: fakeCollectedAvatars,
       completedCourses: fakeCompletedCourses,
       coursesSaved: fakeCoursesSaved,
-      activeCourse: null,
+      currentCourse: null,
       isAdmin: false,
     );
   }
@@ -78,6 +80,22 @@ class UserCustom {
       }
     }
     return i;
+  }
+
+  void saveCourse({required String courseID}){
+    this.coursesSaved.add(courseID);
+    UserController.updateActiveUser();
+  }
+
+  void unsaveCourse({required String courseID}){
+    this.coursesSaved.remove(courseID);
+    UserController.updateActiveUser();
+  }
+
+  Future<void> updateCurrentCourse() async {
+    CurrentCourse cc=CurrentCourse(courseID:activeCourse!.id! , progress: userProgress);
+    this.currentCourse=cc;
+    await UserController.updateActiveUser();
   }
 }
 

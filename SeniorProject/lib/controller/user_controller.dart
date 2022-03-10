@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/config/k_collection_names_firebase.dart';
+import 'package:cyber/globals.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-/**
- * Class that includes static methods to interact with users in DB
- */
 
 class UserController {
   /**
@@ -14,12 +11,11 @@ class UserController {
    * the state of the user to loggedIn. In case the credentials are KO returns
    * a String with the reason of the error
    */
-
   static Future loginWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
       UserCredential userCredential =
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -43,7 +39,7 @@ class UserController {
     //First we upload the user in Auth DB
     try {
       UserCredential userCredential =
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: u.email,
         password: password,
       );
@@ -72,14 +68,14 @@ class UserController {
       {required UserCustom userCustom, required String userId}) {
     // Call the user's CollectionReference
     CollectionReference users =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
     //Access specific entry and set info
     return users.doc(userId).set(userCustom.toJson()).then((value) {
       print("USER CREATED");
-      return userCustom;
+      return true;
     }).catchError((error) {
       print("ERROR when persisting user in collection");
-      return 'Error when persisting user in DB';
+      throw Exception('Error when creating user in Firestore');
     });
   }
 
@@ -89,13 +85,12 @@ class UserController {
    */
   static Future getActiveUser() {
     CollectionReference users =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
 
     //I can get the uid of the active user with the following method
 
     String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
     return users.doc(uidOfActiveUser).get().then((snapshot) {
-
       Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
 
       return UserCustom.fromJson(json);
@@ -111,5 +106,14 @@ class UserController {
     } catch (error) {
       throw Exception('');
     }
+  }
+
+  static Future updateActiveUser() {
+    //We get the id of the active user
+    String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
+
+    //Now we update it in the Firestore DB
+
+    return addUserToFireStore(userCustom: activeUser!, userId: uidOfActiveUser);
   }
 }

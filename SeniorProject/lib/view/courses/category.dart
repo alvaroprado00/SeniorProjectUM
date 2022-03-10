@@ -6,6 +6,7 @@ import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
 import '../../globals.dart';
+import '../useful/cards.dart';
 
 class CategoryPage extends StatelessWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -102,29 +103,12 @@ class CategoryPage extends StatelessWidget {
   }
 }
 
-/**
- * Method to get a container with the text divided into two lines.
- * You specify the first line in param txt1 and the second one in
- * txt2
- */
-getDoubleLineText({required String txt1, required String txt2}) {
-  return Container(
-    width: 0.27 * widthOfScreen,
-    child: Column(
-      children: [
-        Text(
-          txt1,
-          style: getNormalTextStyleBlue(),
-        ),
-        Text(
-          txt2,
-          style: getNormalTextStyleBlue(),
-        ),
-      ],
-    ),
-  );
-}
 
+/**
+ * This method is used to get the cards of the courses that are specified in
+ * the param courses. The way it returns the courses is a column in which the children
+ * are rows formed of two courses.
+ */
 getCourseCards(
     {required Map<String, String> courses, required BuildContext context}) {
   //We get as a param a map. Each entry <courseID, courseTitle>
@@ -133,9 +117,18 @@ getCourseCards(
   List<Widget> childrenForRow = [];
   int i = 0;
   courses.forEach((key, value) {
+
+    //First we check if the active user has the course Saved
+    bool isSaved=false;
+    if(activeUser!.coursesSaved.contains(key)){
+      isSaved=true;
+    }
+
+    //We add the course to a row
     childrenForRow.add(getCardForUnsavedCourse(
+        isSaved: isSaved,
         context: context,
-        courseId: key,
+        courseID: key,
         title: value,
         widthOfCard: 0.43 * widthOfScreen,
         heightOfCard: 0.12 * heightOfScreen,
@@ -143,7 +136,7 @@ getCourseCards(
     if (i == 0) {
       i++;
     } else {
-      //Second Card added to the row
+      //Second child of the row. We add it and after create new array for new row
       children.add(Row(
         children: childrenForRow,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -154,6 +147,7 @@ getCourseCards(
   });
 
   //This means that the number of courses is odd so a course has been not added
+  //to the children of the column
   if (courses.length % 2 != 0) {
     children.add(Row(
       children: childrenForRow,

@@ -134,7 +134,7 @@ Widget getFeedback({required bool isRight, required String shortFeeback}){
         ],
       ),
       Divider(indent: 0.01*widthOfScreen, endIndent: 0.01*widthOfScreen, color: primaryColor,thickness: 0.002*widthOfScreen, ),
-      getCirclesProgressBarForCourseProgression(answers: globals.userProgress!, numberOfCircles: globals.activeCourse!.numberOfQuestions),
+      getCirclesProgressBarForCourseProgression(answers: globals.userProgress, numberOfCircles: globals.activeCourse!.numberOfQuestions),
       SizedBox(height: 0.05*heightOfScreen,),
       Text(shortFeeback, style: getNormalTextStyleBlue(),),
 

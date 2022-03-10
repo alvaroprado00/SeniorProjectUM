@@ -64,7 +64,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
             collectedBadges: [],
             coursesSaved: [],
             completedCourses: [],
-        activeCourse: null,
+        currentCourse: null,
         isAdmin: false);
 
 
@@ -76,7 +76,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
           //I make the screen hold for 2s before using navigator so the user is able to read the message
           Future.delayed(Duration(seconds: 2));
 
-          if (value is UserCustom) {
+          if (value) {
             Navigator.pushNamed(
                 context, ProfileCreated.routeName, arguments: value);
           } else {

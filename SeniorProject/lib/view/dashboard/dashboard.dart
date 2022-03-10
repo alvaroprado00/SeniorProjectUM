@@ -1,13 +1,15 @@
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
-import 'package:cyber/model/active_course.dart';
+import 'package:cyber/model/current_course.dart';
 import 'package:cyber/model/user_custom.dart';
-import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
+
+import '../useful/cards.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -66,11 +68,11 @@ class ContentForDashboard extends StatelessWidget {
                 'Welcome ${user.username}!',
                 style: getSubheadingStyleBlue(),
               ),
-              user.activeCourse == null
+              user.currentCourse == null
                   ? SizedBox(
                       height: 0,
                     )
-                  : ResumeCourseContent(activeCourse: user.activeCourse!),
+                  : ResumeCourseContent(currentCourse: user.currentCourse!),
               SizedBox(
                 height: 0.05 * heightOfScreen,
               ),
@@ -124,6 +126,7 @@ class _RecommendedCourseContentState extends State<RecommendedCourseContent> {
                   thickness: 2,
                 ),
                 ContainerForCourse(
+                  courseID: snapshot.data.id,
                     description: snapshot.data.description,
                     nameOfCourse: snapshot.data.title,
                     isResume: false),
@@ -150,9 +153,9 @@ class _RecommendedCourseContentState extends State<RecommendedCourseContent> {
  */
 
 class ResumeCourseContent extends StatefulWidget {
-  final ActiveCourse activeCourse;
+  final CurrentCourse currentCourse;
 
-  const ResumeCourseContent({required ActiveCourse this.activeCourse});
+  const ResumeCourseContent({required CurrentCourse this.currentCourse});
 
   @override
   _ResumeCourseContentState createState() => _ResumeCourseContentState();
@@ -164,19 +167,26 @@ class _ResumeCourseContentState extends State<ResumeCourseContent> {
     CourseController cc = CourseController();
 
     return FutureBuilder(
-      future: cc.getCourseByID(id: widget.activeCourse.courseID),
+      future: cc.getCourseByID(id: widget.currentCourse.courseID),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          return Column(children: [
+          return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
             Text('Resume Course', style: getNormalTextStyleBlue()),
             Divider(
               color: primaryColor,
               thickness: 2,
             ),
             ContainerForCourse(
-                percentage: (widget.activeCourse.progress.length) /
+                percentage: (widget.currentCourse.progress.length) /
                     (snapshot.data.numberOfQuestions) *
                     100,
+                courseID: widget.currentCourse.courseID,
                 description: snapshot.data.description,
                 nameOfCourse: snapshot.data.title,
                 isResume: true),
@@ -207,6 +217,7 @@ class ContainerForCourse extends StatelessWidget {
     this.percentage = 0,
     required String this.description,
     required String this.nameOfCourse,
+    required String this.courseID,
     required bool this.isResume,
   });
 
@@ -214,6 +225,7 @@ class ContainerForCourse extends StatelessWidget {
   final String nameOfCourse;
   final bool isResume;
   final double percentage;
+  final String courseID;
 
   @override
   Widget build(BuildContext context) {
@@ -272,7 +284,7 @@ class ContainerForCourse extends StatelessWidget {
               child: ElevatedButton(
                 style: yellowButtonStyle,
                 onPressed: () {
-                  print('popo');
+                  Navigator.pushNamed(context, CourseDescription.routeName, arguments: courseID);
                 },
                 child: Text(
                   isResume ? 'Resume' : 'Start',

@@ -1,10 +1,7 @@
-import 'dart:math';
-
-import 'package:cyber/view/courses/course_description.dart';
+import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 
-import '../avatar.dart';
-import '../courses/category.dart';
+import '../../globals.dart';
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -95,7 +92,7 @@ Widget getCirclesProgressBar({
 }
 
 /**
- * Function to create a row of dots. All numbers<= positions will be yellow
+ * Function to create a row of dots. All numbers< positions will be yellow
  * Used as a progress Indicator in the pause menu
  * Uses the function getCircle()
  */
@@ -248,207 +245,6 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
       ));
 }
 
-/**
- * This function Retrieves a card with the name of the course specified.
- *
- * Yoy need to Specify the width of the card as well as the height of the sized
- * box containing everything
- *
- * It is necessary to specify if the card is or not a template. In case it is not
- * then using the argument context and the courseId, when pressed it will
- * redirect the user to the page CourseDescription
- */
-
-Card getCardForUnsavedCourse(
-    {String courseId = '',
-    required BuildContext context,
-    required String title,
-    required double widthOfCard,
-    required double heightOfCard,
-    required bool isTemplate}) {
-  void Function() navigateToCourse = () {
-    Navigator.pushNamed(context, CourseDescription.routeName,
-        arguments: courseId);
-  };
-
-  return Card(
-    color: primaryColor,
-    borderOnForeground: true,
-    shape: new RoundedRectangleBorder(
-        side: new BorderSide(color: tertiaryColor, width: 1.0),
-        borderRadius: BorderRadius.circular(10.0)),
-    child: InkWell(
-      splashColor: secondaryColor,
-      onTap: isTemplate
-          ? () {
-              print('This is a template');
-            }
-          : navigateToCourse,
-      child: SizedBox(
-        height: heightOfCard,
-        width: widthOfCard,
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Align(alignment: Alignment.centerRight, child: SaveButton()),
-          Padding(
-            padding: EdgeInsets.only(
-                left: 0.05 * widthOfCard, bottom: heightOfCard * 0.05),
-            child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Text('$title', style: getNormalTextStyleWhite())),
-          ),
-        ]),
-      ),
-    ),
-  );
-}
-
-/**
- * This class defines the save button of the course cards. Logic for saving/unsaving courses has not yet been implemented
- * V1.0 (2/2/2022) just changes state
- */
-class SaveButton extends StatefulWidget {
-  const SaveButton({Key? key}) : super(key: key);
-
-  @override
-  _SaveButtonState createState() => _SaveButtonState();
-}
-
-class _SaveButtonState extends State<SaveButton> {
-  bool _filled = false;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () {
-        //Do whatever logic in the future
-        setState(() {
-          _filled = !_filled;
-        });
-      },
-      icon: _filled
-          ? Icon(
-              Icons.bookmark,
-              color: secondaryColor,
-            )
-          : Icon(
-              Icons.bookmark_border,
-              color: secondaryColor,
-            ),
-    );
-  }
-}
-
-/**
- * Gets a tapable card with the name of the category. You have to specify the
- * width and the height.
- *
- * V 1.0 (2/8/22) Does nothing when tapped
- *
- * V 2.0 (3/8/22) Now when the card is tapped is navigates to the category itself
- * You also need to specify if it is a template Card. In case this param is set
- * to true, the card does nothing when tapped.
- *
- * Param: context. If the card is not a template we need a build context
- * from which we navigate from. Even stated that we only use it when template is
- * false, we have to make it required because its nature makes unable to assign
- * null as a value
- */
-
-Card getCardForCategory(
-    {required BuildContext context,
-    required Category category,
-    required double widthOfCard,
-    required double heightOfCard,
-    required bool isTemplate}) {
-  //Function to be executed if the card is not a template
-  void Function() navigateToCategory = () {
-    Navigator.pushNamed(context, CategoryPage.routeName, arguments: category);
-  };
-
-  return Card(
-    color: primaryColor,
-    borderOnForeground: true,
-    shape: new RoundedRectangleBorder(
-        side: new BorderSide(color: tertiaryColor, width: 1.0),
-        borderRadius: BorderRadius.circular(10.0)),
-    child: InkWell(
-      splashColor: secondaryColor,
-      onTap: isTemplate
-          ? () {
-              print('Does nothing');
-            }
-          : navigateToCategory,
-      child: SizedBox(
-        width: widthOfCard,
-        height: heightOfCard,
-        child: Align(
-            alignment: Alignment.center,
-            child: Text(categoryToString[category]!,
-                style: getNormalTextStyleWhite())),
-      ),
-    ),
-  );
-}
-
-/**
- * Getter fot a notification card. We need to specify de username and the course
- * he has completed so it appears as the info displayed. Width and height need
- * to be specified.
- */
-
-Card getCardForNotification(
-    {required String username,
-    required String nameOfCourse,
-    required double widthOfCard,
-    required double heightOfCard}) {
-  return Card(
-    color: primaryColor,
-    borderOnForeground: true,
-    shape: new RoundedRectangleBorder(
-        side: new BorderSide(color: tertiaryColor, width: 1.0),
-        borderRadius: BorderRadius.circular(10.0)),
-    child: InkWell(
-      splashColor: secondaryColor,
-      onTap: () {
-        debugPrint('Redirected to course bla bla.');
-      },
-      child: SizedBox(
-          width: widthOfCard,
-          height: heightOfCard,
-          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 0.025 * widthOfCard, right: 0.025 * widthOfCard),
-              child: Avatar(
-                  url: 'https://robohash.org/$username',
-                  size: widthOfScreen * 0.1),
-            ),
-            Flexible(
-              child: Text(
-                  '$username just completed a course on $nameOfCourse. ${getRandomEncouragingMessage()}',
-                  style: getNormalTextStyleWhite()),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 0.025 * widthOfCard, right: 0.025 * widthOfCard),
-              child: Icon(
-                Icons.password,
-                color: secondaryColor,
-              ),
-            ),
-          ])),
-    ),
-  );
-}
-
-/**
- * This function returns a random String contained in a map defined in
- * k_values. This maps contains a fixed amount of encouraging messages to create
- * the notification cards
- */
-String? getRandomEncouragingMessage() {
-  return encouragingMessages[Random().nextInt(encouragingMessages.length - 1)];
-}
 
 /**
  * This widget is the optionButton used in the course flow
@@ -493,53 +289,79 @@ Widget getOptionsButton(
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          height: getHeightOfSmallButton(),
-                          width: getWidthOfSmallButton(),
-                          child: ElevatedButton(
-                            style: yellowButtonStyle,
-                            child: Text(
-                              'Save',
-                              style: getNormalTextStyleBlue(),
-                            ),
-                            onPressed: () => print('popo'),
-                          ),
-                        ),
+                        getSaveCurrentCourseButton(context: context),
                         SizedBox(
                           width: 0.06 * widthOfScreen,
                         ),
-                        SizedBox(
-                          height: getHeightOfSmallButton(),
-                          width: getWidthOfSmallButton(),
-                          child: ElevatedButton(
-                            style: greyButtonStyle,
-                            child: Text(
-                              'Exit',
-                              style: getNormalTextStyleBlue(),
-                            ),
-                            onPressed: () => print('popo'),
-                          ),
-                        )
+                        getExitCourseButton(context:context),
                       ],
                     ),
-                    SizedBox(
-                      height: getHeightOfLargeButton(),
-                      width: getWidthOfLargeButton(),
-                      child: ElevatedButton(
-                        style: blueButtonStyle,
-                        child: Text(
-                          'Resume',
-                          style: getNormalTextStyleWhite(),
-                        ),
-                        onPressed: () => print('popo'),
-                      ),
-                    )
+                    getResumeButton(context: context),
                   ],
                 ),
               );
             });
       });
 }
+
+
+getExitCourseButton({required BuildContext context}){
+
+    return  SizedBox(
+      height: getHeightOfSmallButton(),
+      width: getWidthOfSmallButton(),
+      child: ElevatedButton(
+        style: greyButtonStyle,
+        child: Text(
+          'Exit',
+          style: getNormalTextStyleBlue(),
+        ),
+        onPressed: (){
+          Navigator.pushNamed(context, DashboardPage.routeName);
+        },
+      ),
+    );
+
+}
+
+getSaveCurrentCourseButton({required BuildContext context}){
+
+    return SizedBox(
+      height: getHeightOfSmallButton(),
+      width: getWidthOfSmallButton(),
+      child: ElevatedButton(
+        style: yellowButtonStyle,
+        child: Text(
+          'Save',
+          style: getNormalTextStyleBlue(),
+        ),
+        onPressed:() async {
+          await activeUser!.updateCurrentCourse();
+          //Once the user is updated, then we go to the dashboard
+          Navigator.pushNamed(context, DashboardPage.routeName);
+        }
+      ),
+    );
+
+}
+
+getResumeButton({required BuildContext context}){
+
+    return  SizedBox(
+      height: getHeightOfLargeButton(),
+      width: getWidthOfLargeButton(),
+      child: ElevatedButton(
+        style: blueButtonStyle,
+        child: Text(
+          'Resume',
+          style: getNormalTextStyleWhite(),
+        ),
+        onPressed: (){Navigator.pop(context);},
+      ),
+    );
+}
+
+
 
 /**
  * Function that returns a grey box with rounded corners containing a child
@@ -586,4 +408,27 @@ Widget getAddQuestionButton({required void Function() todo}) {
         child: Text('Add Question', style: getNormalTextStyleBlue()),
         style: yellowButtonStyle,
       ));
+}
+
+/**
+ * Method to get a container with the text divided into two lines.
+ * You specify the first line in param txt1 and the second one in
+ * txt2
+ */
+getDoubleLineText({required String txt1, required String txt2}) {
+  return Container(
+    width: 0.27 * widthOfScreen,
+    child: Column(
+      children: [
+        Text(
+          txt1,
+          style: getNormalTextStyleBlue(),
+        ),
+        Text(
+          txt2,
+          style: getNormalTextStyleBlue(),
+        ),
+      ],
+    ),
+  );
 }

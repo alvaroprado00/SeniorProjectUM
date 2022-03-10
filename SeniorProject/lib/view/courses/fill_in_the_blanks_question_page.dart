@@ -111,7 +111,7 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
                               }
 
                               //I update the global variables once answer submitted
-                              globals.userProgress!.add(isRight);
+                              globals.userProgress.add(isRight);
                               globals.activeQuestionNum=globals.activeQuestionNum!+1;
 
                               // Before navigating to the next page we have to

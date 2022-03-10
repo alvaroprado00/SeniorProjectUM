@@ -2,6 +2,7 @@ import 'package:cyber/model/question.dart';
 import 'package:cyber/view/useful/k_values.dart';
 
 class Course {
+  String? id;
   String imageURL;
   String title;
   Category category;
@@ -44,13 +45,15 @@ class Course {
 
   Map<String, Object?> toJson() {
     return {
-      'imageURL': imageURL,
-      'title': title,
       'category': categoryToString[category],
-      'experiencePoints': experiencePoints,
-      'numberOfQuestions': numberOfQuestions,
       'description': description,
+      'experiencePoints': experiencePoints,
+      'imageURL':imageURL,
+      'numberOfQuestions':numberOfQuestions,
       'outcomes': outcomes,
+      'title': title,
+      'badgeIcon':badgeIcon,
+      'positionInCategory':positionInCategory,
     };
   }
 
