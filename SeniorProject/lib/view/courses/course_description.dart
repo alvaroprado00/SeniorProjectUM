@@ -1,8 +1,6 @@
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart' as globals;
-import 'package:cyber/model/completed_course.dart';
 import 'package:cyber/model/course.dart';
-import 'package:cyber/view/courses/category.dart';
 import 'package:cyber/view/useful/components.dart';
 import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
@@ -10,6 +8,7 @@ import 'package:cyber/view/useful/k_styles.dart';
 import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/completed_course.dart';
 import '../useful/cards.dart';
 
 
@@ -45,25 +44,18 @@ class CourseDescription extends StatelessWidget {
               globals.userProgress=[];
 
               //I check if the activeUser has the courseSaved or if its the current one
-              bool isSaved=false;
-              bool isCurrentCourse=false;
-              bool isCompleted=false;
+              bool isSaved=globals.activeUser!.isCourseSaved(courseID: courseID);
+              bool isCurrentCourse=globals.activeUser!.isCurrentCourse(courseID: courseID);
+              bool isCompleted=globals.activeUser!.isCourseCompleted(courseID: courseID);
 
-              if(globals.activeUser!.coursesSaved.contains(courseID)){
-                isSaved=true;
-              }
-              if(globals.activeUser!.currentCourse!=null && globals.activeUser!.currentCourse!.courseID==courseID){
-                isCurrentCourse=true;
+
+              if(isCurrentCourse){
                 globals.activeQuestionNum=globals.activeUser!.currentCourse!.progress.length+1;
                 globals.userProgress=globals.activeUser!.currentCourse!.progress;
-
               }
 
-              //I also have to check If the user has completed this course
-              //for(CompletedCourse cc in Com)
+              return CourseDescriptionContent(course: snapshot.data, isSaved: isSaved, isCurrentCourse: isCurrentCourse, isCompleted:isCompleted);
 
-
-              return CourseDescriptionContent(course: snapshot.data, isSaved: isSaved, isCurrentCourse: isCurrentCourse);
           } else if (snapshot.hasError) {
             return Center(
               child: Text('Error: ${snapshot.error}', style: getHeadingStyleBlue(),),
@@ -83,10 +75,11 @@ class CourseDescription extends StatelessWidget {
  */
 class CourseDescriptionContent extends StatelessWidget {
 
-  const CourseDescriptionContent({required Course this.course, required bool this.isSaved, required this.isCurrentCourse});
+  const CourseDescriptionContent({required Course this.course, required bool this.isSaved, required this.isCurrentCourse, required this.isCompleted});
   final Course course;
   final bool isSaved;
   final bool isCurrentCourse;
+  final bool isCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -119,12 +112,14 @@ class CourseDescriptionContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         course.title,
                         style: getHeadingStyleBlue(),
                       ),
+                      SizedBox(width: 0.35*widthOfScreen,),
+                      isCompleted? Icon(Icons.check_circle_rounded, color: secondaryColor,):SizedBox(width: 0,),
                       SaveButton(isFilled: isSaved, courseID: course.id!),
                     ]),
                 Row(
@@ -159,8 +154,9 @@ class CourseDescriptionContent extends StatelessWidget {
                   thickness: 1,
                 ),
                 getGreyTextHolderContainer(child: getContentForOutcomes(outcomes: course.outcomes)),
-                SizedBox(height: 0.03*heightOfScreen,),
+
                 isCurrentCourse? getContentForCurrentCourse():SizedBox(height: 0,),
+                isCompleted? getContentForCompletedCourse():SizedBox(height: 0,),
               ],
             ),
           ),
@@ -216,17 +212,20 @@ getContentForOutcomes({required List<String> outcomes}) {
   );
 }
 
-getContentForCurrentCourse(){
+/**
+ * Method to get Container Showing two lines of text. Used for both 
+ * showing the content for the last completed course and the progress in the
+ * current course
+ */
 
-  final double progress;
-
-  progress=globals.activeUser!.currentCourse!.progress.length.toDouble()/globals.activeCourse!.numberOfQuestions.toDouble();
+getNewSection({required String sectionName, required String txt1ForBox, required String txt2ForBox}){
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
+      SizedBox(height: 0.03*heightOfScreen,),
       Text(
-        'Your progress',
+        sectionName,
         style: getSubheadingStyleBlue(),
       ),
       Divider(
@@ -237,20 +236,34 @@ getContentForCurrentCourse(){
       SizedBox(height: 0.01*heightOfScreen,),
 
       Container(
-        padding: EdgeInsets.all(widthOfScreen*0.03),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          color: primaryColor,
-          
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Text('${progress}%', style: getSubheadingStyleYellow(),),
-          Text('Completed', style: getNormalTextStyleYellow(),)],
-        )
+          padding: EdgeInsets.all(widthOfScreen*0.03),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            color: primaryColor,
+
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [Text(txt1ForBox, style: getSubheadingStyleYellow(),),
+              Text(txt2ForBox, style: getNormalTextStyleYellow(),)],
+          )
       )
     ],
   );
+}
+getContentForCurrentCourse(){
+  String progress=(((globals.activeUser!.currentCourse!.progress.length/globals.activeCourse!.numberOfQuestions)*100).round()).toString();
+
+  return getNewSection(sectionName: 'Your progress', txt1ForBox: progress+'%', txt2ForBox: 'Completed');
+      
+}
+
+getContentForCompletedCourse(){
+  CompletedCourse cc=globals.activeUser!.completedCourses.firstWhere((element){return element.courseID==globals.activeCourse!.id;});
+
+  String xpEarned=cc.experiencePointsEarned.toString();
+
+  return getNewSection(sectionName: 'Best Attempt', txt1ForBox: xpEarned, txt2ForBox: 'EXP');
 }
 

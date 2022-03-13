@@ -66,7 +66,7 @@ class ContentForDashboard extends StatelessWidget {
             children: [
               Text(
                 'Welcome ${user.username}!',
-                style: getSubheadingStyleBlue(),
+                style: TextStyle(color: primaryColor, fontSize: 0.08*widthOfScreen, fontWeight: FontWeight.w500, fontFamily: 'roboto'),
               ),
               user.currentCourse == null
                   ? SizedBox(
@@ -183,9 +183,9 @@ class _ResumeCourseContentState extends State<ResumeCourseContent> {
               thickness: 2,
             ),
             ContainerForCourse(
-                percentage: (widget.currentCourse.progress.length) /
+                percentage: ((widget.currentCourse.progress.length) /
                     (snapshot.data.numberOfQuestions) *
-                    100,
+                    100).round(),
                 courseID: widget.currentCourse.courseID,
                 description: snapshot.data.description,
                 nameOfCourse: snapshot.data.title,
@@ -224,7 +224,7 @@ class ContainerForCourse extends StatelessWidget {
   final String description;
   final String nameOfCourse;
   final bool isResume;
-  final double percentage;
+  final int percentage;
   final String courseID;
 
   @override

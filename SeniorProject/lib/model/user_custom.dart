@@ -194,13 +194,40 @@ class UserCustom {
     }
   }
 
+  /**
+   * Function to add a new avatar to the user
+   */
   void addNewAvatar(){
     this.collectedAvatars.add(getRandomString(5));
   }
 
+  /**
+   * Function to add a new badge to the user
+   */
   void addNewBadge(){
     Badge newBadge=Badge(course: activeCourse!.id!, picture: activeCourse!.badgeIcon, timeEarned: DateTime.now());
     this.collectedBadges.add(newBadge);
+  }
+
+  bool isCourseSaved({required String courseID}){
+    return this.coursesSaved.contains(courseID);
+  }
+
+  bool isCourseCompleted({required String courseID}){
+    for(CompletedCourse cc in this.completedCourses){
+      if(cc.courseID==courseID){
+        return true;
+      }
+    }
+    return false;
+  }
+
+  bool isCurrentCourse({required String courseID}){
+    if(this.currentCourse!=null && this.currentCourse!.courseID==courseID){
+      return true;
+    }else{
+      return false;
+    }
   }
 }
 

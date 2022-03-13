@@ -115,18 +115,22 @@ getCourseCards(
 
   List<Widget> children = [];
   List<Widget> childrenForRow = [];
+  bool isSaved=false;
+  bool isCompleted=false;
+
   int i = 0;
   courses.forEach((key, value) {
 
     //First we check if the active user has the course Saved
-    bool isSaved=false;
-    if(activeUser!.coursesSaved.contains(key)){
-      isSaved=true;
-    }
+    isSaved=activeUser!.isCourseSaved(courseID: key);
+
+    //After that we check if the user has completed the course
+    isCompleted=activeUser!.isCourseCompleted(courseID: key);
 
     //We add the course to a row
-    childrenForRow.add(getCardForUnsavedCourse(
+    childrenForRow.add(getCardForCourse(
         isSaved: isSaved,
+        isCompleted: isCompleted,
         context: context,
         courseID: key,
         title: value,

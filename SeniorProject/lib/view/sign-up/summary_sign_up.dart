@@ -54,7 +54,7 @@ class SignUpSummary extends StatelessWidget {
                     bottom: heightOfScreen * 0.03),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: getCardForUnsavedCourse(
+                  child: getCardForCourse(
                       context: context,
                       title: 'Passwords',
                       heightOfCard: 0.11 * heightOfScreen,

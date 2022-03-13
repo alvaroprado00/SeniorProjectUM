@@ -25,9 +25,10 @@ import 'k_values.dart';
  * why they are optional. The Save Button needs both those param
  */
 
-Card getCardForUnsavedCourse(
+Card getCardForCourse(
     {String courseID = '',
       bool isSaved = false,
+      bool isCompleted=false,
       required BuildContext context,
       required String title,
       required double widthOfCard,
@@ -55,11 +56,16 @@ Card getCardForUnsavedCourse(
         height: heightOfCard,
         width: widthOfCard,
         child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Align(
-              alignment: Alignment.centerRight,
-              child: isTemplate
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              isCompleted? Icon(Icons.check_circle_rounded, color: secondaryColor,):SizedBox(width: 0,),
+              isTemplate
                   ? Icon(Icons.bookmark, color: secondaryColor)
-                  : SaveButton(isFilled: isSaved, courseID: courseID)),
+                  : SaveButton(isFilled: isSaved, courseID: courseID),
+            ],
+          ),
+
           Padding(
             padding: EdgeInsets.only(
                 left: 0.05 * widthOfCard, bottom: heightOfCard * 0.05),

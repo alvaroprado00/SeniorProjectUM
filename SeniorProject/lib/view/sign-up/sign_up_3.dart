@@ -79,7 +79,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
           if (value) {
             Navigator.pushNamed(
-                context, ProfileCreated.routeName, arguments: value);
+                context, ProfileCreated.routeName, arguments: userCreated);
           } else {
             SnackBar snBar = SnackBar(
               content: Text(value, style: getNormalTextStyleBlue(),),

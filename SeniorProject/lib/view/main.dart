@@ -144,6 +144,7 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
+            //FirebaseAuth.instance.signOut();
             return DashboardPage();
           }
         case ApplicationLoginState.loggedOut:
