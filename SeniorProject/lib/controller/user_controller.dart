@@ -71,7 +71,7 @@ class UserController {
         FirebaseFirestore.instance.collection(userCollectionName);
     //Access specific entry and set info
     return users.doc(userId).set(userCustom.toJson()).then((value) {
-      print("USER CREATED");
+      print("User created/updated");
       return true;
     }).catchError((error) {
       print("ERROR when persisting user in collection");
@@ -96,6 +96,7 @@ class UserController {
       return UserCustom.fromJson(json);
     }).catchError((error) {
       print('Failed to get User: ${error.toString()}');
+      throw Exception('Error getting active user');
     });
   }
 

@@ -1,4 +1,5 @@
 import 'package:cyber/controller/user_controller.dart';
+import 'package:cyber/model/level.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
 import 'package:cyber/view/useful/components.dart';
@@ -58,7 +59,7 @@ class _SignUpUsernameState extends State<SignUpUsername> {
 
         UserCustom userCreated = UserCustom(email: args[0],
             username: _controllerUsername.text,
-            currentXP: 0,
+            level: Level(totalXP: 0, levelNumber: 1, xpInLevel: 0),
             profilePictureActive: _controllerUsername.text,
             collectedAvatars: [_controllerUsername.text],
             collectedBadges: [],

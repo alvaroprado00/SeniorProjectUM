@@ -205,7 +205,7 @@ Card getCardForNotification(
               padding: EdgeInsets.only(
                   left: 0.025 * widthOfCard, right: 0.025 * widthOfCard),
               child: Avatar(
-                  url: 'https://robohash.org/$username',
+                  nameOfAvatar: username,
                   size: widthOfScreen * 0.1),
             ),
             Flexible(

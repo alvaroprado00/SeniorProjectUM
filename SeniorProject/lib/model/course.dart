@@ -38,8 +38,8 @@ class Course {
       description: json['description'],
       outcomes: List.castFrom(json['outcomes']),
       questions: [],
-      badgeIcon: '',
-      positionInCategory: 1,
+      badgeIcon: json['badgeIcon'],
+      positionInCategory: json['positionInCategory'],
     );
   }
 

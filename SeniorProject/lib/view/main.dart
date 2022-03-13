@@ -23,6 +23,7 @@ import 'package:provider/provider.dart';
 import 'admin/new_multiple_choice_page_2.dart';
 import 'courses/category.dart';
 import 'courses/fill_in_the_blanks_question_page.dart';
+import 'courses/overview.dart';
 import 'dashboard/dashboard.dart';
 import 'log_in_page.dart';
 
@@ -102,6 +103,7 @@ class MyApp extends StatelessWidget {
         DashboardPage.routeName:(context)=> const DashboardPage(),
         CategoryPage.routeName:(context)=> const CategoryPage(),
         CourseDescription.routeName:(context)=> const CourseDescription(),
+        Overview.routeName:(context)=> const Overview(),
 
 
 

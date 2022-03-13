@@ -1,5 +1,6 @@
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart' as globals;
+import 'package:cyber/model/completed_course.dart';
 import 'package:cyber/model/course.dart';
 import 'package:cyber/view/courses/category.dart';
 import 'package:cyber/view/useful/components.dart';
@@ -46,6 +47,7 @@ class CourseDescription extends StatelessWidget {
               //I check if the activeUser has the courseSaved or if its the current one
               bool isSaved=false;
               bool isCurrentCourse=false;
+              bool isCompleted=false;
 
               if(globals.activeUser!.coursesSaved.contains(courseID)){
                 isSaved=true;
@@ -56,6 +58,11 @@ class CourseDescription extends StatelessWidget {
                 globals.userProgress=globals.activeUser!.currentCourse!.progress;
 
               }
+
+              //I also have to check If the user has completed this course
+              //for(CompletedCourse cc in Com)
+
+
               return CourseDescriptionContent(course: snapshot.data, isSaved: isSaved, isCurrentCourse: isCurrentCourse);
           } else if (snapshot.hasError) {
             return Center(

@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 /**
  * Constant values in the app that are not related to colors or config files
  */
@@ -56,3 +59,7 @@ Map <String, TypeOfQuestion> typeOfQuestionFromString={
   'Fill in the Blanks': TypeOfQuestion.fillInTheBlanks,
 };
 
+Map<String, IconData> stringToBadgeIcon={
+
+  'key': FontAwesomeIcons.key,
+};

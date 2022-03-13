@@ -31,7 +31,7 @@ class ProfileCreated extends StatelessWidget {
               child: Align(child: Text('Say hello to yourself.', style: getSubheadingStyleWhite(),))
             ),
             
-            Avatar(url: 'https://robohash.org/${userCreated.username}', size: widthOfScreen*0.5),
+            Avatar(nameOfAvatar: userCreated.username, size: widthOfScreen*0.5),
 
             Padding(
               padding: EdgeInsets.only(top:0.05*heightOfScreen, bottom:0.05*heightOfScreen),

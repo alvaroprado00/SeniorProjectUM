@@ -137,7 +137,10 @@ Widget getCirclesProgressBarForCourseProgression(
   return Container(
     height: 0.05 * heightOfScreen,
     width: 0.8 * widthOfScreen,
+    alignment: Alignment.center,
     child: ListView(
+      shrinkWrap: true,
+
       scrollDirection: Axis.horizontal,
       children: children,
     ),

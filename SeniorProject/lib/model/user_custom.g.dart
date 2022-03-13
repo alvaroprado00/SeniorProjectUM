@@ -9,7 +9,7 @@ part of 'user_custom.dart';
 UserCustom _$UserCustomFromJson(Map<String, dynamic> json) => UserCustom(
       email: json['email'] as String,
       username: json['username'] as String,
-      currentXP: json['currentXP'] as int,
+      level: Level.fromJson(json['level'] as Map<String, dynamic>),
       profilePictureActive: json['profilePictureActive'] as String,
       collectedAvatars: (json['collectedAvatars'] as List<dynamic>)
           .map((e) => e as String)
@@ -34,7 +34,7 @@ Map<String, dynamic> _$UserCustomToJson(UserCustom instance) =>
     <String, dynamic>{
       'email': instance.email,
       'username': instance.username,
-      'currentXP': instance.currentXP,
+      'level': instance.level.toJson(),
       'profilePictureActive': instance.profilePictureActive,
       'collectedAvatars': instance.collectedAvatars,
       'collectedBadges':
