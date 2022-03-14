@@ -9,6 +9,8 @@ import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+import 'category_progress.dart';
+
 class Overview extends StatelessWidget {
 
   const Overview({Key? key}) : super(key: key);
@@ -161,7 +163,7 @@ class _ContentForOverviewState extends State<ContentForOverview> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   getRestartButton(context: context),
-                  getNextButton(todo: (){}, large: false),
+                  getNextButton(todo:(){Navigator.pushNamed(context, CategoryProgress.routeName);}, large: false),
                 ],
               )
             ]),

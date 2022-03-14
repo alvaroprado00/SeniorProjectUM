@@ -6,6 +6,7 @@ import 'package:cyber/view/admin/new_fill_blanks_page_2.dart';
 import 'package:cyber/view/admin/new_multiple_choice_page_1.dart';
 import 'package:cyber/view/admin/long_feedback_page.dart';
 import 'package:cyber/view/admin/new_question_page.dart';
+import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
@@ -104,11 +105,7 @@ class MyApp extends StatelessWidget {
         CategoryPage.routeName:(context)=> const CategoryPage(),
         CourseDescription.routeName:(context)=> const CourseDescription(),
         Overview.routeName:(context)=> const Overview(),
-
-
-
-
-
+        CategoryProgress.routeName:(context)=> const CategoryProgress(),
 
       },
       theme: ThemeData(
@@ -144,7 +141,7 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-            //FirebaseAuth.instance.signOut();
+           // FirebaseAuth.instance.signOut();
             return DashboardPage();
           }
         case ApplicationLoginState.loggedOut:
