@@ -8,6 +8,7 @@ import 'package:cyber/view/admin/long_feedback_page.dart';
 import 'package:cyber/view/admin/new_question_page.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
+import 'package:cyber/view/groups/group_page_home.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
 import 'package:cyber/view/sign-up/sign_up_1.dart';
@@ -72,7 +73,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Cyber',
-      initialRoute: '/',
+      initialRoute: GroupHome.routeName,
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const HomePage(),
@@ -96,7 +97,7 @@ class MyApp extends StatelessWidget {
         LongFeedbackPage.routeName:(context)=> const LongFeedbackPage(),
         FillInBlanksText.routeName:(context)=> const FillInBlanksText(),
         FillInBlanksOptions.routeName:(context)=> const FillInBlanksOptions(),
-
+        GroupHome.routeName: (context)=> const GroupHome(),
 
 
       },

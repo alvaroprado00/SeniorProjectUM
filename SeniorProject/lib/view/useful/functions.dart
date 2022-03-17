@@ -5,6 +5,7 @@ import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
 
 
+import 'k_colors.dart';
 import 'k_values.dart';
 
 Function nextQuestion=(BuildContext context){

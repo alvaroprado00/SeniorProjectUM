@@ -530,3 +530,62 @@ Widget getAddQuestionButton({required void Function() todo}){
         style: yellowButtonStyle,
       ));
 }
+
+/**
+ * GROUP PAGE
+ * Function returns an orange notification indicator if there are unread notifications in the group page.
+ * Takes in a bool that signals if there are unread notifications or not
+ */
+Container getNotification(bool notification) {
+  if (!notification) {
+    return Container(height: 5.0, width: 5.0,color: Colors.transparent,);
+  }
+  return Container(
+    height: 10.0,
+    width: 10.0,
+    decoration: const BoxDecoration(
+      shape: BoxShape.circle,
+      color: secondaryColor,
+    ),
+  );
+}
+
+// /**
+//  * GROUP PAGE
+//  * Function returns a list tile for a group.
+//  * It requires an image path and a group name as well as a bool if there are unread notifications.
+//  * must pass context
+//  */
+// Widget buildGroupTile({ required BuildContext context, required String groupName, required String imagePath, bool notification = false}) {
+//   return ListTile(
+//     leading: CircleAvatar(
+//       backgroundImage: AssetImage(imagePath),
+//       backgroundColor: Colors.transparent,
+//     ),
+//     title: Text(
+//       groupName,
+//       style: const TextStyle(
+//         fontSize: 20,
+//         color: primaryColor,
+//         fontFamily: 'Roboto',
+//       ),
+//     ),
+//     trailing: Row(
+//       children: [
+//         getNotification(notification),
+//         const Padding(
+//           padding: EdgeInsets.all(8.0),
+//           child: Icon(
+//             Icons.arrow_forward_ios,
+//             color: primaryColor,
+//             size: 30.0,
+//           ),
+//         ),
+//       ],
+//       mainAxisSize: MainAxisSize.min,
+//     ),
+//     onTap: () {
+//       Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(groupName: groupName,)));
+//     },
+//   );
+// }

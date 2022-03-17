@@ -1,10 +1,16 @@
 import 'package:cyber/view/useful/components.dart';
+import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
 import 'package:flutter/material.dart';
 
+import 'group_chat_page.dart';
+import 'group_create_page.dart';
+
 class GroupHome extends StatefulWidget {
   const GroupHome({Key? key}) : super(key: key);
+
+  static final String routeName = '/groupHome';
 
   @override
   _GroupHomeState createState() => _GroupHomeState();
@@ -27,33 +33,20 @@ class _GroupHomeState extends State<GroupHome> {
     super.dispose();
   }
 
-  Container getNotification(bool notification) {
-    if (!notification) {
-      return Container(height: 5.0, width: 5.0,color: Colors.transparent,);
-    }
-    return Container(
-      height: 10.0,
-      width: 10.0,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        color: secondaryColor,
-      ),
-    );
-  }
-
-  Widget _buildRow({required String groupName, required String imagePath, bool notification = false}) {
+  /**
+   * GROUP PAGE
+   * Function returns a list tile for a group.
+   * It requires an image path and a group name as well as a bool if there are unread notifications.
+   */
+  Widget _buildGroupTile({required String groupName, required String imagePath, bool notification = false}) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: AssetImage(imagePath),
+        backgroundImage: AssetImage('assets/images/group_icon_default.png'),
         backgroundColor: Colors.transparent,
       ),
       title: Text(
         groupName,
-        style: const TextStyle(
-          fontSize: 20,
-          color: primaryColor,
-          fontFamily: 'Roboto',
-        ),
+        style: getNormalTextStyleBlue(),
       ),
       trailing: Row(
         children: [
@@ -75,12 +68,18 @@ class _GroupHomeState extends State<GroupHome> {
     );
   }
 
-  Widget _buildSuggestions({required BuildContext context, List<String>? groupNames, List<String>? imagePaths}) {
+  /**
+   * GROUP PAGE
+   * Function returns a list of group tiles.
+   * It requires a list of image paths and a list of group names.
+   * must pass context
+   */
+  Widget _buildGroups({required BuildContext context, List<String>? groupNames, List<String>? imagePaths}) {
     if (groupNames != null && imagePaths != null) {
       return ListView.builder(
         padding: const EdgeInsets.all(16),
         itemBuilder: (BuildContext context, int i) {
-          return _buildRow(groupName: groupNames[i], imagePath: imagePaths[i], notification: true);
+          return _buildGroupTile(groupName: groupNames[i], imagePath: imagePaths[i], notification: true);
         },
         shrinkWrap: true,
         itemCount: groupNames.length,
@@ -92,14 +91,10 @@ class _GroupHomeState extends State<GroupHome> {
         padding: const EdgeInsets.all(10.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Text(
               'You are currently not in a group.',
-              style: TextStyle(
-                color: primaryColor,
-                fontSize: 16,
-                fontFamily: 'Roboto',
-              ),
+              style: getNormalTextStyleBlue(),
             ),
           ],
         ),
@@ -135,13 +130,10 @@ class _GroupHomeState extends State<GroupHome> {
               padding: const EdgeInsets.only(left: 23.0, right: 23.0, top: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'Groups',
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 20,
-                    ),
+                    style: getHeadingStyleBlue(),
                   ),
                 ],
               ),
@@ -152,18 +144,15 @@ class _GroupHomeState extends State<GroupHome> {
                 color: primaryColor,
               ),
             ),
-            _buildSuggestions(context: context, imagePaths: imagePaths, groupNames: groupNames,),
+            _buildGroups(context: context, imagePaths: imagePaths, groupNames: groupNames,),
             Padding(
               padding: const EdgeInsets.only(left: 23.0, right: 23.0, top: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'Join',
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 20,
-                    ),
+                    style: getHeadingStyleBlue(),
                   ),
                 ],
               ),
@@ -199,25 +188,22 @@ class _GroupHomeState extends State<GroupHome> {
 
                     },
                     child: Text('Join Group', style: getNormalTextStyleWhite()),
-                    style: largeBlueButtonStyle,
+                    style: blueButtonStyle,
                   )),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 23.0, right: 23.0, top: 10.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                children: const [
+                children: [
                   Text(
                     'Create',
-                    style: TextStyle(
-                      color: primaryColor,
-                      fontSize: 20,
-                    ),
+                    style: getHeadingStyleBlue(),
                   ),
                 ],
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.only(left: 16.0, right: 16.0),
               child: Divider(
                 color: primaryColor,
@@ -232,11 +218,8 @@ class _GroupHomeState extends State<GroupHome> {
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroup()));
                   },
-                  child: Text('Create a Group'),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(primaryColor),
-                    shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))),
-                  ),
+                  child: Text('Create a Group', style: getNormalTextStyleWhite(),),
+                  style: blueButtonStyle,
                 ),
               ),
             ),
