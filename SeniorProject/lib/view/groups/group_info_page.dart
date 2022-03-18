@@ -7,9 +7,10 @@ import 'package:flutter/services.dart';
 import '../useful/components.dart';
 
 class GroupInfoPage extends StatefulWidget {
-  const GroupInfoPage({Key? key, required this.groupName}) : super(key: key);
+  const GroupInfoPage({Key? key, required this.groupName, required this.usernames}) : super(key: key);
 
   final String groupName;
+  final List<String> usernames;
 
   @override
   State<GroupInfoPage> createState() => _GroupInfoPageState();
@@ -111,7 +112,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
       ),
       style: ButtonStyle(
         shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(26.0))),
-        backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
+        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFD5D5D5)),
       ),
     );
   }
@@ -121,7 +122,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
 
     List<String> avatarPaths = ['assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png'];
     List<String> userLevels = ['Level 1', 'Level 2', 'Level 3', 'Level 6', 'Level 1', 'Level 5'];
-    List<String> userNames = ['Alvarito_007', 'Alvarito_007', 'Alvarito_007', 'Alvarito_007', 'Alvarito_007', 'Alvarito_007'];
+    // List<String> userNames = ['Alvarito_007', 'Alvarito_007', 'Alvarito_007', 'Alvarito_007', 'Alvarito_007', 'Alvarito_007'];
     String groupCode = 'XYZ123';
 
     return Scaffold(
@@ -172,7 +173,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
             _buildSuggestions(
               context: context,
               avatarPaths: avatarPaths,
-              groupMembers: userNames,
+              groupMembers: widget.usernames,
               userLevels: userLevels,
             ),
             const Padding(
@@ -196,7 +197,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: userNames.length.toString(),
+                            text: widget.usernames.length.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                               color: primaryColor,

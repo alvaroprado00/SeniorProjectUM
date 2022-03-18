@@ -550,6 +550,35 @@ Container getNotification(bool notification) {
   );
 }
 
+/**
+ * Function to get section title with a divider. Takes in text
+ */
+Widget getTitleAndDivider(String text) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 23.0, right: 23.0, top: 10.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              text,
+              style: getHeadingStyleBlue(),
+            ),
+          ],
+        ),
+      ),
+      const Padding(
+        padding: EdgeInsets.only(left: 16.0, right: 16.0),
+        child: Divider(
+          color: primaryColor,
+        ),
+      ),
+    ],
+  );
+}
+
 // /**
 //  * GROUP PAGE
 //  * Function returns a list tile for a group.
@@ -589,3 +618,4 @@ Container getNotification(bool notification) {
 //     },
 //   );
 // }
+

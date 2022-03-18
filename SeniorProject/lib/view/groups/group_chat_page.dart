@@ -136,7 +136,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfoPage(groupName: widget.groupName,)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfoPage(groupName: widget.groupName, usernames: usernames)));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),

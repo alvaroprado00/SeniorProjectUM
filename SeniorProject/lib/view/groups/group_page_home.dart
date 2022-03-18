@@ -2,6 +2,7 @@ import 'package:cyber/view/useful/components.dart';
 import 'package:cyber/view/useful/functions.dart';
 import 'package:cyber/view/useful/k_colors.dart';
 import 'package:cyber/view/useful/k_styles.dart';
+import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
 import 'group_chat_page.dart';
@@ -105,10 +106,7 @@ class _GroupHomeState extends State<GroupHome> {
   @override
   Widget build(BuildContext context) {
 
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
-
-    double bannerHeight = (screenHeight * 211.0) / 844.0;
+    double bannerHeight = (heightOfScreen * 211.0) / 844.0;
 
     List<String> imagePaths = ['assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png'];
     List<String> groupNames = ['Canes', 'Los_Yankis', 'ECE Course', 'Team', 'Alvarito', 'Chupacabra'];
@@ -123,46 +121,12 @@ class _GroupHomeState extends State<GroupHome> {
               padding: const EdgeInsets.only(bottom: 5.0),
               child: Image.asset(
                 'assets/images/group_home_banner.png',
-                width: screenWidth,
+                width: widthOfScreen,
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 23.0, right: 23.0, top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Groups',
-                    style: getHeadingStyleBlue(),
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Divider(
-                color: primaryColor,
-              ),
-            ),
+            getTitleAndDivider('Groups'),
             _buildGroups(context: context, imagePaths: imagePaths, groupNames: groupNames,),
-            Padding(
-              padding: const EdgeInsets.only(left: 23.0, right: 23.0, top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Join',
-                    style: getHeadingStyleBlue(),
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Divider(
-                color: primaryColor,
-              ),
-            ),
+            getTitleAndDivider('Join'),
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
               child: TextFormField(
@@ -175,7 +139,6 @@ class _GroupHomeState extends State<GroupHome> {
                     color: secondaryColor,
                   ),
                 ),
-
               ),
             ),
             Padding(
@@ -191,24 +154,7 @@ class _GroupHomeState extends State<GroupHome> {
                     style: blueButtonStyle,
                   )),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 23.0, right: 23.0, top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Create',
-                    style: getHeadingStyleBlue(),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Divider(
-                color: primaryColor,
-              ),
-            ),
+            getTitleAndDivider('Create'),
             Padding(
               padding: const EdgeInsets.only(bottom: 100.0, left: 16.0, right: 16.0),
               child: SizedBox(
