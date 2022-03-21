@@ -5,7 +5,7 @@ import 'package:cyber/model/level.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../config/fixed_values.dart';
-import '../view/useful/functions.dart';
+import '../view/util/functions.dart';
 import 'current_course.dart';
 import 'badge.dart';
 import 'completed_course.dart';
@@ -89,8 +89,8 @@ class UserCustom {
   }
 
   /**
-   * This function is used to save a completed course in the user
-   * It checks if the user had already completed the course.
+   * This function is used to save a completed new-course in the user
+   * It checks if the user had already completed the new-course.
    * It adds XP points to the user
    * It adds a badge and a profile picture in case the user achieves it
    * It returns a boolean that indicates if the user has leveled up
@@ -102,7 +102,7 @@ class UserCustom {
     bool earnedBadge=false;
   
 
-    //This is to check that the user has completed the active course
+    //This is to check that the user has completed the active new-course
     //If the method is called by error does nothing
     if(activeCourse==null){
       return false;
@@ -123,8 +123,8 @@ class UserCustom {
     int percentageCompleted=((questionsRight.toDouble()/activeCourse!.numberOfQuestions)*100).round();
 
 
-    //Before creating the completed course, we check if the user has already done
-    //the course and has a better rate of correct answers
+    //Before creating the completed new-course, we check if the user has already done
+    //the new-course and has a better rate of correct answers
 
     int xpEarnedLastTime=0;
     int xpBalance=0;
@@ -141,7 +141,7 @@ class UserCustom {
           return SaveCompletedCourseArgs(levelUp: false, earnedBadge:false, balanceXP: 0);
 
         }else{
-          //In this case the user has already done the course but worse
+          //In this case the user has already done the new-course but worse
           
           //We save the xpPoints he earned and check if he earned the badge
           xpEarnedLastTime=cCourse.experiencePointsEarned;
@@ -163,7 +163,7 @@ class UserCustom {
     
     xpBalance=xpEarned-xpEarnedLastTime;
 
-    //We add the course to the list
+    //We add the new-course to the list
     CompletedCourse completedCourse=CompletedCourse(answers: userProgress,numQuestionsRight: questionsRight,percentageCompleted: percentageCompleted, experiencePointsEarned: xpEarned, dateCompleted: DateTime.now(), courseID: activeCourse!.id!);
     this.completedCourses.add(completedCourse);
 
@@ -179,7 +179,7 @@ class UserCustom {
       levelUp=true;
     };
 
-    //If the user had as a current course this one, we need to set that
+    //If the user had as a current new-course this one, we need to set that
     //attribute to null
     if(activeUser!.currentCourse!=null && activeUser!.currentCourse!.courseID==completedCourse.courseID){
       activeUser!.currentCourse=null;
@@ -232,9 +232,9 @@ class UserCustom {
 }
 
 /**
- * This class is used to get the info from the method saveCompleted course.
+ * This class is used to get the info from the method saveCompleted new-course.
  * It is used to know if the user has leveled up as a consequence of completing
- * the course and also to know if he got the score required to earn the badge and 
+ * the new-course and also to know if he got the score required to earn the badge and
  * the balance XP he earned
  */
 

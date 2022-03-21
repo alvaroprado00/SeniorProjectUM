@@ -7,57 +7,61 @@ import 'package:cyber/model/course.dart';
 import 'package:cyber/model/fill_in_the_blanks_question.dart';
 import 'package:cyber/model/multiple_choice_question.dart';
 import 'package:cyber/model/question.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_values.dart';
 
 class CourseController {
   //Reference to the collection of courses
-  CollectionReference courses =
+  CollectionReference coursesRef =
       FirebaseFirestore.instance.collection(courseCollectionName);
+
+  //Reference to the collection of recommended
+  CollectionReference recommendedCollectionRef =
+  FirebaseFirestore.instance.collection(recommendedCollectionName);
 
   /**
    * Function to get a Course from the database when the title is specified.
-   * First the course is gotten from the DB, after that, the ID is initialized
+   * First the new-course is gotten from the DB, after that, the ID is initialized
    * Then using another method the questions are initialized
    */
   Future getCourseByTitle({required String title}) async {
-    return courses
+    return coursesRef
         .where('title', isEqualTo: title)
         .get()
         .then((snapshot) async {
-      //We get the first course from the list
+      //We get the first new-course from the list
       Map<String, dynamic> json =
           snapshot.docs[0].data() as Map<String, dynamic>;
 
-      //Here I build the course from the json however the questions are not initialized
+      //Here I build the new-course from the json however the questions are not initialized
       Course course = Course.fromJson(json);
       course.id = snapshot.docs[0].id;
 
-      //To add the questions to the course I need to call to another future
+      //To add the questions to the new-course I need to call to another future
 
       try{
         Course courseFilled = await getQuestionsForCourse(
             course: course, courseId: snapshot.docs[0].id);
         return courseFilled;
       }catch(error){
-        throw Exception('Could not get the questions for the course');
+        throw Exception('Could not get the questions for the new-course');
       }
 
     }).catchError((error) {
-      print('Could not find a course with that name');
+      print('Could not find a new-course with that name');
       return Exception(error.toString());
     });
   }
 
   /**
    * This function is used by the function getCourse to be able to get
-   * the subcollection of questions of the course and add them to the instance
+   * the subcollection of questions of the new-course and add them to the instance
    */
   Future getQuestionsForCourse(
       {required Course course, required String courseId}) async {
 
     //I create a reference to the subcollection of questions
     CollectionReference questions =
-        courses.doc(courseId).collection(questionCollectionName);
+        coursesRef.doc(courseId).collection(questionCollectionName);
 
     Question q;
     return questions.get().then((snapshot) {
@@ -76,7 +80,7 @@ class CourseController {
           q = FillInTheBlanksQuestion.fromJson(json);
         }
 
-        //Finally I can add the question to the course
+        //Finally I can add the question to the new-course
         course.questions.add(q);
       }
 
@@ -85,18 +89,18 @@ class CourseController {
 
       return course;
     }).catchError((error){
-      print('Could not get the questions for the course specified');
-      throw Exception('Could not get the questions for the course');
+      print('Could not get the questions for the new-course specified');
+      throw Exception('Could not get the questions for the new-course');
     }
         );
   }
 
   /**
-   * Function to add the course that has been filled in the admin pages
-   * to firebase. The course to be added is a global variable
+   * Function to add the new-course that has been filled in the admin pages
+   * to firebase. The new-course to be added is a global variable
    */
   Future addCourseToFirebase() {
-    return courses.add(newCourse!.toJson()).then((value) async {
+    return coursesRef.add(newCourse!.toJson()).then((value) async {
 
 
       print('Course created');
@@ -105,7 +109,7 @@ class CourseController {
         print('Questions added');
 
       } catch (e) {
-        throw Exception('Could not add Questions to course');
+        throw Exception('Could not add Questions to new-course');
       }
 
     }).catchError((error) {
@@ -116,11 +120,11 @@ class CourseController {
 
   /**
    * Function used by addCourseToFirebase to create a subcollection of questions
-   * in the document of the course
+   * in the document of the new-course
    */
   Future addQuestionsToFirebase({required String courseId}) {
     CollectionReference questions =
-        courses.doc(courseId).collection(questionCollectionName);
+        coursesRef.doc(courseId).collection(questionCollectionName);
 
     try {
       for (Question q in newCourse!.questions) {
@@ -131,11 +135,11 @@ class CourseController {
         }
       }
     }catch(error){
-      print('Error when adding questions to course');
+      print('Error when adding questions to new-course');
       throw Exception(error.toString());
     }
     print('Questions added');
-    return Future<String>.value('Complete course added');
+    return Future<String>.value('Complete new-course added');
   }
 
   /**
@@ -146,7 +150,7 @@ class CourseController {
   Future getCoursesFromCategory({required Category category}) {
     Map<String, String> coursesInCategory = {};
 
-    return courses
+    return coursesRef
         .where('category', isEqualTo: categoryToString[category]!)
         .get()
         .then((snapshot) {
@@ -162,11 +166,11 @@ class CourseController {
   }
 
   /**
-   * This method returns a course from the DB. The param id is the courses' id
+   * This method returns a new-course from the DB. The param id is the courses' id
    * It will also be filled with its questions.
    */
   Future getCourseByID({required String id}) {
-    return courses.doc(id).get().then((snapshot) async {
+    return coursesRef.doc(id).get().then((snapshot) async {
       Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
       Course course = Course.fromJson(json);
       course.id = snapshot.id;
@@ -176,7 +180,7 @@ class CourseController {
             await getQuestionsForCourse(course: course, courseId: id);
         return courseFilled;
       } catch (error) {
-        throw Exception('Failed when getting questions for course');
+        throw Exception('Failed when getting questions for new-course');
       }
     }).catchError((error) {
       throw Exception(error.toString());
@@ -184,14 +188,13 @@ class CourseController {
   }
 
   /**
-   * This method is used to get the recommended course from the collection
+   * This method is used to get the recommended new-course from the collection
    * created in Firestore for that purpose
    */
   Future getRecommendedCourse() {
-    CollectionReference recommendedCollection =
-        FirebaseFirestore.instance.collection(recommendedCollectionName);
 
-    return recommendedCollection
+
+    return recommendedCollectionRef
         .doc(recommendedDocName)
         .get()
         .then((snapshot) async {
@@ -200,10 +203,47 @@ class CourseController {
         Course c = await getCourseByID(id: json['courseID']);
         return c;
       } catch (error) {
-        throw Exception('Did not found course with that ID');
+        throw Exception('Did not found new-course with that ID');
       }
     }).catchError((error) {
-      throw Exception('Not recommended course found');
+      throw Exception('Not recommended new-course found');
     });
+  }
+
+  /**
+   * Function to check if a course exists on the courses collection
+   */
+  Future courseExists({required String courseID}){
+
+    return coursesRef.doc(courseID).get().then((docSnapshot){
+      if(docSnapshot.exists){
+        return true;
+      }else{
+        return false;
+      }
+    }).catchError((onError){
+      throw Exception('Failed to access the collection recommended');
+    });
+  }
+
+  /**
+   * Function to update the course Id of the document in the
+   * recommended collection
+   */
+  Future updateRecommendedCourse({required String courseID}) async {
+
+    try{
+      bool exists= await courseExists(courseID: courseID);
+
+      if(exists){
+       return recommendedCollectionRef.doc(recommendedDocName).set({'courseID':courseID}).then((val){return 'Course Updated';});
+
+      }else{
+        return 'Course not Found';
+      }
+
+    }catch(error){
+      throw Exception('Error when looking for the course');
+    }
   }
 }

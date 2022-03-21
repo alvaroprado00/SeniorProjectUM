@@ -1,13 +1,14 @@
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart';
-import 'package:cyber/view/admin/new_course_page_1.dart';
-import 'package:cyber/view/admin/new_fill_blanks_page_1.dart';
-import 'package:cyber/view/admin/new_multiple_choice_page_1.dart';
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/admin/new-course/new_course_page.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+
+import 'new_fill_blanks_page_text.dart';
+import 'new_multiple_choice_page_description.dart';
 
 class NewQuestionPage extends StatelessWidget {
   const NewQuestionPage({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class NewQuestionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //Function to be executed when submitting a course
+    //Function to be executed when submitting a new-course
 
     void Function() addCourse = () {
       if (newCourse!.questions.length < 5) {
@@ -41,7 +42,7 @@ class NewQuestionPage extends StatelessWidget {
                   SizedBox(
                     height: 0.05 * heightOfScreen,
                   ),
-                  Text('You need to add at least 5 questions to the course',
+                  Text('You need to add at least 5 questions to the new-course',
                       style: getNormalTextStyleBlue(),
                       textAlign: TextAlign.center),
                 ],
@@ -52,11 +53,11 @@ class NewQuestionPage extends StatelessWidget {
       } else {
         final CourseController courseController = CourseController();
 
-        //Before uploading the course we have to set the number of questions
+        //Before uploading the new-course we have to set the number of questions
 
         newCourse!.numberOfQuestions = newCourse!.questions.length;
 
-        //After adding the course we show a message of success
+        //After adding the new-course we show a message of success
         courseController.addCourseToFirebase().then((value) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
@@ -69,8 +70,6 @@ class NewQuestionPage extends StatelessWidget {
           //After that I navigate
           Navigator.pushNamed(context, NewCoursePage.routeName);
         });
-
-
       }
     };
 
@@ -108,7 +107,7 @@ class NewQuestionPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(
-                        context, MultipleChoiceDescription.routeName);
+                        context, MultipleChoiceDescriptionPage.routeName);
                   },
                   child:
                       Text('Multiple Choice', style: getNormalTextStyleBlue()),
@@ -122,7 +121,8 @@ class NewQuestionPage extends StatelessWidget {
                 width: getWidthOfSmallButton(),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, FillInBlanksText.routeName);
+                    Navigator.pushNamed(
+                        context, FillInTheBlanksTextPage.routeName);
                   },
                   child: Text('Fill In the blanks',
                       style: getNormalTextStyleBlue()),

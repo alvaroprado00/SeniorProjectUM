@@ -12,7 +12,7 @@ import 'k_values.dart';
 
 
 /**
- * This function Retrieves a card with the title of the course specified.
+ * This function Retrieves a card with the title of the new-course specified.
  *
  * Yoy need to Specify the width of the card as well as the height of the sized
  * box containing everything
@@ -80,10 +80,10 @@ Card getCardForCourse(
 }
 
 /**
- * This class defines the Save Button logic included in the course Cards
+ * This class defines the Save Button logic included in the new-course Cards
  * When created we specify the first state of the button with the boolean
- * isFilled. We also need the button to have the course ID to save/unsave that
- * course.
+ * isFilled. We also need the button to have the new-course ID to save/unsave that
+ * new-course.
  *
  */
 class SaveButton extends StatefulWidget {
@@ -182,7 +182,7 @@ Card getCardForCategory(
 }
 
 /**
- * Getter fot a notification card. We need to specify de username and the course
+ * Getter fot a notification card. We need to specify de username and the new-course
  * he has completed so it appears as the info displayed. Width and height need
  * to be specified.
  */
@@ -201,7 +201,7 @@ Card getCardForNotification(
     child: InkWell(
       splashColor: secondaryColor,
       onTap: () {
-        debugPrint('Redirected to course bla bla.');
+        debugPrint('Redirected to new-course bla bla.');
       },
       child: SizedBox(
           width: widthOfCard,
@@ -216,7 +216,7 @@ Card getCardForNotification(
             ),
             Flexible(
               child: Text(
-                  '$username just completed a course on $nameOfCourse. ${getRandomEncouragingMessage()}',
+                  '$username just completed a new-course on $nameOfCourse. ${getRandomEncouragingMessage()}',
                   style: getNormalTextStyleWhite()),
             ),
             Padding(

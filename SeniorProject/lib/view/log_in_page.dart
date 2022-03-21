@@ -1,9 +1,9 @@
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/sign-up/sign_up_1.dart';
-import 'package:cyber/view/useful/functions.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/sign-up/email_page.dart';
+import 'package:cyber/view/util/functions.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cyber/controller/user_controller.dart';
@@ -49,7 +49,7 @@ class _LogInPageState extends State<LogInPage> {
     //Here I define the function to execute when pressing the buttons
 
     void Function() goToSignUp=(){
-          Navigator.pushNamed(context, SignUpEmail.routeName);
+          Navigator.pushNamed(context, SignUpEmailPage.routeName);
     };
 
     void Function() login=(){

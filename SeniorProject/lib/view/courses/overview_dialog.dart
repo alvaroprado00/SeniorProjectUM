@@ -1,10 +1,10 @@
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
-import '../useful/k_styles.dart';
+import '../util/k_styles.dart';
 
 
 /**

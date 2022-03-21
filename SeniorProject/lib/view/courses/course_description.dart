@@ -1,15 +1,15 @@
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart' as globals;
-import 'package:cyber/model/course.dart';
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/functions.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/util/functions.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/completed_course.dart';
-import '../useful/cards.dart';
+import '../../model/course.dart';
+import '../util/cards.dart';
 
 
 
@@ -29,7 +29,7 @@ class CourseDescription extends StatelessWidget {
     //defined in that class
     final courseController=CourseController();
 
-    // Before building the page I need to get the course from the DB
+    // Before building the page I need to get the new-course from the DB
     return Scaffold(
       backgroundColor: tertiaryColor,
       body:FutureBuilder(
@@ -37,7 +37,7 @@ class CourseDescription extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if (snapshot.hasData) {
 
-              //Once I get the course I assign its value to a global variable
+              //Once I get the new-course I assign its value to a global variable
               // so I can access the info from other pages easily
               globals.activeCourse=snapshot.data;
               globals.activeQuestionNum=1;
@@ -70,8 +70,8 @@ class CourseDescription extends StatelessWidget {
 }
 
 /**
- * This class is built specifying a course in its constructor.
- * When built, it shows the info from the course
+ * This class is built specifying a new-course in its constructor.
+ * When built, it shows the info from the new-course
  */
 class CourseDescriptionContent extends StatelessWidget {
 
@@ -180,7 +180,7 @@ class CourseDescriptionContent extends StatelessWidget {
 }
 
 /**
- * Function to get the outcomes of the course in the format that
+ * Function to get the outcomes of the new-course in the format that
  * we have designed
  */
 getContentForOutcomes({required List<String> outcomes}) {
@@ -214,8 +214,8 @@ getContentForOutcomes({required List<String> outcomes}) {
 
 /**
  * Method to get Container Showing two lines of text. Used for both 
- * showing the content for the last completed course and the progress in the
- * current course
+ * showing the content for the last completed new-course and the progress in the
+ * current new-course
  */
 
 getNewSection({required String sectionName, required String txt1ForBox, required String txt2ForBox}){

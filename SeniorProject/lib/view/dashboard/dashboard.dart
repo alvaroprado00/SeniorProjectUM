@@ -3,13 +3,14 @@ import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/current_course.dart';
 import 'package:cyber/model/user_custom.dart';
+import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/courses/course_description.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
-import '../useful/cards.dart';
+import '../util/cards.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -18,9 +19,7 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: tertiaryColor,
-        body: FutureBuilder(
+        return FutureBuilder(
           future: UserController.getActiveUser(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
@@ -30,17 +29,17 @@ class DashboardPage extends StatelessWidget {
               activeUser=snapshot.data;
               return ContentForDashboard(user: snapshot.data);
             } else if (snapshot.hasError) {
-              return Center(
+              return Scaffold(body:Center(
                 child: Text(
                   'Error: ${snapshot.error}',
                   style: getHeadingStyleBlue(),
                 ),
-              );
+              ));
             } else {
-              return Center(child: CircularProgressIndicator());
+              return Scaffold(body:Center(child: CircularProgressIndicator()));
             }
           },
-        ));
+        );
   }
 }
 
@@ -55,38 +54,49 @@ class ContentForDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.only(
-            left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Welcome ${user.username}!',
-                style: TextStyle(color: primaryColor, fontSize: 0.08*widthOfScreen, fontWeight: FontWeight.w500, fontFamily: 'roboto'),
-              ),
-              user.currentCourse == null
-                  ? SizedBox(
-                      height: 0,
-                    )
-                  : ResumeCourseContent(currentCourse: user.currentCourse!),
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              RecommendedCourseContent(),
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              Text('Categories', style: getNormalTextStyleBlue()),
-              Divider(
-                color: primaryColor,
-                thickness: 2,
-              ),
-              CategoryCards(),
-            ],
+    return Scaffold(
+      floatingActionButton:user.isAdmin?AdminButton():null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      appBar: AppBar(
+        title:Text(
+          'Welcome ${user.username}!',
+          style: TextStyle(color: primaryColor, fontSize: 0.08*widthOfScreen, fontWeight: FontWeight.w500, fontFamily: 'roboto'),
+        ),
+
+        backgroundColor: tertiaryColor,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+
+                user.currentCourse == null
+                    ? SizedBox(
+                        height: 0,
+                      )
+                    : ResumeCourseContent(currentCourse: user.currentCourse!),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+                RecommendedCourseContent(),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+                Text('Categories', style: getNormalTextStyleBlue()),
+                Divider(
+                  color: primaryColor,
+                  thickness: 2,
+                ),
+                CategoryCards(),
+
+              ],
+            ),
           ),
         ),
       ),
@@ -95,7 +105,31 @@ class ContentForDashboard extends StatelessWidget {
 }
 
 /**
- * This class when built shows a card for the recommended course.
+ * This class when built displays a floating button only available for the admin
+ * It redirects the user to the admin pages
+ */
+class AdminButton extends StatelessWidget {
+  const AdminButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      hoverColor: primaryColor,
+    hoverElevation: 50,
+
+    onPressed: () {
+      Navigator.pushNamed(context, AdminDashboardPage.routeName);
+    },
+    label:  Text('Admin', style: getNormalTextStyleWhite(),),
+    icon: const Icon(Icons.admin_panel_settings, color: tertiaryColor,),
+    backgroundColor: secondaryColor,
+    );
+  }
+}
+
+
+/**
+ * This class when built shows a card for the recommended new-course.
  * It has to first execute the future to search for it in the DB
  */
 
@@ -148,8 +182,8 @@ class _RecommendedCourseContentState extends State<RecommendedCourseContent> {
 
 /**
  * This is a stateful widget that builds using a FutureBuilder
- * It is created specifying an active course from the User.
- * The future consists on searching for that course in the database
+ * It is created specifying an active new-course from the User.
+ * The future consists on searching for that new-course in the database
  */
 
 class ResumeCourseContent extends StatefulWidget {
@@ -208,8 +242,8 @@ class _ResumeCourseContentState extends State<ResumeCourseContent> {
 
 /**
  * This class builds an special container shown in the dashboard.
- * It has been built to show both the recommended course and the
- * active course. In case the course is the active one we need to
+ * It has been built to show both the recommended new-course and the
+ * active new-course. In case the new-course is the active one we need to
  * provide the optional param percentage
  */
 class ContainerForCourse extends StatelessWidget {
