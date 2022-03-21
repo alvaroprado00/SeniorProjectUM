@@ -5,21 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="41b64c42-e4a0-4fa7-900c-6047041cf9cb" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/SeniorProject/assets/images/default_chat_banner.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SeniorProject/assets/images/group_icon_default.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_created_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/group_home.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_page_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_page_home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/useful/components.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/useful/components.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/useful/functions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/useful/functions.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
