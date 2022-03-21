@@ -9,21 +9,29 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:cyber/view/k_colors.dart';
+import 'package:cyber/view/useful/k_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Avatar extends StatefulWidget {
-  Avatar({required this.url, required this.size});
-  final String url;
+  Avatar({required this.nameOfAvatar, required this.size});
+  final String nameOfAvatar;
   final double size;
   @override
   State<StatefulWidget> createState() => new _AvatarState();
 }
 
 class _AvatarState extends State<Avatar> {
+
+  late final String url;
+  @override
+  void initState(){
+    super.initState();
+    url='https://robohash.org/${widget.nameOfAvatar}';
+  }
+
   Future<Uint8List> fetchAvatar() async {
-    http.Response response = await http.get(Uri.parse(widget.url));
+    http.Response response = await http.get(Uri.parse(url));
     return response.bodyBytes;
   }
 

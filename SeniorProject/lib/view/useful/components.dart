@@ -305,57 +305,64 @@ Widget getOptionsButton(
       });
 }
 
-getExitCourseButton({required BuildContext context}) {
-  return SizedBox(
-    height: getHeightOfSmallButton(),
-    width: getWidthOfSmallButton(),
-    child: ElevatedButton(
-      style: greyButtonStyle,
-      child: Text(
-        'Exit',
-        style: getNormalTextStyleBlue(),
+
+getExitCourseButton({required BuildContext context}){
+
+    return  SizedBox(
+      height: getHeightOfSmallButton(),
+      width: getWidthOfSmallButton(),
+      child: ElevatedButton(
+        style: greyButtonStyle,
+        child: Text(
+          'Exit',
+          style: getNormalTextStyleBlue(),
+        ),
+        onPressed: (){
+          Navigator.pushNamed(context, DashboardPage.routeName);
+        },
       ),
-      onPressed: () {
-        Navigator.pushNamed(context, DashboardPage.routeName);
-      },
-    ),
-  );
+    );
+
 }
 
-getSaveCurrentCourseButton({required BuildContext context}) {
-  return SizedBox(
-    height: getHeightOfSmallButton(),
-    width: getWidthOfSmallButton(),
-    child: ElevatedButton(
+getSaveCurrentCourseButton({required BuildContext context}){
+
+    return SizedBox(
+      height: getHeightOfSmallButton(),
+      width: getWidthOfSmallButton(),
+      child: ElevatedButton(
         style: yellowButtonStyle,
         child: Text(
           'Save',
           style: getNormalTextStyleBlue(),
         ),
-        onPressed: () async {
+        onPressed:() async {
           await activeUser!.updateCurrentCourse();
           //Once the user is updated, then we go to the dashboard
           Navigator.pushNamed(context, DashboardPage.routeName);
-        }),
-  );
+        }
+      ),
+    );
+
 }
 
-getResumeButton({required BuildContext context}) {
-  return SizedBox(
-    height: getHeightOfLargeButton(),
-    width: getWidthOfLargeButton(),
-    child: ElevatedButton(
-      style: blueButtonStyle,
-      child: Text(
-        'Resume',
-        style: getNormalTextStyleWhite(),
+getResumeButton({required BuildContext context}){
+
+    return  SizedBox(
+      height: getHeightOfLargeButton(),
+      width: getWidthOfLargeButton(),
+      child: ElevatedButton(
+        style: blueButtonStyle,
+        child: Text(
+          'Resume',
+          style: getNormalTextStyleWhite(),
+        ),
+        onPressed: (){Navigator.pop(context);},
       ),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    ),
-  );
+    );
 }
+
+
 
 /**
  * Function that returns a grey box with rounded corners containing a child
