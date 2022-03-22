@@ -1,11 +1,10 @@
 import 'package:cyber/globals.dart' as globals;
 import 'package:cyber/model/fill_in_the_blanks_question.dart';
 import 'package:cyber/view/courses/question_feedback.dart';
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
 //Global variables to be filled when user interacts with buttons
@@ -54,7 +53,7 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
                       getOptionsButton(
                           context: context,
                           courseTitle: globals.activeCourse!.title,
-                          categoryTitle: stringFromCategory[globals.activeCourse!.category]?? 'No category found',
+                          categoryTitle: categoryToString[globals.activeCourse!.category]?? 'No category found',
                           question: question.number,
                           numberOfQuestions: globals.activeCourse!.numberOfQuestions)
                     ],
@@ -112,7 +111,7 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
                               }
 
                               //I update the global variables once answer submitted
-                              globals.userProgress!.add(isRight);
+                              globals.userProgress.add(isRight);
                               globals.activeQuestionNum=globals.activeQuestionNum!+1;
 
                               // Before navigating to the next page we have to

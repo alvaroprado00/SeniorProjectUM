@@ -1,9 +1,9 @@
 
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/functions.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/util/functions.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
 
@@ -134,7 +134,7 @@ Widget getFeedback({required bool isRight, required String shortFeeback}){
         ],
       ),
       Divider(indent: 0.01*widthOfScreen, endIndent: 0.01*widthOfScreen, color: primaryColor,thickness: 0.002*widthOfScreen, ),
-      getCirclesProgressBarForCourseProgression(answers: globals.userProgress!, numberOfCircles: globals.activeCourse!.numberOfQuestions),
+      getCirclesProgressBarForCourseProgression(answers: globals.userProgress, numberOfCircles: globals.activeCourse!.numberOfQuestions),
       SizedBox(height: 0.05*heightOfScreen,),
       Text(shortFeeback, style: getNormalTextStyleBlue(),),
 

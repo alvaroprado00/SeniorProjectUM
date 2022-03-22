@@ -1,5 +1,5 @@
 import 'package:cyber/model/question.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_values.dart';
 
 class MultipleChoiceQuestion extends Question {
 
@@ -40,5 +40,16 @@ class MultipleChoiceQuestion extends Question {
       options: List.castFrom(json['options']),
       rightOption: json['rightOption'],
     );
+  }
+
+  Map<String, Object?> toJson() {
+    return {
+      'longFeedback': longFeedback,
+      'number': number,
+      'options': options,
+      'rightOption': rightOption,
+      'description': description,
+      'typeOfQuestion': stringFromTypeOfQuestion[typeOfQuestion],
+    };
   }
 }

@@ -1,13 +1,14 @@
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/main.dart';
-import 'package:cyber/view/sign-up/sign_up_1.dart';
-import 'package:cyber/view/useful/functions.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/sign-up/email_page.dart';
+import 'package:cyber/view/util/functions.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cyber/controller/user_controller.dart';
+
+import 'dashboard/dashboard.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -44,6 +45,35 @@ class _LogInPageState extends State<LogInPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    //Here I define the function to execute when pressing the buttons
+
+    void Function() goToSignUp=(){
+          Navigator.pushNamed(context, SignUpEmailPage.routeName);
+    };
+
+    void Function() login=(){
+      if(_formKey.currentState!.validate()){
+
+        //We get both the email and password and try to login
+
+        String email=_controllerEmail.text;
+        String password=_controllerPassword.text;
+        UserController.loginWithEmailAndPassword(email: email, password: password).then((value){
+          if(value is UserCredential ){
+
+            //If the user logs In then we again navigate to the home Page since it would have been notified
+            //of the changes and now will display the dashboard
+            Navigator.pushNamed(context, DashboardPage.routeName);
+
+          }else{
+            SnackBar snBar= SnackBar(content: Text(value, style: getNormalTextStyleBlue(),), backgroundColor: secondaryColor,);
+            ScaffoldMessenger.of(context).showSnackBar(snBar);
+          }
+        });
+      }
+    };
+
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
@@ -88,25 +118,7 @@ class _LogInPageState extends State<LogInPage> {
                         height: getHeightOfLargeButton(),
                         width: getWidthOfLargeButton(),
                         child: ElevatedButton(
-                          onPressed: (){
-                            if(_formKey.currentState!.validate()){
-                              String email=_controllerEmail.text;
-                              String password=_controllerPassword.text;
-                              UserController.loginWithEmailAndPassword(email: email, password: password).then((value){
-                                if(value is UserCredential ){
-
-                                  //If the user logs In then we again navigate to the home Page since it would have been notified
-                                  //of the changes and now will display the dashboard
-
-                                    Navigator.pushNamed(context, HomePage.routeName);
-                                }else{
-                                  SnackBar snBar= SnackBar(content: Text(value, style: getNormalTextStyleBlue(),), backgroundColor: secondaryColor,);
-                                  ScaffoldMessenger.of(context).showSnackBar(snBar);
-
-                                }
-                              });
-                            }
-                          },
+                          onPressed: login,
                           child: Text('Login', style: getNormalTextStyleBlue()),
                           style: yellowButtonStyle,
                         )),
@@ -125,7 +137,7 @@ class _LogInPageState extends State<LogInPage> {
                         height: getHeightOfLargeButton(),
                         width: getWidthOfLargeButton(),
                         child: ElevatedButton(
-                          onPressed: () {Navigator.pushNamed(context, SignUpEmail.routeName);},
+                          onPressed: goToSignUp,
                           child: Text('Sign Up', style: getNormalTextStyleBlue()),
                           style: greyButtonStyle,
                         )),

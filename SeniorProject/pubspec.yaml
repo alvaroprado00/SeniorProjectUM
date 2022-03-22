@@ -34,19 +34,22 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons:
   http: ^0.13.4
-  firebase_auth: ^3.3.6
-  firebase_core: ^1.12.0
-  cloud_firestore: ^3.1.7
+
   provider: ^6.0.2
   font_awesome_flutter:
   shared_preferences: ^2.0.13
+  json_serializable: ^6.1.4
+  firebase_core: ^1.12.0
+  firebase_auth: ^3.3.8
+  cloud_firestore: ^3.1.9
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^1.3.3
-
-
+  build_runner:
 flutter_native_splash:
 
   # This package generates native code to customize Flutter's default white native splash screen
@@ -58,7 +61,7 @@ flutter_native_splash:
 
   # color or background_image is the only required parameter.  Use color to set the background
   # of your splash screen to a solid color.  Use background_image to set the background of your
-  # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
+  # splash screen to a png image.  This is util for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
   color: "#14213D"
   #background_image: "assets/background.png"

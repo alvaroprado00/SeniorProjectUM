@@ -1,21 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/config/k_collection_names_firebase.dart';
+import 'package:cyber/globals.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-/**
- * Class that includes static methods to interact with users in DB
- */
-
 class UserController {
-
   /**
    * Method to login into Auth DB provided an email and a Password
    * If the credentials are OK it returns the user credentials and changes
    * the state of the user to loggedIn. In case the credentials are KO returns
    * a String with the reason of the error
    */
-
   static Future loginWithEmailAndPassword(
       {required String email, required String password}) async {
     try {
@@ -41,7 +36,6 @@ class UserController {
    */
   static Future addUserToAuthAndFirestore(
       {required UserCustom u, required String password}) async {
-
     //First we upload the user in Auth DB
     try {
       UserCredential userCredential =
@@ -53,9 +47,8 @@ class UserController {
       //If we succeed in creating the user in the Auth DB, then we create the entry for the other info in the separate collection
       // That separate collection is were we will have our custom info of the user
 
-      addUserToFireStore(userCustom: u, userId: userCredential.user!.uid);
-
-      return u;
+      return addUserToFireStore(
+          userCustom: u, userId: userCredential.user!.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'The password provided is too weak.';
@@ -71,44 +64,57 @@ class UserController {
    * Method to add a user to the userCollection in Firestore.
    * The document created will be named with the userId from the AuthDB
    */
-  static Future addUserToFireStore(
+  static Future<dynamic> addUserToFireStore(
       {required UserCustom userCustom, required String userId}) {
     // Call the user's CollectionReference
     CollectionReference users =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
     //Access specific entry and set info
-    return users.doc(userId).set({
-      'userName': userCustom.username,
-      'email': userCustom.email,
-    }).then((value) {
-      print("USER CREATED");
+    return users.doc(userId).set(userCustom.toJson()).then((value) {
+      print("User created/updated");
+      return true;
     }).catchError((error) {
       print("ERROR when persisting user in collection");
+      throw Exception('Error when creating user in Firestore');
     });
-
   }
 
   /**
    * This method returns the user that is active in the app in case there is
    * one
    */
-  static Future getActiveUser() async {
+  static Future getActiveUser() {
     CollectionReference users =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
 
     //I can get the uid of the active user with the following method
 
     String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
-    await users.doc(uidOfActiveUser).get().then((snapshot){
+    return users.doc(uidOfActiveUser).get().then((snapshot) {
+      Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
 
-      Map<String, dynamic> json = snapshot.data as Map<String, dynamic>;
       return UserCustom.fromJson(json);
+    }).catchError((error) {
+      print('Failed to get User: ${error.toString()}');
+      throw Exception('Error getting active user');
     });
+  }
 
+  static Future getUsername() async {
+    try {
+      UserCustom u = await getActiveUser();
+      return u.username;
+    } catch (error) {
+      throw Exception('');
+    }
+  }
+
+  static Future updateActiveUser() {
+    //We get the id of the active user
+    String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
+
+    //Now we update it in the Firestore DB
+
+    return addUserToFireStore(userCustom: activeUser!, userId: uidOfActiveUser);
   }
 }
-
-
-
-
-

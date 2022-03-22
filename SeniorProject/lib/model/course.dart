@@ -1,8 +1,8 @@
 import 'package:cyber/model/question.dart';
-import 'package:cyber/view/useful/k_values.dart';
-import 'package:flutter/material.dart';
+import 'package:cyber/view/util/k_values.dart';
 
 class Course {
+  String? id;
   String imageURL;
   String title;
   Category category;
@@ -38,20 +38,22 @@ class Course {
       description: json['description'],
       outcomes: List.castFrom(json['outcomes']),
       questions: [],
-      badgeIcon: '',
-      positionInCategory: 1,
+      badgeIcon: json['badgeIcon'],
+      positionInCategory: json['positionInCategory'],
     );
   }
 
   Map<String, Object?> toJson() {
     return {
-      'imageURL': imageURL,
-      'title': title,
-      'category': stringFromCategory[category],
-      'experiencePoints': experiencePoints,
-      'numberOfQuestions': numberOfQuestions,
+      'category': categoryToString[category],
       'description': description,
+      'experiencePoints': experiencePoints,
+      'imageURL':imageURL,
+      'numberOfQuestions':numberOfQuestions,
       'outcomes': outcomes,
+      'title': title,
+      'badgeIcon':badgeIcon,
+      'positionInCategory':positionInCategory,
     };
   }
 

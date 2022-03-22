@@ -1,40 +1,46 @@
-import 'package:cyber/view/admin/new_course_page_1.dart';
-import 'package:cyber/view/admin/new_course_page_2.dart';
-import 'package:cyber/view/admin/new_course_page_3.dart';
-import 'package:cyber/view/admin/new_fill_blanks_page_1.dart';
-import 'package:cyber/view/admin/new_fill_blanks_page_2.dart';
-import 'package:cyber/view/admin/new_multiple_choice_page_1.dart';
-import 'package:cyber/view/admin/long_feedback_page.dart';
-import 'package:cyber/view/admin/new_question_page.dart';
+import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
+import 'package:cyber/view/admin/new-course/new_course_page.dart';
+import 'package:cyber/view/admin/new-course/new_course_page_outcomes.dart';
+import 'package:cyber/view/admin/new-course/new_course_page_description.dart';
+import 'package:cyber/view/admin/new-course/new_question_feedback_page.dart';
+import 'package:cyber/view/admin/new-course/new_question_page.dart';
+import 'package:cyber/view/admin/recommended/new_recommended_page.dart';
+import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
-import 'package:cyber/view/groups/group_page_home.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
-import 'package:cyber/view/sign-up/sign_up_1.dart';
-import 'package:cyber/view/sign-up/sign_up_2.dart';
-import 'package:cyber/view/sign-up/sign_up_3.dart';
+import 'package:cyber/view/sign-up/email_page.dart';
+import 'package:cyber/view/sign-up/password_page.dart';
+import 'package:cyber/view/sign-up/username_page.dart';
 import 'package:cyber/view/sign-up/summary_sign_up.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'admin/new_multiple_choice_page_2.dart';
+import 'admin/new-course/new_fill_blanks_page_text.dart';
+import 'admin/new-course/new_fill_blanks_page_blanks.dart';
+import 'admin/new-course/new_multiple_choice_page_description.dart';
+import 'admin/new-course/new_multiple_choice_page_options.dart';
+import 'courses/category.dart';
 import 'courses/fill_in_the_blanks_question_page.dart';
+import 'courses/overview.dart';
+import 'dashboard/dashboard.dart';
+import 'log_in_page.dart';
 
 
 
-main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main()  {
+  //WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
 
     //The notifier provider provides an instance of ApplicationState to all its descendants
     ChangeNotifierProvider(
       create: (context) => ApplicationState(),
-      builder: (context, _) => MyApp(),
+      builder: (context, _) => const MyApp(),
     ),
   );
 }
@@ -51,6 +57,7 @@ class ApplicationState extends ChangeNotifier {
   }
 
   Future<void> init() async {
+    await Firebase.initializeApp();
 
     //Now we create a listener of the user state and after this we know the state of the user
     FirebaseAuth.instance.userChanges().listen((user) {
@@ -73,17 +80,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Cyber',
-      initialRoute: GroupHome.routeName,
+      initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const HomePage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
-        SignUpEmail.routeName: (context) => const SignUpEmail(),
+        SignUpEmailPage.routeName: (context) => const SignUpEmailPage(),
         HomePage.routeName: (context) => const HomePage(),
-        SignUpPassword.routeName: (context) => const SignUpPassword(),
-        SignUpUsername.routeName: (context) => const SignUpUsername(),
+        SignUpPasswordPage.routeName: (context) => const SignUpPasswordPage(),
+        SignUpUsernamePage.routeName: (context) => const SignUpUsernamePage(),
         ProfileCreated.routeName: (context) => const ProfileCreated(),
-        SignUpJoinGroup.routeName: (context) => const SignUpJoinGroup(),
+        SignUpGroupPage.routeName: (context) => const SignUpGroupPage(),
         SignUpSummary.routeName: (context) => const SignUpSummary(),
         MultipleChoiceQuestionPage.routeName: (context)=> const MultipleChoiceQuestionPage(),
         FillInTheBlanksQuestionPage.routeName:(context)=> const FillInTheBlanksQuestionPage(),
@@ -91,13 +98,18 @@ class MyApp extends StatelessWidget {
         NewCourseOutcomesPage.routeName:(context)=> const NewCourseOutcomesPage(),
         NewCourseDescriptionPage.routeName:(context)=> const NewCourseDescriptionPage(),
         NewQuestionPage.routeName:(context)=> const NewQuestionPage(),
-        MultipleChoiceDescription.routeName:(context)=> const MultipleChoiceDescription(),
-        MultipleChoiceOptions.routeName:(context)=> const MultipleChoiceOptions(),
-        LongFeedbackPage.routeName:(context)=> const LongFeedbackPage(),
-        LongFeedbackPage.routeName:(context)=> const LongFeedbackPage(),
-        FillInBlanksText.routeName:(context)=> const FillInBlanksText(),
-        FillInBlanksOptions.routeName:(context)=> const FillInBlanksOptions(),
-        GroupHome.routeName: (context)=> const GroupHome(),
+        MultipleChoiceDescriptionPage.routeName:(context)=> const MultipleChoiceDescriptionPage(),
+        MultipleChoiceOptionsPage.routeName:(context)=> const MultipleChoiceOptionsPage(),
+        QuestionLongFeedbackPage.routeName:(context)=> const QuestionLongFeedbackPage(),
+        FillInTheBlanksTextPage.routeName:(context)=> const FillInTheBlanksTextPage(),
+        FillInTheBlanksOptionsPage.routeName:(context)=> const FillInTheBlanksOptionsPage(),
+        DashboardPage.routeName:(context)=> const DashboardPage(),
+        CategoryPage.routeName:(context)=> const CategoryPage(),
+        CourseDescription.routeName:(context)=> const CourseDescription(),
+        Overview.routeName:(context)=> const Overview(),
+        CategoryProgress.routeName:(context)=> const CategoryProgress(),
+        NewRecommendedCoursePage.routeName:(context)=> const NewRecommendedCoursePage(),
+        AdminDashboardPage.routeName:(context)=> const AdminDashboardPage(),
 
 
       },
@@ -134,13 +146,14 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-            //return SignUpSummary();
-            return NewCoursePage();
+           // FirebaseAuth.instance.signOut();
+            return DashboardPage();
           }
         case ApplicationLoginState.loggedOut:
           {
-            //return LogInPage();
-            return NewCoursePage();
+
+            return LogInPage();
+
           }
         default:
           {

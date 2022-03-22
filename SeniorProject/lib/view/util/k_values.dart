@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 /**
  * Constant values in the app that are not related to colors or config files
  */
@@ -10,7 +13,7 @@ const Map<int, String> encouragingMessages={
   1: 'Do it now!',
   2: 'Do you think you can?',
   3: 'What are you waiting for?',
-  4: 'It seems like a nice course...'
+  4: 'It seems like a nice new-course...'
 };
 
 Map<int, String> numberToOptionLetter = {
@@ -32,7 +35,7 @@ enum Category{
   info,
 }
 
-Map <Category, String> stringFromCategory={
+Map <Category, String> categoryToString={
   Category.socialMedia: 'Social Media',
   Category.devices: 'Devices',
   Category.info:'Info',
@@ -56,3 +59,7 @@ Map <String, TypeOfQuestion> typeOfQuestionFromString={
   'Fill in the Blanks': TypeOfQuestion.fillInTheBlanks,
 };
 
+Map<String, IconData> stringToBadgeIcon={
+
+  'key': FontAwesomeIcons.key,
+};

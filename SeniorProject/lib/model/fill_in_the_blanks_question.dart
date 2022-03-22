@@ -1,5 +1,5 @@
 import 'package:cyber/model/question.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_values.dart';
 
 class FillInTheBlanksQuestion extends Question {
 
@@ -45,5 +45,19 @@ class FillInTheBlanksQuestion extends Question {
     )
     );
   }
+
+  Map<String, Object?> toJson() {
+    return {
+      'longFeedback':longFeedback,
+      'number': number,
+      'options': options,
+      'solution': Map.from(this.solution.map((key, value) {
+        return MapEntry(key.toString(), value);
+      })),
+      'typeOfQuestion': stringFromTypeOfQuestion[typeOfQuestion],
+      'text': text,
+    };
+  }
+
 
 }
