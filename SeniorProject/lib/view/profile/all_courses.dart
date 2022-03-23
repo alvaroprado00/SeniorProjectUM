@@ -1,10 +1,10 @@
-import 'package:cyber/view/useful/components.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../model/user_custom.dart';
-import '../useful/k_colors.dart';
-import '../useful/k_styles.dart';
+import '../util/components.dart';
+import '../util/k_colors.dart';
+import '../util/k_styles.dart';
 
 class AllCoursePage extends StatefulWidget {
   const AllCoursePage({Key? key, required this.dummyUser}) : super(key: key);

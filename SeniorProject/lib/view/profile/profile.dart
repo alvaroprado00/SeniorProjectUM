@@ -5,13 +5,13 @@ import 'package:cyber/view/profile/all_avatars.dart';
 import 'package:cyber/view/profile/all_badges.dart';
 import 'package:cyber/view/profile/all_courses.dart';
 import 'package:cyber/view/profile/edit_profile.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../useful/components.dart';
+import '../util/components.dart';
+import '../util/k_colors.dart';
+import '../util/k_styles.dart';
+import '../util/k_values.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key, required this.buildContext}) : super(key: key);

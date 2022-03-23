@@ -1,10 +1,11 @@
-import 'package:cyber/view/admin/new_course_page_1.dart';
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:cyber/view/profile/profile.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'admin/new-course/new_course_page.dart';
 
 class PageViewScreen extends StatefulWidget {
   const PageViewScreen({Key? key, required this.buildContext})

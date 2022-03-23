@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/user_custom.dart';
-import '../useful/components.dart';
-import '../useful/k_colors.dart';
-import '../useful/k_styles.dart';
-import '../useful/k_values.dart';
+import '../util/components.dart';
+import '../util/k_colors.dart';
+import '../util/k_styles.dart';
+import '../util/k_values.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key, required this.dummyUser}) : super(key: key);

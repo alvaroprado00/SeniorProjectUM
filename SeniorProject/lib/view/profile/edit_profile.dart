@@ -1,14 +1,14 @@
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/profile/change_password.dart';
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/user_custom.dart';
-import '../useful/functions.dart';
-import '../useful/k_colors.dart';
+import '../util/components.dart';
+import '../util/functions.dart';
+import '../util/k_colors.dart';
+import '../util/k_styles.dart';
+import '../util/k_values.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key, required this.dummyUser}) : super(key: key);
