@@ -103,7 +103,6 @@ class MyApp extends StatelessWidget {
             const NewCourseDescriptionPage(),
         NewQuestionPage.routeName: (context) => const NewQuestionPage(),
         DashboardPage.routeName: (context) => const DashboardPage(),
-        CategoryPage.routeName: (context) => const CategoryPage(),
         CourseDescription.routeName: (context) => const CourseDescription(),
         Overview.routeName: (context) => const Overview(),
         CategoryProgress.routeName: (context) => const CategoryProgress(),
