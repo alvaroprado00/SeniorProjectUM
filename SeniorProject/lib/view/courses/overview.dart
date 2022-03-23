@@ -2,10 +2,10 @@ import 'package:cyber/config/fixed_values.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/overview_dialog.dart';
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 

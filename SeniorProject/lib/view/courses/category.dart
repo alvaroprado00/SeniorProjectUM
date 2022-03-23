@@ -1,12 +1,12 @@
 import 'package:cyber/controller/course_controller.dart';
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
 import '../../globals.dart';
-import '../useful/cards.dart';
+import '../util/cards.dart';
 
 class CategoryPage extends StatelessWidget {
   const CategoryPage({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class CategoryPage extends StatelessWidget {
           List<Widget> children = [];
 
           //The snapshot.data should be a map. Each entry is the courseID and
-          //the course title of one course from the category
+          //the new-course title of one new-course from the category
 
           if (snapshot.hasData) {
             if (snapshot.data.isEmpty) {
@@ -121,13 +121,13 @@ getCourseCards(
   int i = 0;
   courses.forEach((key, value) {
 
-    //First we check if the active user has the course Saved
+    //First we check if the active user has the new-course Saved
     isSaved=activeUser!.isCourseSaved(courseID: key);
 
-    //After that we check if the user has completed the course
+    //After that we check if the user has completed the new-course
     isCompleted=activeUser!.isCourseCompleted(courseID: key);
 
-    //We add the course to a row
+    //We add the new-course to a row
     childrenForRow.add(getCardForCourse(
         isSaved: isSaved,
         isCompleted: isCompleted,
@@ -150,7 +150,7 @@ getCourseCards(
     }
   });
 
-  //This means that the number of courses is odd so a course has been not added
+  //This means that the number of courses is odd so a new-course has been not added
   //to the children of the column
   if (courses.length % 2 != 0) {
     children.add(Row(

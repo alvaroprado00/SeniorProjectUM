@@ -9,7 +9,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:cyber/view/useful/k_colors.dart';
+import 'package:cyber/view/util/k_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,4 +1,4 @@
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_values.dart';
 
 class Question {
   final int number;

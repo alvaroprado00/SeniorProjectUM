@@ -1,5 +1,5 @@
 import 'package:cyber/model/question.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_values.dart';
 
 class MultipleChoiceQuestion extends Question {
 

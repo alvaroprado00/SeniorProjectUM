@@ -1,23 +1,53 @@
 import 'package:cyber/model/fill_in_the_blanks_question.dart';
-import 'package:cyber/view/admin/long_feedback_page.dart';
+import 'package:cyber/view/admin/new-course/new_question_feedback_page.dart';
 
-import 'package:cyber/view/useful/functions.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
+import 'package:cyber/view/util/functions.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
 import 'package:flutter/material.dart';
-import '../useful/components.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/k_values.dart';
 
-class FillInBlanksOptions extends StatefulWidget {
-  const FillInBlanksOptions({Key? key}) : super(key: key);
+import '../../util/components.dart';
 
+class FillInTheBlanksOptionsPage extends StatelessWidget {
+  const FillInTheBlanksOptionsPage({Key? key}) : super(key: key);
   static final String routeName = '/fillInBlanksOptions';
 
   @override
-  State<FillInBlanksOptions> createState() => _FillInBlanksOptionsState();
+  Widget build(BuildContext context) {
+    //First of all I take the question from the arguments
+
+    final newQuestion =
+    ModalRoute.of(context)!.settings.arguments as FillInTheBlanksQuestion;
+
+
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+    appBar: AppBar(
+    leading: getBackButton(context: context),
+    title: Text('Fill In The Blanks'),
+    centerTitle: true,
+    titleTextStyle: getSubheadingStyleWhite(),
+    elevation: 0,
+    actions: <Widget>[
+    getExitButtonAdmin(context: context),
+    ],
+    ),
+    body: SafeArea(
+    child:OptionsForm(question: newQuestion)));
+    }
 }
 
-class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
+
+class OptionsForm extends StatefulWidget {
+  const OptionsForm({required FillInTheBlanksQuestion this.question});
+
+final FillInTheBlanksQuestion question;
+  @override
+  State<OptionsForm> createState() => _OptionsFormState();
+}
+
+class _OptionsFormState extends State<OptionsForm> {
   final _formKey = GlobalKey<FormState>();
 
   late TextEditingController _controllerOption;
@@ -39,10 +69,6 @@ class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
 
   @override
   Widget build(BuildContext context) {
-    //First of all I take the question from the arguments
-
-    final newQuestion =
-        ModalRoute.of(context)!.settings.arguments as FillInTheBlanksQuestion;
 
     //Define the snackbar
     SnackBar getSnackBar({required String message}) {
@@ -60,24 +86,29 @@ class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
     //Here I define the function to execute
     void Function() addOption = () {
       if (_formKey.currentState!.validate()) {
-        newQuestion.options.add(_controllerOption.text);
+        widget.question.options.add(_controllerOption.text);
 
         //Update counter
         setState(() {
           _optionNumber++;
+          _controllerOption.clear();
         });
       }
     };
 
     void Function() addSolution = () {
       if (_formKey.currentState!.validate()) {
-        if (newQuestion.text.split('X').length - 1 >= _blankNumber) {
-          newQuestion.solution[_blankNumber] = _controllerOption.text;
+        if (widget.question.text.split('X').length - 1 >= _blankNumber) {
+          widget.question.solution[_blankNumber] = _controllerOption.text;
+
+          //Also add the solution as option
+          widget.question.options.add(_controllerOption.text);
 
           //After adding solution increment counter
           setState(() {
             _blankNumber++;
             _optionNumber++;
+            _controllerOption.clear();
           });
         } else {
           SnackBar snBar =
@@ -92,29 +123,16 @@ class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
       //That the number of solutions is equal to the number of blanks
       //in the text
 
-      if (newQuestion.text.split('X').length - 1 == (_blankNumber - 1)) {
-        Navigator.pushNamed(context, LongFeedbackPage.routeName,
-            arguments: newQuestion);
+      if (widget.question.text.split('X').length - 1 == (_blankNumber - 1)) {
+        Navigator.pushNamed(context, QuestionLongFeedbackPage.routeName,
+            arguments: widget.question);
       } else {
         SnackBar snBar =
             getSnackBar(message: 'No matching between blanks and solutions');
         ScaffoldMessenger.of(context).showSnackBar(snBar);
       }
     };
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        leading: getBackButton(context: context),
-        title: Text('Fill In The Blanks'),
-        centerTitle: true,
-        titleTextStyle: getSubheadingStyleWhite(),
-        elevation: 0,
-        actions: <Widget>[
-          getExitButtonAdmin(context: context),
-        ],
-      ),
-      body: SafeArea(
-        child: Form(
+    return Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
@@ -174,8 +192,6 @@ class _FillInBlanksOptionsState extends State<FillInBlanksOptions> {
               ],
             ),
           ),
-        ),
-      ),
-    );
+        );
   }
 }

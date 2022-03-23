@@ -1,9 +1,9 @@
 
-import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/functions.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
+import 'package:cyber/view/util/components.dart';
+import 'package:cyber/view/util/functions.dart';
+import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
 

@@ -250,8 +250,8 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
 }
 
 /**
- * This widget is the optionButton used in the course flow
- * Which allows the user to exit the course saving the progress
+ * This widget is the optionButton used in the new-course flow
+ * Which allows the user to exit the new-course saving the progress
  * or exit it whithout saving the progress
  */
 Widget getOptionsButton(

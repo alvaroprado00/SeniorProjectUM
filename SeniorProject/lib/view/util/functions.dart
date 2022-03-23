@@ -14,7 +14,7 @@ import 'k_values.dart';
 Function nextQuestion=(BuildContext context){
 
   if(globals.activeCourse!.numberOfQuestions>=globals.activeQuestionNum!){
-    //I get the question in the course
+    //I get the question in the new-course
     Question q= globals.activeCourse!.questions[globals.activeQuestionNum!-1];
 
     //Once I have the first question I check what type of question it is
