@@ -59,12 +59,18 @@ class _PageViewScreenState extends State<PageViewScreen> {
         onTap: onTapped,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.square_grid_2x2_fill),
+              activeIcon: Icon(CupertinoIcons.square_grid_2x2_fill),
+              icon: Icon(CupertinoIcons.square_grid_2x2),
               label: 'Courses'),
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.suit_diamond), label: 'Featured'),
+            icon: Icon(CupertinoIcons.star),
+            activeIcon: Icon(CupertinoIcons.star_fill),
+            label: 'Featured',
+          ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.group_rounded), label: 'Groups'),
+              icon: Icon(CupertinoIcons.person_2),
+              activeIcon: Icon(CupertinoIcons.person_2_fill),
+              label: 'Groups'),
           BottomNavigationBarItem(
               icon:
                   //ImageIcon(
