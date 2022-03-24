@@ -71,7 +71,7 @@ class _AvatarState extends State<Avatar> {
               end: Alignment.bottomCenter,
               colors: [
                 Colors.transparent,
-                Colors.black12,
+                Colors.white38,
               ])),
       child: new ClipOval(
         child: loadingWidget(),

@@ -1,7 +1,9 @@
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../globals.dart';
+import '../../model/user_custom.dart';
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -140,7 +142,6 @@ Widget getCirclesProgressBarForCourseProgression(
     alignment: Alignment.center,
     child: ListView(
       shrinkWrap: true,
-
       scrollDirection: Axis.horizontal,
       children: children,
     ),
@@ -171,7 +172,7 @@ IconButton getBackButton({required BuildContext context}) {
         Navigator.pop(context);
       },
       icon: Icon(
-        Icons.chevron_left,
+        Icons.chevron_left_rounded,
         color: secondaryColor,
         size: 0.06 * heightOfScreen,
       ));
@@ -248,7 +249,6 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
       ));
 }
 
-
 /**
  * This widget is the optionButton used in the new-course flow
  * Which allows the user to exit the new-course saving the progress
@@ -296,7 +296,7 @@ Widget getOptionsButton(
                         SizedBox(
                           width: 0.06 * widthOfScreen,
                         ),
-                        getExitCourseButton(context:context),
+                        getExitCourseButton(context: context),
                       ],
                     ),
                     getResumeButton(context: context),
@@ -307,64 +307,57 @@ Widget getOptionsButton(
       });
 }
 
-
-getExitCourseButton({required BuildContext context}){
-
-    return  SizedBox(
-      height: getHeightOfSmallButton(),
-      width: getWidthOfSmallButton(),
-      child: ElevatedButton(
-        style: greyButtonStyle,
-        child: Text(
-          'Exit',
-          style: getNormalTextStyleBlue(),
-        ),
-        onPressed: (){
-          Navigator.pushNamed(context, DashboardPage.routeName);
-        },
+getExitCourseButton({required BuildContext context}) {
+  return SizedBox(
+    height: getHeightOfSmallButton(),
+    width: getWidthOfSmallButton(),
+    child: ElevatedButton(
+      style: greyButtonStyle,
+      child: Text(
+        'Exit',
+        style: getNormalTextStyleBlue(),
       ),
-    );
-
+      onPressed: () {
+        Navigator.pushNamed(context, DashboardPage.routeName);
+      },
+    ),
+  );
 }
 
-getSaveCurrentCourseButton({required BuildContext context}){
-
-    return SizedBox(
-      height: getHeightOfSmallButton(),
-      width: getWidthOfSmallButton(),
-      child: ElevatedButton(
+getSaveCurrentCourseButton({required BuildContext context}) {
+  return SizedBox(
+    height: getHeightOfSmallButton(),
+    width: getWidthOfSmallButton(),
+    child: ElevatedButton(
         style: yellowButtonStyle,
         child: Text(
           'Save',
           style: getNormalTextStyleBlue(),
         ),
-        onPressed:() async {
+        onPressed: () async {
           await activeUser!.updateCurrentCourse();
           //Once the user is updated, then we go to the dashboard
           Navigator.pushNamed(context, DashboardPage.routeName);
-        }
-      ),
-    );
-
+        }),
+  );
 }
 
-getResumeButton({required BuildContext context}){
-
-    return  SizedBox(
-      height: getHeightOfLargeButton(),
-      width: getWidthOfLargeButton(),
-      child: ElevatedButton(
-        style: blueButtonStyle,
-        child: Text(
-          'Resume',
-          style: getNormalTextStyleWhite(),
-        ),
-        onPressed: (){Navigator.pop(context);},
+getResumeButton({required BuildContext context}) {
+  return SizedBox(
+    height: getHeightOfLargeButton(),
+    width: getWidthOfLargeButton(),
+    child: ElevatedButton(
+      style: blueButtonStyle,
+      child: Text(
+        'Resume',
+        style: getNormalTextStyleWhite(),
       ),
-    );
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    ),
+  );
 }
-
-
 
 /**
  * Function that returns a grey box with rounded corners containing a child
@@ -435,3 +428,237 @@ getDoubleLineText({required String txt1, required String txt2}) {
     ),
   );
 }
+
+// Divider and subtitle with padding
+
+class SubtitleDivider extends StatelessWidget {
+  const SubtitleDivider({Key? key, required this.subtitle}) : super(key: key);
+
+  final String subtitle;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+                widthOfScreen * 0.04,
+                heightOfScreen * 0.02,
+                widthOfScreen * 0.04,
+                heightOfScreen * 0.005),
+            child: Text(
+              this.subtitle,
+              style: getNormalTextStyleBlue(),
+            ),
+          ),
+        ),
+        Padding(
+            padding: EdgeInsets.fromLTRB(
+                widthOfScreen * 0.04,
+                heightOfScreen * 0.00,
+                widthOfScreen * 0.04,
+                heightOfScreen * 0.005),
+            child: Divider(
+              color: quinaryColor,
+            )),
+      ],
+    );
+  }
+}
+
+/* Building the info menu with three sections
+
+ */
+
+// This build the individual section
+// Such as:
+//  120
+// Badges
+
+class InfoTriple extends StatelessWidget {
+  const InfoTriple({Key? key, required this.topLine, required this.bottomLine})
+      : super(key: key);
+  final String topLine;
+  final String bottomLine;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: widthOfScreen * 0.06, right: widthOfScreen * 0.06),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            topLine,
+            style: getNormalTextStyleBlue(),
+          ),
+          Text(
+            bottomLine,
+            style: getNormalTextStyleBlue(),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// This puts 3 InfoTriples together to create the menu
+
+SizedBox threeSectionMenu(
+    {required InfoTriple info1,
+    required InfoTriple info2,
+    required InfoTriple info3}) {
+  return SizedBox(
+      height: 0.09 * heightOfScreen,
+      width: 0.95 * widthOfScreen,
+      child: Container(
+        decoration: BoxDecoration(
+            color: quinaryColor,
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            InfoTriple(topLine: info1.topLine, bottomLine: info1.bottomLine),
+            VerticalDivider(
+              color: secondaryColor,
+              thickness: 2,
+            ),
+            InfoTriple(topLine: info2.topLine, bottomLine: info2.bottomLine),
+            VerticalDivider(
+              color: secondaryColor,
+              thickness: 2,
+            ),
+            InfoTriple(topLine: info3.topLine, bottomLine: info3.bottomLine),
+          ],
+        ),
+      ));
+}
+
+SizedBox threeSectionMenuProfile({required UserCustom dummyUser}) {
+  return SizedBox(
+      height: 0.09 * heightOfScreen,
+      width: 0.95 * widthOfScreen,
+      child: Container(
+        decoration: BoxDecoration(
+            color: quinaryColor,
+            borderRadius: BorderRadius.all(Radius.circular(10))),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            InfoTriple(
+                topLine: dummyUser.collectedBadges.length.toString(),
+                bottomLine: "Badges"),
+            VerticalDivider(
+              color: secondaryColor,
+              thickness: 2,
+            ),
+            InfoTriple(
+                topLine: dummyUser.level.totalXP.toString(),
+                bottomLine: "Points"),
+            VerticalDivider(
+              color: secondaryColor,
+              thickness: 2,
+            ),
+            InfoTriple(
+                topLine: dummyUser.collectedAvatars.length.toString(),
+                bottomLine: "Avatars"),
+          ],
+        ),
+      ));
+}
+
+// Class to create a progress indicator for profile page
+// Shows user level and upper and lower bounds of that level
+
+class LevelProgress extends StatelessWidget {
+  const LevelProgress({Key? key, required this.dummyUser}) : super(key: key);
+
+  final UserCustom dummyUser;
+  @override
+  Widget build(BuildContext context) {
+    // Aqui no se como vas a poner el lower y upper bound
+    //int difference = dummyUser.level. % 100;
+    //int lowerBound = (dummyUser.getLevel().getCurrentXP() - difference);
+    //int upperBound = lowerBound + 100;
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+                widthOfScreen * 0.03,
+                heightOfScreen * 0.03,
+                widthOfScreen * 0.03,
+                heightOfScreen * 0.01),
+            child: StepProgressIndicator(
+              totalSteps: 100,
+              currentStep: 50,
+              size: 8,
+              padding: 0,
+              selectedColor: secondaryColor,
+              unselectedColor: primaryColor,
+              roundedEdges: Radius.circular(10),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      widthOfScreen * 0.03,
+                      heightOfScreen * 0.01,
+                      widthOfScreen * 0.00,
+                      heightOfScreen * 0.01),
+                  child: Text("100")),
+              Align(
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                      top: heightOfScreen * 0.01,
+                      bottom: heightOfScreen * 0.01),
+                  child: Text(
+                    "Level 2",
+                    style: getNormalTextStyleBlue(),
+                  ),
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      widthOfScreen * 0.00,
+                      heightOfScreen * 0.01,
+                      widthOfScreen * 0.04,
+                      heightOfScreen * 0.01),
+                  child: Text("300")),
+            ],
+          ),
+        ]);
+  }
+}
+
+/*
+class TopBar extends AppBar {
+  //TopBar({required String title, required BuildContext context});
+  TopBar():super(
+    elevation: 0,
+    centerTitle: true,
+    leading: getBackButton(context: context),
+    backgroundColor: tertiaryColor,
+  )
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      title: Text(
+        title,
+        style: getSubheadingStyleBlue(),
+      ),
+      centerTitle: true,
+      leading: getBackButton(context: context),
+      backgroundColor: tertiaryColor,
+    );
+  }
+}
+*/

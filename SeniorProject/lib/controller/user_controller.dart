@@ -117,4 +117,9 @@ class UserController {
 
     return addUserToFireStore(userCustom: activeUser!, userId: uidOfActiveUser);
   }
+
+  // Method to sign out user
+  static Future signOutUser() async {
+    await FirebaseAuth.instance.signOut();
+  }
 }

@@ -4,8 +4,8 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/SeniorProject/.dart_tool" />
-      <excludeFolder url="file://$MODULE_DIR$/SeniorProject/build" />
       <excludeFolder url="file://$MODULE_DIR$/SeniorProject/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/SeniorProject/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,28 +1,29 @@
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/admin/new-course/new_course_page.dart';
-import 'package:cyber/view/admin/new-course/new_course_page_outcomes.dart';
 import 'package:cyber/view/admin/new-course/new_course_page_description.dart';
+import 'package:cyber/view/admin/new-course/new_course_page_outcomes.dart';
 import 'package:cyber/view/admin/new-course/new_question_feedback_page.dart';
 import 'package:cyber/view/admin/new-course/new_question_page.dart';
 import 'package:cyber/view/admin/recommended/new_recommended_page.dart';
 import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
-import 'package:cyber/view/groups/group_home_page.dart';
-import 'package:cyber/view/sign-up/join_group_sign_up.dart';
-import 'package:cyber/view/sign-up/profile_created.dart';
+import 'package:cyber/view/page_view.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
+import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/password_page.dart';
-import 'package:cyber/view/sign-up/username_page.dart';
+import 'package:cyber/view/sign-up/profile_created.dart';
 import 'package:cyber/view/sign-up/summary_sign_up.dart';
+import 'package:cyber/view/sign-up/username_page.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'admin/new-course/new_fill_blanks_page_text.dart';
+
 import 'admin/new-course/new_fill_blanks_page_blanks.dart';
+import 'admin/new-course/new_fill_blanks_page_text.dart';
 import 'admin/new-course/new_multiple_choice_page_description.dart';
 import 'admin/new-course/new_multiple_choice_page_options.dart';
 import 'courses/category.dart';
@@ -31,13 +32,10 @@ import 'courses/overview.dart';
 import 'dashboard/dashboard.dart';
 import 'log_in_page.dart';
 
-
-
-void main()  {
+void main() {
   //WidgetsFlutterBinding.ensureInitialized();
 
   runApp(
-
     //The notifier provider provides an instance of ApplicationState to all its descendants
     ChangeNotifierProvider(
       create: (context) => ApplicationState(),
@@ -45,7 +43,6 @@ void main()  {
     ),
   );
 }
-
 
 enum ApplicationLoginState { loggedIn, loggedOut }
 
@@ -84,35 +81,61 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const GroupHome(),
+        '/': (context) => const HomePage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         SignUpEmailPage.routeName: (context) => const SignUpEmailPage(),
         HomePage.routeName: (context) => const HomePage(),
         SignUpPasswordPage.routeName: (context) => const SignUpPasswordPage(),
         SignUpUsernamePage.routeName: (context) => const SignUpUsernamePage(),
         ProfileCreated.routeName: (context) => const ProfileCreated(),
+        PageViewScreen.routeName: (context) =>
+            PageViewScreen(buildContext: context),
+
+        SignUpSummary.routeName: (context) => const SignUpSummary(),
+        MultipleChoiceQuestionPage.routeName: (context) =>
+            const MultipleChoiceQuestionPage(),
+        FillInTheBlanksQuestionPage.routeName: (context) =>
+            const FillInTheBlanksQuestionPage(),
+        NewCoursePage.routeName: (context) => const NewCoursePage(),
+        NewCourseOutcomesPage.routeName: (context) =>
+            const NewCourseOutcomesPage(),
+        NewCourseDescriptionPage.routeName: (context) =>
+            const NewCourseDescriptionPage(),
+        NewQuestionPage.routeName: (context) => const NewQuestionPage(),
+        DashboardPage.routeName: (context) => const DashboardPage(),
+        CourseDescription.routeName: (context) => const CourseDescription(),
+        Overview.routeName: (context) => const Overview(),
+        CategoryProgress.routeName: (context) => const CategoryProgress(),
         SignUpGroupPage.routeName: (context) => const SignUpGroupPage(),
         SignUpSummary.routeName: (context) => const SignUpSummary(),
-        MultipleChoiceQuestionPage.routeName: (context)=> const MultipleChoiceQuestionPage(),
-        FillInTheBlanksQuestionPage.routeName:(context)=> const FillInTheBlanksQuestionPage(),
-        NewCoursePage.routeName:(context)=> const NewCoursePage(),
-        NewCourseOutcomesPage.routeName:(context)=> const NewCourseOutcomesPage(),
-        NewCourseDescriptionPage.routeName:(context)=> const NewCourseDescriptionPage(),
-        NewQuestionPage.routeName:(context)=> const NewQuestionPage(),
-        MultipleChoiceDescriptionPage.routeName:(context)=> const MultipleChoiceDescriptionPage(),
-        MultipleChoiceOptionsPage.routeName:(context)=> const MultipleChoiceOptionsPage(),
-        QuestionLongFeedbackPage.routeName:(context)=> const QuestionLongFeedbackPage(),
-        FillInTheBlanksTextPage.routeName:(context)=> const FillInTheBlanksTextPage(),
-        FillInTheBlanksOptionsPage.routeName:(context)=> const FillInTheBlanksOptionsPage(),
-        DashboardPage.routeName:(context)=> const DashboardPage(),
-        CategoryPage.routeName:(context)=> const CategoryPage(),
-        CourseDescription.routeName:(context)=> const CourseDescription(),
-        Overview.routeName:(context)=> const Overview(),
-        CategoryProgress.routeName:(context)=> const CategoryProgress(),
-        NewRecommendedCoursePage.routeName:(context)=> const NewRecommendedCoursePage(),
-        AdminDashboardPage.routeName:(context)=> const AdminDashboardPage(),
-        GroupHome.routeName: (context) => const GroupHome(),
-
+        MultipleChoiceQuestionPage.routeName: (context) =>
+            const MultipleChoiceQuestionPage(),
+        FillInTheBlanksQuestionPage.routeName: (context) =>
+            const FillInTheBlanksQuestionPage(),
+        NewCoursePage.routeName: (context) => const NewCoursePage(),
+        NewCourseOutcomesPage.routeName: (context) =>
+            const NewCourseOutcomesPage(),
+        NewCourseDescriptionPage.routeName: (context) =>
+            const NewCourseDescriptionPage(),
+        NewQuestionPage.routeName: (context) => const NewQuestionPage(),
+        MultipleChoiceDescriptionPage.routeName: (context) =>
+            const MultipleChoiceDescriptionPage(),
+        MultipleChoiceOptionsPage.routeName: (context) =>
+            const MultipleChoiceOptionsPage(),
+        QuestionLongFeedbackPage.routeName: (context) =>
+            const QuestionLongFeedbackPage(),
+        FillInTheBlanksTextPage.routeName: (context) =>
+            const FillInTheBlanksTextPage(),
+        FillInTheBlanksOptionsPage.routeName: (context) =>
+            const FillInTheBlanksOptionsPage(),
+        DashboardPage.routeName: (context) => const DashboardPage(),
+        CategoryPage.routeName: (context) => const CategoryPage(),
+        CourseDescription.routeName: (context) => const CourseDescription(),
+        Overview.routeName: (context) => const Overview(),
+        CategoryProgress.routeName: (context) => const CategoryProgress(),
+        NewRecommendedCoursePage.routeName: (context) =>
+            const NewRecommendedCoursePage(),
+        AdminDashboardPage.routeName: (context) => const AdminDashboardPage(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -147,14 +170,13 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-           // FirebaseAuth.instance.signOut();
-            return DashboardPage();
+            // FirebaseAuth.instance.signOut();
+            //return DashboardPage();
+            return PageViewScreen(buildContext: context);
           }
         case ApplicationLoginState.loggedOut:
           {
-
             return LogInPage();
-
           }
         default:
           {
