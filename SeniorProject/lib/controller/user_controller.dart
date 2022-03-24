@@ -118,8 +118,35 @@ class UserController {
     return addUserToFireStore(userCustom: activeUser!, userId: uidOfActiveUser);
   }
 
-  // Method to sign out user
+  /**
+   * Method to sign out a user
+   */
   static Future signOutUser() async {
-    await FirebaseAuth.instance.signOut();
+    try{
+      await FirebaseAuth.instance.signOut();
+      return 'Signed out';
+
+    } on FirebaseAuthException catch(e){
+      print('Error in the sign out');
+
+      return 'Error in the sign out';
+    }
+
   }
+
+/**
+ * Method to delete an account
+ */
+static Future deleteActiveUser() async {
+  try {
+    await FirebaseAuth.instance.currentUser!.delete();
+    return 'Success';
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'requires-recent-login') {
+      print('The user must reauthenticate before this operation can be executed.');
+      return 'User must reauthenticate before';
+    }
+  }
+}
+
 }

@@ -1,9 +1,9 @@
+import 'package:cyber/config/fixed_values.dart';
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../globals.dart';
-import '../../model/user_custom.dart';
+import '../../model/level.dart';
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -460,6 +460,7 @@ class SubtitleDivider extends StatelessWidget {
                 widthOfScreen * 0.04,
                 heightOfScreen * 0.005),
             child: Divider(
+              thickness: 2,
               color: quinaryColor,
             )),
       ],
@@ -467,198 +468,69 @@ class SubtitleDivider extends StatelessWidget {
   }
 }
 
-/* Building the info menu with three sections
 
+
+
+
+/**
+ * This class when built displays a grey container with three subcontainers
+ * separated by vertical dividers. Is both used in the profile and in the
+ * category place. To create one you have to specify the strings you want
+ * diplayed in each subcontainer
  */
+class ProgressContainerThreeFields extends StatelessWidget {
+  const ProgressContainerThreeFields(
+      {required String this.field1,
+        required String this.field2,
+        required String this.field3});
 
-// This build the individual section
-// Such as:
-//  120
-// Badges
-
-class InfoTriple extends StatelessWidget {
-  const InfoTriple({Key? key, required this.topLine, required this.bottomLine})
-      : super(key: key);
-  final String topLine;
-  final String bottomLine;
+  final String field1;
+  final String field2;
+  final String field3;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          left: widthOfScreen * 0.06, right: widthOfScreen * 0.06),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            topLine,
-            style: getNormalTextStyleBlue(),
-          ),
-          Text(
-            bottomLine,
-            style: getNormalTextStyleBlue(),
-          )
-        ],
-      ),
-    );
+
+    final List<String> field1List=field1.split(' ');
+    final List<String> field2List=field2.split(' ');
+    final List<String> field3List=field3.split(' ');
+
+    return getGreyTextHolderContainer(
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+          getDoubleLineText(txt1: field1List[0], txt2: field1List[1]),
+          SizedBox(
+              height: 0.07 * heightOfScreen,
+              child: VerticalDivider(
+                color: secondaryColor,
+                thickness: 2,
+              )),
+          getDoubleLineText(
+              txt1: field2List[0], txt2: field2List[1]),
+          SizedBox(
+              height: 0.07 * heightOfScreen,
+              child: VerticalDivider(
+                color: secondaryColor,
+                thickness: 2,
+              )),
+          getDoubleLineText(txt1: field3List[0], txt2: field3List[1])
+        ]));
   }
 }
 
-// This puts 3 InfoTriples together to create the menu
+/**
+ * Function to get a container with a badge from
+ * the name of the badge stored in the user
+ */
+getContainerForBadge({required String nameOfIcon, required double size}){
+  return Container(
+    width: size,
+    height: size,
 
-SizedBox threeSectionMenu(
-    {required InfoTriple info1,
-    required InfoTriple info2,
-    required InfoTriple info3}) {
-  return SizedBox(
-      height: 0.09 * heightOfScreen,
-      width: 0.95 * widthOfScreen,
-      child: Container(
-        decoration: BoxDecoration(
-            color: quinaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            InfoTriple(topLine: info1.topLine, bottomLine: info1.bottomLine),
-            VerticalDivider(
-              color: secondaryColor,
-              thickness: 2,
-            ),
-            InfoTriple(topLine: info2.topLine, bottomLine: info2.bottomLine),
-            VerticalDivider(
-              color: secondaryColor,
-              thickness: 2,
-            ),
-            InfoTriple(topLine: info3.topLine, bottomLine: info3.bottomLine),
-          ],
-        ),
-      ));
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: primaryColor,
+    ),
+
+    child:Icon(stringToBadgeIcon[nameOfIcon],color: secondaryColor,),
+  );
 }
-
-SizedBox threeSectionMenuProfile({required UserCustom dummyUser}) {
-  return SizedBox(
-      height: 0.09 * heightOfScreen,
-      width: 0.95 * widthOfScreen,
-      child: Container(
-        decoration: BoxDecoration(
-            color: quinaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            InfoTriple(
-                topLine: dummyUser.collectedBadges.length.toString(),
-                bottomLine: "Badges"),
-            VerticalDivider(
-              color: secondaryColor,
-              thickness: 2,
-            ),
-            InfoTriple(
-                topLine: dummyUser.level.totalXP.toString(),
-                bottomLine: "Points"),
-            VerticalDivider(
-              color: secondaryColor,
-              thickness: 2,
-            ),
-            InfoTriple(
-                topLine: dummyUser.collectedAvatars.length.toString(),
-                bottomLine: "Avatars"),
-          ],
-        ),
-      ));
-}
-
-// Class to create a progress indicator for profile page
-// Shows user level and upper and lower bounds of that level
-
-class LevelProgress extends StatelessWidget {
-  const LevelProgress({Key? key, required this.dummyUser}) : super(key: key);
-
-  final UserCustom dummyUser;
-  @override
-  Widget build(BuildContext context) {
-    // Aqui no se como vas a poner el lower y upper bound
-    //int difference = dummyUser.level. % 100;
-    //int lowerBound = (dummyUser.getLevel().getCurrentXP() - difference);
-    //int upperBound = lowerBound + 100;
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-                widthOfScreen * 0.03,
-                heightOfScreen * 0.03,
-                widthOfScreen * 0.03,
-                heightOfScreen * 0.01),
-            child: StepProgressIndicator(
-              totalSteps: 100,
-              currentStep: 50,
-              size: 8,
-              padding: 0,
-              selectedColor: secondaryColor,
-              unselectedColor: primaryColor,
-              roundedEdges: Radius.circular(10),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      widthOfScreen * 0.03,
-                      heightOfScreen * 0.01,
-                      widthOfScreen * 0.00,
-                      heightOfScreen * 0.01),
-                  child: Text("100")),
-              Align(
-                alignment: Alignment.center,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                      top: heightOfScreen * 0.01,
-                      bottom: heightOfScreen * 0.01),
-                  child: Text(
-                    "Level 2",
-                    style: getNormalTextStyleBlue(),
-                  ),
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      widthOfScreen * 0.00,
-                      heightOfScreen * 0.01,
-                      widthOfScreen * 0.04,
-                      heightOfScreen * 0.01),
-                  child: Text("300")),
-            ],
-          ),
-        ]);
-  }
-}
-
-/*
-class TopBar extends AppBar {
-  //TopBar({required String title, required BuildContext context});
-  TopBar():super(
-    elevation: 0,
-    centerTitle: true,
-    leading: getBackButton(context: context),
-    backgroundColor: tertiaryColor,
-  )
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      elevation: 0,
-      title: Text(
-        title,
-        style: getSubheadingStyleBlue(),
-      ),
-      centerTitle: true,
-      leading: getBackButton(context: context),
-      backgroundColor: tertiaryColor,
-    );
-  }
-}
-*/

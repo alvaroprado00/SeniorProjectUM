@@ -1,5 +1,6 @@
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
+import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
@@ -73,17 +74,7 @@ class BadgeContent extends StatelessWidget {
 
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          width: 0.2*heightOfScreen,
-          height: 0.2*heightOfScreen,
-
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: primaryColor,
-          ),
-
-          child:Icon(stringToBadgeIcon[activeUser!.collectedBadges.last.picture],color: secondaryColor,size: 0.1*heightOfScreen,),
-        ),
+        getContainerForBadge(nameOfIcon: activeUser!.collectedBadges.last.picture, size: 0.2*heightOfScreen),
         SizedBox(height: 0.05*heightOfScreen,),
         Text('Course:${activeCourse!.title}',style: getNormalTextStyleBlue(),),
       ],

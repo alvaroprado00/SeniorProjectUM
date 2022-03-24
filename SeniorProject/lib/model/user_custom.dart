@@ -254,7 +254,7 @@ getFakeUser() {
     username: 'FakeUser',
     profilePictureActive: 'FakeUser',
     collectedBadges: fakeCollectedBadges,
-    level: Level(totalXP: 1100, levelNumber: 2, xpInLevel: 100),
+    level: Level(totalXP: 1100, levelNumber: 2, xpEarnedInLevel: 100),
     collectedAvatars: fakeCollectedAvatars,
     completedCourses: fakeCompletedCourses,
     coursesSaved: fakeCoursesSaved,

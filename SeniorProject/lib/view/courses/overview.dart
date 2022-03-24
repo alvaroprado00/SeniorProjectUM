@@ -67,7 +67,7 @@ class _ContentForOverviewState extends State<ContentForOverview> {
 
   //All of these params are used to display the info. We are going to
   //initialize them after updating the user in the DB
-  final String xpInLevel=activeUser!.level.xpInLevel.toString();
+  final String xpInLevel=activeUser!.level.xpEarnedInLevel.toString();
   final String level=activeUser!.level.levelNumber.toString();
   final String questionsRight=activeUser!.completedCourses.last.numQuestionsRight.toString();
   final List<bool> answers=activeUser!.completedCourses.last.answers;

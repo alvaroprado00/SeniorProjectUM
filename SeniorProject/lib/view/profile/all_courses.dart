@@ -15,9 +15,6 @@ class AllCoursePage extends StatefulWidget {
 }
 
 class _AllCoursePageState extends State<AllCoursePage> {
-  InfoTriple info1 = InfoTriple(topLine: "120", bottomLine: "Badges");
-  InfoTriple info2 = InfoTriple(topLine: "230", bottomLine: "Points");
-  InfoTriple info3 = InfoTriple(topLine: "25", bottomLine: "Avatars");
 
   FaIcon getIcon(String icon) {
     return FaIcon(FontAwesomeIcons.car);
@@ -43,7 +40,7 @@ class _AllCoursePageState extends State<AllCoursePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Align(alignment: Alignment.center),
-            threeSectionMenu(info1: info1, info2: info2, info3: info3),
+            ProgressContainerThreeFields(field1: '120 Badges', field2:'230 Points' , field3: '25 Avatars'),
             SubtitleDivider(subtitle: "Social Media"),
             SubtitleDivider(subtitle: "Information"),
             SubtitleDivider(subtitle: "Devices"),

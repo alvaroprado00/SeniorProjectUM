@@ -9,7 +9,7 @@ part of 'completed_course.dart';
 CompletedCourse _$CompletedCourseFromJson(Map<String, dynamic> json) =>
     CompletedCourse(
       answers:
-          (json['answers'] as List<dynamic>).map((e) => e as bool).toList(),
+      (json['answers'] as List<dynamic>).map((e) => e as bool).toList(),
       numQuestionsRight: json['numQuestionsRight'] as int,
       percentageCompleted: json['percentageCompleted'] as int,
       experiencePointsEarned: json['experiencePointsEarned'] as int,

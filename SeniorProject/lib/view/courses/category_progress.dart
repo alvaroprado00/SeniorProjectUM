@@ -27,7 +27,7 @@ class CategoryProgress extends StatelessWidget {
       ),
 
       body:FutureBuilder(
-        future: courseController.getCoursesFromCategory(category: activeCourse!.category),
+        future: courseController.getCourseNamesFromCategory(category: activeCourse!.category),
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if(snapshot.hasData){
             return CategoryProgressContent(categoryCourses:snapshot.data);

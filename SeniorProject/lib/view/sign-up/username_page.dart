@@ -76,7 +76,7 @@ class _UsernameFormState extends State<UsernameForm> {
         UserCustom userCreated = UserCustom(
             email: widget.args[0],
             username: _controllerUsername.text,
-            level: Level(totalXP: 0, levelNumber: 1, xpInLevel: 0),
+            level: Level(totalXP: 0, levelNumber: 1, xpEarnedInLevel: 0),
             profilePictureActive: _controllerUsername.text,
             collectedAvatars: [_controllerUsername.text],
             collectedBadges: [],

@@ -39,9 +39,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
         children: [
           DashboardPage(),
           NewCoursePage(),
-          ProfilePage(buildContext: context),
+          ProfilePage(),
           ProfilePage(
-            buildContext: context,
           ),
         ],
       ),

@@ -147,7 +147,7 @@ class CourseController {
    * <courseID, title> for all the courses in the category specified.
    * If not any then the map will be empty.
    */
-  Future getCoursesFromCategory({required Category category}) {
+  Future getCourseNamesFromCategory({required Category category}) {
     Map<String, String> coursesInCategory = {};
 
     return coursesRef
@@ -245,5 +245,26 @@ class CourseController {
     }catch(error){
       throw Exception('Error when looking for the course');
     }
+  }
+
+  /**
+   * This function is used to get a map with entries
+   * <courseID, title> when provided just with the ids
+   */
+  Future getCourseNamesByIDs({required List<String> ids}) async {
+
+    Map<String, String> courses = {};
+
+    try{
+      for(String id in ids){
+        Course newCourse=await getCourseByID(id: id);
+        courses[id]=newCourse.title;
+      }
+    }catch(err){
+      throw Exception('Error when getting the courses');
+    }
+
+    return courses;
+
   }
 }

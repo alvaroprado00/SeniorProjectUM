@@ -34,7 +34,7 @@ class CategoryPage extends StatelessWidget {
         elevation: 0,
       ),
       body: FutureBuilder(
-        future: courseController.getCoursesFromCategory(
+        future: courseController.getCourseNamesFromCategory(
           category: category,
         ),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -46,8 +46,10 @@ class CategoryPage extends StatelessWidget {
           if (snapshot.hasData) {
             if (snapshot.data.isEmpty) {
               children = [
-                ProgressContainer(
-                    numCourses: 0, numCoursesCompleted: 0, xpInCategory: 0),
+                ProgressContainerThreeFields(
+                    field1: '0 Courses',
+                    field2: '0 Completed',
+                    field3: '0 EXP'),
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
@@ -61,13 +63,21 @@ class CategoryPage extends StatelessWidget {
               children = [
                 //The active user stored in the globals file is used to see
                 //his progress in the category
-                ProgressContainer(
-                    numCourses: snapshot.data.length,
-                    numCoursesCompleted: activeUser!
-                        .getCompletedCoursesInCategory(
-                            courseIDs: List.of(snapshot.data.keys)),
-                    xpInCategory: activeUser!.getXPInCategory(
-                        courseIDs: List.of(snapshot.data.keys))),
+                ProgressContainerThreeFields(
+                    field1: snapshot.data.length.toString() + ' ' + 'Courses',
+                    field2: activeUser!
+                            .getCompletedCoursesInCategory(
+                                courseIDs: List.of(snapshot.data.keys))
+                            .toString() +
+                        ' ' +
+                        'Completed',
+                    field3: activeUser!
+                            .getXPInCategory(
+                                courseIDs: List.of(snapshot.data.keys))
+                            .toString() +
+                        ' ' +
+                        'EXP'),
+
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
@@ -103,7 +113,6 @@ class CategoryPage extends StatelessWidget {
   }
 }
 
-
 /**
  * This method is used to get the cards of the courses that are specified in
  * the param courses. The way it returns the courses is a column in which the children
@@ -115,17 +124,16 @@ getCourseCards(
 
   List<Widget> children = [];
   List<Widget> childrenForRow = [];
-  bool isSaved=false;
-  bool isCompleted=false;
+  bool isSaved = false;
+  bool isCompleted = false;
 
   int i = 0;
   courses.forEach((key, value) {
-
     //First we check if the active user has the new-course Saved
-    isSaved=activeUser!.isCourseSaved(courseID: key);
+    isSaved = activeUser!.isCourseSaved(courseID: key);
 
     //After that we check if the user has completed the new-course
-    isCompleted=activeUser!.isCourseCompleted(courseID: key);
+    isCompleted = activeUser!.isCourseCompleted(courseID: key);
 
     //We add the new-course to a row
     childrenForRow.add(getCardForCourse(
@@ -164,39 +172,3 @@ getCourseCards(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: children);
 }
-
-class ProgressContainer extends StatelessWidget {
-  const ProgressContainer(
-      {required int this.numCourses,
-      required int this.numCoursesCompleted,
-      required int this.xpInCategory});
-
-  final int numCourses;
-  final int numCoursesCompleted;
-  final int xpInCategory;
-
-  @override
-  Widget build(BuildContext context) {
-    return getGreyTextHolderContainer(
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-      getDoubleLineText(txt1: numCourses.toString(), txt2: 'Courses'),
-      SizedBox(
-          height: 0.07 * heightOfScreen,
-          child: VerticalDivider(
-            color: secondaryColor,
-            thickness: 2,
-          )),
-      getDoubleLineText(
-          txt1: numCoursesCompleted.toString(), txt2: 'Completed'),
-      SizedBox(
-          height: 0.07 * heightOfScreen,
-          child: VerticalDivider(
-            color: secondaryColor,
-            thickness: 2,
-          )),
-      getDoubleLineText(txt1: xpInCategory.toString(), txt2: 'XP')
-    ]));
-  }
-}
-
-
