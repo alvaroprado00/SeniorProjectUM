@@ -231,7 +231,10 @@ class _CreateGroupState extends State<CreateGroup> {
                         Container(
                           height: heightOfScreen * 0.25,
                           width: getWidthOfLargeButton(),
-                          child: Image.file(
+                          child: groupImage != null ? Image.file(
+                            groupImage!,
+                            fit: BoxFit.fitWidth,
+                          ) : Image.file(
                             File(cameraImage!.path),
                             fit: BoxFit.fitWidth,
                           ),
