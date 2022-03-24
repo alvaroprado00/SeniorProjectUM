@@ -205,7 +205,7 @@ class UserCustom {
    * Function to add a new badge to the user
    */
   void addNewBadge(){
-    Badge newBadge=Badge(course: activeCourse!.id!, picture: activeCourse!.badgeIcon, timeEarned: DateTime.now());
+    Badge newBadge=Badge(courseID: activeCourse!.id!, picture: activeCourse!.badgeIcon, timeEarned: DateTime.now());
     this.collectedBadges.add(newBadge);
   }
 
@@ -265,35 +265,35 @@ getFakeUser() {
 
 List<Badge> fakeCollectedBadges = [
   Badge(
-      course: "Passwords",
+      courseID: "Passwords",
       picture: "keys",
       timeEarned: DateTime.parse("2022-02-02")),
   Badge(
-      course: "Cookies",
+      courseID: "Cookies",
       picture: "cookies",
       timeEarned: DateTime.parse("2022-01-24")),
   Badge(
-      course: "USB",
+      courseID: "USB",
       picture: "cable",
       timeEarned: DateTime.parse("2022-02-02")),
   Badge(
-      course: "Cookies",
+      courseID: "Cookies",
       picture: "cookies",
       timeEarned: DateTime.parse("2022-01-24")),
   Badge(
-      course: "Passwords",
+      courseID: "Passwords",
       picture: "keys",
       timeEarned: DateTime.parse("2022-02-02")),
   Badge(
-      course: "Cookies",
+      courseID: "Cookies",
       picture: "cookies",
       timeEarned: DateTime.parse("2022-01-24")),
   Badge(
-      course: "Passwords",
+      courseID: "Passwords",
       picture: "keys",
       timeEarned: DateTime.parse("2022-02-02")),
   Badge(
-      course: "Cookies",
+      courseID: "Cookies",
       picture: "cookies",
       timeEarned: DateTime.parse("2022-01-24")),
 ];

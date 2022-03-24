@@ -531,6 +531,6 @@ getContainerForBadge({required String nameOfIcon, required double size}){
       color: primaryColor,
     ),
 
-    child:Icon(stringToBadgeIcon[nameOfIcon],color: secondaryColor,),
+    child:Icon(stringToBadgeIcon[nameOfIcon],color: secondaryColor,size: 0.4*size,),
   );
 }

@@ -57,14 +57,13 @@ class ContentForDashboard extends StatelessWidget {
     return Scaffold(
       floatingActionButton:user.isAdmin?AdminButton():null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      backgroundColor: tertiaryColor,
       appBar: AppBar(
-        title:Text(
-          'Welcome ${user.username}!',
-          style: TextStyle(color: primaryColor, fontSize: 0.08*widthOfScreen, fontWeight: FontWeight.w500, fontFamily: 'roboto'),
-        ),
-
+        title:Text('Welcome ${user.username}!',),
         backgroundColor: tertiaryColor,
         elevation: 0,
+        centerTitle: false,
+        titleTextStyle:TextStyle(color: primaryColor, fontSize: 0.08*widthOfScreen, fontWeight: FontWeight.w500, fontFamily: 'roboto',) ,
       ),
       body: SafeArea(
         child: Padding(

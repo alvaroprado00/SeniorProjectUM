@@ -7,6 +7,7 @@ import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
 import '../dashboard/dashboard.dart';
+import '../main.dart';
 
 
 class CategoryProgress extends StatelessWidget {
@@ -68,7 +69,7 @@ class CategoryProgressContent extends StatelessWidget {
               width: getWidthOfLargeButton(),
               child: ElevatedButton(
                 style: blueButtonStyle,
-                onPressed: (){Navigator.pushNamed(context, DashboardPage.routeName);},
+                onPressed: (){Navigator.pushNamed(context, HomePage.routeName);},
                 child: Text('Finish',style: getNormalTextStyleWhite(),),
               ),
             )

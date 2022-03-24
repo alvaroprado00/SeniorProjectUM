@@ -4,6 +4,7 @@ import 'package:cyber/globals.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/main.dart';
+import 'package:cyber/view/profile/all_badges.dart';
 
 import 'package:cyber/view/profile/edit_profile.dart';
 import 'package:cyber/view/util/cards.dart';
@@ -81,6 +82,7 @@ class ProfilePageContent extends StatelessWidget {
    };
 
     return Scaffold(
+      backgroundColor: tertiaryColor,
         appBar: AppBar(
           backgroundColor: tertiaryColor,
           elevation: 0,
@@ -134,6 +136,7 @@ class ProfilePageContent extends StatelessWidget {
                     ProfileSection(
                       typeOfSection: TypeOfSection.Badges,
                       coursesSaved: {},
+                      todo:() {Navigator.pushNamed(context, AllBadgesPage.routeName);},
                     ),
                     SizedBox(
                       height: 0.05 * heightOfScreen,
@@ -141,6 +144,8 @@ class ProfilePageContent extends StatelessWidget {
                     ProfileSection(
                       typeOfSection: TypeOfSection.Avatars,
                       coursesSaved: {},
+                      todo:() {Navigator.pushNamed(context, AllBadgesPage.routeName);},
+
                     ),
                     SizedBox(
                       height: 0.05 * heightOfScreen,
@@ -148,6 +153,8 @@ class ProfilePageContent extends StatelessWidget {
                     ProfileSection(
                       typeOfSection: TypeOfSection.Courses,
                       coursesSaved: coursesSaved,
+                      todo:() {Navigator.pushNamed(context, AllBadgesPage.routeName);},
+
                     ),
                     SizedBox(
                       height: 0.05 * heightOfScreen,
@@ -252,12 +259,14 @@ class ProfileSection extends StatelessWidget {
     Key? key,
     required this.typeOfSection,
     required Map<String, String> this.coursesSaved,
+    required this.todo,
   }) : super(key: key);
 
   final TypeOfSection typeOfSection;
   Widget widgetToShow =
       getLastBadgesFromUser(badges: activeUser!.collectedBadges);
   final Map<String, String> coursesSaved;
+  final void Function() todo;
 
   @override
   Widget build(BuildContext context) {
@@ -297,7 +306,7 @@ class ProfileSection extends StatelessWidget {
           width: getWidthOfLargeButton(),
           child: ElevatedButton(
             style: greyButtonStyle,
-            onPressed: () {},
+            onPressed: todo,
             child: Text(
               'See all ${typeOfSectionToString[typeOfSection]}',
               style: getNormalTextStyleBlue(),

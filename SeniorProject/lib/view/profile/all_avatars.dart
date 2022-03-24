@@ -5,10 +5,11 @@ import '../../model/user_custom.dart';
 import '../util/components.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
+import '../util/k_values.dart';
 
 class AllAvatarsPage extends StatefulWidget {
-  const AllAvatarsPage({Key? key, required this.dummyUser}) : super(key: key);
-  final UserCustom dummyUser;
+  const AllAvatarsPage({Key? key}) : super(key: key);
+
 
   @override
   _AllAvatarsPageState createState() => _AllAvatarsPageState();
@@ -17,13 +18,12 @@ class AllAvatarsPage extends StatefulWidget {
 class _AllAvatarsPageState extends State<AllAvatarsPage> {
 
 
-  FaIcon getIcon(String icon) {
-    return FaIcon(FontAwesomeIcons.car);
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: tertiaryColor,
       appBar: AppBar(
         elevation: 0,
         title: Text(
@@ -38,15 +38,23 @@ class _AllAvatarsPageState extends State<AllAvatarsPage> {
         child: SingleChildScrollView(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(alignment: Alignment.center),
-            ProgressContainerThreeFields(field1: '120 Badges', field2:'230 Points' , field3: '25 Avatars'),
-            Padding(padding: EdgeInsets.all(10)),
-            SubtitleDivider(subtitle: "Collected"),
+            SizedBox(height: 0.05*heightOfScreen,),
+            SubtitleDivider(subtitle: 'Collected Avatars'),
+            SizedBox(height: 0.05*heightOfScreen,),
+            //getAvatars();
+
+
           ],
         )),
       ),
     );
   }
+}
+
+
+getAvatars(){
+
+   // List<String>
 }

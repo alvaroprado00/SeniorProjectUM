@@ -5,11 +5,11 @@ part 'badge.g.dart';
 
 @JsonSerializable()
 class Badge {
-  String course;
+  String courseID;
   String picture;
   DateTime timeEarned;
 
-  Badge({required String this.course, required String this.picture, required DateTime this.timeEarned});
+  Badge({required String this.courseID, required String this.picture, required DateTime this.timeEarned});
 
   void getBadge(String picture) {
     FaIcon(FontAwesomeIcons.car);
@@ -17,4 +17,8 @@ class Badge {
   factory Badge.fromJson(Map<String, dynamic> json) => _$BadgeFromJson(json);
 
   Map<String, dynamic> toJson() => _$BadgeToJson(this);
+
+  timeEarnedToString(){
+    return '${this.timeEarned.month}/${this.timeEarned.day}/${this.timeEarned.year} at ${this.timeEarned.hour}:${this.timeEarned.minute}';
+  }
 }
