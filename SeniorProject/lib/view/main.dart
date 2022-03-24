@@ -148,7 +148,7 @@ class HomePage extends StatelessWidget {
         case ApplicationLoginState.loggedIn:
           {
            // FirebaseAuth.instance.signOut();
-            return GroupHome();
+            return DashboardPage();
           }
         case ApplicationLoginState.loggedOut:
           {
