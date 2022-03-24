@@ -8,6 +8,7 @@ import 'package:cyber/view/admin/recommended/new_recommended_page.dart';
 import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
+import 'package:cyber/view/groups/group_home_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/profile_created.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
@@ -83,7 +84,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const HomePage(),
+        '/': (context) => const GroupHome(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         SignUpEmailPage.routeName: (context) => const SignUpEmailPage(),
         HomePage.routeName: (context) => const HomePage(),
@@ -110,7 +111,7 @@ class MyApp extends StatelessWidget {
         CategoryProgress.routeName:(context)=> const CategoryProgress(),
         NewRecommendedCoursePage.routeName:(context)=> const NewRecommendedCoursePage(),
         AdminDashboardPage.routeName:(context)=> const AdminDashboardPage(),
-
+        GroupHome.routeName: (context) => const GroupHome(),
 
       },
       theme: ThemeData(
@@ -147,7 +148,7 @@ class HomePage extends StatelessWidget {
         case ApplicationLoginState.loggedIn:
           {
            // FirebaseAuth.instance.signOut();
-            return DashboardPage();
+            return GroupHome();
           }
         case ApplicationLoginState.loggedOut:
           {

@@ -1,17 +1,17 @@
 import 'package:cyber/view/useful/components.dart';
-import 'package:cyber/view/useful/functions.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
+import '../util/functions.dart';
+import '../util/k_colors.dart';
+import '../util/k_styles.dart';
+import '../util/k_values.dart';
 import 'group_chat_page.dart';
 import 'group_create_page.dart';
 
 class GroupHome extends StatefulWidget {
   const GroupHome({Key? key}) : super(key: key);
 
-  static final String routeName = '/groupHome';
+  static final String routeName = '/GroupHome';
 
   @override
   _GroupHomeState createState() => _GroupHomeState();
@@ -106,6 +106,14 @@ class _GroupHomeState extends State<GroupHome> {
   @override
   Widget build(BuildContext context) {
 
+    widthOfScreen = MediaQuery.of(context).size.width;
+    heightOfScreen = MediaQuery.of(context).size.height;
+    print(heightOfScreen);
+    print(widthOfScreen);
+    var padding = MediaQuery.of(context).padding;
+    //I update the height by subtracting the status bar height
+    heightOfScreen = heightOfScreen - padding.top;
+
     double bannerHeight = (heightOfScreen * 211.0) / 844.0;
 
     List<String> imagePaths = ['assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png'];
@@ -158,8 +166,8 @@ class _GroupHomeState extends State<GroupHome> {
             Padding(
               padding: const EdgeInsets.only(bottom: 100.0, left: 16.0, right: 16.0),
               child: SizedBox(
-                height: 50.0,
-                width: 384.0,
+                height: getHeightOfLargeButton(),
+                width: getWidthOfLargeButton(),
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroup()));

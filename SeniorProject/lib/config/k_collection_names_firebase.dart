@@ -7,3 +7,4 @@ const String courseCollectionName='courseCollection';
 const String questionCollectionName='questions';
 const String recommendedCollectionName='recommendedCollection';
 const String recommendedDocName='recommendedCourse';
+const String groupImagesBucket = "gs://fir-seniorproject.appspot.com/groupImages";

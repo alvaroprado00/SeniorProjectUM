@@ -1,10 +1,10 @@
 import 'package:cyber/view/groups/group_info_page.dart';
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
-import 'package:cyber/view/useful/k_values.dart';
 import 'package:flutter/material.dart';
 
 import '../useful/components.dart';
+import '../util/k_colors.dart';
+import '../util/k_styles.dart';
+import '../util/k_values.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key, required this.groupName}) : super(key: key);

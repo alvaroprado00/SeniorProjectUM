@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import '../avatar.dart';
-import 'functions.dart';
-import 'k_colors.dart';
-import 'k_styles.dart';
-import 'k_values.dart';
+import '../util/functions.dart';
+import '../util/k_colors.dart';
+import '../util/k_styles.dart';
+import '../util/k_values.dart';
 
 
 
@@ -372,9 +372,7 @@ Card getCardForNotification(
             Padding(
               padding: EdgeInsets.only(
                   left: 0.025 * widthOfCard, right: 0.025 * widthOfCard),
-              child: Avatar(
-                  url: 'https://robohash.org/$username',
-                  size: widthOfScreen * 0.1),
+              child: Avatar(size: widthOfScreen * 0.1, nameOfAvatar: 'https://robohash.org/$username'),
             ),
             Flexible(
               child: Text(

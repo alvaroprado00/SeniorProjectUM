@@ -1,10 +1,10 @@
-import 'package:cyber/view/useful/k_colors.dart';
-import 'package:cyber/view/useful/k_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../useful/components.dart';
+import '../util/k_colors.dart';
+import '../util/k_styles.dart';
 
 class GroupInfoPage extends StatefulWidget {
   const GroupInfoPage({Key? key, required this.groupName, required this.usernames}) : super(key: key);
