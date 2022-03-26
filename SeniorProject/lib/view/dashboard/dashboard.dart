@@ -9,6 +9,8 @@ import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 import '../util/cards.dart';
 
@@ -27,6 +29,7 @@ class DashboardPage extends StatelessWidget {
               //This is the moment to save our active user in the global variable
 
               activeUser=snapshot.data;
+
               return ContentForDashboard(user: snapshot.data);
             } else if (snapshot.hasError) {
               return Scaffold(body:Center(
@@ -382,3 +385,4 @@ class CategoryCards extends StatelessWidget {
     );
   }
 }
+

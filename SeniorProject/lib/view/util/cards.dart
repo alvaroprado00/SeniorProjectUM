@@ -232,3 +232,17 @@ Card getCardForNotification(
   );
 }
 
+
+/**
+ * Function to get a grey container with the shape of a course card
+ * to show a placeholder
+ */
+getCourseCardPlaceHolder(){
+  return Container(
+    width: 0.4 * widthOfScreen,
+    height: 0.12 * heightOfScreen,
+    decoration: BoxDecoration(
+        color: quinaryColor,
+        borderRadius: BorderRadius.all(Radius.circular(10))),
+  );
+}

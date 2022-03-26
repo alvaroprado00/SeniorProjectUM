@@ -36,6 +36,7 @@ class AllBadgesPage extends StatelessWidget {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             BadgesFromCategory(category: Category.info),
             SizedBox(height: 0.05 * heightOfScreen),
@@ -88,8 +89,11 @@ class BadgesContent extends StatelessWidget {
         //The snapshot is a map with entries <courseID, courseName>
         if (snapshot.hasData) {
           if (snapshot.data.isEmpty) {
-            return Center(
-              child: Text('No Courses in the Category'),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment:  CrossAxisAlignment.center,
+
+              children: [SizedBox(height: 0.05*heightOfScreen),Text('No courses in category', style: getSubheadingStyleBlue(),)],
             );
           } else {
             return getRowOfBadges(
@@ -146,7 +150,7 @@ getRowOfBadges(
       getIconButtonShowMore(context: context, size: 0.1 * heightOfScreen, todo: (){Navigator.pushNamed(context, CategoryBadges.routeName, arguments: CategoryBadgesArgs(coursesInCategory: coursesInCategory, category: category));}));
 
   return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    mainAxisAlignment: MainAxisAlignment.spaceAround,
     children: childrenOfRow,
   );
 }

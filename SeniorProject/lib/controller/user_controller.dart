@@ -75,7 +75,7 @@ class UserController {
       return true;
     }).catchError((error) {
       print("ERROR when persisting user in collection");
-      throw Exception('Error when creating user in Firestore');
+      return false;
     });
   }
 

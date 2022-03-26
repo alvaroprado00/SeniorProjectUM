@@ -4,7 +4,9 @@ import 'package:cyber/globals.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/main.dart';
+import 'package:cyber/view/profile/all_avatars.dart';
 import 'package:cyber/view/profile/all_badges.dart';
+import 'package:cyber/view/profile/all_courses.dart';
 
 import 'package:cyber/view/profile/edit_profile.dart';
 import 'package:cyber/view/util/cards.dart';
@@ -29,7 +31,8 @@ class ProfilePage extends StatelessWidget {
       future: cc.getCourseNamesByIDs(ids: activeUser!.coursesSaved),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          return ProfilePageContent(coursesSaved: snapshot.data);
+          return ProfilePageContent(
+               coursesSaved: snapshot.data);
         } else if (snapshot.hasError) {
           return Scaffold(
               body: Center(
@@ -52,37 +55,65 @@ class ProfilePage extends StatelessWidget {
   }
 }
 
-class ProfilePageContent extends StatelessWidget {
-  const ProfilePageContent({required Map<String, String> this.coursesSaved});
+class ProfilePageContent extends StatefulWidget {
+  const ProfilePageContent(
+      {Key? key, required Map<String, String> this.coursesSaved});
 
   final Map<String, String> coursesSaved;
 
   @override
+  State<ProfilePageContent> createState() => _ProfilePageContentState();
+}
+
+class _ProfilePageContentState extends State<ProfilePageContent> {
+
+
+  late ProfilePic _avatar;
+  late int _numBadges;
+  late String _username;
+  late int _xp;
+  late int _numAvatars;
+  late Level _level;
+
+  @override
+  void initState() {
+    super.initState();
+    _avatar=ProfilePic(avatarName: activeUser!.profilePictureActive);
+    _numBadges = activeUser!.collectedBadges.length;
+    _username = activeUser!.username;
+    _xp = activeUser!.level.totalXP;
+    _numAvatars = activeUser!.collectedAvatars.length;
+    _level = activeUser!.level;
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-    //Here I define all the variables that I am going to be using in the user
-    final username = activeUser!.username;
-    final numBadges = activeUser!.collectedBadges.length;
-    final xp = activeUser!.level.totalXP;
-    final numAvatars = activeUser!.collectedAvatars.length;
-    final level = activeUser!.level;
-
     //Here I define the functions to be executed in the buttons
 
-   void Function() signOut=(){
-     showDialog(context: context, builder: (BuildContext context){
-       return AlertDialogCustom(todo:UserController.signOutUser, isDelete: false,);
-     });
+    void Function() signOut = () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialogCustom(
+              todo: UserController.signOutUser,
+              isDelete: false,
+            );
+          });
     };
 
-   void Function() deleteAccount=(){
-     showDialog(context: context, builder: (BuildContext context){
-       return AlertDialogCustom(todo:UserController.deleteActiveUser, isDelete: true,);
-     });
-   };
+    void Function() deleteAccount = () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialogCustom(
+              todo: UserController.deleteActiveUser,
+              isDelete: true,
+            );
+          });
+    };
 
     return Scaffold(
-      backgroundColor: tertiaryColor,
+        backgroundColor: tertiaryColor,
         appBar: AppBar(
           backgroundColor: tertiaryColor,
           elevation: 0,
@@ -110,33 +141,33 @@ class ProfilePageContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Align(
-                      alignment: AlignmentDirectional.center,
-                      child: Avatar(
-                          nameOfAvatar: username, size: 0.6 * widthOfScreen),
-                    ),
+                    _avatar,
                     Padding(
                       padding: EdgeInsets.only(
                           top: heightOfScreen * 0.03,
                           bottom: heightOfScreen * 0.03),
                       child: Text(
-                        username,
+                        _username,
                         style: getHeadingStyleBlue(),
                       ),
                     ),
                     ProgressContainerThreeFields(
-                        field1: numBadges.toString() + ' Badges',
-                        field2: xp.toString() + ' Points',
-                        field3: numAvatars.toString() + ' Avatars'),
+                        field1: _numBadges.toString() + ' Badges',
+                        field2: _xp.toString() + ' Points',
+                        field3: _numAvatars.toString() + ' Avatars'),
                     SizedBox(height: 0.05 * heightOfScreen),
                     LevelProgress(
-                      userLevel: level,
+                      userLevel: _level,
                     ),
-                    SizedBox(height: 0.05*heightOfScreen,),
+                    SizedBox(
+                      height: 0.05 * heightOfScreen,
+                    ),
                     ProfileSection(
                       typeOfSection: TypeOfSection.Badges,
                       coursesSaved: {},
-                      todo:() {Navigator.pushNamed(context, AllBadgesPage.routeName);},
+                      todo: () {
+                        Navigator.pushNamed(context, AllBadgesPage.routeName);
+                      },
                     ),
                     SizedBox(
                       height: 0.05 * heightOfScreen,
@@ -144,29 +175,37 @@ class ProfilePageContent extends StatelessWidget {
                     ProfileSection(
                       typeOfSection: TypeOfSection.Avatars,
                       coursesSaved: {},
-                      todo:() {Navigator.pushNamed(context, AllBadgesPage.routeName);},
-
+                      todo: () async {
+                        final value = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AllAvatarsPage()),
+                        );
+                        _avatar=ProfilePic(avatarName: activeUser!.profilePictureActive);
+                        setState(() {
+                          print('setting state');
+                        });
+                      },
                     ),
                     SizedBox(
                       height: 0.05 * heightOfScreen,
                     ),
                     ProfileSection(
                       typeOfSection: TypeOfSection.Courses,
-                      coursesSaved: coursesSaved,
-                      todo:() {Navigator.pushNamed(context, AllBadgesPage.routeName);},
-
+                      coursesSaved: widget.coursesSaved,
+                      todo: () {
+                        Navigator.pushNamed(context, AllCoursesPage.routeName);
+                      },
                     ),
                     SizedBox(
                       height: 0.05 * heightOfScreen,
                     ),
-
                     SubtitleDivider(subtitle: " My Account"),
                     SizedBox(
                         height: getHeightOfLargeButton(),
                         width: getWidthOfLargeButton(),
                         child: ElevatedButton(
                           onPressed: signOut,
-
                           child:
                               Text('Sign Out', style: getNormalTextStyleBlue()),
                           style: yellowButtonStyle,
@@ -191,7 +230,39 @@ class ProfilePageContent extends StatelessWidget {
           ),
         ));
   }
+
+
+
 }
+
+class ProfilePic extends StatefulWidget {
+  const ProfilePic({Key? key, required String this.avatarName}):super(key: key);
+
+  final String avatarName;
+  @override
+  State<ProfilePic> createState() => new ProfilePicState();
+}
+
+class ProfilePicState extends State<ProfilePic> {
+
+
+  initState(){
+    super.initState();
+
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.center,
+      child: Avatar(nameOfAvatar: widget.avatarName, size: 0.11*heightOfScreen),
+    );
+  }
+
+
+  }
+
+
+
 
 /**
  * Class to create a progress indicator for profile page
@@ -212,7 +283,7 @@ class LevelProgress extends StatelessWidget {
               child: LinearProgressIndicator(
                 value:
                     (userLevel.xpEarnedInLevel / userLevel.xpAvailableInLevel),
-                valueColor:  AlwaysStoppedAnimation<Color>(secondaryColor),
+                valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
                 backgroundColor: primaryColor,
               )),
           Row(
@@ -362,8 +433,12 @@ getLastBadgesFromUser({required List<Badge> badges}) {
 getLastAvatarsFromUser({required List<String> avatars}) {
   List<Widget> childrenForRow = [];
 
+  //I flip the list so i can access the last avatars
+
+  avatars = List.from(avatars.reversed);
+
   //we know that in the case of avatars the user is always going to have at least one
-  for (int i = 0; i < avatars.length; i++) {
+  for (int i = 0; i < avatars.length && i < 4; i++) {
     childrenForRow
         .add(Avatar(nameOfAvatar: avatars[i], size: 0.1 * heightOfScreen));
   }
@@ -434,10 +509,19 @@ getLastSavedCoursesFromUser(
   );
 }
 
+/**
+ * Alert Dialog used to confirm the user deleting or signing out his account.
+ * It uses a boolean to differentiate between the two mentioned cases.
+ * A function is provided to be executed when the user clicks confirm
+ */
 class AlertDialogCustom extends StatelessWidget {
-  const AlertDialogCustom({Key? key, required Future Function() this.todo, required bool this.isDelete}) : super(key: key);
+  const AlertDialogCustom(
+      {Key? key,
+      required Future Function() this.todo,
+      required bool this.isDelete})
+      : super(key: key);
 
-  final Future Function () todo;
+  final Future Function() todo;
   final bool isDelete;
 
   @override
@@ -446,39 +530,51 @@ class AlertDialogCustom extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      title: Text('Are you sure?', style: getNormalTextStyleBlue(),),
+      title: Text(
+        'Are you sure?',
+        style: getNormalTextStyleBlue(),
+      ),
       content: Text(
-         isDelete?" You will sign out.": "You will delete your account", style: getNormalTextStyleBlue(),),
+        isDelete ? " You will sign out." : "You will delete your account",
+        style: getNormalTextStyleBlue(),
+      ),
       actions: <Widget>[
         TextButton(
-          onPressed: () =>
-              Navigator.pop(context, 'Cancel'),
-          child: Text('Cancel',style: getNormalTextStyleBlue(),),
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: Text(
+            'Cancel',
+            style: getNormalTextStyleBlue(),
+          ),
         ),
         TextButton(
           onPressed: () async {
-            String message='';
-            await todo().then((value){
-
-              message=value;
-            }).catchError((onError){message=onError;});
+            String message = '';
+            await todo().then((value) {
+              message = value;
+            }).catchError((onError) {
+              message = onError;
+            });
 
             var snackBar = SnackBar(
               backgroundColor: secondaryColor,
-              content: Text(message, style: getNormalTextStyleWhite(),),
+              content: Text(
+                message,
+                style: getNormalTextStyleWhite(),
+              ),
             );
 
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
             Navigator.pushNamed(context, HomePage.routeName);
-
           },
-          child:  Text('Confirm', style: getNormalTextStyleYellow(),),
+          child: Text(
+            'Confirm',
+            style: getNormalTextStyleYellow(),
+          ),
         ),
       ],
     );
   }
 }
-
 
 enum TypeOfSection {
   Badges,

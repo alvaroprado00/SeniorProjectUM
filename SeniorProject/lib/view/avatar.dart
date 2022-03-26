@@ -10,6 +10,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:cyber/view/util/k_colors.dart';
+import 'package:cyber/view/util/k_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -63,7 +64,7 @@ class _AvatarState extends State<Avatar> {
       decoration: new BoxDecoration(
           shape: BoxShape.circle,
           border: new Border.all(
-            color: secondaryColor,
+            color: primaryColor,
             width: 2.0,
           ),
           gradient: LinearGradient(
@@ -79,3 +80,4 @@ class _AvatarState extends State<Avatar> {
     );
   }
 }
+
