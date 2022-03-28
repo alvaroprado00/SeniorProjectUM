@@ -1,3 +1,4 @@
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
@@ -12,10 +13,10 @@ import '../util/k_styles.dart';
 import '../util/k_values.dart';
 
 
-class AllAvatarsPage extends StatelessWidget {
+class AllAvatarsPage extends GetView<ActiveUserController> {
   const AllAvatarsPage({Key? key}) : super(key: key);
 
-  static final routeName='/allAvatars';
+  static final routeName = '/allAvatars';
 
   @override
   Widget build(BuildContext context) {
@@ -36,101 +37,103 @@ class AllAvatarsPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-        SizedBox(height: 0.05*heightOfScreen,),
-        SubtitleDivider(subtitle: 'Collected'),
-        SizedBox(height: 0.03*heightOfScreen,),
-        SizedBox(
-          width: widthOfScreen,
-          height: 0.5*heightOfScreen,
-          child: SingleChildScrollView(
+            SizedBox(height: 0.05 * heightOfScreen,),
+            SubtitleDivider(subtitle: 'Collected'),
+            SizedBox(height: 0.03 * heightOfScreen,),
+            SizedBox(
+              width: widthOfScreen,
+              height: 0.5 * heightOfScreen,
+              child: SingleChildScrollView(
 
-            child: getAvatars(),
-          ),
-        ),
+                child:Obx(()=> getAvatars(userAvatars: controller.collectedAvatars.value, size: 0.11*heightOfScreen)),
+              ),
+            ),
 
-        SizedBox(height: 0.06*heightOfScreen,),
-        Container(
-          width: widthOfScreen,
-          height: 0.2*heightOfScreen,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.transparent,
-                  ])
-          ),
+            SizedBox(height: 0.06 * heightOfScreen,),
+            Container(
+              width: widthOfScreen,
+              height: 0.2 * heightOfScreen,
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.transparent,
+                      ])
+              ),
 
-          child: Image.asset(
-            'assets/images/help.png',
+              child: Image.asset(
+                'assets/images/help.png',
 
-          ),
-        ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
+
+  getAvatars({required List<String> userAvatars, required double size}) {
+    List<Widget> childrenOfRow = [];
+
+
+    //The user is always going to have at least one avatar so I dont
+    //check for the user not having avatars
+    for (String s in userAvatars) {
+      //The Avatars are going to be Obx because depend on the value of the vble activeUser
+      childrenOfRow.add(
+          AvatarButton(avatarName: s, size: size,));
+    }
+
+    return Wrap(
+      runSpacing: 10,
+      spacing: 5,
+      children: childrenOfRow,
+    );
+  }
 }
 
-
-
-getAvatars(){
-
-   List<Widget> childrenOfRow=[];
-
-   //I get the avatars from the active user
-   List<String> userAvatars= activeUser!.collectedAvatars;
-
-
-   //The user is always going to have at least one avatar so I dont
-   //check for the user not having avatars
-   for (String s in userAvatars){
-     //The Avatars are going to be Obx because depend on the value of the vble activeUser
-     childrenOfRow.add(
-       AvatarButton(avatarName:s));
-   }
-
-   return Wrap(
-     runSpacing: 10,
-     spacing: 5,
-     children: childrenOfRow,
-   );
-
-}
-
+/**
+ * This class when built displays a button with an avatar. The button
+ * will have a yellow background in case the avatar displayed is the that
+ * the user is currently having as his profilePictureActive
+ */
 class AvatarButton extends StatelessWidget {
 
 
- AvatarButton({Key? key, required String this.avatarName}) : super(key: key);
+ AvatarButton({Key? key, required String this.avatarName, required double this.size}) : super(key: key);
 
   final String avatarName;
+  final double size;
 
-  ControllerActiveAvatar c = Get.put(ControllerActiveAvatar());
+  ActiveUserController activeUserController=Get.find();
 
   @override
   Widget build(BuildContext context) {
 
     return Obx( ()=>ElevatedButton(
       style: ElevatedButton.styleFrom(
-          shape: const CircleBorder(), primary: c.activeAvatar==avatarName? secondaryColor: primaryColor),
+          shape: const CircleBorder(), primary: activeUserController.profilePictureActive==avatarName? secondaryColor: primaryColor),
       onPressed: (){  showDialog(
           context: context,
           barrierDismissible: true,
           builder: (_) {
             return AvatarDialog(avatarName: avatarName,);
           });},
-      child: Avatar(nameOfAvatar: avatarName, size: 0.11*heightOfScreen),
+      child: Avatar(nameOfAvatar: avatarName, size: size),
 
     ));
   }
 }
 
 
-
-
-class AvatarDialog extends GetView<ControllerActiveAvatar> {
+/**
+ * A custom dialog that is displayed when the user clicks on the
+ * avatar icon. It lets the user change its active profile pic
+ */
+class AvatarDialog extends GetView<ActiveUserController> {
   const AvatarDialog({Key? key, required String this.avatarName}) : super(key: key);
 
   final String avatarName;
@@ -161,13 +164,9 @@ class AvatarDialog extends GetView<ControllerActiveAvatar> {
               //We change the active User
               activeUser!.profilePictureActive=avatarName;
 
-              controller.activeAvatar.value=avatarName;
-              //We change the variable we are observing
-              controller.update();
-
 
               String message='';
-              await UserController.updateActiveUser().then((value){
+              await controller.updateProfilePictureActive(newPicture: avatarName).then((value){
                 if(value){
                   message='Changes Applied';
                 }else{
@@ -182,7 +181,7 @@ class AvatarDialog extends GetView<ControllerActiveAvatar> {
                 content: Text(message, style: getNormalTextStyleWhite(),),
               );
 
-              //ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
               Navigator.pop(context);
           },
           child:  Text('Change', style: getNormalTextStyleYellow(),),
@@ -193,11 +192,4 @@ class AvatarDialog extends GetView<ControllerActiveAvatar> {
 }
 
 
-
-class ControllerActiveAvatar extends GetxController{
-
-  //The variable is obs which means observable
-  var activeAvatar=activeUser!.profilePictureActive.obs;
-
-}
 

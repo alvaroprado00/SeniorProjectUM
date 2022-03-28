@@ -6,14 +6,15 @@ import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../../model/completed_course.dart';
+import '../../controller/active_user_controller.dart';
 import '../../model/course.dart';
 import '../util/cards.dart';
 
 
 
-class CourseDescription extends StatelessWidget {
+class CourseDescription extends GetView<ActiveUserController> {
 
   const CourseDescription({Key? key}) : super(key: key);
 
@@ -43,18 +44,13 @@ class CourseDescription extends StatelessWidget {
               globals.activeQuestionNum=1;
               globals.userProgress=[];
 
-              //I check if the activeUser has the courseSaved or if its the current one
-              bool isSaved=globals.activeUser!.isCourseSaved(courseID: courseID);
-              bool isCurrentCourse=globals.activeUser!.isCurrentCourse(courseID: courseID);
-              bool isCompleted=globals.activeUser!.isCourseCompleted(courseID: courseID);
 
-
-              if(isCurrentCourse){
+              if(controller.isCurrentCourse(courseID: courseID)){
                 globals.activeQuestionNum=globals.activeUser!.currentCourse!.progress.length+1;
                 globals.userProgress=globals.activeUser!.currentCourse!.progress;
               }
 
-              return CourseDescriptionContent(course: snapshot.data, isSaved: isSaved, isCurrentCourse: isCurrentCourse, isCompleted:isCompleted);
+              return Obx(()=>CourseDescriptionContent(course: snapshot.data, isSaved: controller.isSaved(courseID: courseID), isCurrentCourse: controller.isCurrentCourse(courseID: courseID), isCompleted:controller.isCompleted(courseID: courseID)));
 
           } else if (snapshot.hasError) {
             return Center(
@@ -83,6 +79,7 @@ class CourseDescriptionContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -253,17 +250,16 @@ getNewSection({required String sectionName, required String txt1ForBox, required
   );
 }
 getContentForCurrentCourse(){
-  String progress=(((globals.activeUser!.currentCourse!.progress.length/globals.activeCourse!.numberOfQuestions)*100).round()).toString();
+  ActiveUserController activeUserController=Get.find();
 
-  return getNewSection(sectionName: 'Your progress', txt1ForBox: progress+'%', txt2ForBox: 'Completed');
+  return Obx(()=>getNewSection(sectionName: 'Your progress', txt1ForBox: (((activeUserController.currentCourse.value!.progress.length/globals.activeCourse!.numberOfQuestions)*100).round()).toString()+'%', txt2ForBox: 'Completed'));
       
 }
 
 getContentForCompletedCourse(){
-  CompletedCourse cc=globals.activeUser!.completedCourses.firstWhere((element){return element.courseID==globals.activeCourse!.id;});
 
-  String xpEarned=cc.experiencePointsEarned.toString();
+  ActiveUserController activeUserController=Get.find();
 
-  return getNewSection(sectionName: 'Best Attempt', txt1ForBox: xpEarned, txt2ForBox: 'EXP');
+  return Obx(()=>getNewSection(sectionName: 'Best Attempt', txt1ForBox:activeUserController.completedCourses.value.firstWhere((element) => element.courseID==globals.activeCourse!.id).experiencePointsEarned.toString(), txt2ForBox: 'EXP'));
 }
 

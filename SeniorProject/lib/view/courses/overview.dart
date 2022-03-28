@@ -1,5 +1,7 @@
 import 'package:cyber/config/fixed_values.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/globals.dart';
+import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/overview_dialog.dart';
 import 'package:cyber/view/util/components.dart';
@@ -8,16 +10,20 @@ import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:get/get.dart';
 
 import 'category_progress.dart';
 
-class Overview extends StatelessWidget {
+class Overview extends GetView<ActiveUserController> {
 
-  const Overview({Key? key}) : super(key: key);
+   const Overview({Key? key}) : super(key: key);
 
   static final  String routeName='/overview';
+
   @override
   Widget build(BuildContext context) {
+
+    final args =ModalRoute.of(context)!.settings.arguments as SaveCompletedCourseArgs;
 
     return Scaffold(
         appBar: AppBar(
@@ -30,62 +36,29 @@ class Overview extends StatelessWidget {
           backgroundColor: tertiaryColor,
         ),
         backgroundColor: tertiaryColor,
-        body: FutureBuilder(
-          future: activeUser!.saveCompletedCourse(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
-
-              return ContentForOverview(earnedBadge:snapshot.data.earnedBadge, levelUp: snapshot.data.levelUp, balanceXP: snapshot.data.balanceXP,);
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  'Error: ${snapshot.error}',
-                  style: getHeadingStyleBlue(),
-                ),
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ));
+        body: ContentForOverview(earnedBadge:args.earnedBadge, levelUp:args.levelUp, balanceXP: args.balanceXP)
+    );
 
 
   }
 }
-class ContentForOverview extends StatefulWidget {
+class ContentForOverview extends GetView<ActiveUserController> {
   const ContentForOverview({required bool this.earnedBadge, required bool this.levelUp, required int this.balanceXP});
 
   final bool earnedBadge;
   final bool levelUp;
   final int balanceXP;
 
-  @override
-  _ContentForOverviewState createState() => _ContentForOverviewState();
-}
-
-class _ContentForOverviewState extends State<ContentForOverview> {
-
-  //All of these params are used to display the info. We are going to
-  //initialize them after updating the user in the DB
-  final String xpInLevel=activeUser!.level.xpEarnedInLevel.toString();
-  final String level=activeUser!.level.levelNumber.toString();
-  final String questionsRight=activeUser!.completedCourses.last.numQuestionsRight.toString();
-  final List<bool> answers=activeUser!.completedCourses.last.answers;
-  final String numQuestions=activeUser!.completedCourses.last.answers.length.toString();
-  final String xpEarned=activeUser!.completedCourses.last.experiencePointsEarned.toString();
 
   @override
-  void initState() {
-
-    super.initState();
-
+  Widget build(BuildContext context) {
 
     SchedulerBinding.instance!.addPostFrameCallback((_) {
 
       //After the widget builds we check if the user has leveled up to show
       //the alert dialog corresponding to that
 
-      if(widget.levelUp){
+      if(levelUp){
         showDialog(
             context: context,
             barrierDismissible: true,
@@ -94,10 +67,7 @@ class _ContentForOverviewState extends State<ContentForOverview> {
             });
       }
     });
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(
@@ -109,26 +79,26 @@ class _ContentForOverviewState extends State<ContentForOverview> {
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-              getCircularProgressCustom(xp: xpInLevel, level:level),
+              Obx(()=>getCircularProgressCustom(xp: controller.level.value.xpEarnedInLevel.toString(), level:controller.level.value.levelNumber.toString())),
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-              Text(
-                'Level $level',
+              Obx(()=>Text(
+                'Level ${controller.level.value.levelNumber.toString()}',
                 style: getSubheadingStyleBlue(),
-              ),
+              )),
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text(
-                    '$questionsRight/$numQuestions',
+                 Obx(()=> Text(
+                    '${controller.completedCourses.value.last.numQuestionsRight.toString()}/${controller.completedCourses.value.last.answers.length.toString()}',
                     style: getHeadingStyleBlue(),
-                  ),
+                  )),
                   Text(
-                    '+ ${widget.balanceXP.toString()} EXP',
+                    '+ ${balanceXP.toString()} EXP',
                     style: getHeadingStyleBlue(),
                   ),
                 ],
@@ -136,12 +106,12 @@ class _ContentForOverviewState extends State<ContentForOverview> {
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-              getCirclesProgressBarForCourseProgression(
-                  answers: answers, numberOfCircles: answers.length),
+              Obx(()=>getCirclesProgressBarForCourseProgression(
+                  answers: controller.completedCourses.value.last.answers, numberOfCircles: controller.completedCourses.value.last.answers.length)),
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-              widget.earnedBadge
+              earnedBadge
                   ? Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,

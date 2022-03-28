@@ -47,7 +47,7 @@ class UserCustom {
 
   Map<String, dynamic> toJson() => _$UserCustomToJson(this);
 
-
+/*
   int getCompletedCoursesInCategory({required List<String> courseIDs}) {
     int i = 0;
 
@@ -221,14 +221,8 @@ class UserCustom {
     }
     return false;
   }
+*/
 
-  bool isCurrentCourse({required String courseID}){
-    if(this.currentCourse!=null && this.currentCourse!.courseID==courseID){
-      return true;
-    }else{
-      return false;
-    }
-  }
 }
 
 /**

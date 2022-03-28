@@ -1,9 +1,10 @@
-import 'package:cyber/config/fixed_values.dart';
-import 'package:cyber/view/dashboard/dashboard.dart';
+import 'package:cyber/controller/active_user_controller.dart';
+import 'package:cyber/view/main.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
-import '../../globals.dart';
-import '../../model/level.dart';
+
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -318,13 +319,18 @@ getExitCourseButton({required BuildContext context}) {
         style: getNormalTextStyleBlue(),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, DashboardPage.routeName);
+        Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
+
       },
     ),
   );
 }
 
 getSaveCurrentCourseButton({required BuildContext context}) {
+
+  //We get an instance of our activeUserController
+
+  ActiveUserController activeUserController=Get.find();
   return SizedBox(
     height: getHeightOfSmallButton(),
     width: getWidthOfSmallButton(),
@@ -335,9 +341,11 @@ getSaveCurrentCourseButton({required BuildContext context}) {
           style: getNormalTextStyleBlue(),
         ),
         onPressed: () async {
-          await activeUser!.updateCurrentCourse();
+
+          await activeUserController.updateCurrentCourse();
           //Once the user is updated, then we go to the dashboard
-          Navigator.pushNamed(context, DashboardPage.routeName);
+          Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
+
         }),
   );
 }

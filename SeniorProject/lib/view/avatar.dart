@@ -9,27 +9,20 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
-class Avatar extends StatefulWidget {
+class Avatar extends StatelessWidget {
   Avatar({required this.nameOfAvatar, required this.size});
   final String nameOfAvatar;
   final double size;
-  @override
-  State<StatefulWidget> createState() => new _AvatarState();
-}
-
-class _AvatarState extends State<Avatar> {
-
   late final String url;
-  @override
-  void initState(){
-    super.initState();
-    url='https://robohash.org/${widget.nameOfAvatar}';
-  }
+
 
   Future<Uint8List> fetchAvatar() async {
     http.Response response = await http.get(Uri.parse(url));
@@ -48,7 +41,7 @@ class _AvatarState extends State<Avatar> {
               child: new Text('❌', style: TextStyle(fontSize: 72.0)));
         } else {
           return new Container(
-            padding: EdgeInsets.all((widget.size) / 2.0), //-50
+            padding: EdgeInsets.all((size) / 2.0), //-50
             child: new CircularProgressIndicator(),
           );
         }
@@ -58,9 +51,10 @@ class _AvatarState extends State<Avatar> {
 
   @override
   Widget build(BuildContext context) {
+    url='https://robohash.org/${nameOfAvatar}';
     return new Container(
-      width: widget.size,
-      height: widget.size,
+      width: size,
+      height: size,
       decoration: new BoxDecoration(
           shape: BoxShape.circle,
           border: new Border.all(

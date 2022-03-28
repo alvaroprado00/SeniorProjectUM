@@ -4,7 +4,10 @@ import 'package:cyber/view/profile/category_badges.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 
+import '../../controller/active_user_controller.dart';
 import '../../model/badge.dart';
 import '../util/components.dart';
 import '../util/k_colors.dart';
@@ -74,7 +77,7 @@ class BadgesFromCategory extends StatelessWidget {
   }
 }
 
-class BadgesContent extends StatelessWidget {
+class BadgesContent extends GetView<ActiveUserController> {
   const BadgesContent({Key? key, required Category this.category})
       : super(key: key);
 
@@ -84,7 +87,7 @@ class BadgesContent extends StatelessWidget {
     CourseController cc = CourseController();
     return FutureBuilder(
       future: cc.getCourseNamesFromCategory(
-          category: category), // a previously-obtained Future<String> or null
+          category: category),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         //The snapshot is a map with entries <courseID, courseName>
         if (snapshot.hasData) {
@@ -96,8 +99,8 @@ class BadgesContent extends StatelessWidget {
               children: [SizedBox(height: 0.05*heightOfScreen),Text('No courses in category', style: getSubheadingStyleBlue(),)],
             );
           } else {
-            return getRowOfBadges(
-                coursesInCategory: snapshot.data, context: context, category: category);
+            return Obx(()=>getRowOfBadges(
+                coursesInCategory: snapshot.data, context: context, category: category, userBadges: controller.collectedBadges));
           }
         } else if (snapshot.hasError) {
           return Center(
@@ -117,12 +120,13 @@ class BadgesContent extends StatelessWidget {
 
 getRowOfBadges(
     {required Map<String, String> coursesInCategory,
-    required BuildContext context, required Category category}) {
+    required BuildContext context, required Category category,
+    required List<Badge> userBadges}) {
   List<Widget> childrenOfRow = [];
 
   //Add a maximum of 3 badges
-  for (int i = 0; i < activeUser!.collectedBadges.length; i++) {
-    Badge userBadge = activeUser!.collectedBadges[i];
+  for (int i = 0; i < userBadges.length; i++) {
+    Badge userBadge = userBadges[i];
     if (coursesInCategory.containsKey(userBadge.courseID) &&
         childrenOfRow.length < 4) {
       childrenOfRow.add(getIconButtonForBadge(
@@ -134,6 +138,20 @@ getRowOfBadges(
   }
 
   int numberOfBadges = childrenOfRow.length;
+
+  //In case there are no badges I show a message
+  if(numberOfBadges==0){
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: heightOfScreen*0.05,
+        ),
+        Text('No badges Earned in ${categoryToString[category]!}', style: getSubheadingStyleBlue(),),
+      ],
+    );
+  }
 
   //I add grey circles to complete the row
 

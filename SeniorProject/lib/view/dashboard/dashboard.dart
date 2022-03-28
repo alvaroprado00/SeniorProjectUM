@@ -1,8 +1,8 @@
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/current_course.dart';
-import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/util/k_colors.dart';
@@ -10,7 +10,7 @@ import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+
 
 import '../util/cards.dart';
 
@@ -29,8 +29,14 @@ class DashboardPage extends StatelessWidget {
               //This is the moment to save our active user in the global variable
 
               activeUser=snapshot.data;
+              
+              //This is the moment to initialize my controller too
+              if(Get.isRegistered<ActiveUserController>()){
+                Get.delete<ActiveUserController>();
+              }
+              Get.put(ActiveUserController());
 
-              return ContentForDashboard(user: snapshot.data);
+              return ContentForDashboard();
             } else if (snapshot.hasError) {
               return Scaffold(body:Center(
                 child: Text(
@@ -51,18 +57,17 @@ class DashboardPage extends StatelessWidget {
  * param since the content varies depending on the user.
  */
 
-class ContentForDashboard extends StatelessWidget {
-  const ContentForDashboard({required UserCustom this.user});
-  final UserCustom user;
+class ContentForDashboard extends GetView<ActiveUserController> {
+  const ContentForDashboard();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton:user.isAdmin?AdminButton():null,
+    return Obx(()=>Scaffold(
+      floatingActionButton:controller.isAdmin.value? AdminButton():null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       backgroundColor: tertiaryColor,
       appBar: AppBar(
-        title:Text('Welcome ${user.username}!',),
+        title:Text('Welcome ${controller.username.value}!',),
         backgroundColor: tertiaryColor,
         elevation: 0,
         centerTitle: false,
@@ -78,11 +83,11 @@ class ContentForDashboard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
-                user.currentCourse == null
+                controller.currentCourse.value == null
                     ? SizedBox(
                         height: 0,
                       )
-                    : ResumeCourseContent(currentCourse: user.currentCourse!),
+                    : ResumeCourseContent(currentCourse: controller.currentCourse.value!),
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
@@ -102,7 +107,7 @@ class ContentForDashboard extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
 
@@ -135,15 +140,9 @@ class AdminButton extends StatelessWidget {
  * It has to first execute the future to search for it in the DB
  */
 
-class RecommendedCourseContent extends StatefulWidget {
+class RecommendedCourseContent extends StatelessWidget {
   const RecommendedCourseContent({Key? key}) : super(key: key);
 
-  @override
-  _RecommendedCourseContentState createState() =>
-      _RecommendedCourseContentState();
-}
-
-class _RecommendedCourseContentState extends State<RecommendedCourseContent> {
   @override
   Widget build(BuildContext context) {
     CourseController cc = CourseController();
@@ -188,22 +187,18 @@ class _RecommendedCourseContentState extends State<RecommendedCourseContent> {
  * The future consists on searching for that new-course in the database
  */
 
-class ResumeCourseContent extends StatefulWidget {
-  final CurrentCourse currentCourse;
+class ResumeCourseContent extends StatelessWidget {
 
   const ResumeCourseContent({required CurrentCourse this.currentCourse});
+  final CurrentCourse currentCourse;
 
-  @override
-  _ResumeCourseContentState createState() => _ResumeCourseContentState();
-}
 
-class _ResumeCourseContentState extends State<ResumeCourseContent> {
   @override
   Widget build(BuildContext context) {
     CourseController cc = CourseController();
 
     return FutureBuilder(
-      future: cc.getCourseByID(id: widget.currentCourse.courseID),
+      future: cc.getCourseByID(id:currentCourse.courseID),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return Column(
@@ -219,10 +214,10 @@ class _ResumeCourseContentState extends State<ResumeCourseContent> {
               thickness: 2,
             ),
             ContainerForCourse(
-                percentage: ((widget.currentCourse.progress.length) /
+                percentage: ((currentCourse.progress.length) /
                     (snapshot.data.numberOfQuestions) *
                     100).round(),
-                courseID: widget.currentCourse.courseID,
+                courseID: currentCourse.courseID,
                 description: snapshot.data.description,
                 nameOfCourse: snapshot.data.title,
                 isResume: true),

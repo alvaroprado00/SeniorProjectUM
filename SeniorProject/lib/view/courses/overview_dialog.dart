@@ -1,9 +1,10 @@
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/util/components.dart';
-import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../util/k_styles.dart';
 
@@ -44,7 +45,7 @@ class OverviewDialog extends StatelessWidget {
 }
 
 
-class LevelUpContent extends StatelessWidget {
+class LevelUpContent extends GetView<ActiveUserController> {
   const LevelUpContent({Key? key}) : super(key: key);
 
   @override
@@ -54,16 +55,16 @@ class LevelUpContent extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Avatar(nameOfAvatar:activeUser!.collectedAvatars.last, size:0.2*heightOfScreen),
+        Obx(()=>Avatar(nameOfAvatar:controller.collectedAvatars.value.last, size:0.2*heightOfScreen)),
         SizedBox(height: 0.05*heightOfScreen,),
 
-        Text('Avatar ID:${activeUser!.collectedAvatars.last}',style: getNormalTextStyleBlue(),),
+        Obx(()=>Text('Avatar ID:${controller.collectedAvatars.value.last}',style: getNormalTextStyleBlue(),)),
       ],
     );
   }
 }
 
-class BadgeContent extends StatelessWidget {
+class BadgeContent extends GetView<ActiveUserController> {
   const BadgeContent({Key? key}) : super(key: key);
 
   @override
@@ -74,7 +75,7 @@ class BadgeContent extends StatelessWidget {
 
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        getContainerForBadge(nameOfIcon: activeUser!.collectedBadges.last.picture, size: 0.2*heightOfScreen),
+        Obx(()=>getContainerForBadge(nameOfIcon: controller.collectedBadges.value.last.picture, size: 0.2*heightOfScreen)),
         SizedBox(height: 0.05*heightOfScreen,),
         Text('Course:${activeCourse!.title}',style: getNormalTextStyleBlue(),),
       ],

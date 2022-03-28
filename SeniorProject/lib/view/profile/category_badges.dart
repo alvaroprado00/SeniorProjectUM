@@ -1,16 +1,17 @@
 
-import 'package:cyber/globals.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/view/profile/all_badges.dart';
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../model/badge.dart';
 import '../util/k_values.dart';
 
 
-class CategoryBadges extends StatelessWidget {
+class CategoryBadges extends GetView<ActiveUserController> {
   const CategoryBadges({Key? key}) : super(key: key);
 
   static final routeName='/categoryBadges';
@@ -41,7 +42,7 @@ class CategoryBadges extends StatelessWidget {
               SubtitleDivider(subtitle: categoryToString[args.category]!),
               SizedBox(height: 0.03*heightOfScreen,),
 
-              getAllBadges(coursesInCategory: args.coursesInCategory, context: context),
+              Obx(()=>getAllBadges(coursesInCategory: args.coursesInCategory, context: context, userBadges:controller.collectedBadges.value)),
             ],
           ),
         ),
@@ -59,11 +60,9 @@ class CategoryBadgesArgs{
 
 }
 
-Widget getAllBadges({required Map<String, String> coursesInCategory, required BuildContext context}){
+Widget getAllBadges({required Map<String, String> coursesInCategory, required BuildContext context, required List<Badge> userBadges}){
 
   List<Widget> childrenOfRow=[];
-
-  List<Badge> userBadges=activeUser!.collectedBadges;
 
   for (Badge b in userBadges){
     if(coursesInCategory.containsKey(b.courseID)){

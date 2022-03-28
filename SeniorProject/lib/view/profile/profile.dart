@@ -1,6 +1,6 @@
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
-import 'package:cyber/controller/user_controller.dart';
-import 'package:cyber/globals.dart';
+
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/main.dart';
@@ -12,6 +12,7 @@ import 'package:cyber/view/profile/edit_profile.dart';
 import 'package:cyber/view/util/cards.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../model/badge.dart';
 import '../../model/level.dart';
@@ -20,15 +21,17 @@ import '../util/k_colors.dart';
 import '../util/k_styles.dart';
 import '../util/k_values.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends GetView<ActiveUserController> {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     CourseController cc = CourseController();
 
-    return FutureBuilder(
-      future: cc.getCourseNamesByIDs(ids: activeUser!.coursesSaved),
+    //If the coursesSaved of the user change we need to rebuild the page
+
+    return Obx( ()=>FutureBuilder(
+      future: cc.getCourseNamesByIDs(ids:controller.coursesSaved),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return ProfilePageContent(
@@ -51,40 +54,16 @@ class ProfilePage extends StatelessWidget {
           );
         }
       },
-    );
+    ));
   }
 }
 
-class ProfilePageContent extends StatefulWidget {
+class ProfilePageContent extends GetView<ActiveUserController> {
   const ProfilePageContent(
       {Key? key, required Map<String, String> this.coursesSaved});
 
   final Map<String, String> coursesSaved;
 
-  @override
-  State<ProfilePageContent> createState() => _ProfilePageContentState();
-}
-
-class _ProfilePageContentState extends State<ProfilePageContent> {
-
-
-  late ProfilePic _avatar;
-  late int _numBadges;
-  late String _username;
-  late int _xp;
-  late int _numAvatars;
-  late Level _level;
-
-  @override
-  void initState() {
-    super.initState();
-    _avatar=ProfilePic(avatarName: activeUser!.profilePictureActive);
-    _numBadges = activeUser!.collectedBadges.length;
-    _username = activeUser!.username;
-    _xp = activeUser!.level.totalXP;
-    _numAvatars = activeUser!.collectedAvatars.length;
-    _level = activeUser!.level;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +74,7 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialogCustom(
-              todo: UserController.signOutUser,
+              todo: controller.signOut,
               isDelete: false,
             );
           });
@@ -106,7 +85,7 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialogCustom(
-              todo: UserController.deleteActiveUser,
+              todo: controller.delete,
               isDelete: true,
             );
           });
@@ -141,24 +120,28 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    _avatar,
+
+                    //When the profile picture of the user changes, we need to change this
+                    AvatarPic(),
                     Padding(
                       padding: EdgeInsets.only(
                           top: heightOfScreen * 0.03,
                           bottom: heightOfScreen * 0.03),
-                      child: Text(
-                        _username,
+                      child: Obx(()=> Text(
+                        controller.username.value,
                         style: getHeadingStyleBlue(),
-                      ),
+                      ))
                     ),
-                    ProgressContainerThreeFields(
-                        field1: _numBadges.toString() + ' Badges',
-                        field2: _xp.toString() + ' Points',
-                        field3: _numAvatars.toString() + ' Avatars'),
+
+                    //This field is also prone to changes
+                    Obx(()=>ProgressContainerThreeFields(
+                        field1: controller.getNumBadges().toString() + ' Badges',
+                        field2: controller.getTotalPoints().toString() + ' Points',
+                        field3: controller.getNumAvatars().toString() + ' Avatars')),
                     SizedBox(height: 0.05 * heightOfScreen),
-                    LevelProgress(
-                      userLevel: _level,
-                    ),
+                   Obx(()=> LevelProgress(
+                      userLevel: controller.level.value,
+                    )),
                     SizedBox(
                       height: 0.05 * heightOfScreen,
                     ),
@@ -176,15 +159,12 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                       typeOfSection: TypeOfSection.Avatars,
                       coursesSaved: {},
                       todo: () async {
-                        final value = await Navigator.push(
+                        await Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => AllAvatarsPage()),
                         );
-                        _avatar=ProfilePic(avatarName: activeUser!.profilePictureActive);
-                        setState(() {
-                          print('setting state');
-                        });
+                        controller.profilePictureActive.refresh();
                       },
                     ),
                     SizedBox(
@@ -192,7 +172,7 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                     ),
                     ProfileSection(
                       typeOfSection: TypeOfSection.Courses,
-                      coursesSaved: widget.coursesSaved,
+                      coursesSaved: coursesSaved,
                       todo: () {
                         Navigator.pushNamed(context, AllCoursesPage.routeName);
                       },
@@ -200,7 +180,7 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                     SizedBox(
                       height: 0.05 * heightOfScreen,
                     ),
-                    SubtitleDivider(subtitle: " My Account"),
+                    SubtitleDivider(subtitle: "My Account"),
                     SizedBox(
                         height: getHeightOfLargeButton(),
                         width: getWidthOfLargeButton(),
@@ -230,38 +210,22 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
           ),
         ));
   }
-
-
-
 }
 
-class ProfilePic extends StatefulWidget {
-  const ProfilePic({Key? key, required String this.avatarName}):super(key: key);
+/**
+ * Class to display the Avatar picture of the user
+ */
+class AvatarPic extends GetView<ActiveUserController> {
+  const AvatarPic({Key? key}):super(key: key);
 
-  final String avatarName;
-  @override
-  State<ProfilePic> createState() => new ProfilePicState();
-}
-
-class ProfilePicState extends State<ProfilePic> {
-
-
-  initState(){
-    super.initState();
-
-  }
   @override
   Widget build(BuildContext context) {
-    return Align(
+    return  Align(
       alignment: Alignment.center,
-      child: Avatar(nameOfAvatar: widget.avatarName, size: 0.11*heightOfScreen),
+      child: Obx(()=>Avatar(nameOfAvatar: controller.profilePictureActive.value, size: 0.3*heightOfScreen)),
     );
   }
-
-
-  }
-
-
+}
 
 
 /**
@@ -325,7 +289,7 @@ class LevelProgress extends StatelessWidget {
  * General class to get one of the three different sections in this
  * page.
  */
-class ProfileSection extends StatelessWidget {
+class ProfileSection extends GetView<ActiveUserController> {
   ProfileSection({
     Key? key,
     required this.typeOfSection,
@@ -334,8 +298,7 @@ class ProfileSection extends StatelessWidget {
   }) : super(key: key);
 
   final TypeOfSection typeOfSection;
-  Widget widgetToShow =
-      getLastBadgesFromUser(badges: activeUser!.collectedBadges);
+  Widget widgetToShow=Container();
   final Map<String, String> coursesSaved;
   final void Function() todo;
 
@@ -344,8 +307,7 @@ class ProfileSection extends StatelessWidget {
     switch (typeOfSection) {
       case TypeOfSection.Badges:
         {
-          widgetToShow =
-              getLastBadgesFromUser(badges: activeUser!.collectedBadges);
+          widgetToShow = Obx(()=>getLastBadgesFromUser(badges: controller.collectedBadges.value));
         }
         break;
 
@@ -358,8 +320,8 @@ class ProfileSection extends StatelessWidget {
 
       default:
         {
-          widgetToShow =
-              getLastAvatarsFromUser(avatars: activeUser!.collectedAvatars);
+          widgetToShow = Obx(()=>
+              getLastAvatarsFromUser(avatars: controller.collectedAvatars.value));
         }
         break;
     }
@@ -440,7 +402,7 @@ getLastAvatarsFromUser({required List<String> avatars}) {
   //we know that in the case of avatars the user is always going to have at least one
   for (int i = 0; i < avatars.length && i < 4; i++) {
     childrenForRow
-        .add(Avatar(nameOfAvatar: avatars[i], size: 0.1 * heightOfScreen));
+        .add(AvatarContainer(avatarName: avatars[i], size: 0.1*heightOfScreen));
   }
 
   //In case that there are not 3 badges we add grey circles
@@ -463,7 +425,7 @@ getLastAvatarsFromUser({required List<String> avatars}) {
  * You need to provide as a param a map with entries of the style
  * <courseID, title> for the coursesSaved to be able to build the cards
  */
-getLastSavedCoursesFromUser(
+getLastSavedCoursesFromUser (
     {required Map<String, String> coursesSaved,
     required BuildContext context}) {
   if (coursesSaved.isEmpty) {
@@ -475,12 +437,14 @@ getLastSavedCoursesFromUser(
     );
   }
 
+  final ActiveUserController controller=Get.find();
+
   List<Widget> childrenForRow = [];
 
   coursesSaved.forEach((key, value) {
     childrenForRow.add(getCardForCourse(
         isSaved: true,
-        isCompleted: activeUser!.isCourseCompleted(courseID: key),
+        isCompleted: controller.isCompleted(courseID:key),
         courseID: key,
         context: context,
         title: value,
@@ -535,7 +499,7 @@ class AlertDialogCustom extends StatelessWidget {
         style: getNormalTextStyleBlue(),
       ),
       content: Text(
-        isDelete ? " You will sign out." : "You will delete your account",
+        isDelete ? "You will delete your account":" You will sign out.",
         style: getNormalTextStyleBlue(),
       ),
       actions: <Widget>[
@@ -573,6 +537,25 @@ class AlertDialogCustom extends StatelessWidget {
         ),
       ],
     );
+  }
+}
+
+class AvatarContainer extends GetView<ActiveUserController> {
+  const AvatarContainer({Key? key, required this.avatarName, required this.size}) : super(key: key);
+
+  final String avatarName;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(()=>Container(
+      child: Avatar(nameOfAvatar: avatarName, size:size),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+        color: controller.profilePictureActive.value==avatarName? secondaryColor: primaryColor,
+      )
+    ));
+
   }
 }
 

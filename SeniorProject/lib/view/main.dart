@@ -13,6 +13,7 @@ import 'package:cyber/view/profile/all_avatars.dart';
 import 'package:cyber/view/profile/all_badges.dart';
 import 'package:cyber/view/profile/all_courses.dart';
 import 'package:cyber/view/profile/category_badges.dart';
+import 'package:cyber/view/profile/category_courses.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/password_page.dart';
@@ -145,6 +146,7 @@ class MyApp extends StatelessWidget {
 
         CategoryBadges.routeName: (context)=> const CategoryBadges(),
         AllCoursesPage.routeName: (context)=> const AllCoursesPage(),
+        CategoryCourses.routeName: (context)=> const CategoryCourses(),
 
 
       },

@@ -65,8 +65,8 @@ class _LogInPageState extends State<LogInPage> {
 
             //If the user logs In then we again navigate to the home Page since it would have been notified
             //of the changes and now will display the dashboard
-            Navigator.pushNamed(context, HomePage.routeName);
-
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(HomePage.routeName, (Route<dynamic> route) => false);
           }else{
             SnackBar snBar= SnackBar(content: Text(value, style: getNormalTextStyleBlue(),), backgroundColor: secondaryColor,);
             ScaffoldMessenger.of(context).showSnackBar(snBar);
@@ -85,6 +85,7 @@ class _LogInPageState extends State<LogInPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
+                    SizedBox(height: 0.05*heightOfScreen,),
                     Image.asset(
                       'assets/images/logoNoText.png',
                       width: 0.2*widthOfScreen,

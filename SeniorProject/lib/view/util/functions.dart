@@ -1,17 +1,21 @@
 import 'dart:math';
 
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/model/question.dart';
 import 'package:cyber/globals.dart' as globals;
+import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/courses/overview.dart';
 import 'package:flutter/material.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 
 import '../../config/fixed_values.dart';
 import 'k_values.dart';
 
-Function nextQuestion=(BuildContext context){
+Function nextQuestion=(BuildContext context) async {
 
   if(globals.activeCourse!.numberOfQuestions>=globals.activeQuestionNum!){
     //I get the question in the new-course
@@ -21,13 +25,15 @@ Function nextQuestion=(BuildContext context){
     //to navigate to the appropriate page
 
     if(q.typeOfQuestion==TypeOfQuestion.multipleChoice){
-      Navigator.pushNamed(context, MultipleChoiceQuestionPage.routeName, arguments: q);
+      Navigator.pushNamedAndRemoveUntil(context, MultipleChoiceQuestionPage.routeName, (r) => false, arguments: q);
     }else{
-      Navigator.pushNamed(context, FillInTheBlanksQuestionPage.routeName, arguments: q);
+      Navigator.pushNamedAndRemoveUntil(context, FillInTheBlanksQuestionPage.routeName, (r) => false, arguments: q);
     }
 
   }else{
-    Navigator.pushNamed(context, Overview.routeName);
+    ActiveUserController activeUserController=Get.find();
+    final SaveCompletedCourseArgs args= await activeUserController.saveCompletedCourse();
+    Navigator.pushNamedAndRemoveUntil(context, Overview.routeName, (r) => false, arguments: args);
   }
 
 
