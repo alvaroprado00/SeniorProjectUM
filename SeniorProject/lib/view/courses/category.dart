@@ -93,7 +93,7 @@ class CategoryPage extends GetView<ActiveUserController> {
                   left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: children,
               ),
             );
