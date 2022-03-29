@@ -10,7 +10,7 @@ CurrentCourse _$CurrentCourseFromJson(Map<String, dynamic> json) =>
     CurrentCourse(
       courseID: json['courseID'] as String,
       progress:
-          (json['progress'] as List<dynamic>).map((e) => e as bool).toList(),
+      (json['progress'] as List<dynamic>).map((e) => e as bool).toList(),
     );
 
 Map<String, dynamic> _$CurrentCourseToJson(CurrentCourse instance) =>

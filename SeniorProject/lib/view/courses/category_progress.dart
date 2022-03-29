@@ -1,3 +1,4 @@
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/util/components.dart';
@@ -5,8 +6,10 @@ import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import '../dashboard/dashboard.dart';
+import '../../model/completed_course.dart';
+import '../main.dart';
 
 
 class CategoryProgress extends StatelessWidget {
@@ -20,14 +23,14 @@ class CategoryProgress extends StatelessWidget {
     return Scaffold(
       backgroundColor: tertiaryColor,
       appBar: AppBar(
-        title: Text('Social Media', style: getSubheadingStyleBlue(),),//categoryToString[activeCourse!.category]!
+        title: Text(categoryToString[activeCourse!.category]!, style: getSubheadingStyleBlue(),),//categoryToString[activeCourse!.category]!
         centerTitle: true,
         backgroundColor: tertiaryColor,
         elevation: 0,
       ),
 
       body:FutureBuilder(
-        future: courseController.getCoursesFromCategory(category: activeCourse!.category),
+        future: courseController.getCourseNamesFromCategory(category: activeCourse!.category),
         builder: (BuildContext context, AsyncSnapshot snapshot){
           if(snapshot.hasData){
             return CategoryProgressContent(categoryCourses:snapshot.data);
@@ -44,7 +47,7 @@ class CategoryProgress extends StatelessWidget {
   }
 }
 
-class CategoryProgressContent extends StatelessWidget {
+class CategoryProgressContent extends GetView<ActiveUserController> {
 
   const CategoryProgressContent({required Map<String, String> this.categoryCourses});
 
@@ -62,13 +65,14 @@ class CategoryProgressContent extends StatelessWidget {
             Text('Progress', style: getHeadingStyleBlue(),),
             Divider (thickness: 2,color: primaryColor,),
             SizedBox(height: 0.01*heightOfScreen,),
-            getProgressInCategory(coursesInCategory: categoryCourses),
+            Obx(()=>getProgressInCategory(coursesInCategory: categoryCourses, userCompletedCourses: controller.completedCourses.value)),
             SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),
               child: ElevatedButton(
                 style: blueButtonStyle,
-                onPressed: (){Navigator.pushNamed(context, DashboardPage.routeName);},
+                onPressed: (){   Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
+                },
                 child: Text('Finish',style: getNormalTextStyleWhite(),),
               ),
             )
@@ -80,13 +84,17 @@ class CategoryProgressContent extends StatelessWidget {
 }
 
 
-getProgressInCategory({required Map<String,String> coursesInCategory}){
+getProgressInCategory({required Map<String,String> coursesInCategory, required List<CompletedCourse> userCompletedCourses}){
 
   List<Widget> childrenOfColumn=[];
 
-  bool isCompleted;
+  bool isCompleted=false;
   coursesInCategory.forEach((key, value) {
-    isCompleted=activeUser!.isCourseCompleted(courseID: key);
+    for(CompletedCourse cc in userCompletedCourses){
+      if(cc.courseID==key){
+        isCompleted=true;
+      }
+    }
     childrenOfColumn.add(
       Row(
         mainAxisAlignment: MainAxisAlignment.start,

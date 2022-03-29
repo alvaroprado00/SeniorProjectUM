@@ -1,18 +1,21 @@
 import 'dart:math';
-import 'package:uuid/uuid.dart';
+
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/model/question.dart';
 import 'package:cyber/globals.dart' as globals;
+import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/courses/overview.dart';
 import 'package:flutter/material.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
-import 'package:cyber/controller/group_controller.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 
 import '../../config/fixed_values.dart';
 import 'k_values.dart';
 
-Function nextQuestion=(BuildContext context){
+Function nextQuestion=(BuildContext context) async {
 
   if(globals.activeCourse!.numberOfQuestions>=globals.activeQuestionNum!){
     //I get the question in the new-course
@@ -22,13 +25,15 @@ Function nextQuestion=(BuildContext context){
     //to navigate to the appropriate page
 
     if(q.typeOfQuestion==TypeOfQuestion.multipleChoice){
-      Navigator.pushNamed(context, MultipleChoiceQuestionPage.routeName, arguments: q);
+      Navigator.pushNamedAndRemoveUntil(context, MultipleChoiceQuestionPage.routeName, (r) => false, arguments: q);
     }else{
-      Navigator.pushNamed(context, FillInTheBlanksQuestionPage.routeName, arguments: q);
+      Navigator.pushNamedAndRemoveUntil(context, FillInTheBlanksQuestionPage.routeName, (r) => false, arguments: q);
     }
 
   }else{
-    Navigator.pushNamed(context, Overview.routeName);
+    ActiveUserController activeUserController=Get.find();
+    final SaveCompletedCourseArgs args= await activeUserController.saveCompletedCourse();
+    Navigator.pushNamedAndRemoveUntil(context, Overview.routeName, (r) => false, arguments: args);
   }
 
 
@@ -132,19 +137,3 @@ String? getRandomEncouragingMessage() {
  */
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
-
-/**
- * Function to generate a random Group Code using uid v4. If uid exists in
- * Firebase it will recursively find a new one until it is unique.
- */
-String getGroupCode() {
-  final GroupController _groupController = new GroupController();
-  var uuid = new Uuid();
-  String groupCode = uuid.v4().substring(0,8);
-  if(_groupController.checkGroupCode(groupCode)) {
-    return getGroupCode();
-  }
-  else {
-    return groupCode;
-  }
-}

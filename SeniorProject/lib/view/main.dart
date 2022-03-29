@@ -8,11 +8,12 @@ import 'package:cyber/view/admin/recommended/new_recommended_page.dart';
 import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
-import 'package:cyber/view/groups/group_create_page.dart';
-import 'package:cyber/view/groups/group_created_page.dart';
-import 'package:cyber/view/groups/group_home_page.dart';
-import 'package:cyber/view/groups/group_info_page.dart';
 import 'package:cyber/view/page_view.dart';
+import 'package:cyber/view/profile/all_avatars.dart';
+import 'package:cyber/view/profile/all_badges.dart';
+import 'package:cyber/view/profile/all_courses.dart';
+import 'package:cyber/view/profile/category_badges.dart';
+import 'package:cyber/view/profile/category_courses.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/password_page.dart';
@@ -140,10 +141,15 @@ class MyApp extends StatelessWidget {
         NewRecommendedCoursePage.routeName: (context) =>
             const NewRecommendedCoursePage(),
         AdminDashboardPage.routeName: (context) => const AdminDashboardPage(),
-        GroupHome.routeName: (context) => const GroupHome(),
-        CreateGroup.routeName: (context) => const CreateGroup(),
+        AllBadgesPage.routeName: (context)=> const AllBadgesPage(),
+        AllAvatarsPage.routeName: (context)=> const AllAvatarsPage(),
 
-    },
+        CategoryBadges.routeName: (context)=> const CategoryBadges(),
+        AllCoursesPage.routeName: (context)=> const AllCoursesPage(),
+        CategoryCourses.routeName: (context)=> const CategoryCourses(),
+
+
+      },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
                 primarySwatch: MaterialColor(0xFF14213D, primaryBlue),

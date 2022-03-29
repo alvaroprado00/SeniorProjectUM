@@ -1,6 +1,5 @@
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/profile/change_password.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/user_custom.dart';

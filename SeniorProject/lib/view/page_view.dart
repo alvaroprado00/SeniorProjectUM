@@ -1,5 +1,4 @@
 import 'package:cyber/view/dashboard/dashboard.dart';
-import 'package:cyber/view/groups/group_home_page.dart';
 import 'package:cyber/view/profile/profile.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_values.dart';
@@ -21,6 +20,7 @@ class PageViewScreen extends StatefulWidget {
 class _PageViewScreenState extends State<PageViewScreen> {
   PageController pageController = PageController(initialPage: 0);
 
+
   int _selectedIndex = 0;
 
   void onTapped(int index) {
@@ -33,6 +33,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       body: PageView(
         controller: pageController,
@@ -40,8 +42,9 @@ class _PageViewScreenState extends State<PageViewScreen> {
         children: [
           DashboardPage(),
           NewCoursePage(),
-          GroupHome(),
-          ProfilePage(buildContext: context),
+          ProfilePage(),
+          ProfilePage(
+          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

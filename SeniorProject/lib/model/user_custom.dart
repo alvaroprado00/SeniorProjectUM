@@ -47,7 +47,7 @@ class UserCustom {
 
   Map<String, dynamic> toJson() => _$UserCustomToJson(this);
 
-
+/*
   int getCompletedCoursesInCategory({required List<String> courseIDs}) {
     int i = 0;
 
@@ -205,7 +205,7 @@ class UserCustom {
    * Function to add a new badge to the user
    */
   void addNewBadge(){
-    Badge newBadge=Badge(course: activeCourse!.id!, picture: activeCourse!.badgeIcon, timeEarned: DateTime.now());
+    Badge newBadge=Badge(courseID: activeCourse!.id!, picture: activeCourse!.badgeIcon, timeEarned: DateTime.now());
     this.collectedBadges.add(newBadge);
   }
 
@@ -221,14 +221,8 @@ class UserCustom {
     }
     return false;
   }
+*/
 
-  bool isCurrentCourse({required String courseID}){
-    if(this.currentCourse!=null && this.currentCourse!.courseID==courseID){
-      return true;
-    }else{
-      return false;
-    }
-  }
 }
 
 /**
@@ -254,7 +248,7 @@ getFakeUser() {
     username: 'FakeUser',
     profilePictureActive: 'FakeUser',
     collectedBadges: fakeCollectedBadges,
-    level: Level(totalXP: 1100, levelNumber: 2, xpInLevel: 100),
+    level: Level(totalXP: 1100, levelNumber: 2, xpEarnedInLevel: 100),
     collectedAvatars: fakeCollectedAvatars,
     completedCourses: fakeCompletedCourses,
     coursesSaved: fakeCoursesSaved,
@@ -265,35 +259,35 @@ getFakeUser() {
 
 List<Badge> fakeCollectedBadges = [
   Badge(
-      course: "Passwords",
+      courseID: "Passwords",
       picture: "keys",
       timeEarned: DateTime.parse("2022-02-02")),
   Badge(
-      course: "Cookies",
+      courseID: "Cookies",
       picture: "cookies",
       timeEarned: DateTime.parse("2022-01-24")),
   Badge(
-      course: "USB",
+      courseID: "USB",
       picture: "cable",
       timeEarned: DateTime.parse("2022-02-02")),
   Badge(
-      course: "Cookies",
+      courseID: "Cookies",
       picture: "cookies",
       timeEarned: DateTime.parse("2022-01-24")),
   Badge(
-      course: "Passwords",
+      courseID: "Passwords",
       picture: "keys",
       timeEarned: DateTime.parse("2022-02-02")),
   Badge(
-      course: "Cookies",
+      courseID: "Cookies",
       picture: "cookies",
       timeEarned: DateTime.parse("2022-01-24")),
   Badge(
-      course: "Passwords",
+      courseID: "Passwords",
       picture: "keys",
       timeEarned: DateTime.parse("2022-02-02")),
   Badge(
-      course: "Cookies",
+      courseID: "Cookies",
       picture: "cookies",
       timeEarned: DateTime.parse("2022-01-24")),
 ];

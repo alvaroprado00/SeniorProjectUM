@@ -1,4 +1,8 @@
 
+import 'package:cyber/controller/active_user_controller.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
 import '../avatar.dart';
 import '../courses/category.dart';
 import 'package:cyber/globals.dart';
@@ -99,6 +103,9 @@ class SaveButton extends StatefulWidget {
 class _SaveButtonState extends State<SaveButton> {
   @override
   Widget build(BuildContext context) {
+
+    ActiveUserController activeUserController=Get.find();
+
     return IconButton(
       onPressed: () {
         //When pressed we check if the courses is or not
@@ -106,10 +113,12 @@ class _SaveButtonState extends State<SaveButton> {
 
         if(widget.isFilled){
 
-          activeUser!.unsaveCourse(courseID:widget.courseID);
+          activeUserController.unsaveCourse(courseID:widget.courseID);
+          //activeUser!.unsaveCourse(courseID:widget.courseID);
 
         }else{
-          activeUser!.saveCourse(courseID:widget.courseID);
+          activeUserController.saveCourse(courseID:widget.courseID);
+          //activeUser!.saveCourse(courseID:widget.courseID);
         }
 
         setState(() {
@@ -232,3 +241,17 @@ Card getCardForNotification(
   );
 }
 
+
+/**
+ * Function to get a grey container with the shape of a course card
+ * to show a placeholder
+ */
+getCourseCardPlaceHolder(){
+  return Container(
+    width: 0.4 * widthOfScreen,
+    height: 0.12 * heightOfScreen,
+    decoration: BoxDecoration(
+        color: quinaryColor,
+        borderRadius: BorderRadius.all(Radius.circular(10))),
+  );
+}

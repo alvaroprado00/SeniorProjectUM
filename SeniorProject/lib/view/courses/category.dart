@@ -1,14 +1,18 @@
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 
-import '../../globals.dart';
+import '../../model/completed_course.dart';
 import '../util/cards.dart';
 
-class CategoryPage extends StatelessWidget {
+class CategoryPage extends GetView<ActiveUserController> {
   const CategoryPage({Key? key}) : super(key: key);
 
   static const routeName = '/category';
@@ -34,7 +38,7 @@ class CategoryPage extends StatelessWidget {
         elevation: 0,
       ),
       body: FutureBuilder(
-        future: courseController.getCoursesFromCategory(
+        future: courseController.getCourseNamesFromCategory(
           category: category,
         ),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -46,8 +50,10 @@ class CategoryPage extends StatelessWidget {
           if (snapshot.hasData) {
             if (snapshot.data.isEmpty) {
               children = [
-                ProgressContainer(
-                    numCourses: 0, numCoursesCompleted: 0, xpInCategory: 0),
+                ProgressContainerThreeFields(
+                    field1: '0 Courses',
+                    field2: '0 Completed',
+                    field3: '0 EXP'),
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
@@ -61,17 +67,24 @@ class CategoryPage extends StatelessWidget {
               children = [
                 //The active user stored in the globals file is used to see
                 //his progress in the category
-                ProgressContainer(
-                    numCourses: snapshot.data.length,
-                    numCoursesCompleted: activeUser!
-                        .getCompletedCoursesInCategory(
-                            courseIDs: List.of(snapshot.data.keys)),
-                    xpInCategory: activeUser!.getXPInCategory(
-                        courseIDs: List.of(snapshot.data.keys))),
+                Obx(()=> ProgressContainerThreeFields(
+                    field1: snapshot.data.length.toString() + ' ' + 'Courses',
+                    field2: controller
+                            .getCompletedCoursesInCategory(
+                                courseIDs: List.of(snapshot.data.keys))
+                            .toString() +
+                        ' ' +
+                        'Completed',
+                    field3: controller.getXPInCategory(
+                                courseIDs: List.of(snapshot.data.keys))
+                            .toString() +
+                        ' ' +
+                        'EXP')),
+
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
-                getCourseCards(courses: snapshot.data, context: context),
+                Obx(()=>getAllCourses(coursesInCategory: snapshot.data, context: context, coursesCompleted: controller.completedCourses, coursesSaved: controller.coursesSaved)),
               ];
             }
 
@@ -80,7 +93,7 @@ class CategoryPage extends StatelessWidget {
                   left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: children,
               ),
             );
@@ -103,100 +116,41 @@ class CategoryPage extends StatelessWidget {
   }
 }
 
-
 /**
  * This method is used to get the cards of the courses that are specified in
  * the param courses. The way it returns the courses is a column in which the children
  * are rows formed of two courses.
  */
-getCourseCards(
-    {required Map<String, String> courses, required BuildContext context}) {
-  //We get as a param a map. Each entry <courseID, courseTitle>
+Widget getAllCourses({required Map<String, String> coursesInCategory, required List<String> coursesSaved, required List<CompletedCourse> coursesCompleted, required BuildContext context}){
 
-  List<Widget> children = [];
-  List<Widget> childrenForRow = [];
-  bool isSaved=false;
-  bool isCompleted=false;
+  List<Widget> childrenOfRow=[];
 
-  int i = 0;
-  courses.forEach((key, value) {
 
-    //First we check if the active user has the new-course Saved
-    isSaved=activeUser!.isCourseSaved(courseID: key);
-
-    //After that we check if the user has completed the new-course
-    isCompleted=activeUser!.isCourseCompleted(courseID: key);
-
-    //We add the new-course to a row
-    childrenForRow.add(getCardForCourse(
-        isSaved: isSaved,
-        isCompleted: isCompleted,
-        context: context,
-        courseID: key,
-        title: value,
-        widthOfCard: 0.43 * widthOfScreen,
-        heightOfCard: 0.12 * heightOfScreen,
-        isTemplate: false));
-    if (i == 0) {
-      i++;
-    } else {
-      //Second child of the row. We add it and after create new array for new row
-      children.add(Row(
-        children: childrenForRow,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      ));
-      childrenForRow = [];
-      i = 0;
+  coursesInCategory.forEach((key, value) {
+    bool isCompleted=false;
+    bool isSaved=coursesSaved.contains(key);
+    for(CompletedCourse cc in coursesCompleted){
+      if(cc.courseID==key){
+        isCompleted=true;
+      }
     }
+
+      childrenOfRow.add(getCardForCourse(courseID:key, isCompleted: isCompleted, isSaved: isSaved,context: context, title: value, widthOfCard: 0.4*widthOfScreen, heightOfCard: 0.12*heightOfScreen, isTemplate: false));
+
   });
 
-  //This means that the number of courses is odd so a new-course has been not added
-  //to the children of the column
-  if (courses.length % 2 != 0) {
-    children.add(Row(
-      children: childrenForRow,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    ));
+
+  if(childrenOfRow.isEmpty){
+    return Center(child: Text('No Courses Earned yet', style: getSubheadingStyleBlue(),),);
   }
 
-  return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: children);
+  return Wrap(
+    //alignment: WrapAlignment.center,
+    runSpacing: 15,
+    spacing: 0.1*widthOfScreen,
+    runAlignment: WrapAlignment.start,
+    crossAxisAlignment: WrapCrossAlignment.center,
+    children: childrenOfRow,
+  );
+
 }
-
-class ProgressContainer extends StatelessWidget {
-  const ProgressContainer(
-      {required int this.numCourses,
-      required int this.numCoursesCompleted,
-      required int this.xpInCategory});
-
-  final int numCourses;
-  final int numCoursesCompleted;
-  final int xpInCategory;
-
-  @override
-  Widget build(BuildContext context) {
-    return getGreyTextHolderContainer(
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-      getDoubleLineText(txt1: numCourses.toString(), txt2: 'Courses'),
-      SizedBox(
-          height: 0.07 * heightOfScreen,
-          child: VerticalDivider(
-            color: secondaryColor,
-            thickness: 2,
-          )),
-      getDoubleLineText(
-          txt1: numCoursesCompleted.toString(), txt2: 'Completed'),
-      SizedBox(
-          height: 0.07 * heightOfScreen,
-          child: VerticalDivider(
-            color: secondaryColor,
-            thickness: 2,
-          )),
-      getDoubleLineText(txt1: xpInCategory.toString(), txt2: 'XP')
-    ]));
-  }
-}
-
-

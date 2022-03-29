@@ -76,7 +76,7 @@ class _UsernameFormState extends State<UsernameForm> {
         UserCustom userCreated = UserCustom(
             email: widget.args[0],
             username: _controllerUsername.text,
-            level: Level(totalXP: 0, levelNumber: 1, xpInLevel: 0),
+            level: Level(totalXP: 0, levelNumber: 1, xpEarnedInLevel: 0),
             profilePictureActive: _controllerUsername.text,
             collectedAvatars: [_controllerUsername.text],
             collectedBadges: [],
@@ -90,16 +90,26 @@ class _UsernameFormState extends State<UsernameForm> {
         await UserController.addUserToAuthAndFirestore(
                 u: userCreated, password: widget.args[1])
             .then((value) {
-          //I make the screen hold for 2s before using navigator so the user is able to read the message
-          Future.delayed(Duration(seconds: 2));
-
-          if (value) {
-            Navigator.pushNamed(context, ProfileCreated.routeName,
-                arguments: userCreated);
+          String message = '';
+          bool showSnack = true;
+          //value will be bool if The user is added to the Auth DB
+          if (value is bool) {
+            if (value) {
+              showSnack = false;
+              Navigator.pushNamed(context, ProfileCreated.routeName,
+                  arguments: userCreated);
+            } else {
+              message = 'Error when adding user to Firestore DB';
+            }
           } else {
+            //In case value returned by the Future is a String, it means
+            //it couldnt be added to the Auth DB
+            message = value;
+          }
+          if (showSnack) {
             SnackBar snBar = SnackBar(
               content: Text(
-                value,
+                message,
                 style: getNormalTextStyleBlue(),
               ),
               backgroundColor: secondaryColor,

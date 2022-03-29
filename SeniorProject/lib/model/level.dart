@@ -5,14 +5,17 @@ part 'level.g.dart';
 
 @JsonSerializable()
 class Level {
-  Level(
-      {int this.totalXP = 0,
-      required int this.xpInLevel,
-      required int this.levelNumber});
 
   int totalXP;
-  int xpInLevel;
+  int xpEarnedInLevel;
   int levelNumber;
+  int xpAvailableInLevel;
+
+ Level({required int this.xpEarnedInLevel, required int this.levelNumber, required int this.totalXP, int this.xpAvailableInLevel=0}){
+
+    initializeXPAvailableInLevel();
+  }
+
 
   factory Level.fromJson(Map<String, dynamic> json) => _$LevelFromJson(json);
 
@@ -20,7 +23,7 @@ class Level {
 
   bool updateLevel({required int xpToAdd}) {
     bool levelUp = false;
-    int newXpInLevel = this.xpInLevel + xpToAdd;
+    int newXpInLevel = this.xpEarnedInLevel + xpToAdd;
 
     //Regardless the leveling up we update the Xp
 
@@ -29,13 +32,17 @@ class Level {
     if (newXpInLevel > (baseLevel + ((levelNumber - 1) * levelScale))) {
       //That means the user has leveled up
 
-      xpInLevel = newXpInLevel - (baseLevel + (levelNumber) * levelScale);
+      xpEarnedInLevel = newXpInLevel - (baseLevel + (levelNumber) * levelScale);
       levelUp = true;
       levelNumber++;
     } else {
-      xpInLevel = newXpInLevel;
+      xpEarnedInLevel = newXpInLevel;
     }
 
     return levelUp;
+  }
+
+  void initializeXPAvailableInLevel() {
+    this.xpAvailableInLevel=(levelNumber-1)*levelScale+baseLevel;
   }
 }
