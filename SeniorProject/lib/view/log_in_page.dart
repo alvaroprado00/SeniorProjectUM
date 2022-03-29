@@ -1,3 +1,4 @@
+import 'package:cyber/view/page_view.dart';
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
 import 'package:cyber/view/util/functions.dart';
@@ -64,7 +65,7 @@ class _LogInPageState extends State<LogInPage> {
 
             //If the user logs In then we again navigate to the home Page since it would have been notified
             //of the changes and now will display the dashboard
-            Navigator.pushNamed(context, DashboardPage.routeName);
+            Navigator.pushNamed(context, PageViewScreen.routeName);
 
           }else{
             SnackBar snBar= SnackBar(content: Text(value, style: getNormalTextStyleBlue(),), backgroundColor: secondaryColor,);

@@ -17,6 +17,8 @@ import 'package:cyber/controller/group_controller.dart';
 class CreateGroup extends StatefulWidget {
   const CreateGroup({Key? key}) : super(key: key);
 
+  static final String routeName = "/CreateGroup";
+
   @override
   _CreateGroupState createState() => _CreateGroupState();
 }
@@ -31,6 +33,7 @@ class _CreateGroupState extends State<CreateGroup> {
   XFile? cameraImage;
   File? groupImage;
   bool gettingImage = false;
+  late var imageUrl;
   late String groupCode;
   late Map<String, dynamic> newGroup;
 
@@ -91,6 +94,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 setState(() {
                   cameraImage = _newImage;
                   Navigator.of(context).pop();
+                  _cropImage();
                 });
               },
               child: Row(
@@ -125,6 +129,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 setState(() {
                   cameraImage = _newImage;
                   Navigator.of(context).pop();
+                  _cropImage();
                 });
               },
               child: Row(
@@ -161,11 +166,23 @@ class _CreateGroupState extends State<CreateGroup> {
         sourcePath: cameraImage!.path,
         maxHeight: (heightOfScreen * 0.25).toInt(),
         maxWidth: getWidthOfLargeButton().toInt(),
+        compressFormat: ImageCompressFormat.png,
+        aspectRatio: CropAspectRatio(ratioX: 16, ratioY: 9),
+        iosUiSettings: IOSUiSettings(
+          title: "Crop Image",
+          aspectRatioLockEnabled: true,
+          aspectRatioPickerButtonHidden: true,
+          hidesNavigationBar: false,
+          showCancelConfirmationDialog: false,
+          showActivitySheetOnDone: true,
+          rotateButtonsHidden: false,
+          resetButtonHidden: false,
+        ),
         androidUiSettings: AndroidUiSettings(
           backgroundColor: tertiaryColor,
           activeControlsWidgetColor: secondaryColor,
           cropFrameColor: secondaryColor,
-          cropGridColor: primaryColor,
+          cropGridColor: tertiaryColor,
           cropGridColumnCount: 2,
           cropGridRowCount: 2,
           showCropGrid: true,
@@ -173,8 +190,8 @@ class _CreateGroupState extends State<CreateGroup> {
           toolbarTitle: "Crop Image",
           toolbarWidgetColor: tertiaryColor,
           statusBarColor: primaryColor,
-          lockAspectRatio: true,
           initAspectRatio: CropAspectRatioPreset.ratio16x9,
+          lockAspectRatio: true,
         ),
       );
     }
@@ -229,7 +246,7 @@ class _CreateGroupState extends State<CreateGroup> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Container(
-                          height: heightOfScreen * 0.25,
+                          height: heightOfScreen * 0.28,
                           width: getWidthOfLargeButton(),
                           child: groupImage != null ? Image.file(
                             groupImage!,
@@ -240,7 +257,7 @@ class _CreateGroupState extends State<CreateGroup> {
                           ),
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
+                            borderRadius: BorderRadius.circular(20.0),
                           ),
                         ),
                         Padding(
@@ -256,7 +273,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                   );
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
+                                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                                   child: Column(
                                     children: [
                                       Icon(
@@ -264,7 +281,16 @@ class _CreateGroupState extends State<CreateGroup> {
                                         color: primaryColor,
                                         size: widthOfScreen * 0.1,
                                       ),
-                                      Text("Change Image", style: getNormalTextStyleBlue(),),
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Text("Change",
+                                          style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 14,
+                                            fontFamily: 'Roboto',
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -275,7 +301,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                   _cropImage();
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
+                                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 4.0, right: 4.0,),
                                   child: Column(
                                     children: [
                                       Icon(
@@ -283,7 +309,16 @@ class _CreateGroupState extends State<CreateGroup> {
                                         color: primaryColor,
                                         size: widthOfScreen * 0.1,
                                       ),
-                                      Text("Crop Image", style: getNormalTextStyleBlue(),),
+                                      Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Text("Crop",
+                                          style: TextStyle(
+                                            color: primaryColor,
+                                            fontSize: 14,
+                                            fontFamily: 'Roboto',
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -299,7 +334,7 @@ class _CreateGroupState extends State<CreateGroup> {
               ) : Padding(
                 padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
                 child: Container(
-                  height: heightOfScreen * 0.25,
+                  height: heightOfScreen * 0.28,
                   width: getWidthOfLargeButton(),
                   child: ElevatedButton(
                     onPressed: () {
@@ -316,7 +351,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.grey),
                       shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(20.0),
                           side: const BorderSide(
                             color: primaryColor,
                             width: 2.0,
@@ -326,7 +361,7 @@ class _CreateGroupState extends State<CreateGroup> {
                   ),
                 ),
               ),
-              cameraImage != null ? SizedBox(height: heightOfScreen * 0.06,) : SizedBox(height: heightOfScreen * 0.15),
+              cameraImage != null ? SizedBox(height: heightOfScreen * 0.03,) : SizedBox(height: heightOfScreen * 0.13),
               Padding(
                 padding: EdgeInsets.only(bottom: 8.0, left: 16.0, right: 16.0, top: 8.0),
                 child: Text(
@@ -340,28 +375,58 @@ class _CreateGroupState extends State<CreateGroup> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 20.0, left: 16.0, right: 16.0, top: 10.0),
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
                 child: SizedBox(
                   height: getHeightOfLargeButton(),
                   width: getWidthOfLargeButton(),
                   child: ElevatedButton(
                     onPressed: () async {
                       if (validatorForEmptyTextField != null){
-                        setState(() {
-                          gettingImage = true;
-                          groupCode = uuid.v4().substring(0,8);
-                          newGroup = {
-                            "groupCode" : groupCode,
-                            "groupName" : _controllerJoin.text,
-                            "groupMembers" : [activeUser!.username,],
-                          };
-                        });
+                        groupCode = uuid.v4().substring(0,8);
+                        if(groupImage != null) {
+                          _groupController.uploadImage(groupCode,groupImage!)
+                            .then((value) {
+                              setState(() {
+                                gettingImage = true;
+                                imageUrl = value;
+                                newGroup = new Group(
+                                  groupCode: groupCode,
+                                  groupName: _controllerJoin.text,
+                                  groupMembers: [activeUser!.username,],
+                                  groupImageURL: imageUrl,
+                                ).toJson();
+                                _groupController.addGroup(newGroup, groupCode)
+                                    .whenComplete(() {
+                                  setState(() {
+                                    gettingImage = false;
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GroupCreated(groupCode: groupCode,)));
+                                  });
+                                });
+                              });
+                          });
+                        }
+                        else {
+                          _groupController.uploadImage(groupCode,groupImage!)
+                            .then((value) {
+                              setState(() {
+                                gettingImage = true;
+                                imageUrl = value;
+                                newGroup = Group(
+                                  groupCode: groupCode,
+                                  groupName: _controllerJoin.text,
+                                  groupMembers: [activeUser!.username,],
+                                  groupImageURL: imageUrl,).toJson();
+                                _groupController.addGroup(newGroup, groupCode)
+                                    .whenComplete(() {
+                                  setState(() {
+                                    gettingImage = false;
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GroupCreated(groupCode: groupCode,)));
+                                  });
+                                });
+                              });
+                          });
+                        }
                       }
-                      await _groupController.addGroup(newGroup, groupCode)
-                          .then((value) {
-                            gettingImage = false;
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => GroupCreated()));
-                      });
                     },
                     child: Text(
                       'Create Group',

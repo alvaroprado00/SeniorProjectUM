@@ -562,7 +562,7 @@ Widget getTitleAndDivider(String text) {
           children: [
             Text(
               text,
-              style: getHeadingStyleBlue(),
+              style: getSubheadingStyleBlue(),
             ),
           ],
         ),

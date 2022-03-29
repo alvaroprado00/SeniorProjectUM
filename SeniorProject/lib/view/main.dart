@@ -8,6 +8,10 @@ import 'package:cyber/view/admin/recommended/new_recommended_page.dart';
 import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
+import 'package:cyber/view/groups/group_create_page.dart';
+import 'package:cyber/view/groups/group_created_page.dart';
+import 'package:cyber/view/groups/group_home_page.dart';
+import 'package:cyber/view/groups/group_info_page.dart';
 import 'package:cyber/view/page_view.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
@@ -136,7 +140,10 @@ class MyApp extends StatelessWidget {
         NewRecommendedCoursePage.routeName: (context) =>
             const NewRecommendedCoursePage(),
         AdminDashboardPage.routeName: (context) => const AdminDashboardPage(),
-      },
+        GroupHome.routeName: (context) => const GroupHome(),
+        CreateGroup.routeName: (context) => const CreateGroup(),
+
+    },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
                 primarySwatch: MaterialColor(0xFF14213D, primaryBlue),

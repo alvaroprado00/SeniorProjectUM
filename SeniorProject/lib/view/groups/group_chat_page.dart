@@ -10,6 +10,7 @@ class ChatPage extends StatefulWidget {
   const ChatPage({Key? key, required this.groupName}) : super(key: key);
 
   final String groupName;
+  static final String routeName = "/ChatPage";
 
   @override
   _ChatPageState createState() => _ChatPageState();

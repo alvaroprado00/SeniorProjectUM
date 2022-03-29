@@ -1,4 +1,5 @@
 import 'package:cyber/view/dashboard/dashboard.dart';
+import 'package:cyber/view/groups/group_home_page.dart';
 import 'package:cyber/view/profile/profile.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_values.dart';
@@ -39,10 +40,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
         children: [
           DashboardPage(),
           NewCoursePage(),
+          GroupHome(),
           ProfilePage(buildContext: context),
-          ProfilePage(
-            buildContext: context,
-          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

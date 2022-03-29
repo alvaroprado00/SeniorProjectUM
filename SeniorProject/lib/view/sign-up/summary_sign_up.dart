@@ -1,4 +1,5 @@
 import 'package:cyber/view/dashboard/dashboard.dart';
+import 'package:cyber/view/page_view.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
@@ -142,7 +143,7 @@ class SignUpSummary extends StatelessWidget {
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, DashboardPage.routeName);
+                        Navigator.pushNamed(context, PageViewScreen.routeName);
                       },
                       child: Text('Finish', style: getNormalTextStyleBlue()),
                       style: yellowButtonStyle,

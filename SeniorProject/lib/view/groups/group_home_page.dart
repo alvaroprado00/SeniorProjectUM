@@ -164,13 +164,13 @@ class _GroupHomeState extends State<GroupHome> {
             ),
             getTitleAndDivider('Create'),
             Padding(
-              padding: const EdgeInsets.only(bottom: 100.0, left: 16.0, right: 16.0),
+              padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
               child: SizedBox(
                 height: getHeightOfLargeButton(),
                 width: getWidthOfLargeButton(),
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroup()));
+                    Navigator.pushNamed(context, CreateGroup.routeName);
                   },
                   child: Text('Create a Group', style: getNormalTextStyleWhite(),),
                   style: blueButtonStyle,

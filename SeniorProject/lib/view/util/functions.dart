@@ -1,11 +1,12 @@
 import 'dart:math';
-
+import 'package:uuid/uuid.dart';
 import 'package:cyber/model/question.dart';
 import 'package:cyber/globals.dart' as globals;
 import 'package:cyber/view/courses/overview.dart';
 import 'package:flutter/material.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
+import 'package:cyber/controller/group_controller.dart';
 
 
 import '../../config/fixed_values.dart';
@@ -131,3 +132,19 @@ String? getRandomEncouragingMessage() {
  */
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
+
+/**
+ * Function to generate a random Group Code using uid v4. If uid exists in
+ * Firebase it will recursively find a new one until it is unique.
+ */
+String getGroupCode() {
+  final GroupController _groupController = new GroupController();
+  var uuid = new Uuid();
+  String groupCode = uuid.v4().substring(0,8);
+  if(_groupController.checkGroupCode(groupCode)) {
+    return getGroupCode();
+  }
+  else {
+    return groupCode;
+  }
+}
