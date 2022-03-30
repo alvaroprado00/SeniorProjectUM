@@ -161,6 +161,11 @@ class ActiveUserController extends GetxController {
                 activeCourse!.numberOfQuestions) *
             questionsRight)
         .round();
+
+    if(activeCourse!.isFeatured!){
+      xpEarned=xpEarned*2;
+    }
+
     int percentageCompleted =
         ((questionsRight.toDouble() / activeCourse!.numberOfQuestions) * 100)
             .round();
