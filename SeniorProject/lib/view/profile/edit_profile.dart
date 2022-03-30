@@ -1,136 +1,302 @@
-import 'package:cyber/view/avatar.dart';
-import 'package:cyber/view/profile/change_password.dart';
-import 'package:flutter/material.dart';
+import 'package:cyber/controller/active_user_controller.dart';
+import 'package:cyber/view/profile/all_avatars.dart';
 
-import '../../model/user_custom.dart';
+import 'package:cyber/view/profile/profile.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import '../util/components.dart';
 import '../util/functions.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
 import '../util/k_values.dart';
+import 'change_password.dart';
 
-class EditProfilePage extends StatefulWidget {
-  const EditProfilePage({Key? key, required this.dummyUser}) : super(key: key);
+class EditProfilePage extends StatelessWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
 
-  final UserCustom dummyUser;
-
-  @override
-  _EditProfilePageState createState() => _EditProfilePageState();
-}
-
-class _EditProfilePageState extends State<EditProfilePage> {
-  late TextEditingController _controllerUsername;
-  @override
-  void initState() {
-    super.initState();
-    _controllerUsername = TextEditingController();
-  }
+  static final String routeName = '/editProfilePage';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: tertiaryColor,
       appBar: AppBar(
-        elevation: 0,
         title: Text(
-          "Edit Profile",
+          'Edit Profile',
           style: getSubheadingStyleBlue(),
         ),
-        centerTitle: true,
         leading: getBackButton(context: context),
+        elevation: 0,
+        centerTitle: true,
         backgroundColor: tertiaryColor,
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Align(
-              alignment: AlignmentDirectional.center,
-              child: Avatar(nameOfAvatar: getFakeUser().username, size: 200),
-            ),
-            SizedBox(height: 15),
-            SizedBox(
-                height: 0.07 * heightOfScreen,
-                width: 0.95 * widthOfScreen,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Change Avatar', style: getNormalTextStyleBlue()),
-                  style: greyButtonStyle,
-                )),
-            SubtitleDivider(subtitle: "Username"),
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: 0.015 * heightOfScreen,
-                  left: 0.03 * widthOfScreen,
-                  right: 0.03 * widthOfScreen),
-              child: TextFormField(
-                validator: validatorForEmptyTextField,
-                controller: _controllerUsername,
-                decoration: getInputDecoration(
-                    hintText: widget.dummyUser.username,
-                    icon: Icon(
-                      Icons.person,
-                      color: secondaryColor,
-                    )),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 0.05 * heightOfScreen,
               ),
-            ),
-            SizedBox(
-                height: 0.07 * heightOfScreen,
-                width: 0.95 * widthOfScreen,
-                child: ElevatedButton(
-                  onPressed: () {
-                    //widget.dummyUser.updateUsername(_controllerUsername.text);
-                    Navigator.pop(context);
-                  },
-                  child: Text('Save', style: getNormalTextStyleBlue()),
-                  style: yellowButtonStyle,
-                )),
-            SubtitleDivider(subtitle: "Password"),
-            SizedBox(
-                height: 0.07 * heightOfScreen,
-                width: 0.95 * widthOfScreen,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ChangePassword(dummyUser: widget.dummyUser)));
-                  },
-                  child:
-                      Text('Change Password', style: getNormalTextStyleBlue()),
-                  style: greyButtonStyle,
-                )),
-            SubtitleDivider(subtitle: "Email"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: 0.015 * heightOfScreen,
-                      left: 0.05 * widthOfScreen,
-                      right: 0.03 * widthOfScreen),
-                  child: Icon(
-                    Icons.email,
-                    color: secondaryColor,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      bottom: 0.015 * heightOfScreen,
-                      left: 0.02 * widthOfScreen,
-                      right: 0.03 * widthOfScreen),
-                  child: Text(
-                    widget.dummyUser.email,
-                    style: getNormalTextStyleBlue(),
-                  ),
-                )
-              ],
-            ),
-            Padding(padding: EdgeInsets.only(top: heightOfScreen * 0.2))
-          ],
-        )),
+              AvatarSection(),
+              SizedBox(
+                height: 0.03 * heightOfScreen,
+              ),
+              SubtitleDivider(subtitle: 'Username'),
+              UsernameForm(),
+              SizedBox(
+                height: 0.05 * heightOfScreen,
+              ),
+              PasswordSection(),
+              SizedBox(
+                height: 0.05 * heightOfScreen,
+              ),
+              EmailSection(),
+              SizedBox(
+                height: 0.05 * heightOfScreen,
+              ),
+            ],
+          ),
+        ),
       ),
+    );
+  }
+}
+
+class AvatarSection extends StatelessWidget {
+  const AvatarSection({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        AvatarPic(
+          size: 0.2 * heightOfScreen,
+        ),
+        SizedBox(
+          height: 0.03 * heightOfScreen,
+        ),
+        SizedBox(
+          height: getHeightOfLargeButton(),
+          width: getWidthOfLargeButton(),
+          child: ElevatedButton(
+            child: Text(
+              'Change Avatar',
+              style: getNormalTextStyleBlue(),
+            ),
+            style: greyButtonStyle,
+            onPressed: () {
+              Navigator.pushNamed(context, AllAvatarsPage.routeName);
+            },
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class UsernameForm extends GetView<ActiveUserController> {
+  UsernameForm({Key? key}) : super(key: key);
+
+  //Here I initiaize the variables needed for the form
+
+  final _formKey = GlobalKey<FormState>();
+  late TextEditingController _controllerUsername = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    //Function to be executed in the form
+
+    void Function() changeUsername = () {
+      if (_formKey.currentState!.validate()) {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialogUsername(
+                newUsername: _controllerUsername.text,
+              );
+            }).then((value) => {
+              //Clean textformfield
+              _controllerUsername.clear()
+            });
+      }
+    };
+
+    return Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 0.01 * heightOfScreen,
+            ),
+            Obx(() => TextFormField(
+                  validator: validatorForEmptyTextField,
+                  controller: _controllerUsername,
+                  decoration: getInputDecoration(
+                      hintText: controller.username.value,
+                      icon: Icon(
+                        Icons.person,
+                        color: secondaryColor,
+                      )),
+                )),
+            SizedBox(
+              height: 0.03 * heightOfScreen,
+            ),
+            SizedBox(
+              height: getHeightOfLargeButton(),
+              width: getWidthOfLargeButton(),
+              child: ElevatedButton(
+                onPressed: changeUsername,
+                style: yellowButtonStyle,
+                child: Text('Save', style: getNormalTextStyleBlue()),
+              ),
+            )
+          ],
+        ));
+  }
+}
+
+class PasswordSection extends StatelessWidget {
+  const PasswordSection({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SubtitleDivider(subtitle: 'Password'),
+        SizedBox(height: heightOfScreen * 0.03),
+        SizedBox(
+          height: getHeightOfLargeButton(),
+          width: getWidthOfLargeButton(),
+          child: ElevatedButton(
+            style: greyButtonStyle,
+            child: Text(
+              'Change Password',
+              style: getNormalTextStyleBlue(),
+            ),
+            onPressed: () {
+              Navigator.pushNamed(context, ChangePasswordPage.routeName);
+            },
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class EmailSection extends GetView<ActiveUserController> {
+  const EmailSection({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        SubtitleDivider(subtitle: 'Email'),
+        SizedBox(height: heightOfScreen * 0.03),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Icon(
+              Icons.mail,
+              color: secondaryColor,
+            ),
+            SizedBox(
+              width: 0.1 * widthOfScreen,
+            ),
+            Obx(() => Text(
+                  controller.email.value,
+                  style: getNormalTextStyleBlue(),
+                ))
+          ],
+        )
+      ],
+    );
+  }
+}
+
+/**
+ * Alert Dialog specifically built for the username form. It displays
+ * an text asking the user if he really wants to change his username
+ * before doing so. After that a message is shown with feedback of the
+ * operation
+ */
+class AlertDialogUsername extends StatelessWidget {
+  //I couldnt use the dialog defined in profile.dart
+  //because of the nature of the function that needs
+  //to be executed which needs a param
+
+  AlertDialogUsername({Key? key, required String this.newUsername})
+      : super(key: key);
+
+  final String newUsername;
+
+  final ActiveUserController activeUserController = Get.find();
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      title: Text(
+        'Continue with change?',
+        style: getNormalTextStyleBlue(),
+      ),
+      content: Text(
+        'Changing username to: ${newUsername}',
+        style: getNormalTextStyleBlue(),
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: Text(
+            'Cancel',
+            style: getNormalTextStyleBlue(),
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            String message = '';
+            await activeUserController
+                .changeUsername(newUsername: newUsername)
+                .then((value) {
+              if (value) {
+                message = 'New username';
+              } else {
+                message = 'Couldn\'t change username';
+              }
+            }).catchError((onError) {
+              message = 'Couldn\'t change username';
+            });
+
+            var snackBar = SnackBar(
+              backgroundColor: secondaryColor,
+              content: Text(
+                message,
+                style: getNormalTextStyleWhite(),
+              ),
+            );
+
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Navigator.pop(context);
+          },
+          child: Text(
+            'Confirm',
+            style: getNormalTextStyleYellow(),
+          ),
+        ),
+      ],
     );
   }
 }

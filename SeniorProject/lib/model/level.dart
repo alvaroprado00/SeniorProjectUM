@@ -5,17 +5,18 @@ part 'level.g.dart';
 
 @JsonSerializable()
 class Level {
-
   int totalXP;
   int xpEarnedInLevel;
   int levelNumber;
   int xpAvailableInLevel;
 
- Level({required int this.xpEarnedInLevel, required int this.levelNumber, required int this.totalXP, int this.xpAvailableInLevel=0}){
-
+  Level(
+      {required int this.xpEarnedInLevel,
+      required int this.levelNumber,
+      required int this.totalXP,
+      int this.xpAvailableInLevel = 0}) {
     initializeXPAvailableInLevel();
   }
-
 
   factory Level.fromJson(Map<String, dynamic> json) => _$LevelFromJson(json);
 
@@ -43,6 +44,6 @@ class Level {
   }
 
   void initializeXPAvailableInLevel() {
-    this.xpAvailableInLevel=(levelNumber-1)*levelScale+baseLevel;
+    this.xpAvailableInLevel = (levelNumber - 1) * levelScale + baseLevel;
   }
 }

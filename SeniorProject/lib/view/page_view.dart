@@ -20,7 +20,6 @@ class PageViewScreen extends StatefulWidget {
 class _PageViewScreenState extends State<PageViewScreen> {
   PageController pageController = PageController(initialPage: 0);
 
-
   int _selectedIndex = 0;
 
   void onTapped(int index) {
@@ -33,8 +32,6 @@ class _PageViewScreenState extends State<PageViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: PageView(
         controller: pageController,
@@ -43,8 +40,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
           DashboardPage(),
           NewCoursePage(),
           ProfilePage(),
-          ProfilePage(
-          ),
+          ProfilePage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

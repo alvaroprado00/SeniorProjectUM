@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 int optionSelected = 0;
 
 class MultipleChoiceQuestionPage extends StatelessWidget {
-
   const MultipleChoiceQuestionPage({Key? key}) : super(key: key);
   static String routeName = '/MultipleChoiceQuestionPage';
 
@@ -47,16 +46,20 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                   getOptionsButton(
                       context: context,
                       courseTitle: globals.activeCourse!.title,
-                      categoryTitle: categoryToString[globals.activeCourse!.category]?? 'No category found',
+                      categoryTitle:
+                          categoryToString[globals.activeCourse!.category] ??
+                              'No category found',
                       question: question.number,
-                      numberOfQuestions: globals.activeCourse!.numberOfQuestions)
+                      numberOfQuestions:
+                          globals.activeCourse!.numberOfQuestions)
                 ],
               ),
               Container(
                   alignment: Alignment.topCenter,
                   child: LinearProgressIndicator(
                     color: secondaryColor,
-                    value: (question.number.toDouble()/globals.activeCourse!.numberOfQuestions.toDouble()),
+                    value: (question.number.toDouble() /
+                        globals.activeCourse!.numberOfQuestions.toDouble()),
                   )),
               SizedBox(
                 height: 0.05 * heightOfScreen,
@@ -88,29 +91,34 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
                       onPressed: () {
-                        int i=0;
-                        int optSelected=0;
+                        int i = 0;
+                        int optSelected = 0;
                         //With this loop I get what option the user has selected
-                       for(bool selected in ToggleButtonOptions.isSelected){
-                         if(selected){
-                           optSelected=i;
-                         }
-                         i++;
-                       }
-                        bool isRight=false;
-                       if(optSelected==question.rightOption){
-                        isRight=true;
-                       }
+                        for (bool selected in ToggleButtonOptions.isSelected) {
+                          if (selected) {
+                            optSelected = i;
+                          }
+                          i++;
+                        }
+                        bool isRight = false;
+                        if (optSelected == question.rightOption) {
+                          isRight = true;
+                        }
 
-                       //I update the global variables once answer submitted
-                       globals.userProgress.add(isRight);
-                       globals.activeQuestionNum=globals.activeQuestionNum!+1;
+                        //I update the global variables once answer submitted
+                        globals.userProgress.add(isRight);
+                        globals.activeQuestionNum =
+                            globals.activeQuestionNum! + 1;
 
                         showDialog(
                             context: context,
                             barrierDismissible: false,
                             builder: (_) {
-                              return QuestionFeedback(args: FeedbackArguments(isRight, question.longFeedback, question.getSolutionAsString()));
+                              return QuestionFeedback(
+                                  args: FeedbackArguments(
+                                      isRight,
+                                      question.longFeedback,
+                                      question.getSolutionAsString()));
                             });
                       },
                       child: Text('Submit', style: getNormalTextStyleWhite()),
@@ -146,7 +154,6 @@ class _ToggleButtonOptionsState extends State<ToggleButtonOptions> {
       renderBorder: false,
       direction: Axis.vertical,
       onPressed: (int index) {
-
         setState(() {
           for (int buttonIndex = 0;
               buttonIndex < ToggleButtonOptions.isSelected.length;
@@ -212,5 +219,3 @@ class ButtonForOption extends StatelessWidget {
         ));
   }
 }
-
-

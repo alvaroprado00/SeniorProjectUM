@@ -11,7 +11,6 @@ import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../util/cards.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -21,34 +20,34 @@ class DashboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-        return FutureBuilder(
-          future: UserController.getActiveUser(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
+    return FutureBuilder(
+      future: UserController.getActiveUser(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          //This is the moment to save our active user in the global variable
 
-              //This is the moment to save our active user in the global variable
+          activeUser = snapshot.data;
 
-              activeUser=snapshot.data;
-              
-              //This is the moment to initialize my controller too
-              if(Get.isRegistered<ActiveUserController>()){
-                Get.delete<ActiveUserController>();
-              }
-              Get.put(ActiveUserController());
+          //This is the moment to initialize my controller too
+          if (Get.isRegistered<ActiveUserController>()) {
+            Get.delete<ActiveUserController>();
+          }
+          Get.put(ActiveUserController());
 
-              return ContentForDashboard();
-            } else if (snapshot.hasError) {
-              return Scaffold(body:Center(
-                child: Text(
-                  'Error: ${snapshot.error}',
-                  style: getHeadingStyleBlue(),
-                ),
-              ));
-            } else {
-              return Scaffold(body:Center(child: CircularProgressIndicator()));
-            }
-          },
-        );
+          return ContentForDashboard();
+        } else if (snapshot.hasError) {
+          return Scaffold(
+              body: Center(
+            child: Text(
+              'Error: ${snapshot.error}',
+              style: getHeadingStyleBlue(),
+            ),
+          ));
+        } else {
+          return Scaffold(body: Center(child: CircularProgressIndicator()));
+        }
+      },
+    );
   }
 }
 
@@ -62,52 +61,58 @@ class ContentForDashboard extends GetView<ActiveUserController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>Scaffold(
-      floatingActionButton:controller.isAdmin.value? AdminButton():null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      backgroundColor: tertiaryColor,
-      appBar: AppBar(
-        title:Text('Welcome ${controller.username.value}!',),
-        backgroundColor: tertiaryColor,
-        elevation: 0,
-        centerTitle: false,
-        titleTextStyle:TextStyle(color: primaryColor, fontSize: 0.08*widthOfScreen, fontWeight: FontWeight.w500, fontFamily: 'roboto',) ,
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                controller.currentCourse.value == null
-                    ? SizedBox(
-                        height: 0,
-                      )
-                    : ResumeCourseContent(currentCourse: controller.currentCourse.value!),
-                SizedBox(
-                  height: 0.05 * heightOfScreen,
-                ),
-                RecommendedCourseContent(),
-                SizedBox(
-                  height: 0.05 * heightOfScreen,
-                ),
-                Text('Categories', style: getNormalTextStyleBlue()),
-                Divider(
-                  color: primaryColor,
-                  thickness: 2,
-                ),
-                CategoryCards(),
-
-              ],
+    return Obx(() => Scaffold(
+          floatingActionButton: controller.isAdmin.value ? AdminButton() : null,
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          backgroundColor: tertiaryColor,
+          appBar: AppBar(
+            title: Text(
+              'Welcome ${controller.username.value}!',
+            ),
+            backgroundColor: tertiaryColor,
+            elevation: 0,
+            centerTitle: false,
+            titleTextStyle: TextStyle(
+              color: primaryColor,
+              fontSize: 0.08 * widthOfScreen,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'roboto',
             ),
           ),
-        ),
-      ),
-    ));
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(
+                  left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    controller.currentCourse.value == null
+                        ? SizedBox(
+                            height: 0,
+                          )
+                        : ResumeCourseContent(
+                            currentCourse: controller.currentCourse.value!),
+                    SizedBox(
+                      height: 0.05 * heightOfScreen,
+                    ),
+                    RecommendedCourseContent(),
+                    SizedBox(
+                      height: 0.05 * heightOfScreen,
+                    ),
+                    Text('Categories', style: getNormalTextStyleBlue()),
+                    Divider(
+                      color: primaryColor,
+                      thickness: 2,
+                    ),
+                    CategoryCards(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 }
 
@@ -122,18 +127,22 @@ class AdminButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       hoverColor: primaryColor,
-    hoverElevation: 50,
-
-    onPressed: () {
-      Navigator.pushNamed(context, AdminDashboardPage.routeName);
-    },
-    label:  Text('Admin', style: getNormalTextStyleWhite(),),
-    icon: const Icon(Icons.admin_panel_settings, color: tertiaryColor,),
-    backgroundColor: secondaryColor,
+      hoverElevation: 50,
+      onPressed: () {
+        Navigator.pushNamed(context, AdminDashboardPage.routeName);
+      },
+      label: Text(
+        'Admin',
+        style: getNormalTextStyleWhite(),
+      ),
+      icon: const Icon(
+        Icons.admin_panel_settings,
+        color: tertiaryColor,
+      ),
+      backgroundColor: secondaryColor,
     );
   }
 }
-
 
 /**
  * This class when built shows a card for the recommended new-course.
@@ -161,7 +170,7 @@ class RecommendedCourseContent extends StatelessWidget {
                   thickness: 2,
                 ),
                 ContainerForCourse(
-                  courseID: snapshot.data.id,
+                    courseID: snapshot.data.id,
                     description: snapshot.data.description,
                     nameOfCourse: snapshot.data.title,
                     isResume: false),
@@ -188,17 +197,15 @@ class RecommendedCourseContent extends StatelessWidget {
  */
 
 class ResumeCourseContent extends StatelessWidget {
-
   const ResumeCourseContent({required CurrentCourse this.currentCourse});
   final CurrentCourse currentCourse;
-
 
   @override
   Widget build(BuildContext context) {
     CourseController cc = CourseController();
 
     return FutureBuilder(
-      future: cc.getCourseByID(id:currentCourse.courseID),
+      future: cc.getCourseByID(id: currentCourse.courseID),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return Column(
@@ -208,20 +215,21 @@ class ResumeCourseContent extends StatelessWidget {
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
-            Text('Resume Course', style: getNormalTextStyleBlue()),
-            Divider(
-              color: primaryColor,
-              thickness: 2,
-            ),
-            ContainerForCourse(
-                percentage: ((currentCourse.progress.length) /
-                    (snapshot.data.numberOfQuestions) *
-                    100).round(),
-                courseID: currentCourse.courseID,
-                description: snapshot.data.description,
-                nameOfCourse: snapshot.data.title,
-                isResume: true),
-          ]);
+                Text('Resume Course', style: getNormalTextStyleBlue()),
+                Divider(
+                  color: primaryColor,
+                  thickness: 2,
+                ),
+                ContainerForCourse(
+                    percentage: ((currentCourse.progress.length) /
+                            (snapshot.data.numberOfQuestions) *
+                            100)
+                        .round(),
+                    courseID: currentCourse.courseID,
+                    description: snapshot.data.description,
+                    nameOfCourse: snapshot.data.title,
+                    isResume: true),
+              ]);
         } else if (snapshot.hasError) {
           return Center(
             child: Text(
@@ -315,7 +323,8 @@ class ContainerForCourse extends StatelessWidget {
               child: ElevatedButton(
                 style: yellowButtonStyle,
                 onPressed: () {
-                  Navigator.pushNamed(context, CourseDescription.routeName, arguments: courseID);
+                  Navigator.pushNamed(context, CourseDescription.routeName,
+                      arguments: courseID);
                 },
                 child: Text(
                   isResume ? 'Resume' : 'Start',
@@ -380,4 +389,3 @@ class CategoryCards extends StatelessWidget {
     );
   }
 }
-

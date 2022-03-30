@@ -67,7 +67,7 @@ class CategoryPage extends GetView<ActiveUserController> {
               children = [
                 //The active user stored in the globals file is used to see
                 //his progress in the category
-                Obx(()=> ProgressContainerThreeFields(
+                Obx(() => ProgressContainerThreeFields(
                     field1: snapshot.data.length.toString() + ' ' + 'Courses',
                     field2: controller
                             .getCompletedCoursesInCategory(
@@ -75,7 +75,8 @@ class CategoryPage extends GetView<ActiveUserController> {
                             .toString() +
                         ' ' +
                         'Completed',
-                    field3: controller.getXPInCategory(
+                    field3: controller
+                            .getXPInCategory(
                                 courseIDs: List.of(snapshot.data.keys))
                             .toString() +
                         ' ' +
@@ -84,7 +85,11 @@ class CategoryPage extends GetView<ActiveUserController> {
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
-                Obx(()=>getAllCourses(coursesInCategory: snapshot.data, context: context, coursesCompleted: controller.completedCourses, coursesSaved: controller.coursesSaved)),
+                Obx(() => getAllCourses(
+                    coursesInCategory: snapshot.data,
+                    context: context,
+                    coursesCompleted: controller.completedCourses,
+                    coursesSaved: controller.coursesSaved)),
               ];
             }
 
@@ -121,36 +126,48 @@ class CategoryPage extends GetView<ActiveUserController> {
  * the param courses. The way it returns the courses is a column in which the children
  * are rows formed of two courses.
  */
-Widget getAllCourses({required Map<String, String> coursesInCategory, required List<String> coursesSaved, required List<CompletedCourse> coursesCompleted, required BuildContext context}){
-
-  List<Widget> childrenOfRow=[];
-
+Widget getAllCourses(
+    {required Map<String, String> coursesInCategory,
+    required List<String> coursesSaved,
+    required List<CompletedCourse> coursesCompleted,
+    required BuildContext context}) {
+  List<Widget> childrenOfRow = [];
 
   coursesInCategory.forEach((key, value) {
-    bool isCompleted=false;
-    bool isSaved=coursesSaved.contains(key);
-    for(CompletedCourse cc in coursesCompleted){
-      if(cc.courseID==key){
-        isCompleted=true;
+    bool isCompleted = false;
+    bool isSaved = coursesSaved.contains(key);
+    for (CompletedCourse cc in coursesCompleted) {
+      if (cc.courseID == key) {
+        isCompleted = true;
       }
     }
 
-      childrenOfRow.add(getCardForCourse(courseID:key, isCompleted: isCompleted, isSaved: isSaved,context: context, title: value, widthOfCard: 0.4*widthOfScreen, heightOfCard: 0.12*heightOfScreen, isTemplate: false));
-
+    childrenOfRow.add(getCardForCourse(
+        courseID: key,
+        isCompleted: isCompleted,
+        isSaved: isSaved,
+        context: context,
+        title: value,
+        widthOfCard: 0.4 * widthOfScreen,
+        heightOfCard: 0.12 * heightOfScreen,
+        isTemplate: false));
   });
 
-
-  if(childrenOfRow.isEmpty){
-    return Center(child: Text('No Courses Earned yet', style: getSubheadingStyleBlue(),),);
+  if (childrenOfRow.isEmpty) {
+    return Center(
+      child: Text(
+        'No Courses Earned yet',
+        style: getSubheadingStyleBlue(),
+      ),
+    );
   }
 
   return Wrap(
     //alignment: WrapAlignment.center,
     runSpacing: 15,
-    spacing: 0.1*widthOfScreen,
+    spacing: 0.1 * widthOfScreen,
     runAlignment: WrapAlignment.start,
     crossAxisAlignment: WrapCrossAlignment.center,
     children: childrenOfRow,
   );
-
 }
