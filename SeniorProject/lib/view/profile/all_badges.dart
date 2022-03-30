@@ -1,5 +1,4 @@
 import 'package:cyber/controller/course_controller.dart';
-import 'package:cyber/globals.dart';
 import 'package:cyber/view/profile/category_badges.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/cupertino.dart';
@@ -68,7 +67,13 @@ class BadgesFromCategory extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SubtitleDivider(subtitle: categoryToString[category]!),
+        Padding(
+          padding: EdgeInsets.only(
+              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+          child: SubtitleDivider(
+            subtitle: categoryToString[category]!,
+          ),
+        ),
         BadgesContent(
           category: category,
         )
@@ -98,7 +103,7 @@ class BadgesContent extends GetView<ActiveUserController> {
                 SizedBox(height: 0.05 * heightOfScreen),
                 Text(
                   'No courses in category',
-                  style: getSubheadingStyleBlue(),
+                  style: getNormalTextStyleBlue(),
                 )
               ],
             );
@@ -116,7 +121,7 @@ class BadgesContent extends GetView<ActiveUserController> {
         } else {
           return SizedBox(
               height: 0.01 * heightOfScreen,
-              child: LinearProgressIndicator(
+              child: CircularProgressIndicator(
                 color: secondaryColor,
               ));
         }
@@ -157,7 +162,7 @@ getRowOfBadges(
           height: heightOfScreen * 0.05,
         ),
         Text(
-          'No badges Earned in ${categoryToString[category]!}',
+          'No badges earned in ${categoryToString[category]!}',
           style: getSubheadingStyleBlue(),
         ),
       ],

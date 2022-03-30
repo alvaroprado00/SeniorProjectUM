@@ -1,3 +1,4 @@
+import 'package:cyber/controller/active_user_controller.dart' as activeUser;
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:cyber/view/profile/profile.dart';
 import 'package:cyber/view/util/k_colors.dart';
@@ -44,7 +45,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xffFfffff),
+        backgroundColor: tertiaryColor,
         unselectedItemColor: primaryColor,
         selectedItemColor: secondaryColor,
         showUnselectedLabels: true,
@@ -78,7 +79,8 @@ class _PageViewScreenState extends State<PageViewScreen> {
                     shape: BoxShape.circle,
                     border: Border.all(color: primaryColor, width: 0.5)),
                 child: CircleAvatar(
-                  backgroundImage: NetworkImage('https://robohash.org/beltran'),
+                  backgroundImage: NetworkImage(
+                      'https://robohash.org/${activeUser.ActiveUserController}'),
                   backgroundColor: Colors.transparent,
                   radius: 12,
                 ),

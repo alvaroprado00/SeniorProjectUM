@@ -5,6 +5,7 @@ import 'package:cyber/globals.dart';
 import 'package:cyber/model/current_course.dart';
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/courses/course_description.dart';
+import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
@@ -84,7 +85,7 @@ class ContentForDashboard extends GetView<ActiveUserController> {
           body: SafeArea(
             child: Padding(
               padding: EdgeInsets.only(
-                  left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+                  left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -103,10 +104,8 @@ class ContentForDashboard extends GetView<ActiveUserController> {
                     SizedBox(
                       height: 0.05 * heightOfScreen,
                     ),
-                    Text('Categories', style: getNormalTextStyleBlue()),
-                    Divider(
-                      color: primaryColor,
-                      thickness: 2,
+                    SubtitleDivider(
+                      subtitle: 'Categories',
                     ),
                     CategoryCards(),
                   ],
@@ -166,10 +165,8 @@ class RecommendedCourseContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Recommended', style: getNormalTextStyleBlue()),
-                Divider(
-                  color: primaryColor,
-                  thickness: 2,
+                SubtitleDivider(
+                  subtitle: 'Recommended',
                 ),
                 ContainerForCourse(
                     courseID: snapshot.data.id,
@@ -272,9 +269,10 @@ class ContainerForCourse extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(15),
+      margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
       decoration: BoxDecoration(
         color: primaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -359,14 +357,14 @@ class CategoryCards extends StatelessWidget {
             getCardForCategory(
                 context: context,
                 category: Category.devices,
-                widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen,
+                widthOfCard: 0.43 * widthOfScreen,
+                heightOfCard: 0.15 * heightOfScreen,
                 isTemplate: false),
             getCardForCategory(
                 context: context,
                 category: Category.info,
-                widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen,
+                widthOfCard: 0.43 * widthOfScreen,
+                heightOfCard: 0.15 * heightOfScreen,
                 isTemplate: false),
           ],
         ),
@@ -376,17 +374,18 @@ class CategoryCards extends StatelessWidget {
             getCardForCategory(
                 context: context,
                 category: Category.socialMedia,
-                widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen,
+                widthOfCard: 0.43 * widthOfScreen,
+                heightOfCard: 0.15 * heightOfScreen,
                 isTemplate: false),
             getCardForCategory(
                 context: context,
                 category: Category.web,
-                widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen,
+                widthOfCard: 0.43 * widthOfScreen,
+                heightOfCard: 0.15 * heightOfScreen,
                 isTemplate: false),
           ],
-        )
+        ),
+        SizedBox(height: heightOfScreen * 0.1)
       ],
     );
   }

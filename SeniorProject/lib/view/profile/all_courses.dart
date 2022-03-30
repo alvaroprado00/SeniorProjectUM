@@ -142,7 +142,13 @@ class CategoryContent extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        SubtitleDivider(subtitle: nameOfCategory),
+        Padding(
+          padding: EdgeInsets.only(
+              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+          child: SubtitleDivider(
+            subtitle: nameOfCategory,
+          ),
+        ),
         getCards(context: context),
       ],
     );
@@ -240,7 +246,7 @@ class CategoryContent extends StatelessWidget {
       height: 0.12 * heightOfScreen,
       decoration: BoxDecoration(
           color: quinaryColor,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
+          borderRadius: BorderRadius.all(Radius.circular(15))),
       child: IconButton(
         onPressed: () {
           Navigator.pushNamed(context, CategoryCourses.routeName,

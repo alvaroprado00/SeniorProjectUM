@@ -1,13 +1,12 @@
 import 'package:cyber/controller/active_user_controller.dart';
+import 'package:cyber/view/courses/course_description.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../avatar.dart';
 import '../courses/category.dart';
-import 'package:cyber/globals.dart';
-import 'package:cyber/view/courses/course_description.dart';
-import 'package:flutter/material.dart';
-
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -44,9 +43,9 @@ Card getCardForCourse(
   return Card(
     color: primaryColor,
     borderOnForeground: true,
-    shape: new RoundedRectangleBorder(
-        side: new BorderSide(color: tertiaryColor, width: 1.0),
-        borderRadius: BorderRadius.circular(10.0)),
+    shape: RoundedRectangleBorder(
+        side: BorderSide(color: tertiaryColor, width: 1.0),
+        borderRadius: BorderRadius.circular(15.0)),
     child: InkWell(
       splashColor: secondaryColor,
       onTap: isTemplate
@@ -57,31 +56,41 @@ Card getCardForCourse(
       child: SizedBox(
         height: heightOfCard,
         width: widthOfCard,
-        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              isCompleted
-                  ? Icon(
-                      Icons.check_circle_rounded,
-                      color: secondaryColor,
-                    )
-                  : SizedBox(
-                      width: 0,
-                    ),
-              isTemplate
-                  ? Icon(Icons.bookmark, color: secondaryColor)
-                  : SaveButton(isFilled: isSaved, courseID: courseID),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                left: 0.05 * widthOfCard, bottom: heightOfCard * 0.05),
-            child: Align(
-                alignment: Alignment.bottomLeft,
-                child: Text('$title', style: getNormalTextStyleWhite())),
-          ),
-        ]),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  isCompleted
+                      ? Icon(
+                          CupertinoIcons.checkmark_alt_circle_fill,
+                          color: secondaryColor,
+                        )
+                      : SizedBox(
+                          width: 0,
+                        ),
+                  isTemplate
+                      ? Icon(CupertinoIcons.bookmark, color: secondaryColor)
+                      : SaveButton(isFilled: isSaved, courseID: courseID),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        left: 0.07 * widthOfCard,
+                        bottom: heightOfCard * 0.12,
+                        right: 0.07 * widthOfCard),
+                    child: Text('$title', style: getNormalTextStyleWhite()),
+                    // Align(
+                    //     alignment: Alignment.center,
+                    //     child: Text('$title', style: getNormalTextStyleWhite())),
+                  ),
+                ],
+              ),
+            ]),
       ),
     ),
   );
@@ -129,11 +138,11 @@ class _SaveButtonState extends State<SaveButton> {
       },
       icon: widget.isFilled
           ? Icon(
-              Icons.bookmark,
+              CupertinoIcons.bookmark_fill,
               color: secondaryColor,
             )
           : Icon(
-              Icons.bookmark_border,
+              CupertinoIcons.bookmark,
               color: secondaryColor,
             ),
     );
@@ -168,11 +177,11 @@ Card getCardForCategory(
   };
 
   return Card(
-    color: primaryColor,
-    borderOnForeground: true,
+    color: quaternaryColor,
+    borderOnForeground: false,
     shape: new RoundedRectangleBorder(
         side: new BorderSide(color: tertiaryColor, width: 1.0),
-        borderRadius: BorderRadius.circular(10.0)),
+        borderRadius: BorderRadius.circular(15.0)),
     child: InkWell(
       splashColor: secondaryColor,
       onTap: isTemplate
@@ -186,7 +195,7 @@ Card getCardForCategory(
         child: Align(
             alignment: Alignment.center,
             child: Text(categoryToString[category]!,
-                style: getNormalTextStyleWhite())),
+                style: getNormalTextStyleBlue())),
       ),
     ),
   );

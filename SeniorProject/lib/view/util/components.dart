@@ -448,7 +448,7 @@ class SubtitleDivider extends StatelessWidget {
           alignment: AlignmentDirectional.centerStart,
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-                widthOfScreen * 0.04,
+                widthOfScreen * 0.03,
                 heightOfScreen * 0.02,
                 widthOfScreen * 0.04,
                 heightOfScreen * 0.005),
@@ -460,12 +460,12 @@ class SubtitleDivider extends StatelessWidget {
         ),
         Padding(
             padding: EdgeInsets.fromLTRB(
-                widthOfScreen * 0.04,
+                widthOfScreen * 0.01,
                 heightOfScreen * 0.00,
-                widthOfScreen * 0.04,
-                heightOfScreen * 0.005),
+                widthOfScreen * 0.01,
+                heightOfScreen * 0.01),
             child: Divider(
-              thickness: 2,
+              thickness: 1,
               color: quinaryColor,
             )),
       ],

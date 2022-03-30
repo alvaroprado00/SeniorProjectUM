@@ -236,24 +236,39 @@ class LevelProgress extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          Container(
               height: 0.01 * heightOfScreen,
-              child: LinearProgressIndicator(
-                value:
-                    (userLevel.xpEarnedInLevel / userLevel.xpAvailableInLevel),
-                valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
-                backgroundColor: primaryColor,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: LinearProgressIndicator(
+                  value: (userLevel.xpEarnedInLevel /
+                      userLevel.xpAvailableInLevel),
+                  valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
+                  backgroundColor: primaryColor,
+                ),
               )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Stack(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      widthOfScreen * 0.03,
-                      heightOfScreen * 0.01,
-                      widthOfScreen * 0.00,
-                      heightOfScreen * 0.01),
-                  child: Text("0")),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          widthOfScreen * 0.01,
+                          heightOfScreen * 0.01,
+                          widthOfScreen * 0.00,
+                          heightOfScreen * 0.01),
+                      child: Text("0")),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          widthOfScreen * 0.00,
+                          heightOfScreen * 0.01,
+                          widthOfScreen * 0.01,
+                          heightOfScreen * 0.01),
+                      child: Text(userLevel.xpAvailableInLevel.toString())),
+                ],
+              ),
               Align(
                 alignment: Alignment.center,
                 child: Padding(
@@ -266,13 +281,6 @@ class LevelProgress extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      widthOfScreen * 0.00,
-                      heightOfScreen * 0.01,
-                      widthOfScreen * 0.04,
-                      heightOfScreen * 0.01),
-                  child: Text(userLevel.xpAvailableInLevel.toString())),
             ],
           ),
         ]);
@@ -327,7 +335,7 @@ class ProfileSection extends GetView<ActiveUserController> {
         SubtitleDivider(subtitle: "My ${typeOfSectionToString[typeOfSection]}"),
         widgetToShow,
         SizedBox(
-          height: 0.05 * heightOfScreen,
+          height: 0.03 * heightOfScreen,
         ),
         SizedBox(
           height: getHeightOfLargeButton(),
@@ -336,7 +344,7 @@ class ProfileSection extends GetView<ActiveUserController> {
             style: greyButtonStyle,
             onPressed: todo,
             child: Text(
-              'See all ${typeOfSectionToString[typeOfSection]}',
+              'All ${typeOfSectionToString[typeOfSection]}',
               style: getNormalTextStyleBlue(),
             ),
           ),
@@ -457,13 +465,13 @@ getLastSavedCoursesFromUser(
         height: 0.12 * heightOfScreen,
         decoration: BoxDecoration(
             color: quinaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+            borderRadius: BorderRadius.all(Radius.circular(15))),
       ));
     }
   }
 
   return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: childrenForRow,
   );
 }

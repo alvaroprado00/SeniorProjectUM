@@ -2,11 +2,12 @@ import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:cyber/view/util/k_values.dart' as k_values;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../model/course.dart';
 import '../../util/components.dart';
-import 'package:cyber/view/util/k_values.dart' as k_values;
-
 import 'new_course_page_outcomes.dart';
 
 class NewCoursePage extends StatelessWidget {
@@ -114,7 +115,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
           children: [
             SizedBox(height: 0.05 * k_values.heightOfScreen),
             Text(
-              'Title.',
+              'Title',
               style: getNormalTextStyleWhite(),
               textAlign: TextAlign.center,
             ),
@@ -136,7 +137,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
             ),
             SizedBox(height: 0.05 * k_values.heightOfScreen),
             Text(
-              'Category.',
+              'Category',
               style: getNormalTextStyleWhite(),
               textAlign: TextAlign.center,
             ),
@@ -144,7 +145,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
             buildDropdown(),
             SizedBox(height: 0.05 * k_values.heightOfScreen),
             Text(
-              'Image.',
+              'Image',
               style: getNormalTextStyleWhite(),
               textAlign: TextAlign.center,
             ),
@@ -166,15 +167,15 @@ class _NewCourseFormState extends State<NewCourseForm> {
             ),
             SizedBox(height: 0.05 * k_values.heightOfScreen),
             Text(
-              'XP.',
+              'XP',
               style: getNormalTextStyleWhite(),
               textAlign: TextAlign.center,
             ),
             Padding(
               padding: EdgeInsets.only(
                   top: 0.025 * k_values.heightOfScreen,
-                  left: 0.35 * k_values.widthOfScreen,
-                  right: 0.35 * k_values.widthOfScreen),
+                  left: 0.3 * k_values.widthOfScreen,
+                  right: 0.3 * k_values.widthOfScreen),
               child: TextFormField(
                 validator: validatorForExp,
                 keyboardType: TextInputType.number,
@@ -199,33 +200,36 @@ class _NewCourseFormState extends State<NewCourseForm> {
   }
 
   Widget buildDropdown() => Container(
-        width: 0.94 * k_values.widthOfScreen,
+        width: 0.93 * k_values.widthOfScreen,
         padding: EdgeInsets.symmetric(
-            horizontal: 0.1 * k_values.widthOfScreen,
+            horizontal: 0.04 * k_values.widthOfScreen,
             vertical: 0.005 * k_values.heightOfScreen),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: Colors.white,
         ),
-        child: DropdownButtonHideUnderline(
-          child: DropdownButtonFormField(
-            decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.transparent))),
-            value: value, // currently selected item
-            items: items
-                .map((item) => DropdownMenuItem<k_values.Category>(
-                      child: Text(
-                        k_values.categoryToString[item] ?? 'No category',
-                        style: getNormalTextStyleBlue(),
-                      ),
-                      value: item,
-                    ))
-                .toList(),
-            onChanged: (value) => setState(() {
-              this.value = value as k_values.Category;
-            }),
+        child: DropdownButton(
+          alignment: Alignment.center,
+          isExpanded: true,
+          underline: SizedBox(),
+          icon: Icon(
+            CupertinoIcons.chevron_down_circle_fill,
+            color: secondaryColor,
           ),
+          borderRadius: BorderRadius.circular(15),
+          value: value, // currently selected item
+          items: items
+              .map((item) => DropdownMenuItem<k_values.Category>(
+                    child: Text(
+                      k_values.categoryToString[item] ?? 'No category',
+                      style: getNormalTextStyleBlue(),
+                    ),
+                    value: item,
+                  ))
+              .toList(),
+          onChanged: (value) => setState(() {
+            this.value = value as k_values.Category;
+          }),
         ),
       );
 }

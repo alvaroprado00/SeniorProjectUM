@@ -1,5 +1,4 @@
 import 'package:cyber/controller/active_user_controller.dart';
-import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:flutter/material.dart';
@@ -31,15 +30,18 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 0.05 * heightOfScreen,
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+              child: SubtitleDivider(
+                subtitle: 'Collected',
+              ),
             ),
-            SubtitleDivider(subtitle: 'Collected'),
             SizedBox(
-              height: 0.03 * heightOfScreen,
+              height: 0.01 * heightOfScreen,
             ),
             SizedBox(
               width: widthOfScreen,
@@ -51,21 +53,12 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
               ),
             ),
             SizedBox(
-              height: 0.06 * heightOfScreen,
+              height: 0.05 * heightOfScreen,
             ),
             Container(
               width: widthOfScreen,
-              height: 0.2 * heightOfScreen,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      colors: [
-                    Colors.transparent,
-                    Colors.transparent,
-                  ])),
               child: Image.asset(
-                'assets/images/help.png',
+                'assets/images/robohash.png',
               ),
             ),
           ],
