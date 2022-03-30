@@ -212,7 +212,14 @@ static Future deleteActiveUser() async {
 
   }
 
+  static Future addGroupCodeToUser({required List<String> groupCode}) async {
+    CollectionReference users = await FirebaseFirestore
+        .instance.collection(userCollectionName);
 
+    String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
+
+    return users.doc(uidOfActiveUser).update({"userGroups": FieldValue.arrayUnion(groupCode)});
+  }
 
 
 }

@@ -10,9 +10,11 @@ import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:uuid/uuid.dart';
 
 
 import '../../config/fixed_values.dart';
+import '../../controller/group_controller.dart';
 import 'k_values.dart';
 
 Function nextQuestion=(BuildContext context) async {
@@ -137,3 +139,14 @@ String? getRandomEncouragingMessage() {
  */
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
+
+// /**
+//  * Function to generate a random Group Code using uid v4. If uid exists in
+//  * Firebase it will recursively find a new one until it is unique.
+//  */
+// String getGroupCode() async {
+//   final GroupController _groupController = new GroupController();
+//   var uuid = new Uuid();
+//   String groupCode = uuid.v4().substring(0,8);
+//   ;
+// }

@@ -1,8 +1,10 @@
 import 'dart:io';
+import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/groups/group_created_page.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -406,26 +408,33 @@ class _CreateGroupState extends State<CreateGroup> {
                           });
                         }
                         else {
-                          _groupController.uploadImage(groupCode,groupImage!)
-                            .then((value) {
-                              setState(() {
-                                gettingImage = true;
-                                imageUrl = value;
-                                newGroup = Group(
-                                  groupCode: groupCode,
-                                  groupName: _controllerJoin.text,
-                                  groupMembers: [activeUser!.username,],
-                                  groupImageURL: imageUrl,).toJson();
-                                _groupController.addGroup(newGroup, groupCode)
-                                    .whenComplete(() {
+                          File defaultImage;
+                          _groupController.getImageFileFromAssets("default_chat_banner.png")
+                            .then((value) {setState(() {
+                                defaultImage = value;
+                                _groupController.uploadImage(groupCode, defaultImage)
+                                    .then((value) {
                                   setState(() {
-                                    gettingImage = false;
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GroupCreated(groupCode: groupCode,)));
+                                    gettingImage = true;
+                                    imageUrl = value;
+                                    newGroup = Group(
+                                      groupCode: groupCode,
+                                      groupName: _controllerJoin.text,
+                                      groupMembers: [activeUser!.username,],
+                                      groupImageURL: imageUrl,).toJson();
+                                    _groupController.addGroup(newGroup, groupCode)
+                                        .whenComplete(() {
+                                      setState(() {
+                                        gettingImage = false;
+                                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GroupCreated(groupCode: groupCode,)));
+                                      });
+                                    });
                                   });
                                 });
                               });
-                          });
+                            });
                         }
+                        UserController.addGroupCodeToUser(groupCode: [groupCode]);
                       }
                     },
                     child: Text(

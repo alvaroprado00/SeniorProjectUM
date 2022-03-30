@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'admin/new-course/new_course_page.dart';
+import 'groups/group_home_page.dart';
 
 class PageViewScreen extends StatefulWidget {
   const PageViewScreen({Key? key, required this.buildContext})
@@ -42,7 +43,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
         children: [
           DashboardPage(),
           NewCoursePage(),
-          ProfilePage(),
+          GroupHome(),
           ProfilePage(
           ),
         ],

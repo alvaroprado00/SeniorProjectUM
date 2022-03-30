@@ -8,6 +8,8 @@ import 'package:cyber/view/admin/recommended/new_recommended_page.dart';
 import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
+import 'package:cyber/view/groups/group_create_page.dart';
+import 'package:cyber/view/groups/group_home_page.dart';
 import 'package:cyber/view/page_view.dart';
 import 'package:cyber/view/profile/all_avatars.dart';
 import 'package:cyber/view/profile/all_badges.dart';
@@ -143,11 +145,11 @@ class MyApp extends StatelessWidget {
         AdminDashboardPage.routeName: (context) => const AdminDashboardPage(),
         AllBadgesPage.routeName: (context)=> const AllBadgesPage(),
         AllAvatarsPage.routeName: (context)=> const AllAvatarsPage(),
-
         CategoryBadges.routeName: (context)=> const CategoryBadges(),
         AllCoursesPage.routeName: (context)=> const AllCoursesPage(),
         CategoryCourses.routeName: (context)=> const CategoryCourses(),
-
+        GroupHome.routeName: (context)=> const GroupHome(),
+        CreateGroup.routeName: (context)=> const CreateGroup(),
 
       },
       theme: ThemeData(

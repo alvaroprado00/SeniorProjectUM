@@ -11,6 +11,9 @@ UserCustom _$UserCustomFromJson(Map<String, dynamic> json) => UserCustom(
   username: json['username'] as String,
   level: Level.fromJson(json['level'] as Map<String, dynamic>),
   profilePictureActive: json['profilePictureActive'] as String,
+  userGroups: (json['userGroups'] as List<dynamic>)
+      .map((e) => e as String)
+      .toList(),
   collectedAvatars: (json['collectedAvatars'] as List<dynamic>)
       .map((e) => e as String)
       .toList(),
@@ -36,6 +39,7 @@ Map<String, dynamic> _$UserCustomToJson(UserCustom instance) =>
       'username': instance.username,
       'level': instance.level.toJson(),
       'profilePictureActive': instance.profilePictureActive,
+      'userGroups': instance.userGroups,
       'collectedAvatars': instance.collectedAvatars,
       'collectedBadges':
       instance.collectedBadges.map((e) => e.toJson()).toList(),

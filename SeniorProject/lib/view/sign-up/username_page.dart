@@ -78,6 +78,7 @@ class _UsernameFormState extends State<UsernameForm> {
             username: _controllerUsername.text,
             level: Level(totalXP: 0, levelNumber: 1, xpEarnedInLevel: 0),
             profilePictureActive: _controllerUsername.text,
+            userGroups: [],
             collectedAvatars: [_controllerUsername.text],
             collectedBadges: [],
             coursesSaved: [],

@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/group_controller.dart';
+import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/view/useful/components.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/group.dart';
 import '../util/functions.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
@@ -20,6 +24,7 @@ class GroupHome extends StatefulWidget {
 class _GroupHomeState extends State<GroupHome> {
 
   late TextEditingController _controllerJoin;
+  GroupController _groupController = new GroupController();
 
   @override
   void initState() {
@@ -103,18 +108,71 @@ class _GroupHomeState extends State<GroupHome> {
     }
   }
 
+  Widget _buildPopupDialog(BuildContext context, String groupCode) {
+    return new AlertDialog(
+      title: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Icon(Icons.close, color: primaryColor,),
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                  elevation: MaterialStateProperty.all<double>(0.0),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              'You Joined',
+              style: getHeadingStyleBlue(),
+            ),
+          ),
+        ],
+      ),
+      content: StreamBuilder(
+        stream: _groupController.getGroupByCode(groupCode),
+        builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+          if(snapshot.hasData) {
+            Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                CircleAvatar(
+                  backgroundImage: NetworkImage(createdGroup.groupImageURL,),
+                  radius: widthOfScreen * 0.1,
+                  backgroundColor: primaryColor,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: Text(
+                    createdGroup.groupName,
+                    style: getSubheadingStyleBlue(),
+                  ),
+                ),
+              ],
+            );
+          }
+          else {
+            return Center(
+              child: CircularProgressIndicator(color: primaryColor,),
+            );
+          }
+        }
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    widthOfScreen = MediaQuery.of(context).size.width;
-    heightOfScreen = MediaQuery.of(context).size.height;
-    print(heightOfScreen);
-    print(widthOfScreen);
-    var padding = MediaQuery.of(context).padding;
-    //I update the height by subtracting the status bar height
-    heightOfScreen = heightOfScreen - padding.top;
-
-    double bannerHeight = (heightOfScreen * 211.0) / 844.0;
 
     List<String> imagePaths = ['assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png', 'assets/images/group_icon_default.png'];
     List<String> groupNames = ['Canes', 'Los_Yankis', 'ECE Course', 'Team', 'Alvarito', 'Chupacabra'];
@@ -156,7 +214,30 @@ class _GroupHomeState extends State<GroupHome> {
                   width: getWidthOfLargeButton(),
                   child: ElevatedButton(
                     onPressed: () {
-
+                      if(validatorForEmptyTextField != null) {
+                        UserController.addGroupCodeToUser(groupCode: [_controllerJoin.text])
+                          .whenComplete(() {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => _buildPopupDialog(context, _controllerJoin.text),
+                            );
+                          })
+                          .catchError((e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Group not found. Please enter the correct group code.',
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                backgroundColor: secondaryColor,
+                              )
+                            );
+                          });
+                        GroupController.addCurrentUserToGroup(groupCode: _controllerJoin.text);
+                      }
                     },
                     child: Text('Join Group', style: getNormalTextStyleWhite()),
                     style: blueButtonStyle,
