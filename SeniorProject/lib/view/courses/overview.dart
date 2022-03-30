@@ -97,10 +97,10 @@ class ContentForOverview extends GetView<ActiveUserController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Obx(() => Text(
-                        '${controller.completedCourses.value.last.numQuestionsRight.toString()}/${controller.completedCourses.value.last.answers.length.toString()}',
+                  Text(
+                        '${getQuestionsRightFromProgress(progress: userProgress).toString()}/${activeCourse!.numberOfQuestions.toString()}',
                         style: getHeadingStyleBlue(),
-                      )),
+                      ),
                   Text(
                     '+ ${balanceXP.toString()} EXP',
                     style: getHeadingStyleBlue(),
@@ -110,10 +110,9 @@ class ContentForOverview extends GetView<ActiveUserController> {
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-              Obx(() => getCirclesProgressBarForCourseProgression(
-                  answers: controller.completedCourses.value.last.answers,
-                  numberOfCircles:
-                      controller.completedCourses.value.last.answers.length)),
+               getCirclesProgressBarForCourseProgression(
+                  answers: userProgress,
+                  numberOfCircles:activeCourse!.numberOfQuestions),
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
@@ -232,4 +231,15 @@ getCircularProgressCustom({required String xp, required String level}) {
       ],
     ),
   );
+}
+
+
+int getQuestionsRightFromProgress({required List<bool> progress}){
+
+  int numQuestionsRight=0;
+  for (bool b in progress){
+    if(b){numQuestionsRight++;}
+  }
+  return numQuestionsRight;
+
 }

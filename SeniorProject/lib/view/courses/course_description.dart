@@ -27,12 +27,12 @@ class CourseDescription extends GetView<ActiveUserController> {
     final courseController = CourseController();
 
     // Before building the page I need to get the new-course from the DB
-    return Scaffold(
-        backgroundColor: tertiaryColor,
-        body: FutureBuilder(
-          future: courseController.getCourseByID(id: courseID),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.hasData) {
+
+ return FutureBuilder(
+        future: courseController.getCourseByID(id: courseID),
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+          if (snapshot.hasData) {
+
               //Once I get the new-course I assign its value to a global variable
               // so I can access the info from other pages easily
               globals.activeCourse = snapshot.data;
@@ -46,24 +46,27 @@ class CourseDescription extends GetView<ActiveUserController> {
                     globals.activeUser!.currentCourse!.progress;
               }
 
+
               return Obx(() => CourseDescriptionContent(
+                comesFromFeaturePage: false,
                   course: snapshot.data,
                   isSaved: controller.isSaved(courseID: courseID),
                   isCurrentCourse:
                       controller.isCurrentCourse(courseID: courseID),
                   isCompleted: controller.isCompleted(courseID: courseID)));
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                  'Error: ${snapshot.error}',
-                  style: getHeadingStyleBlue(),
-                ),
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ));
+          } else if (snapshot.hasError) {
+            return Scaffold(
+              body: Center(
+                child: Text('Error: ${snapshot.error}', style: getHeadingStyleBlue(),),
+              ),
+            );
+          }else{
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
+        },
+ );
+
+
   }
 }
 
@@ -72,19 +75,28 @@ class CourseDescription extends GetView<ActiveUserController> {
  * When built, it shows the info from the new-course
  */
 class CourseDescriptionContent extends StatelessWidget {
+
   const CourseDescriptionContent(
       {required Course this.course,
       required bool this.isSaved,
       required this.isCurrentCourse,
+        required this.comesFromFeaturePage,
       required this.isCompleted});
+
   final Course course;
+  final bool comesFromFeaturePage; //This bool is needed to not show the back button
   final bool isSaved;
   final bool isCurrentCourse;
   final bool isCompleted;
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+
+    return Scaffold(
+
+      floatingActionButton: course.isFeatured!? FeaturedButton(): null,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
+        body:SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -100,6 +112,8 @@ class CourseDescriptionContent extends StatelessWidget {
                   ),
                 ),
               ),
+              this.comesFromFeaturePage?
+              SizedBox(height: 0,):
               Positioned(
                 top: 0.08 * heightOfScreen,
                 child: getBackButton(context: context),
@@ -134,7 +148,7 @@ class CourseDescriptionContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      '${course.experiencePoints} XP',
+                       course.isFeatured!?'${course.experiencePoints} XP x2':'${course.experiencePoints} XP',
                       style: getNormalTextStyleYellow(),
                     ),
                     SizedBox(
@@ -195,7 +209,7 @@ class CourseDescriptionContent extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 }
 
@@ -310,4 +324,38 @@ getContentForCompletedCourse() {
           .experiencePointsEarned
           .toString(),
       txt2ForBox: 'EXP'));
+}
+
+/**
+ * This class when built displays a floating button to show that the
+ * course has x2EXP
+ */
+class FeaturedButton extends StatelessWidget {
+  const FeaturedButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton.extended(
+      hoverColor: primaryColor,
+      hoverElevation: 50,
+      onPressed: () {
+        showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+               // title: Text('Featured!', style: getSubheadingStyleYellow(), textAlign: TextAlign.center,),
+
+                content: Image.asset('assets/images/doubleXP.png', width: 0.25*widthOfScreen, height: 0.3*heightOfScreen,),
+              );
+            });
+      },
+      icon: const Icon(Icons.bolt, color: tertiaryColor,),
+      label: Text('Featured', style: getSubheadingStyleWhite(),),
+      backgroundColor: secondaryColor,
+    );
+  }
 }

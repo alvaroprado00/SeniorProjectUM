@@ -18,6 +18,12 @@ class CourseController {
   CollectionReference recommendedCollectionRef =
       FirebaseFirestore.instance.collection(recommendedCollectionName);
 
+
+  //Reference to the collection featured
+  CollectionReference featuredCollectionRef =
+      FirebaseFirestore.instance.collection(featuredCollectionName);
+
+
   /**
    * Function to get a Course from the database when the title is specified.
    * First the new-course is gotten from the DB, after that, the ID is initialized
@@ -41,7 +47,20 @@ class CourseController {
       try {
         Course courseFilled = await getQuestionsForCourse(
             course: course, courseId: snapshot.docs[0].id);
-        return courseFilled;
+
+
+        //Then we also need to set the attribute isFeatured
+        try {
+          String featuredCourseID = await getFeaturedCourseID();
+
+          courseFilled.isFeatured = false;
+          if (featuredCourseID == course.id) {
+            courseFilled.isFeatured = true;
+          }
+          return courseFilled;
+        } catch (error) {
+          throw Exception('Could not get the ID for the featured Course');
+        }
       } catch (error) {
         throw Exception('Could not get the questions for the new-course');
       }
@@ -166,12 +185,28 @@ class CourseController {
     return coursesRef.doc(id).get().then((snapshot) async {
       Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
       Course course = Course.fromJson(json);
+
+      //I set the Id
       course.id = snapshot.id;
 
+      //I get the questions for the course
       try {
         Course courseFilled =
             await getQuestionsForCourse(course: course, courseId: id);
-        return courseFilled;
+
+        //After that I check if it is the featured course
+        try {
+          String featuredCourseID = await getFeaturedCourseID();
+
+          courseFilled.isFeatured = false;
+          if (featuredCourseID == course.id) {
+            courseFilled.isFeatured = true;
+          }
+          return courseFilled;
+        } catch (error) {
+          throw Exception(
+              'Failed when getting the course ID of the featured Course');
+        }
       } catch (error) {
         throw Exception('Failed when getting questions for new-course');
       }
@@ -255,5 +290,39 @@ class CourseController {
     }
 
     return courses;
+
+  }
+
+  /**
+   * Method to search the FeaturedCollection looking for the ID
+   * of the featuredCourse
+   */
+  Future getFeaturedCourseID() {
+    return featuredCollectionRef
+        .doc(featuredDocName)
+        .get()
+        .then((snapshot) async {
+      Map<String, dynamic> json = snapshot.data() as Map<String, dynamic>;
+
+      return json['courseID'] as String;
+    }).catchError((error) {
+      throw Exception('Could not get the Featured Course\'s ID');
+    });
+  }
+
+  /**
+   * Method to get the Featured Course complete by using the method
+   * getFeaturedCourseID and getCourseByID
+   */
+  Future getFeaturedCourse() async {
+    try{
+      final String featuredCourseID =await this.getFeaturedCourseID();
+      final Course course =await this.getCourseByID(id:featuredCourseID);
+
+      return course;
+    }catch(error){
+      throw Exception(error.toString());
+    }
+
   }
 }

@@ -176,8 +176,10 @@ class ActiveUserController extends GetxController {
     bool deleteCourse = false;
     for (CompletedCourse cCourse in this.completedCourses.value) {
       if (cCourse.courseID == activeCourse!.id) {
-        if (cCourse.numQuestionsRight >= questionsRight) {
-          //Exit the function
+        xpEarnedLastTime = cCourse.experiencePointsEarned;
+
+        if (xpEarnedLastTime >= xpEarned) {
+          //Exit the function because nothing is going to change
           return SaveCompletedCourseArgs(
               levelUp: false, earnedBadge: false, balanceXP: 0);
         } else {

@@ -3,6 +3,7 @@ import 'package:cyber/view/util/k_values.dart';
 
 class Course {
   String? id;
+  bool? isFeatured;
   String imageURL;
   String title;
   Category category;
