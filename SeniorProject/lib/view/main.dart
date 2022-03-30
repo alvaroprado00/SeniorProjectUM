@@ -41,7 +41,7 @@ import 'log_in_page.dart';
 
 void main() {
   //WidgetsFlutterBinding.ensureInitialized();
-
+  //await Firebase.initializeApp();
   runApp(
     //The notifier provider provides an instance of ApplicationState to all its descendants
     ChangeNotifierProvider(
@@ -86,6 +86,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Cyber',
       initialRoute: '/',
+      debugShowCheckedModeBanner: false,
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const HomePage(),

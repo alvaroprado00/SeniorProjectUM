@@ -107,9 +107,9 @@ class _GroupFormState extends State<GroupForm> {
               )),
           Padding(
               padding: EdgeInsets.fromLTRB(
-                widthOfScreen * 0.18,
+                widthOfScreen * 0.1,
                 heightOfScreen * 0.15,
-                widthOfScreen * 0.18,
+                widthOfScreen * 0.1,
                 heightOfScreen * 0.03,
               ),
               child: Text(

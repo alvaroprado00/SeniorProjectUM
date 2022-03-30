@@ -1,12 +1,10 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
-
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/main.dart';
 import 'package:cyber/view/profile/all_avatars.dart';
 import 'package:cyber/view/profile/all_badges.dart';
 import 'package:cyber/view/profile/all_courses.dart';
-
 import 'package:cyber/view/profile/edit_profile.dart';
 import 'package:cyber/view/util/cards.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,9 +68,9 @@ class ProfilePageContent extends GetView<ActiveUserController> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialogSignOutDelete(
+            return AlertDialogCustom(
               todo: controller.signOut,
-              messageToDisplay: 'Do you really want to go?',
+              isDelete: false,
             );
           });
     };
@@ -81,9 +79,9 @@ class ProfilePageContent extends GetView<ActiveUserController> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialogSignOutDelete(
+            return AlertDialogCustom(
               todo: controller.delete,
-              messageToDisplay: 'You should stay with us!',
+              isDelete: true,
             );
           });
     };
@@ -95,12 +93,14 @@ class ProfilePageContent extends GetView<ActiveUserController> {
           elevation: 0,
           actions: [
             IconButton(
-                color: secondaryColor,
-                iconSize: 0.06 * heightOfScreen,
-                icon: Icon(CupertinoIcons.pencil_circle),
-                onPressed: () {
-                  Navigator.pushNamed(context, EditProfilePage.routeName);
-                }),
+              color: secondaryColor,
+              iconSize: 32,
+              icon: Icon(CupertinoIcons.pencil_circle),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EditProfilePage()));
+              },
+            ),
           ],
         ),
         body: SafeArea(
@@ -113,7 +113,7 @@ class ProfilePageContent extends GetView<ActiveUserController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     //When the profile picture of the user changes, we need to change this
-                    AvatarPic(size: 0.3*heightOfScreen,),
+                    AvatarPic(),
                     Padding(
                         padding: EdgeInsets.only(
                             top: heightOfScreen * 0.03,
@@ -209,16 +209,15 @@ class ProfilePageContent extends GetView<ActiveUserController> {
  * Class to display the Avatar picture of the user
  */
 class AvatarPic extends GetView<ActiveUserController> {
-  const AvatarPic({Key? key, required double this.size}) : super(key: key);
+  const AvatarPic({Key? key}) : super(key: key);
 
-  final double size;
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.center,
       child: Obx(() => Avatar(
           nameOfAvatar: controller.profilePictureActive.value,
-          size: size)),
+          size: 0.3 * heightOfScreen)),
     );
   }
 }
@@ -474,15 +473,15 @@ getLastSavedCoursesFromUser(
  * It uses a boolean to differentiate between the two mentioned cases.
  * A function is provided to be executed when the user clicks confirm
  */
-class AlertDialogSignOutDelete extends StatelessWidget {
-  const AlertDialogSignOutDelete(
+class AlertDialogCustom extends StatelessWidget {
+  const AlertDialogCustom(
       {Key? key,
       required Future Function() this.todo,
-      required String this.messageToDisplay})
+      required bool this.isDelete})
       : super(key: key);
 
   final Future Function() todo;
-  final String messageToDisplay;
+  final bool isDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -495,7 +494,7 @@ class AlertDialogSignOutDelete extends StatelessWidget {
         style: getNormalTextStyleBlue(),
       ),
       content: Text(
-        messageToDisplay,
+        isDelete ? "You will delete your account" : " You will sign out.",
         style: getNormalTextStyleBlue(),
       ),
       actions: <Widget>[

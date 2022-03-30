@@ -66,8 +66,10 @@ class ContentForDashboard extends GetView<ActiveUserController> {
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           backgroundColor: tertiaryColor,
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             title: Text(
               'Welcome ${controller.username.value}!',
+              style: getSubheadingStyleBlue(),
             ),
             backgroundColor: tertiaryColor,
             elevation: 0,

@@ -1,6 +1,5 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/view/profile/all_avatars.dart';
-
 import 'package:cyber/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,9 +75,7 @@ class AvatarSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        AvatarPic(
-          size: 0.2 * heightOfScreen,
-        ),
+        AvatarPic(),
         SizedBox(
           height: 0.03 * heightOfScreen,
         ),
