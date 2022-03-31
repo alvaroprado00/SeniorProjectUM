@@ -92,7 +92,7 @@ class _OutcomesFormState extends State<OutcomesForm> {
       if (widget.course.outcomes.isEmpty) {
         SnackBar snBar = SnackBar(
           content: Text(
-            'You need to add at least one outcome',
+            'You need to add at least one outcome.',
             style: getNormalTextStyleBlue(),
           ),
           backgroundColor: secondaryColor,
@@ -125,6 +125,7 @@ class _OutcomesFormState extends State<OutcomesForm> {
                     left: 0.03 * widthOfScreen,
                     right: 0.03 * widthOfScreen),
                 child: TextFormField(
+                  scrollPadding: EdgeInsets.only(left: 1),
                   validator: validatorForEmptyTextField,
                   controller: _controllerOutcome,
                   maxLines: 3,

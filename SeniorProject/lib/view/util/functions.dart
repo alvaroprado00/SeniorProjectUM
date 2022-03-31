@@ -1,13 +1,13 @@
 import 'dart:math';
 
 import 'package:cyber/controller/active_user_controller.dart';
-import 'package:cyber/model/question.dart';
 import 'package:cyber/globals.dart' as globals;
+import 'package:cyber/model/question.dart';
 import 'package:cyber/model/user_custom.dart';
+import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
+import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/courses/overview.dart';
 import 'package:flutter/material.dart';
-import 'package:cyber/view/courses/multiple_choice_question_page.dart';
-import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -46,7 +46,7 @@ Function nextQuestion = (BuildContext context) async {
  */
 String? validatorForEmptyTextField(value) {
   if (value == null || value.isEmpty) {
-    return 'Please enter some text';
+    return 'Please enter some text.';
   }
   return null;
 }
@@ -60,7 +60,7 @@ String? validatorForEmail(String? val) {
   } else if (!RegExp(
           r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(val)) {
-    return 'Please use a valid email';
+    return 'Please use a valid email.';
   } else {
     return null;
   }
@@ -72,9 +72,9 @@ String? validatorForEmail(String? val) {
  */
 String? validatorForURL(value) {
   if (value == null || value.isEmpty) {
-    return 'Please enter some text';
+    return 'Please enter some text.';
   } else if (Uri.parse(value).isAbsolute != true) {
-    return 'Enter a valid URL';
+    return 'Enter a valid URL.';
   }
   return null;
 }
@@ -101,9 +101,9 @@ String? validatorForExp(value) {
 String? validatorForPositiveNumber(value) {
   value = int.tryParse(value);
   if (value == null) {
-    return 'Please enter a number';
+    return 'Please enter a number.';
   } else if (value < 0) {
-    return 'Enter a positive number';
+    return 'Enter a positive number.';
   }
   return null;
 }
@@ -116,9 +116,9 @@ String? validatorForPositiveNumber(value) {
 String? validatorForRightOption(value) {
   value = int.tryParse(value);
   if (value == null) {
-    return 'Please enter a number';
+    return 'Please enter a number.';
   } else if (value < 1 || value > 4) {
-    return 'The right option must be between [1-4]';
+    return 'The right option must be between [1-4].';
   }
   return null;
 }

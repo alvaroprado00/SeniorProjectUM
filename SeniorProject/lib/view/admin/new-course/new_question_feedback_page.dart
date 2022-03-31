@@ -4,9 +4,10 @@ import 'package:cyber/view/admin/new-course/new_question_page.dart';
 import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
-import 'package:flutter/material.dart';
-import '../../util/components.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/material.dart';
+
+import '../../util/components.dart';
 
 class QuestionLongFeedbackPage extends StatelessWidget {
   const QuestionLongFeedbackPage({Key? key}) : super(key: key);
@@ -100,36 +101,34 @@ class _FeedbackFormState extends State<FeedbackForm> {
 
     return Form(
       key: _formKey,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 0.22 * heightOfScreen),
-            Text(
-              'Enter long feedback.',
-              style: getNormalTextStyleWhite(),
-              textAlign: TextAlign.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 0.22 * heightOfScreen),
+          Text(
+            'Enter long feedback.',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * heightOfScreen,
+                left: 0.03 * widthOfScreen,
+                right: 0.03 * widthOfScreen),
+            child: TextFormField(
+              validator: validatorForEmptyTextField,
+              controller: _controllerFeedback,
+              decoration: inputDecorationForLongText,
+              maxLines: 5,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 0.025 * heightOfScreen,
-                  left: 0.03 * widthOfScreen,
-                  right: 0.03 * widthOfScreen),
-              child: TextFormField(
-                validator: validatorForEmptyTextField,
-                controller: _controllerFeedback,
-                decoration: inputDecorationForLongText,
-                maxLines: 5,
-              ),
-            ),
-            SizedBox(height: 0.29 * heightOfScreen),
-            getAddQuestionButton(todo: addQuestionToCourse),
-            SizedBox(height: 0.04 * heightOfScreen),
-            getCirclesProgressBar(position: 3, numberOfCircles: 3),
-            SizedBox(height: 0.01 * heightOfScreen),
-          ],
-        ),
+          ),
+          Spacer(),
+          getAddQuestionButton(todo: addQuestionToCourse),
+          SizedBox(height: 0.04 * heightOfScreen),
+          getCirclesProgressBar(position: 3, numberOfCircles: 3),
+          SizedBox(height: 0.01 * heightOfScreen),
+        ],
       ),
     );
   }

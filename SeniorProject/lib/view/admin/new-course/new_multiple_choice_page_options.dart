@@ -3,9 +3,9 @@ import 'package:cyber/view/admin/new-course/new_question_feedback_page.dart';
 import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
+import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:cyber/view/util/k_values.dart';
 
 import '../../util/components.dart';
 
@@ -102,27 +102,25 @@ class _OptionsFormState extends State<OptionsForm> {
     };
     return Form(
       key: _formKey,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 0.25 * heightOfScreen),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: _completedOptions
-                  ? getTextFormFieldForRightOption(te: _controllerRightOption)
-                  : getTextFormFieldForOption(
-                      numberOfOption: _numberOfOption, te: _controllerOption),
-            ),
-            SizedBox(height: 0.32 * heightOfScreen),
-            getNextButton(todo: addOption, large: true),
-            SizedBox(height: 0.04 * heightOfScreen),
-            getCirclesProgressBar(position: 2, numberOfCircles: 3),
-            SizedBox(height: 0.01 * heightOfScreen),
-          ],
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 0.25 * heightOfScreen),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: _completedOptions
+                ? getTextFormFieldForRightOption(te: _controllerRightOption)
+                : getTextFormFieldForOption(
+                    numberOfOption: _numberOfOption, te: _controllerOption),
+          ),
+          Spacer(),
+          getNextButton(todo: addOption, large: true),
+          SizedBox(height: 0.04 * heightOfScreen),
+          getCirclesProgressBar(position: 2, numberOfCircles: 3),
+          SizedBox(height: 0.01 * heightOfScreen),
+        ],
       ),
     );
   }
@@ -132,7 +130,7 @@ List<Widget> getTextFormFieldForRightOption(
     {required TextEditingController te}) {
   return [
     Text(
-      'Enter correct option.',
+      'Enter the correct option.',
       style: getNormalTextStyleWhite(),
       textAlign: TextAlign.center,
     ),
@@ -149,12 +147,20 @@ List<Widget> getTextFormFieldForRightOption(
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'[1-4]')),
         ],
-        decoration: getInputDecoration(
-            hintText: 'OK',
-            icon: Icon(
+        decoration: InputDecoration(
+            filled: true,
+            fillColor: tertiaryColor,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(30),
+              borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
+            ),
+            prefixIcon: Icon(
               Icons.check_outlined,
               color: secondaryColor,
-            )),
+            ),
+            hintStyle: getTexFieldTextStyle(),
+            contentPadding: EdgeInsets.only(
+                top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen)),
       ),
     ),
   ];
@@ -164,7 +170,7 @@ List<Widget> getTextFormFieldForOption(
     {required int numberOfOption, required TextEditingController te}) {
   return [
     Text(
-      'Option $numberOfOption/4',
+      'Option $numberOfOption of 4',
       style: getNormalTextStyleWhite(),
       textAlign: TextAlign.center,
     ),
@@ -177,7 +183,7 @@ List<Widget> getTextFormFieldForOption(
         validator: validatorForEmptyTextField,
         controller: te,
         decoration: inputDecorationForLongText,
-        maxLines: 2,
+        maxLines: 3,
       ),
     ),
   ];

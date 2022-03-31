@@ -92,8 +92,7 @@ class _NewRecommendedCourseFormState extends State<NewRecommendedCourseForm> {
             SizedBox(
               height: 0.27 * heightOfScreen,
             ),
-            Text('Enter the ID of the course.',
-                style: getNormalTextStyleWhite()),
+            Text('Enter the Course ID: ', style: getNormalTextStyleWhite()),
             SizedBox(
               height: 0.05 * heightOfScreen,
             ),
@@ -101,7 +100,7 @@ class _NewRecommendedCourseFormState extends State<NewRecommendedCourseForm> {
               validator: validatorForEmptyTextField,
               controller: _controllerCourseID,
               decoration: getInputDecoration(
-                  hintText: 'course ID',
+                  hintText: 'Course ID',
                   icon: Icon(
                     Icons.numbers,
                     color: secondaryColor,

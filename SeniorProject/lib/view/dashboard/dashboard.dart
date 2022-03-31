@@ -98,11 +98,11 @@ class ContentForDashboard extends GetView<ActiveUserController> {
                         : ResumeCourseContent(
                             currentCourse: controller.currentCourse.value!),
                     SizedBox(
-                      height: 0.05 * heightOfScreen,
+                      height: 0.03 * heightOfScreen,
                     ),
                     RecommendedCourseContent(),
                     SizedBox(
-                      height: 0.05 * heightOfScreen,
+                      height: 0.03 * heightOfScreen,
                     ),
                     SubtitleDivider(
                       subtitle: 'Categories',
@@ -126,17 +126,13 @@ class AdminButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
+    return FloatingActionButton(
       hoverColor: primaryColor,
-      hoverElevation: 50,
+      hoverElevation: 10,
       onPressed: () {
         Navigator.pushNamed(context, AdminDashboardPage.routeName);
       },
-      label: Text(
-        'Admin',
-        style: getNormalTextStyleWhite(),
-      ),
-      icon: const Icon(
+      child: const Icon(
         Icons.admin_panel_settings,
         color: tertiaryColor,
       ),
@@ -304,7 +300,7 @@ class ContainerForCourse extends StatelessWidget {
                     style: getSmallTextStyle(),
                   ))
               : SizedBox(
-                  height: 0.03 * heightOfScreen,
+                  height: 0.02 * heightOfScreen,
                 ),
           SizedBox(
               width: 0.5 * widthOfScreen,

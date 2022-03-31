@@ -5,8 +5,8 @@
  * They cant be constants since they depend on the variable widthOfScreen,
  * heightOfScreen or even both
  */
-
 import 'package:flutter/material.dart';
+
 import 'k_colors.dart';
 import 'k_values.dart';
 
@@ -165,11 +165,11 @@ InputDecoration getInputDecoration(
           top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen));
 }
 
-final InputDecoration inputDecorationForLongText = InputDecoration(
+InputDecoration inputDecorationForLongText = InputDecoration(
     filled: true,
     fillColor: tertiaryColor,
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(5),
       borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
     ),
-    contentPadding: EdgeInsets.all(0.08 * widthOfScreen));
+    contentPadding: EdgeInsets.all(5));

@@ -108,93 +108,102 @@ class _NewCourseFormState extends State<NewCourseForm> {
 
     return Form(
       key: _formKey,
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 0.05 * k_values.heightOfScreen),
-            Text(
-              'Title',
-              style: getNormalTextStyleWhite(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 0.05 * k_values.heightOfScreen),
+          Text(
+            'Title',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * k_values.heightOfScreen,
+                left: 0.03 * k_values.widthOfScreen,
+                right: 0.03 * k_values.widthOfScreen),
+            child: TextFormField(
+              validator: validatorForEmptyTextField,
+              controller: _controllerTitle,
+              decoration: getInputDecoration(
+                  hintText: 'Title',
+                  icon: Icon(
+                    Icons.label_important,
+                    color: secondaryColor,
+                  )),
+            ),
+          ),
+          Spacer(),
+          Text(
+            'Category',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Spacer(),
+          buildDropdown(),
+          Spacer(),
+          Text(
+            'Image',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * k_values.heightOfScreen,
+                left: 0.03 * k_values.widthOfScreen,
+                right: 0.03 * k_values.widthOfScreen),
+            child: TextFormField(
+              validator: validatorForURL,
+              controller: _controllerImage,
+              decoration: getInputDecoration(
+                  hintText: 'Enter valid URL',
+                  icon: Icon(
+                    Icons.photo,
+                    color: secondaryColor,
+                  )),
+            ),
+          ),
+          Spacer(),
+          Text(
+            'XP',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * k_values.heightOfScreen,
+                left: 0.32 * k_values.widthOfScreen,
+                right: 0.35 * k_values.widthOfScreen),
+            child: TextFormField(
               textAlign: TextAlign.center,
+              validator: validatorForExp,
+              keyboardType: TextInputType.number,
+              controller: _controllerXP,
+              decoration: InputDecoration(
+                  hintText: 'XP',
+                  filled: true,
+                  fillColor: tertiaryColor,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30),
+                    borderSide:
+                        const BorderSide(color: tertiaryColor, width: 1.0),
+                  ),
+                  prefixIcon: Icon(
+                    Icons.star,
+                    color: secondaryColor,
+                  ),
+                  hintStyle: getTexFieldTextStyle(),
+                  contentPadding: EdgeInsets.only(
+                      top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen)),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 0.025 * k_values.heightOfScreen,
-                  left: 0.03 * k_values.widthOfScreen,
-                  right: 0.03 * k_values.widthOfScreen),
-              child: TextFormField(
-                validator: validatorForEmptyTextField,
-                controller: _controllerTitle,
-                decoration: getInputDecoration(
-                    hintText: 'Title',
-                    icon: Icon(
-                      Icons.format_italic,
-                      color: secondaryColor,
-                    )),
-              ),
-            ),
-            SizedBox(height: 0.05 * k_values.heightOfScreen),
-            Text(
-              'Category',
-              style: getNormalTextStyleWhite(),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 0.025 * k_values.heightOfScreen),
-            buildDropdown(),
-            SizedBox(height: 0.05 * k_values.heightOfScreen),
-            Text(
-              'Image',
-              style: getNormalTextStyleWhite(),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 0.025 * k_values.heightOfScreen,
-                  left: 0.03 * k_values.widthOfScreen,
-                  right: 0.03 * k_values.widthOfScreen),
-              child: TextFormField(
-                validator: validatorForURL,
-                controller: _controllerImage,
-                decoration: getInputDecoration(
-                    hintText: 'Enter valid URL',
-                    icon: Icon(
-                      Icons.photo,
-                      color: secondaryColor,
-                    )),
-              ),
-            ),
-            SizedBox(height: 0.05 * k_values.heightOfScreen),
-            Text(
-              'XP',
-              style: getNormalTextStyleWhite(),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 0.025 * k_values.heightOfScreen,
-                  left: 0.3 * k_values.widthOfScreen,
-                  right: 0.3 * k_values.widthOfScreen),
-              child: TextFormField(
-                validator: validatorForExp,
-                keyboardType: TextInputType.number,
-                controller: _controllerXP,
-                decoration: getInputDecoration(
-                    hintText: 'XP',
-                    icon: Icon(
-                      Icons.star,
-                      color: secondaryColor,
-                    )),
-              ),
-            ),
-            SizedBox(height: 0.055 * k_values.heightOfScreen),
-            getNextButton(todo: updateCourseFields, large: true),
-            SizedBox(height: 0.04 * k_values.heightOfScreen),
-            getCirclesProgressBar(position: 1, numberOfCircles: 3),
-            SizedBox(height: 0.01 * heightOfScreen),
-          ],
-        ),
+          ),
+          Spacer(),
+          getNextButton(todo: updateCourseFields, large: true),
+          SizedBox(height: 0.04 * k_values.heightOfScreen),
+          getCirclesProgressBar(position: 1, numberOfCircles: 3),
+          SizedBox(height: 0.01 * heightOfScreen),
+        ],
       ),
     );
   }

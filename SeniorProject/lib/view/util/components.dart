@@ -1,5 +1,6 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/view/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -168,13 +169,15 @@ Widget getCircle({required Color color, required double size}) {
 
 IconButton getBackButton({required BuildContext context}) {
   return IconButton(
+      splashRadius: 25,
+      splashColor: quaternaryColor,
       onPressed: () {
         Navigator.pop(context);
       },
       icon: Icon(
-        Icons.chevron_left_rounded,
+        CupertinoIcons.back,
         color: secondaryColor,
-        size: 0.06 * heightOfScreen,
+        size: 36,
       ));
 }
 
@@ -185,6 +188,8 @@ IconButton getBackButton({required BuildContext context}) {
 
 IconButton getExitButtonAdmin({required BuildContext context}) {
   return IconButton(
+      splashRadius: 25,
+      splashColor: quaternaryColor,
       onPressed: () {
         showModalBottomSheet<void>(
             shape: RoundedRectangleBorder(
@@ -193,17 +198,21 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
             context: context,
             builder: (BuildContext context) {
               return Container(
-                height: 0.25 * heightOfScreen,
+                height: 0.3 * heightOfScreen,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      'Are you sure you want to exit?',
-                      style: getSubheadingStyleYellow(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 10.0, right: 10.0, top: 10),
+                      child: Text(
+                        'Are you sure you want to exit?',
+                        style: getSubheadingStyleYellow(),
+                      ),
                     ),
                     Text(
-                      'Your progress will not be saved',
+                      'Your progress will not be saved.',
                       style: getNormalTextStyleBlue(),
                     ),
                     Row(
@@ -232,10 +241,16 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
                               'Yes',
                               style: getNormalTextStyleBlue(),
                             ),
-                            onPressed: () => print('popo'),
+                            onPressed: () {
+                              Navigator.popUntil(context,
+                                  ModalRoute.withName('/adminDashboard'));
+                            },
                           ),
                         ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 30,
                     )
                   ],
                 ),
@@ -243,9 +258,9 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
             });
       },
       icon: Icon(
-        Icons.clear,
+        CupertinoIcons.clear,
         color: secondaryColor,
-        size: 0.05 * heightOfScreen,
+        size: 28,
       ));
 }
 
@@ -265,6 +280,9 @@ Widget getOptionsButton(
         Icons.menu,
         color: primaryColor,
       ),
+      padding: EdgeInsets.only(top: 0),
+      splashRadius: 20.0,
+      splashColor: secondaryColor,
       onPressed: () {
         showModalBottomSheet<void>(
             shape: RoundedRectangleBorder(
@@ -274,7 +292,7 @@ Widget getOptionsButton(
             builder: (BuildContext context) {
               return Container(
                 padding: EdgeInsets.only(
-                    top: 0.1 * widthOfScreen, bottom: 0.1 * widthOfScreen),
+                    top: 0.05 * widthOfScreen, bottom: 0.1 * widthOfScreen),
                 height: 0.4 * heightOfScreen,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -455,6 +473,44 @@ class SubtitleDivider extends StatelessWidget {
             child: Text(
               this.subtitle,
               style: getNormalTextStyleBlue(),
+            ),
+          ),
+        ),
+        Padding(
+            padding: EdgeInsets.fromLTRB(
+                widthOfScreen * 0.01,
+                heightOfScreen * 0.00,
+                widthOfScreen * 0.01,
+                heightOfScreen * 0.01),
+            child: Divider(
+              thickness: 1,
+              color: quinaryColor,
+            )),
+      ],
+    );
+  }
+}
+
+class SubtitleDividerAdmin extends StatelessWidget {
+  const SubtitleDividerAdmin({Key? key, required this.subtitle})
+      : super(key: key);
+
+  final String subtitle;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+                widthOfScreen * 0.03,
+                heightOfScreen * 0.02,
+                widthOfScreen * 0.04,
+                heightOfScreen * 0.005),
+            child: Text(
+              this.subtitle,
+              style: getNormalTextStyleWhite(),
             ),
           ),
         ),

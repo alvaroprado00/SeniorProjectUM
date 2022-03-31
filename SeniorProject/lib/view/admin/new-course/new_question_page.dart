@@ -25,8 +25,10 @@ class NewQuestionPage extends StatelessWidget {
           barrierDismissible: true,
           builder: (BuildContext context) {
             return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
               title: Text(
-                'Error',
+                'Questions Required',
                 style: getSubheadingStyleBlue(),
                 textAlign: TextAlign.center,
               ),
@@ -42,7 +44,7 @@ class NewQuestionPage extends StatelessWidget {
                   SizedBox(
                     height: 0.05 * heightOfScreen,
                   ),
-                  Text('You need to add at least 5 questions to the new-course',
+                  Text('Add at least 5 questions to add a new course.',
                       style: getNormalTextStyleBlue(),
                       textAlign: TextAlign.center),
                 ],
@@ -75,7 +77,8 @@ class NewQuestionPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: getExitButtonAdmin(context: context),
+        leading: getBackButton(context: context),
+        actions: [getExitButtonAdmin(context: context)],
         title: Text(
           'New Question',
           style: getSubheadingStyleWhite(),
@@ -86,15 +89,14 @@ class NewQuestionPage extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 0.22 * heightOfScreen,
               width: widthOfScreen,
             ),
             Text(
-              'Choose a question to add.',
+              'Choose a type of question:',
               style: getSubheadingStyleWhite(),
               textAlign: TextAlign.center,
             ),
@@ -124,7 +126,7 @@ class NewQuestionPage extends StatelessWidget {
                     Navigator.pushNamed(
                         context, FillInTheBlanksTextPage.routeName);
                   },
-                  child: Text('Fill In the blanks',
+                  child: Text('Fill in the Blanks',
                       style: getNormalTextStyleBlue()),
                   style: yellowButtonStyle,
                 )),

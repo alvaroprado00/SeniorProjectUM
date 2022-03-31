@@ -51,9 +51,7 @@ class CategoryPage extends GetView<ActiveUserController> {
             if (snapshot.data.isEmpty) {
               children = [
                 ProgressContainerThreeFields(
-                    field1: '0 Courses',
-                    field2: '0 Completed',
-                    field3: '0 EXP'),
+                    field1: '0 Courses', field2: '0 Completed', field3: '0 XP'),
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
@@ -80,7 +78,7 @@ class CategoryPage extends GetView<ActiveUserController> {
                                 courseIDs: List.of(snapshot.data.keys))
                             .toString() +
                         ' ' +
-                        'EXP')),
+                        'XP')),
 
                 SizedBox(
                   height: 0.05 * heightOfScreen,

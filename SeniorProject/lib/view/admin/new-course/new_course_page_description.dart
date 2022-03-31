@@ -98,7 +98,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
             children: [
               SizedBox(height: 0.05 * heightOfScreen),
               Text(
-                'Enter a new-course description.',
+                'Enter a course description.',
                 style: getNormalTextStyleWhite(),
                 textAlign: TextAlign.center,
               ),
@@ -112,6 +112,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
                   controller: _controllerDescription,
                   maxLines: 7,
                   decoration: inputDecorationForLongText,
+                  textCapitalization: TextCapitalization.sentences,
                 ),
               ),
               SizedBox(height: 0.05 * heightOfScreen),
@@ -129,7 +130,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
                   validator: validatorForEmptyTextField,
                   controller: _controllerBadge,
                   decoration: getInputDecoration(
-                    hintText: 'Enter the name of the icon from Font-Awesome',
+                    hintText: 'Font-Awesome Icon Name',
                     icon: Icon(
                       Icons.photo,
                       color: secondaryColor,
@@ -146,8 +147,8 @@ class _DescriptionFormState extends State<DescriptionForm> {
               Padding(
                 padding: EdgeInsets.only(
                     top: 0.025 * heightOfScreen,
-                    left: 0.35 * widthOfScreen,
-                    right: 0.35 * widthOfScreen),
+                    left: 0.03 * widthOfScreen,
+                    right: 0.03 * widthOfScreen),
                 child: TextFormField(
                   validator: validatorForPositiveNumber,
                   keyboardType: TextInputType.number,
