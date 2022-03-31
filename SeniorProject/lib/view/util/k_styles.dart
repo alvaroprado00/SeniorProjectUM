@@ -169,7 +169,7 @@ InputDecoration inputDecorationForLongText = InputDecoration(
     filled: true,
     fillColor: tertiaryColor,
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(5),
+      borderRadius: BorderRadius.circular(10),
       borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
     ),
-    contentPadding: EdgeInsets.all(5));
+    contentPadding: EdgeInsets.all(10));

@@ -38,7 +38,7 @@ class _TextFormFieldForPasswordState extends State<TextFormFieldForPassword> {
           hintStyle: getTexFieldTextStyle(),
           filled: true,
           fillColor: tertiaryColor,
-          hintText: 'password',
+          hintText: 'Password',
           contentPadding: EdgeInsets.only(
               top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen),
           border: OutlineInputBorder(

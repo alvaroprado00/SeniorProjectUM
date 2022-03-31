@@ -18,7 +18,7 @@ class SignUpGroupPage extends StatelessWidget {
         backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
             //This is to solve the problem of the overflow caused by the keyboard
-            child: SingleChildScrollView(child: GroupForm())));
+            child: GroupForm()));
   }
 }
 
@@ -118,14 +118,13 @@ class _GroupFormState extends State<GroupForm> {
               )),
           Padding(
               padding: EdgeInsets.only(
-                  bottom: heightOfScreen * 0.06,
-                  left: widthOfScreen * 0.07,
-                  right: widthOfScreen * 0.07),
+                  left: widthOfScreen * 0.07, right: widthOfScreen * 0.07),
               child: Text(
-                'Don\'t worry you can create one later or create one of your own.',
+                'Don\'t worry you can join one later or create one of your own.',
                 style: getSmallTextStyle(),
                 textAlign: TextAlign.center,
               )),
+          Spacer(),
           SizedBox(
               height: 0.07 * heightOfScreen,
               width: 0.95 * widthOfScreen,

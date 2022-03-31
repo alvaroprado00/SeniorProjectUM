@@ -5,6 +5,7 @@ import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ProfileCreated extends StatelessWidget {
@@ -56,7 +57,7 @@ class ProfileCreated extends StatelessWidget {
                   bottom: 0.03 * heightOfScreen),
               child: Row(children: [
                 Icon(
-                  Icons.mail,
+                  CupertinoIcons.mail_solid,
                   color: secondaryColor,
                 ),
                 Padding(
@@ -69,8 +70,7 @@ class ProfileCreated extends StatelessWidget {
               ]),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                  left: 0.1 * widthOfScreen, bottom: 0.17 * heightOfScreen),
+              padding: EdgeInsets.only(left: 0.1 * widthOfScreen),
               child: Row(children: [
                 Icon(
                   Icons.lock,
@@ -85,6 +85,7 @@ class ProfileCreated extends StatelessWidget {
                 )
               ]),
             ),
+            Spacer(),
             SizedBox(
                 height: getHeightOfLargeButton(),
                 width: getWidthOfLargeButton(),

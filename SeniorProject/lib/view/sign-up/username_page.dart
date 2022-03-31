@@ -7,7 +7,6 @@ import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
-
 import 'package:flutter/material.dart';
 
 import '../main.dart';
@@ -28,10 +27,9 @@ class SignUpUsernamePage extends StatelessWidget {
           leading: getBackButton(context: context),
         ),
         body: SafeArea(
-            child: SingleChildScrollView(
-                child: UsernameForm(
+            child: UsernameForm(
           args: args,
-        ))));
+        )));
   }
 }
 
@@ -149,11 +147,10 @@ class _UsernameFormState extends State<UsernameForm> {
                   TextSpan(text: 'ROBOHASH', style: smallTextStyleYellow),
                 ]),
               )),
+
           Padding(
             padding: EdgeInsets.only(
-                bottom: 0.37 * heightOfScreen,
-                left: 0.03 * widthOfScreen,
-                right: 0.03 * widthOfScreen),
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
             child: TextFormField(
               validator: validatorForEmptyTextField,
               controller: _controllerUsername,
@@ -165,6 +162,7 @@ class _UsernameFormState extends State<UsernameForm> {
                   )),
             ),
           ),
+          Spacer(),
           SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),

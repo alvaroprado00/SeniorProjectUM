@@ -1,4 +1,4 @@
-import 'package:cyber/controller/active_user_controller.dart' as activeUser;
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:cyber/view/featured/featured_course.dart';
 import 'package:cyber/view/profile/profile.dart';
@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 import '../controller/active_user_controller.dart';
 import '../controller/user_controller.dart';
+import '../globals.dart';
 import '../model/user_custom.dart';
 import 'admin/new-course/new_course_page.dart';
 

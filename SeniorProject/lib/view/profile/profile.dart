@@ -1,5 +1,6 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
+import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/main.dart';
 import 'package:cyber/view/profile/all_avatars.dart';
@@ -499,10 +500,12 @@ class AlertDialogCustom extends StatelessWidget {
       ),
       title: Text(
         'Are you sure?',
-        style: getNormalTextStyleBlue(),
+        style: getSubheadingStyleBlue(),
       ),
       content: Text(
-        isDelete ? "You will delete your account" : " You will sign out.",
+        isDelete
+            ? "This action cannot be undone."
+            : "${activeUser!.username} will sign out.",
         style: getNormalTextStyleBlue(),
       ),
       actions: <Widget>[
@@ -534,7 +537,7 @@ class AlertDialogCustom extends StatelessWidget {
             Navigator.pushNamed(context, HomePage.routeName);
           },
           child: Text(
-            'Confirm',
+            isDelete ? "Delete" : 'Sign Out',
             style: getNormalTextStyleYellow(),
           ),
         ),

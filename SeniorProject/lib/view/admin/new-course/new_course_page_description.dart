@@ -90,86 +90,83 @@ class _DescriptionFormState extends State<DescriptionForm> {
     };
 
     return Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 0.05 * heightOfScreen),
-              Text(
-                'Enter a course description.',
-                style: getNormalTextStyleWhite(),
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.025 * heightOfScreen,
-                    left: 0.03 * widthOfScreen,
-                    right: 0.03 * widthOfScreen),
-                child: TextFormField(
-                  validator: validatorForEmptyTextField,
-                  controller: _controllerDescription,
-                  maxLines: 7,
-                  decoration: inputDecorationForLongText,
-                  textCapitalization: TextCapitalization.sentences,
-                ),
-              ),
-              SizedBox(height: 0.05 * heightOfScreen),
-              Text(
-                'Enter the badge.',
-                style: getNormalTextStyleWhite(),
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.025 * heightOfScreen,
-                    left: 0.03 * widthOfScreen,
-                    right: 0.03 * widthOfScreen),
-                child: TextFormField(
-                  validator: validatorForEmptyTextField,
-                  controller: _controllerBadge,
-                  decoration: getInputDecoration(
-                    hintText: 'Font-Awesome Icon Name',
-                    icon: Icon(
-                      Icons.photo,
-                      color: secondaryColor,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 0.05 * heightOfScreen),
-              Text(
-                'Enter position in category.',
-                style: getNormalTextStyleWhite(),
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.025 * heightOfScreen,
-                    left: 0.03 * widthOfScreen,
-                    right: 0.03 * widthOfScreen),
-                child: TextFormField(
-                  validator: validatorForPositiveNumber,
-                  keyboardType: TextInputType.number,
-                  controller: _controllerOrder,
-                  decoration: getInputDecoration(
-                      hintText: 'Order',
-                      icon: Icon(
-                        Icons.list,
-                        color: secondaryColor,
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              getNextButton(todo: setFinalFields, large: true),
-              SizedBox(height: 0.04 * heightOfScreen),
-              getCirclesProgressBar(position: 3, numberOfCircles: 3),
-              SizedBox(height: 0.01 * heightOfScreen),
-            ],
+      key: _formKey,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 0.05 * heightOfScreen),
+          Text(
+            'Enter a course description.',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
           ),
-        ));
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * heightOfScreen,
+                left: 0.03 * widthOfScreen,
+                right: 0.03 * widthOfScreen),
+            child: TextFormField(
+              validator: validatorForEmptyTextField,
+              controller: _controllerDescription,
+              maxLines: 7,
+              decoration: inputDecorationForLongText,
+              textCapitalization: TextCapitalization.sentences,
+            ),
+          ),
+          Spacer(),
+          Text(
+            'Enter the badge.',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * heightOfScreen,
+                left: 0.03 * widthOfScreen,
+                right: 0.03 * widthOfScreen),
+            child: TextFormField(
+              validator: validatorForEmptyTextField,
+              controller: _controllerBadge,
+              decoration: getInputDecoration(
+                hintText: 'Font-Awesome Icon Name',
+                icon: Icon(
+                  Icons.photo,
+                  color: secondaryColor,
+                ),
+              ),
+            ),
+          ),
+          Spacer(),
+          Text(
+            'Enter position in category.',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * heightOfScreen,
+                left: 0.03 * widthOfScreen,
+                right: 0.03 * widthOfScreen),
+            child: TextFormField(
+              validator: validatorForPositiveNumber,
+              keyboardType: TextInputType.number,
+              controller: _controllerOrder,
+              decoration: getInputDecoration(
+                  hintText: 'Order',
+                  icon: Icon(
+                    Icons.list,
+                    color: secondaryColor,
+                  )),
+            ),
+          ),
+          Spacer(),
+          getNextButton(todo: setFinalFields, large: true),
+          SizedBox(height: 0.04 * heightOfScreen),
+          getCirclesProgressBar(position: 3, numberOfCircles: 3),
+          SizedBox(height: 0.01 * heightOfScreen),
+        ],
+      ),
+    );
   }
 }

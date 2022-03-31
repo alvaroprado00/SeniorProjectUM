@@ -20,10 +20,10 @@ class SignUpEmailPage extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: EmailForm(),
+        child:
+           EmailForm(),
         ),
-      ),
+
     );
   }
 }
@@ -82,7 +82,7 @@ class _EmailFormState extends State<EmailForm> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  bottom: 0.35 * heightOfScreen,
+
                   left: 0.03 * widthOfScreen,
                   right: 0.03 * widthOfScreen),
               child: TextFormField(
@@ -96,6 +96,7 @@ class _EmailFormState extends State<EmailForm> {
                     )),
               ),
             ),
+            Spacer(),
             SizedBox(
                 height: getHeightOfLargeButton(),
                 width: getWidthOfLargeButton(),

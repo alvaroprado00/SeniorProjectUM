@@ -22,10 +22,9 @@ class SignUpPasswordPage extends StatelessWidget {
       ),
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
-          child: SingleChildScrollView(
-              child: PasswordForm(
+          child: PasswordForm(
         email: email,
-      ))),
+      )),
     );
   }
 }
@@ -84,11 +83,12 @@ class _PasswordFormState extends State<PasswordForm> {
           ),
           Padding(
             padding: EdgeInsets.only(
-                bottom: 0.35 * heightOfScreen,
+
                 left: 0.03 * widthOfScreen,
                 right: 0.03 * widthOfScreen),
             child: TextFormFieldForPassword(_controllerPassword),
           ),
+          Spacer(),
           SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),
