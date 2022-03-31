@@ -15,12 +15,15 @@ import 'package:get/get.dart';
 import '../util/cards.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+  const DashboardPage({Key? key, }) : super(key: key);
 
   static final routeName = '/dashboard';
 
   @override
   Widget build(BuildContext context) {
+
+    return ContentForDashboard();
+    /*
     return FutureBuilder(
       future: UserController.getActiveUser(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -49,8 +52,12 @@ class DashboardPage extends StatelessWidget {
         }
       },
     );
+
+     */
   }
 }
+
+
 
 /**
  * Class to show the info for the Dashboard. It receives the active user as a

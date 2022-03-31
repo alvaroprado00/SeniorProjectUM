@@ -1,3 +1,6 @@
+import 'package:cyber/controller/user_controller.dart';
+import 'package:cyber/globals.dart';
+import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/admin/new-course/new_course_page.dart';
 import 'package:cyber/view/admin/new-course/new_course_page_description.dart';
@@ -27,8 +30,11 @@ import 'package:cyber/view/util/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 
+import '../controller/active_user_controller.dart';
 import 'admin/new-course/new_fill_blanks_page_blanks.dart';
 import 'admin/new-course/new_fill_blanks_page_text.dart';
 import 'admin/new-course/new_multiple_choice_page_description.dart';
@@ -97,7 +103,7 @@ class MyApp extends StatelessWidget {
         SignUpUsernamePage.routeName: (context) => const SignUpUsernamePage(),
         ProfileCreated.routeName: (context) => const ProfileCreated(),
         PageViewScreen.routeName: (context) =>
-            PageViewScreen(buildContext: context),
+            const PageViewScreen(),
 
         SignUpSummary.routeName: (context) => const SignUpSummary(),
         MultipleChoiceQuestionPage.routeName: (context) =>
@@ -187,9 +193,8 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-            // FirebaseAuth.instance.signOut();
-            //return DashboardPage();
-            return PageViewScreen(buildContext: context);
+
+            return PageViewScreen();
           }
         case ApplicationLoginState.loggedOut:
           {
@@ -203,3 +208,4 @@ class HomePage extends StatelessWidget {
     });
   }
 }
+

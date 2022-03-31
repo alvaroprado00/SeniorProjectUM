@@ -161,6 +161,11 @@ class ActiveUserController extends GetxController {
                 activeCourse!.numberOfQuestions) *
             questionsRight)
         .round();
+
+    if(activeCourse!.isFeatured!){
+      xpEarned=xpEarned*2;
+    }
+
     int percentageCompleted =
         ((questionsRight.toDouble() / activeCourse!.numberOfQuestions) * 100)
             .round();
@@ -176,8 +181,10 @@ class ActiveUserController extends GetxController {
     bool deleteCourse = false;
     for (CompletedCourse cCourse in this.completedCourses.value) {
       if (cCourse.courseID == activeCourse!.id) {
-        if (cCourse.numQuestionsRight >= questionsRight) {
-          //Exit the function
+        xpEarnedLastTime = cCourse.experiencePointsEarned;
+
+        if (xpEarnedLastTime >= xpEarned) {
+          //Exit the function because nothing is going to change
           return SaveCompletedCourseArgs(
               levelUp: false, earnedBadge: false, balanceXP: 0);
         } else {
