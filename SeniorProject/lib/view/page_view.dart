@@ -35,7 +35,6 @@ class _PageViewScreenState extends State<PageViewScreen> {
   @override
   Widget build(BuildContext context) {
 
-
     return Scaffold(
       body: PageView(
         controller: pageController,
@@ -43,7 +42,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
         children: [
           DashboardPage(),
           NewCoursePage(),
-          GroupHome(),
+          GroupsHome(),
           ProfilePage(
           ),
         ],
