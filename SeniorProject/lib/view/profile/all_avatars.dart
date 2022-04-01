@@ -5,13 +5,10 @@ import 'package:cyber/view/avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
 import '../util/components.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
 import '../util/k_values.dart';
-
 
 class AllAvatarsPage extends GetView<ActiveUserController> {
   const AllAvatarsPage({Key? key}) : super(key: key);
@@ -37,19 +34,25 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 0.05 * heightOfScreen,),
+            SizedBox(
+              height: 0.05 * heightOfScreen,
+            ),
             SubtitleDivider(subtitle: 'Collected'),
-            SizedBox(height: 0.03 * heightOfScreen,),
+            SizedBox(
+              height: 0.03 * heightOfScreen,
+            ),
             SizedBox(
               width: widthOfScreen,
               height: 0.5 * heightOfScreen,
               child: SingleChildScrollView(
-
-                child:Obx(()=> getAvatars(userAvatars: controller.collectedAvatars.value, size: 0.11*heightOfScreen)),
+                child: Obx(() => getAvatars(
+                    userAvatars: controller.collectedAvatars.value,
+                    size: 0.11 * heightOfScreen)),
               ),
             ),
-
-            SizedBox(height: 0.06 * heightOfScreen,),
+            SizedBox(
+              height: 0.06 * heightOfScreen,
+            ),
             Container(
               width: widthOfScreen,
               height: 0.2 * heightOfScreen,
@@ -58,14 +61,11 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
                       colors: [
-                        Colors.transparent,
-                        Colors.transparent,
-                      ])
-              ),
-
+                    Colors.transparent,
+                    Colors.transparent,
+                  ])),
               child: Image.asset(
                 'assets/images/help.png',
-
               ),
             ),
           ],
@@ -74,17 +74,17 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
     );
   }
 
-
   getAvatars({required List<String> userAvatars, required double size}) {
     List<Widget> childrenOfRow = [];
-
 
     //The user is always going to have at least one avatar so I dont
     //check for the user not having avatars
     for (String s in userAvatars) {
       //The Avatars are going to be Obx because depend on the value of the vble activeUser
-      childrenOfRow.add(
-          AvatarButton(avatarName: s, size: size,));
+      childrenOfRow.add(AvatarButton(
+        avatarName: s,
+        size: size,
+      ));
     }
 
     return Wrap(
@@ -101,95 +101,113 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
  * the user is currently having as his profilePictureActive
  */
 class AvatarButton extends StatelessWidget {
-
-
- AvatarButton({Key? key, required String this.avatarName, required double this.size}) : super(key: key);
+  AvatarButton(
+      {Key? key, required String this.avatarName, required double this.size})
+      : super(key: key);
 
   final String avatarName;
   final double size;
 
-  ActiveUserController activeUserController=Get.find();
+  ActiveUserController activeUserController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-
-    return Obx( ()=>ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          shape: const CircleBorder(), primary: activeUserController.profilePictureActive==avatarName? secondaryColor: primaryColor),
-      onPressed: (){  showDialog(
-          context: context,
-          barrierDismissible: true,
-          builder: (_) {
-            return AvatarDialog(avatarName: avatarName,);
-          });},
-      child: Avatar(nameOfAvatar: avatarName, size: size),
-
-    ));
+    return Obx(() => ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              primary: activeUserController.profilePictureActive == avatarName
+                  ? secondaryColor
+                  : primaryColor),
+          onPressed: () {
+            showDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (_) {
+                  return AvatarDialog(
+                    avatarName: avatarName,
+                  );
+                });
+          },
+          child: Avatar(nameOfAvatar: avatarName, size: size),
+        ));
   }
 }
-
 
 /**
  * A custom dialog that is displayed when the user clicks on the
  * avatar icon. It lets the user change its active profile pic
  */
 class AvatarDialog extends GetView<ActiveUserController> {
-  const AvatarDialog({Key? key, required String this.avatarName}) : super(key: key);
+  const AvatarDialog({Key? key, required String this.avatarName})
+      : super(key: key);
 
   final String avatarName;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Avatar',style: getSubheadingStyleBlue(), textAlign: TextAlign.center,),
-
+      title: Text(
+        'Avatar',
+        style: getSubheadingStyleBlue(),
+        textAlign: TextAlign.center,
+      ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Avatar(nameOfAvatar: avatarName, size: 0.3*heightOfScreen),
-          SizedBox(height: 0.05*heightOfScreen,),
-          Text('Avatar ID: ${avatarName}', style: getNormalTextStyleBlue(),),
-
+          Avatar(nameOfAvatar: avatarName, size: 0.3 * heightOfScreen),
+          SizedBox(
+            height: 0.05 * heightOfScreen,
+          ),
+          Text(
+            'Avatar ID: ${avatarName}',
+            style: getNormalTextStyleBlue(),
+          ),
         ],
       ),
       actions: <Widget>[
         TextButton(
-          onPressed: () =>
-              Navigator.pop(context, 'Cancel'),
-          child: Text('Cancel',style: getNormalTextStyleBlue(),),
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: Text(
+            'Cancel',
+            style: getNormalTextStyleBlue(),
+          ),
         ),
         TextButton(
-          onPressed: ()  async {
-              //We change the active User
-              activeUser!.profilePictureActive=avatarName;
+          onPressed: () async {
+            //We change the active User
+            activeUser!.profilePictureActive = avatarName;
 
+            String message = '';
+            await controller
+                .updateProfilePictureActive(newPicture: avatarName)
+                .then((value) {
+              if (value) {
+                message = 'Changes Applied';
+              } else {
+                message = 'Changes not applied';
+              }
+            }).catchError((onError) {
+              message = 'Something went wrong';
+            });
 
-              String message='';
-              await controller.updateProfilePictureActive(newPicture: avatarName).then((value){
-                if(value){
-                  message='Changes Applied';
-                }else{
-                  message='Changes not applied';
-                }
-              }).catchError((onError){
-                message='Something went wrong';
-              });
+            var snackBar = SnackBar(
+              backgroundColor: secondaryColor,
+              content: Text(
+                message,
+                style: getNormalTextStyleWhite(),
+              ),
+            );
 
-              var snackBar = SnackBar(
-                backgroundColor: secondaryColor,
-                content: Text(message, style: getNormalTextStyleWhite(),),
-              );
-
-              ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Navigator.pop(context);
           },
-          child:  Text('Change', style: getNormalTextStyleYellow(),),
+          child: Text(
+            'Change',
+            style: getNormalTextStyleYellow(),
+          ),
         ),
       ],
     );
   }
 }
-
-
-

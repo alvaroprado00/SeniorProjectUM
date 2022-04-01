@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -319,18 +318,17 @@ getExitCourseButton({required BuildContext context}) {
         style: getNormalTextStyleBlue(),
       ),
       onPressed: () {
-        Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
-
+        Navigator.pushNamedAndRemoveUntil(
+            context, HomePage.routeName, (r) => false);
       },
     ),
   );
 }
 
 getSaveCurrentCourseButton({required BuildContext context}) {
-
   //We get an instance of our activeUserController
 
-  ActiveUserController activeUserController=Get.find();
+  ActiveUserController activeUserController = Get.find();
   return SizedBox(
     height: getHeightOfSmallButton(),
     width: getWidthOfSmallButton(),
@@ -341,11 +339,10 @@ getSaveCurrentCourseButton({required BuildContext context}) {
           style: getNormalTextStyleBlue(),
         ),
         onPressed: () async {
-
           await activeUserController.updateCurrentCourse();
           //Once the user is updated, then we go to the dashboard
-          Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
-
+          Navigator.pushNamedAndRemoveUntil(
+              context, HomePage.routeName, (r) => false);
         }),
   );
 }
@@ -476,10 +473,6 @@ class SubtitleDivider extends StatelessWidget {
   }
 }
 
-
-
-
-
 /**
  * This class when built displays a grey container with three subcontainers
  * separated by vertical dividers. Is both used in the profile and in the
@@ -489,8 +482,8 @@ class SubtitleDivider extends StatelessWidget {
 class ProgressContainerThreeFields extends StatelessWidget {
   const ProgressContainerThreeFields(
       {required String this.field1,
-        required String this.field2,
-        required String this.field3});
+      required String this.field2,
+      required String this.field3});
 
   final String field1;
   final String field2;
@@ -498,30 +491,28 @@ class ProgressContainerThreeFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    final List<String> field1List=field1.split(' ');
-    final List<String> field2List=field2.split(' ');
-    final List<String> field3List=field3.split(' ');
+    final List<String> field1List = field1.split(' ');
+    final List<String> field2List = field2.split(' ');
+    final List<String> field3List = field3.split(' ');
 
     return getGreyTextHolderContainer(
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          getDoubleLineText(txt1: field1List[0], txt2: field1List[1]),
-          SizedBox(
-              height: 0.07 * heightOfScreen,
-              child: VerticalDivider(
-                color: secondaryColor,
-                thickness: 2,
-              )),
-          getDoubleLineText(
-              txt1: field2List[0], txt2: field2List[1]),
-          SizedBox(
-              height: 0.07 * heightOfScreen,
-              child: VerticalDivider(
-                color: secondaryColor,
-                thickness: 2,
-              )),
-          getDoubleLineText(txt1: field3List[0], txt2: field3List[1])
-        ]));
+      getDoubleLineText(txt1: field1List[0], txt2: field1List[1]),
+      SizedBox(
+          height: 0.07 * heightOfScreen,
+          child: VerticalDivider(
+            color: secondaryColor,
+            thickness: 2,
+          )),
+      getDoubleLineText(txt1: field2List[0], txt2: field2List[1]),
+      SizedBox(
+          height: 0.07 * heightOfScreen,
+          child: VerticalDivider(
+            color: secondaryColor,
+            thickness: 2,
+          )),
+      getDoubleLineText(txt1: field3List[0], txt2: field3List[1])
+    ]));
   }
 }
 
@@ -529,16 +520,18 @@ class ProgressContainerThreeFields extends StatelessWidget {
  * Function to get a container with a badge from
  * the name of the badge stored in the user
  */
-getContainerForBadge({required String nameOfIcon, required double size}){
+getContainerForBadge({required String nameOfIcon, required double size}) {
   return Container(
     width: size,
     height: size,
-
     decoration: BoxDecoration(
       shape: BoxShape.circle,
       color: primaryColor,
     ),
-
-    child:Icon(stringToBadgeIcon[nameOfIcon],color: secondaryColor,size: 0.4*size,),
+    child: Icon(
+      stringToBadgeIcon[nameOfIcon],
+      color: secondaryColor,
+      size: 0.4 * size,
+    ),
   );
 }

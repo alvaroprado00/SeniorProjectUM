@@ -15,15 +15,14 @@ import 'package:get/get.dart';
 import 'category_progress.dart';
 
 class Overview extends GetView<ActiveUserController> {
+  const Overview({Key? key}) : super(key: key);
 
-   const Overview({Key? key}) : super(key: key);
-
-  static final  String routeName='/overview';
+  static final String routeName = '/overview';
 
   @override
   Widget build(BuildContext context) {
-
-    final args =ModalRoute.of(context)!.settings.arguments as SaveCompletedCourseArgs;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as SaveCompletedCourseArgs;
 
     return Scaffold(
         appBar: AppBar(
@@ -36,34 +35,37 @@ class Overview extends GetView<ActiveUserController> {
           backgroundColor: tertiaryColor,
         ),
         backgroundColor: tertiaryColor,
-        body: ContentForOverview(earnedBadge:args.earnedBadge, levelUp:args.levelUp, balanceXP: args.balanceXP)
-    );
-
-
+        body: ContentForOverview(
+            earnedBadge: args.earnedBadge,
+            levelUp: args.levelUp,
+            balanceXP: args.balanceXP));
   }
 }
+
 class ContentForOverview extends GetView<ActiveUserController> {
-  const ContentForOverview({required bool this.earnedBadge, required bool this.levelUp, required int this.balanceXP});
+  const ContentForOverview(
+      {required bool this.earnedBadge,
+      required bool this.levelUp,
+      required int this.balanceXP});
 
   final bool earnedBadge;
   final bool levelUp;
   final int balanceXP;
 
-
   @override
   Widget build(BuildContext context) {
-
     SchedulerBinding.instance!.addPostFrameCallback((_) {
-
       //After the widget builds we check if the user has leveled up to show
       //the alert dialog corresponding to that
 
-      if(levelUp){
+      if (levelUp) {
         showDialog(
             context: context,
             barrierDismissible: true,
             builder: (_) {
-              return OverviewDialog(isBadge: false,);
+              return OverviewDialog(
+                isBadge: false,
+              );
             });
       }
     });
@@ -79,24 +81,26 @@ class ContentForOverview extends GetView<ActiveUserController> {
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-              Obx(()=>getCircularProgressCustom(xp: controller.level.value.xpEarnedInLevel.toString(), level:controller.level.value.levelNumber.toString())),
+              Obx(() => getCircularProgressCustom(
+                  xp: controller.level.value.xpEarnedInLevel.toString(),
+                  level: controller.level.value.levelNumber.toString())),
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-              Obx(()=>Text(
-                'Level ${controller.level.value.levelNumber.toString()}',
-                style: getSubheadingStyleBlue(),
-              )),
+              Obx(() => Text(
+                    'Level ${controller.level.value.levelNumber.toString()}',
+                    style: getSubheadingStyleBlue(),
+                  )),
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                 Obx(()=> Text(
-                    '${controller.completedCourses.value.last.numQuestionsRight.toString()}/${controller.completedCourses.value.last.answers.length.toString()}',
-                    style: getHeadingStyleBlue(),
-                  )),
+                  Text(
+                        '${getQuestionsRightFromProgress(progress: userProgress).toString()}/${activeCourse!.numberOfQuestions.toString()}',
+                        style: getHeadingStyleBlue(),
+                      ),
                   Text(
                     '+ ${balanceXP.toString()} EXP',
                     style: getHeadingStyleBlue(),
@@ -106,63 +110,68 @@ class ContentForOverview extends GetView<ActiveUserController> {
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-              Obx(()=>getCirclesProgressBarForCourseProgression(
-                  answers: controller.completedCourses.value.last.answers, numberOfCircles: controller.completedCourses.value.last.answers.length)),
+               getCirclesProgressBarForCourseProgression(
+                  answers: userProgress,
+                  numberOfCircles:activeCourse!.numberOfQuestions),
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
               earnedBadge
                   ? Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'You earned a new badge.',
-                    style: getNormalTextStyleBlue(),
-                  ),
-                  SizedBox(height: 0.025*heightOfScreen,),
-                  getSeeBadgeButton(context: context),
-                  SizedBox(height: 0.025*heightOfScreen,),
-
-                ],
-              )
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'You earned a new badge.',
+                          style: getNormalTextStyleBlue(),
+                        ),
+                        SizedBox(
+                          height: 0.025 * heightOfScreen,
+                        ),
+                        getSeeBadgeButton(context: context),
+                        SizedBox(
+                          height: 0.025 * heightOfScreen,
+                        ),
+                      ],
+                    )
                   : SizedBox(
-                height: 0.1 * heightOfScreen,
-              ),
+                      height: 0.1 * heightOfScreen,
+                    ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   getRestartButton(context: context),
-                  getNextButton(todo:(){Navigator.pushNamed(context, CategoryProgress.routeName);}, large: false),
+                  getNextButton(
+                      todo: () {
+                        Navigator.pushNamed(
+                            context, CategoryProgress.routeName);
+                      },
+                      large: false),
                 ],
               )
             ]),
       ),
     );
-
-
   }
 }
-
-
-
 
 //The following three methods are used to get widgets for the content of the page
 //and make it easier to read
 
-
-getRestartButton({required BuildContext context}){
+getRestartButton({required BuildContext context}) {
   return SizedBox(
       height: getHeightOfSmallButton(),
       width: getWidthOfSmallButton(),
       child: ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, CourseDescription.routeName, arguments: activeCourse!.id);
+          Navigator.pushNamed(context, CourseDescription.routeName,
+              arguments: activeCourse!.id);
         },
         child: Text('Restart', style: getNormalTextStyleBlue()),
         style: yellowButtonStyle,
       ));
 }
+
 getSeeBadgeButton({required BuildContext context}) {
   return SizedBox(
       height: getHeightOfLargeButton(),
@@ -173,14 +182,15 @@ getSeeBadgeButton({required BuildContext context}) {
               context: context,
               barrierDismissible: true,
               builder: (_) {
-                return OverviewDialog(isBadge: true,);
+                return OverviewDialog(
+                  isBadge: true,
+                );
               });
         },
         child: Text('See Badge', style: getNormalTextStyleBlue()),
         style: greyButtonStyle,
       ));
 }
-
 
 getCircularProgressCustom({required String xp, required String level}) {
   return SizedBox(
@@ -193,32 +203,43 @@ getCircularProgressCustom({required String xp, required String level}) {
             height: 0.27 * heightOfScreen,
             child: CircularProgressIndicator(
               strokeWidth: 25,
-              value: double.parse(xp)/(double.parse(level)*levelScale+baseLevel),
+              value: double.parse(xp) /
+                  (double.parse(level) * levelScale + baseLevel),
               color: secondaryColor,
             ),
           ),
         ),
         Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  xp,
-                  style: TextStyle(
-                      fontFamily: 'roboto',
-                      color: primaryColor,
-                      fontSize: 0.1 * widthOfScreen,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'EXP',
-                  style: getNormalTextStyleBlue(),
-                )
-              ],
-            )),
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              xp,
+              style: TextStyle(
+                  fontFamily: 'roboto',
+                  color: primaryColor,
+                  fontSize: 0.1 * widthOfScreen,
+                  fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'EXP',
+              style: getNormalTextStyleBlue(),
+            )
+          ],
+        )),
       ],
     ),
   );
 }
 
+
+int getQuestionsRightFromProgress({required List<bool> progress}){
+
+  int numQuestionsRight=0;
+  for (bool b in progress){
+    if(b){numQuestionsRight++;}
+  }
+  return numQuestionsRight;
+
+}

@@ -3,6 +3,7 @@ import 'package:cyber/view/util/k_values.dart';
 
 class Course {
   String? id;
+  bool? isFeatured;
   String imageURL;
   String title;
   Category category;
@@ -27,11 +28,10 @@ class Course {
     required this.questions,
   });
 
-
-  factory Course.fromJson(Map<String, dynamic> json){
+  factory Course.fromJson(Map<String, dynamic> json) {
     return Course(
-      imageURL:json['imageURL'],
-      title:json['title'],
+      imageURL: json['imageURL'],
+      title: json['title'],
       category: categoryFromString[json['category']]!,
       experiencePoints: json['experiencePoints'],
       numberOfQuestions: json['numberOfQuestions'],
@@ -48,14 +48,12 @@ class Course {
       'category': categoryToString[category],
       'description': description,
       'experiencePoints': experiencePoints,
-      'imageURL':imageURL,
-      'numberOfQuestions':numberOfQuestions,
+      'imageURL': imageURL,
+      'numberOfQuestions': numberOfQuestions,
       'outcomes': outcomes,
       'title': title,
-      'badgeIcon':badgeIcon,
-      'positionInCategory':positionInCategory,
+      'badgeIcon': badgeIcon,
+      'positionInCategory': positionInCategory,
     };
   }
-
-
 }

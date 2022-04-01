@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 
 import '../util/k_styles.dart';
 
-
 /**
  * This class is used to show an alert dialog in the overview page
  * It can be used to show the user he has leveled up or it can be used
@@ -21,14 +20,16 @@ class OverviewDialog extends StatelessWidget {
   final bool isBadge;
   @override
   Widget build(BuildContext context) {
-     return AlertDialog(
-       title: Text(isBadge? 'You earned a new Badge!':'Level UP!', style: getSubheadingStyleBlue(),textAlign: TextAlign.center,),
-
-      content: isBadge? BadgeContent():LevelUpContent(),
+    return AlertDialog(
+      title: Text(
+        isBadge ? 'You earned a new Badge!' : 'Level UP!',
+        style: getSubheadingStyleBlue(),
+        textAlign: TextAlign.center,
+      ),
+      content: isBadge ? BadgeContent() : LevelUpContent(),
       insetPadding: EdgeInsets.all(10),
       actionsAlignment: MainAxisAlignment.center,
       actions: <Widget>[
-
         SizedBox(
             height: getHeightOfSmallButton(),
             width: getWidthOfSmallButton(),
@@ -36,14 +37,14 @@ class OverviewDialog extends StatelessWidget {
               onPressed: () {
                 print('Popo');
               },
-              child: Text(isBadge? 'All Badges': 'All Avatars', style: getNormalTextStyleBlue()),
+              child: Text(isBadge ? 'All Badges' : 'All Avatars',
+                  style: getNormalTextStyleBlue()),
               style: greyButtonStyle,
             )),
       ],
     );
   }
 }
-
 
 class LevelUpContent extends GetView<ActiveUserController> {
   const LevelUpContent({Key? key}) : super(key: key);
@@ -55,10 +56,16 @@ class LevelUpContent extends GetView<ActiveUserController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Obx(()=>Avatar(nameOfAvatar:controller.collectedAvatars.value.last, size:0.2*heightOfScreen)),
-        SizedBox(height: 0.05*heightOfScreen,),
-
-        Obx(()=>Text('Avatar ID:${controller.collectedAvatars.value.last}',style: getNormalTextStyleBlue(),)),
+        Obx(() => Avatar(
+            nameOfAvatar: controller.collectedAvatars.value.last,
+            size: 0.2 * heightOfScreen)),
+        SizedBox(
+          height: 0.05 * heightOfScreen,
+        ),
+        Obx(() => Text(
+              'Avatar ID:${controller.collectedAvatars.value.last}',
+              style: getNormalTextStyleBlue(),
+            )),
       ],
     );
   }
@@ -72,14 +79,19 @@ class BadgeContent extends GetView<ActiveUserController> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Obx(()=>getContainerForBadge(nameOfIcon: controller.collectedBadges.value.last.picture, size: 0.2*heightOfScreen)),
-        SizedBox(height: 0.05*heightOfScreen,),
-        Text('Course:${activeCourse!.title}',style: getNormalTextStyleBlue(),),
+        Obx(() => getContainerForBadge(
+            nameOfIcon: controller.collectedBadges.value.last.picture,
+            size: 0.2 * heightOfScreen)),
+        SizedBox(
+          height: 0.05 * heightOfScreen,
+        ),
+        Text(
+          'Course:${activeCourse!.title}',
+          style: getNormalTextStyleBlue(),
+        ),
       ],
     );
   }
 }
-

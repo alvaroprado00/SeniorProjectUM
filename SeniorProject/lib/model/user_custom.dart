@@ -1,4 +1,3 @@
-
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/level.dart';
@@ -235,14 +234,15 @@ class UserCustom {
  */
 
 class SaveCompletedCourseArgs {
-
   final bool levelUp;
   final bool earnedBadge;
   final int balanceXP;
 
-  const SaveCompletedCourseArgs({required bool this.levelUp, required bool this.earnedBadge, required int this.balanceXP});
+  const SaveCompletedCourseArgs(
+      {required bool this.levelUp,
+      required bool this.earnedBadge,
+      required int this.balanceXP});
 }
-
 
 getFakeUser() {
   return UserCustom(
@@ -299,13 +299,23 @@ List<String> fakeCollectedAvatars = ["hello", "good morning", "hey"];
 
 List<CompletedCourse> fakeCompletedCourses = [
   CompletedCourse(
-      answers: [false, false, false, true, true, true,false,true,false,true],
+      answers: [
+        false,
+        false,
+        false,
+        true,
+        true,
+        true,
+        false,
+        true,
+        false,
+        true
+      ],
       percentageCompleted: 50,
       experiencePointsEarned: 150,
       dateCompleted: DateTime.now(),
-      courseID: "Password", numQuestionsRight: 5)
+      courseID: "Password",
+      numQuestionsRight: 5)
 ];
 
 List<String> fakeCoursesSaved = ['Password', 'Cookies', 'USB'];
-
-

@@ -86,21 +86,28 @@ class BadgesContent extends GetView<ActiveUserController> {
   Widget build(BuildContext context) {
     CourseController cc = CourseController();
     return FutureBuilder(
-      future: cc.getCourseNamesFromCategory(
-          category: category),
+      future: cc.getCourseNamesFromCategory(category: category),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         //The snapshot is a map with entries <courseID, courseName>
         if (snapshot.hasData) {
           if (snapshot.data.isEmpty) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment:  CrossAxisAlignment.center,
-
-              children: [SizedBox(height: 0.05*heightOfScreen),Text('No courses in category', style: getSubheadingStyleBlue(),)],
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 0.05 * heightOfScreen),
+                Text(
+                  'No courses in category',
+                  style: getSubheadingStyleBlue(),
+                )
+              ],
             );
           } else {
-            return Obx(()=>getRowOfBadges(
-                coursesInCategory: snapshot.data, context: context, category: category, userBadges: controller.collectedBadges));
+            return Obx(() => getRowOfBadges(
+                coursesInCategory: snapshot.data,
+                context: context,
+                category: category,
+                userBadges: controller.collectedBadges));
           }
         } else if (snapshot.hasError) {
           return Center(
@@ -120,7 +127,8 @@ class BadgesContent extends GetView<ActiveUserController> {
 
 getRowOfBadges(
     {required Map<String, String> coursesInCategory,
-    required BuildContext context, required Category category,
+    required BuildContext context,
+    required Category category,
     required List<Badge> userBadges}) {
   List<Widget> childrenOfRow = [];
 
@@ -140,15 +148,18 @@ getRowOfBadges(
   int numberOfBadges = childrenOfRow.length;
 
   //In case there are no badges I show a message
-  if(numberOfBadges==0){
+  if (numberOfBadges == 0) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          height: heightOfScreen*0.05,
+          height: heightOfScreen * 0.05,
         ),
-        Text('No badges Earned in ${categoryToString[category]!}', style: getSubheadingStyleBlue(),),
+        Text(
+          'No badges Earned in ${categoryToString[category]!}',
+          style: getSubheadingStyleBlue(),
+        ),
       ],
     );
   }
@@ -164,8 +175,14 @@ getRowOfBadges(
 
   //The last badge will be the button to go to the next page
 
-  childrenOfRow.add(
-      getIconButtonShowMore(context: context, size: 0.1 * heightOfScreen, todo: (){Navigator.pushNamed(context, CategoryBadges.routeName, arguments: CategoryBadgesArgs(coursesInCategory: coursesInCategory, category: category));}));
+  childrenOfRow.add(getIconButtonShowMore(
+      context: context,
+      size: 0.1 * heightOfScreen,
+      todo: () {
+        Navigator.pushNamed(context, CategoryBadges.routeName,
+            arguments: CategoryBadgesArgs(
+                coursesInCategory: coursesInCategory, category: category));
+      }));
 
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -241,7 +258,10 @@ class BadgeDialog extends StatelessWidget {
   }
 }
 
-getIconButtonShowMore({required BuildContext context, required double size, required void Function() todo}) {
+getIconButtonShowMore(
+    {required BuildContext context,
+    required double size,
+    required void Function() todo}) {
   return Padding(
     padding: const EdgeInsets.only(left: 6, right: 6),
     child: Container(

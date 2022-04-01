@@ -18,31 +18,28 @@ class FillInTheBlanksOptionsPage extends StatelessWidget {
     //First of all I take the question from the arguments
 
     final newQuestion =
-    ModalRoute.of(context)!.settings.arguments as FillInTheBlanksQuestion;
-
+        ModalRoute.of(context)!.settings.arguments as FillInTheBlanksQuestion;
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
-    appBar: AppBar(
-    leading: getBackButton(context: context),
-    title: Text('Fill In The Blanks'),
-    centerTitle: true,
-    titleTextStyle: getSubheadingStyleWhite(),
-    elevation: 0,
-    actions: <Widget>[
-    getExitButtonAdmin(context: context),
-    ],
-    ),
-    body: SafeArea(
-    child:OptionsForm(question: newQuestion)));
-    }
+        appBar: AppBar(
+          leading: getBackButton(context: context),
+          title: Text('Fill In The Blanks'),
+          centerTitle: true,
+          titleTextStyle: getSubheadingStyleWhite(),
+          elevation: 0,
+          actions: <Widget>[
+            getExitButtonAdmin(context: context),
+          ],
+        ),
+        body: SafeArea(child: OptionsForm(question: newQuestion)));
+  }
 }
-
 
 class OptionsForm extends StatefulWidget {
   const OptionsForm({required FillInTheBlanksQuestion this.question});
 
-final FillInTheBlanksQuestion question;
+  final FillInTheBlanksQuestion question;
   @override
   State<OptionsForm> createState() => _OptionsFormState();
 }
@@ -69,7 +66,6 @@ class _OptionsFormState extends State<OptionsForm> {
 
   @override
   Widget build(BuildContext context) {
-
     //Define the snackbar
     SnackBar getSnackBar({required String message}) {
       return SnackBar(
@@ -133,65 +129,63 @@ class _OptionsFormState extends State<OptionsForm> {
       }
     };
     return Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 0.25 * heightOfScreen),
-                Text(
-                  'Enter Option.',
-                  style: getNormalTextStyleWhite(),
-                  textAlign: TextAlign.center,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                      top: 0.025 * heightOfScreen,
-                      left: 0.03 * widthOfScreen,
-                      right: 0.03 * widthOfScreen),
-                  child: TextFormField(
-                    validator: validatorForEmptyTextField,
-                    controller: _controllerOption,
-                    decoration: getInputDecoration(
-                        hintText: 'Option $_optionNumber',
-                        icon: Icon(
-                          Icons.view_list,
-                          color: secondaryColor,
-                        )),
-                  ),
-                ),
-                SizedBox(height: 0.29 * heightOfScreen),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(
-                          height: getHeightOfSmallButton(),
-                          width: getWidthOfSmallButton(),
-                          child: ElevatedButton(
-                            onPressed: addOption,
-                            child: Text('Add as Option ${_optionNumber}',
-                                style: getNormalTextStyleBlue()),
-                            style: greyButtonStyle,
-                          )),
-                      SizedBox(
-                          height: getHeightOfSmallButton(),
-                          width: getWidthOfSmallButton(),
-                          child: ElevatedButton(
-                            onPressed: addSolution,
-                            child: Text('Add as Answer ${_blankNumber}',
-                                style: getNormalTextStyleBlue()),
-                            style: yellowButtonStyle,
-                          )),
-                    ]),
-                SizedBox(height: 0.04 * heightOfScreen),
-                getNextButton(todo: navigate, large: true),
-                SizedBox(height: 0.04 * heightOfScreen),
-                getCirclesProgressBar(position: 2, numberOfCircles: 3),
-                SizedBox(height: 0.01 * heightOfScreen),
-              ],
+      key: _formKey,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 0.25 * heightOfScreen),
+            Text(
+              'Enter Option.',
+              style: getNormalTextStyleWhite(),
+              textAlign: TextAlign.center,
             ),
-          ),
-        );
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 0.025 * heightOfScreen,
+                  left: 0.03 * widthOfScreen,
+                  right: 0.03 * widthOfScreen),
+              child: TextFormField(
+                validator: validatorForEmptyTextField,
+                controller: _controllerOption,
+                decoration: getInputDecoration(
+                    hintText: 'Option $_optionNumber',
+                    icon: Icon(
+                      Icons.view_list,
+                      color: secondaryColor,
+                    )),
+              ),
+            ),
+            SizedBox(height: 0.29 * heightOfScreen),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              SizedBox(
+                  height: getHeightOfSmallButton(),
+                  width: getWidthOfSmallButton(),
+                  child: ElevatedButton(
+                    onPressed: addOption,
+                    child: Text('Add as Option ${_optionNumber}',
+                        style: getNormalTextStyleBlue()),
+                    style: greyButtonStyle,
+                  )),
+              SizedBox(
+                  height: getHeightOfSmallButton(),
+                  width: getWidthOfSmallButton(),
+                  child: ElevatedButton(
+                    onPressed: addSolution,
+                    child: Text('Add as Answer ${_blankNumber}',
+                        style: getNormalTextStyleBlue()),
+                    style: yellowButtonStyle,
+                  )),
+            ]),
+            SizedBox(height: 0.04 * heightOfScreen),
+            getNextButton(todo: navigate, large: true),
+            SizedBox(height: 0.04 * heightOfScreen),
+            getCirclesProgressBar(position: 2, numberOfCircles: 3),
+            SizedBox(height: 0.01 * heightOfScreen),
+          ],
+        ),
+      ),
+    );
   }
 }

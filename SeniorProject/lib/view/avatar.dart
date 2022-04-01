@@ -23,7 +23,6 @@ class Avatar extends StatelessWidget {
   final double size;
   late final String url;
 
-
   Future<Uint8List> fetchAvatar() async {
     http.Response response = await http.get(Uri.parse(url));
     return response.bodyBytes;
@@ -51,7 +50,7 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    url='https://robohash.org/${nameOfAvatar}';
+    url = 'http://robohash.org/${nameOfAvatar}';
     return new Container(
       width: size,
       height: size,
@@ -74,4 +73,3 @@ class Avatar extends StatelessWidget {
     );
   }
 }
-

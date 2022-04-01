@@ -1,7 +1,6 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
 
-import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/main.dart';
 import 'package:cyber/view/profile/all_avatars.dart';
@@ -30,31 +29,30 @@ class ProfilePage extends GetView<ActiveUserController> {
 
     //If the coursesSaved of the user change we need to rebuild the page
 
-    return Obx( ()=>FutureBuilder(
-      future: cc.getCourseNamesByIDs(ids:controller.coursesSaved),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          return ProfilePageContent(
-               coursesSaved: snapshot.data);
-        } else if (snapshot.hasError) {
-          return Scaffold(
-              body: Center(
-            child: Text(
-              'Error: ${snapshot.error}',
-              style: getHeadingStyleBlue(),
-            ),
-          ));
-        } else {
-          return Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(
-                color: primaryColor,
-              ),
-            ),
-          );
-        }
-      },
-    ));
+    return Obx(() => FutureBuilder(
+          future: cc.getCourseNamesByIDs(ids: controller.coursesSaved),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return ProfilePageContent(coursesSaved: snapshot.data);
+            } else if (snapshot.hasError) {
+              return Scaffold(
+                  body: Center(
+                child: Text(
+                  'Error: ${snapshot.error}',
+                  style: getHeadingStyleBlue(),
+                ),
+              ));
+            } else {
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(
+                    color: primaryColor,
+                  ),
+                ),
+              );
+            }
+          },
+        ));
   }
 }
 
@@ -64,7 +62,6 @@ class ProfilePageContent extends GetView<ActiveUserController> {
 
   final Map<String, String> coursesSaved;
 
-
   @override
   Widget build(BuildContext context) {
     //Here I define the functions to be executed in the buttons
@@ -73,9 +70,9 @@ class ProfilePageContent extends GetView<ActiveUserController> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialogCustom(
+            return AlertDialogSignOutDelete(
               todo: controller.signOut,
-              isDelete: false,
+              messageToDisplay: 'Do you really want to go?',
             );
           });
     };
@@ -84,9 +81,9 @@ class ProfilePageContent extends GetView<ActiveUserController> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialogCustom(
+            return AlertDialogSignOutDelete(
               todo: controller.delete,
-              isDelete: true,
+              messageToDisplay: 'You should stay with us!',
             );
           });
     };
@@ -98,17 +95,12 @@ class ProfilePageContent extends GetView<ActiveUserController> {
           elevation: 0,
           actions: [
             IconButton(
-              color: secondaryColor,
-              iconSize: 0.06 * heightOfScreen,
-              icon: Icon(CupertinoIcons.pencil_circle),
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            EditProfilePage(dummyUser: getFakeUser())));
-              },
-            ),
+                color: secondaryColor,
+                iconSize: 0.06 * heightOfScreen,
+                icon: Icon(CupertinoIcons.pencil_circle),
+                onPressed: () {
+                  Navigator.pushNamed(context, EditProfilePage.routeName);
+                }),
           ],
         ),
         body: SafeArea(
@@ -120,28 +112,29 @@ class ProfilePageContent extends GetView<ActiveUserController> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-
                     //When the profile picture of the user changes, we need to change this
-                    AvatarPic(),
+                    AvatarPic(size: 0.3*heightOfScreen,),
                     Padding(
-                      padding: EdgeInsets.only(
-                          top: heightOfScreen * 0.03,
-                          bottom: heightOfScreen * 0.03),
-                      child: Obx(()=> Text(
-                        controller.username.value,
-                        style: getHeadingStyleBlue(),
-                      ))
-                    ),
+                        padding: EdgeInsets.only(
+                            top: heightOfScreen * 0.03,
+                            bottom: heightOfScreen * 0.03),
+                        child: Obx(() => Text(
+                              controller.username.value,
+                              style: getHeadingStyleBlue(),
+                            ))),
 
                     //This field is also prone to changes
-                    Obx(()=>ProgressContainerThreeFields(
-                        field1: controller.getNumBadges().toString() + ' Badges',
-                        field2: controller.getTotalPoints().toString() + ' Points',
-                        field3: controller.getNumAvatars().toString() + ' Avatars')),
+                    Obx(() => ProgressContainerThreeFields(
+                        field1:
+                            controller.getNumBadges().toString() + ' Badges',
+                        field2:
+                            controller.getTotalPoints().toString() + ' Points',
+                        field3: controller.getNumAvatars().toString() +
+                            ' Avatars')),
                     SizedBox(height: 0.05 * heightOfScreen),
-                   Obx(()=> LevelProgress(
-                      userLevel: controller.level.value,
-                    )),
+                    Obx(() => LevelProgress(
+                          userLevel: controller.level.value,
+                        )),
                     SizedBox(
                       height: 0.05 * heightOfScreen,
                     ),
@@ -216,17 +209,19 @@ class ProfilePageContent extends GetView<ActiveUserController> {
  * Class to display the Avatar picture of the user
  */
 class AvatarPic extends GetView<ActiveUserController> {
-  const AvatarPic({Key? key}):super(key: key);
+  const AvatarPic({Key? key, required double this.size}) : super(key: key);
 
+  final double size;
   @override
   Widget build(BuildContext context) {
-    return  Align(
+    return Align(
       alignment: Alignment.center,
-      child: Obx(()=>Avatar(nameOfAvatar: controller.profilePictureActive.value, size: 0.3*heightOfScreen)),
+      child: Obx(() => Avatar(
+          nameOfAvatar: controller.profilePictureActive.value,
+          size: size)),
     );
   }
 }
-
 
 /**
  * Class to create a progress indicator for profile page
@@ -298,7 +293,7 @@ class ProfileSection extends GetView<ActiveUserController> {
   }) : super(key: key);
 
   final TypeOfSection typeOfSection;
-  Widget widgetToShow=Container();
+  Widget widgetToShow = Container();
   final Map<String, String> coursesSaved;
   final void Function() todo;
 
@@ -307,7 +302,8 @@ class ProfileSection extends GetView<ActiveUserController> {
     switch (typeOfSection) {
       case TypeOfSection.Badges:
         {
-          widgetToShow = Obx(()=>getLastBadgesFromUser(badges: controller.collectedBadges.value));
+          widgetToShow = Obx(() =>
+              getLastBadgesFromUser(badges: controller.collectedBadges.value));
         }
         break;
 
@@ -320,8 +316,8 @@ class ProfileSection extends GetView<ActiveUserController> {
 
       default:
         {
-          widgetToShow = Obx(()=>
-              getLastAvatarsFromUser(avatars: controller.collectedAvatars.value));
+          widgetToShow = Obx(() => getLastAvatarsFromUser(
+              avatars: controller.collectedAvatars.value));
         }
         break;
     }
@@ -401,8 +397,8 @@ getLastAvatarsFromUser({required List<String> avatars}) {
 
   //we know that in the case of avatars the user is always going to have at least one
   for (int i = 0; i < avatars.length && i < 4; i++) {
-    childrenForRow
-        .add(AvatarContainer(avatarName: avatars[i], size: 0.1*heightOfScreen));
+    childrenForRow.add(
+        AvatarContainer(avatarName: avatars[i], size: 0.1 * heightOfScreen));
   }
 
   //In case that there are not 3 badges we add grey circles
@@ -425,7 +421,7 @@ getLastAvatarsFromUser({required List<String> avatars}) {
  * You need to provide as a param a map with entries of the style
  * <courseID, title> for the coursesSaved to be able to build the cards
  */
-getLastSavedCoursesFromUser (
+getLastSavedCoursesFromUser(
     {required Map<String, String> coursesSaved,
     required BuildContext context}) {
   if (coursesSaved.isEmpty) {
@@ -437,14 +433,14 @@ getLastSavedCoursesFromUser (
     );
   }
 
-  final ActiveUserController controller=Get.find();
+  final ActiveUserController controller = Get.find();
 
   List<Widget> childrenForRow = [];
 
   coursesSaved.forEach((key, value) {
     childrenForRow.add(getCardForCourse(
         isSaved: true,
-        isCompleted: controller.isCompleted(courseID:key),
+        isCompleted: controller.isCompleted(courseID: key),
         courseID: key,
         context: context,
         title: value,
@@ -478,15 +474,15 @@ getLastSavedCoursesFromUser (
  * It uses a boolean to differentiate between the two mentioned cases.
  * A function is provided to be executed when the user clicks confirm
  */
-class AlertDialogCustom extends StatelessWidget {
-  const AlertDialogCustom(
+class AlertDialogSignOutDelete extends StatelessWidget {
+  const AlertDialogSignOutDelete(
       {Key? key,
       required Future Function() this.todo,
-      required bool this.isDelete})
+      required String this.messageToDisplay})
       : super(key: key);
 
   final Future Function() todo;
-  final bool isDelete;
+  final String messageToDisplay;
 
   @override
   Widget build(BuildContext context) {
@@ -499,7 +495,7 @@ class AlertDialogCustom extends StatelessWidget {
         style: getNormalTextStyleBlue(),
       ),
       content: Text(
-        isDelete ? "You will delete your account":" You will sign out.",
+        messageToDisplay,
         style: getNormalTextStyleBlue(),
       ),
       actions: <Widget>[
@@ -541,21 +537,23 @@ class AlertDialogCustom extends StatelessWidget {
 }
 
 class AvatarContainer extends GetView<ActiveUserController> {
-  const AvatarContainer({Key? key, required this.avatarName, required this.size}) : super(key: key);
+  const AvatarContainer(
+      {Key? key, required this.avatarName, required this.size})
+      : super(key: key);
 
   final String avatarName;
   final double size;
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>Container(
-      child: Avatar(nameOfAvatar: avatarName, size:size),
+    return Obx(() => Container(
+        child: Avatar(nameOfAvatar: avatarName, size: size),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-        color: controller.profilePictureActive.value==avatarName? secondaryColor: primaryColor,
-      )
-    ));
-
+          color: controller.profilePictureActive.value == avatarName
+              ? secondaryColor
+              : primaryColor,
+        )));
   }
 }
 

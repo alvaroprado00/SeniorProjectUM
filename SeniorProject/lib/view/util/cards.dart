@@ -1,4 +1,3 @@
-
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -13,7 +12,6 @@ import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
 import 'k_values.dart';
-
 
 /**
  * This function Retrieves a card with the title of the new-course specified.
@@ -31,16 +29,16 @@ import 'k_values.dart';
 
 Card getCardForCourse(
     {String courseID = '',
-      bool isSaved = false,
-      bool isCompleted=false,
-      required BuildContext context,
-      required String title,
-      required double widthOfCard,
-      required double heightOfCard,
-      required bool isTemplate}) {
+    bool isSaved = false,
+    bool isCompleted = false,
+    required BuildContext context,
+    required String title,
+    required double widthOfCard,
+    required double heightOfCard,
+    required bool isTemplate}) {
   void Function() navigateToCourse = () {
     Navigator.pushNamed(context, CourseDescription.routeName,
-        arguments:courseID);
+        arguments: courseID);
   };
 
   return Card(
@@ -53,8 +51,8 @@ Card getCardForCourse(
       splashColor: secondaryColor,
       onTap: isTemplate
           ? () {
-        print('This is a template');
-      }
+              print('This is a template');
+            }
           : navigateToCourse,
       child: SizedBox(
         height: heightOfCard,
@@ -63,13 +61,19 @@ Card getCardForCourse(
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              isCompleted? Icon(Icons.check_circle_rounded, color: secondaryColor,):SizedBox(width: 0,),
+              isCompleted
+                  ? Icon(
+                      Icons.check_circle_rounded,
+                      color: secondaryColor,
+                    )
+                  : SizedBox(
+                      width: 0,
+                    ),
               isTemplate
                   ? Icon(Icons.bookmark, color: secondaryColor)
                   : SaveButton(isFilled: isSaved, courseID: courseID),
             ],
           ),
-
           Padding(
             padding: EdgeInsets.only(
                 left: 0.05 * widthOfCard, bottom: heightOfCard * 0.05),
@@ -103,21 +107,19 @@ class SaveButton extends StatefulWidget {
 class _SaveButtonState extends State<SaveButton> {
   @override
   Widget build(BuildContext context) {
-
-    ActiveUserController activeUserController=Get.find();
+    ActiveUserController activeUserController = Get.find();
 
     return IconButton(
       onPressed: () {
         //When pressed we check if the courses is or not
         //saved and we execute the corresponding function
 
-        if(widget.isFilled){
-
-          activeUserController.unsaveCourse(courseID:widget.courseID);
+        if (widget.isFilled) {
+          activeUserController.unsaveCourse(courseID: widget.courseID);
           //activeUser!.unsaveCourse(courseID:widget.courseID);
 
-        }else{
-          activeUserController.saveCourse(courseID:widget.courseID);
+        } else {
+          activeUserController.saveCourse(courseID: widget.courseID);
           //activeUser!.saveCourse(courseID:widget.courseID);
         }
 
@@ -127,13 +129,13 @@ class _SaveButtonState extends State<SaveButton> {
       },
       icon: widget.isFilled
           ? Icon(
-        Icons.bookmark,
-        color: secondaryColor,
-      )
+              Icons.bookmark,
+              color: secondaryColor,
+            )
           : Icon(
-        Icons.bookmark_border,
-        color: secondaryColor,
-      ),
+              Icons.bookmark_border,
+              color: secondaryColor,
+            ),
     );
   }
 }
@@ -156,10 +158,10 @@ class _SaveButtonState extends State<SaveButton> {
 
 Card getCardForCategory(
     {required BuildContext context,
-      required Category category,
-      required double widthOfCard,
-      required double heightOfCard,
-      required bool isTemplate}) {
+    required Category category,
+    required double widthOfCard,
+    required double heightOfCard,
+    required bool isTemplate}) {
   //Function to be executed if the card is not a template
   void Function() navigateToCategory = () {
     Navigator.pushNamed(context, CategoryPage.routeName, arguments: category);
@@ -175,8 +177,8 @@ Card getCardForCategory(
       splashColor: secondaryColor,
       onTap: isTemplate
           ? () {
-        print('Does nothing');
-      }
+              print('Does nothing');
+            }
           : navigateToCategory,
       child: SizedBox(
         width: widthOfCard,
@@ -198,9 +200,9 @@ Card getCardForCategory(
 
 Card getCardForNotification(
     {required String username,
-      required String nameOfCourse,
-      required double widthOfCard,
-      required double heightOfCard}) {
+    required String nameOfCourse,
+    required double widthOfCard,
+    required double heightOfCard}) {
   return Card(
     color: primaryColor,
     borderOnForeground: true,
@@ -219,9 +221,7 @@ Card getCardForNotification(
             Padding(
               padding: EdgeInsets.only(
                   left: 0.025 * widthOfCard, right: 0.025 * widthOfCard),
-              child: Avatar(
-                  nameOfAvatar: username,
-                  size: widthOfScreen * 0.1),
+              child: Avatar(nameOfAvatar: username, size: widthOfScreen * 0.1),
             ),
             Flexible(
               child: Text(
@@ -241,12 +241,11 @@ Card getCardForNotification(
   );
 }
 
-
 /**
  * Function to get a grey container with the shape of a course card
  * to show a placeholder
  */
-getCourseCardPlaceHolder(){
+getCourseCardPlaceHolder() {
   return Container(
     width: 0.4 * widthOfScreen,
     height: 0.12 * heightOfScreen,
