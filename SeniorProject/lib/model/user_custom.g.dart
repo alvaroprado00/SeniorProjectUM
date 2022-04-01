@@ -39,7 +39,7 @@ Map<String, dynamic> _$UserCustomToJson(UserCustom instance) =>
       'username': instance.username,
       'level': instance.level.toJson(),
       'profilePictureActive': instance.profilePictureActive,
-      'userGroups': instance.userGroups,
+      'userGroups': instance.userGroups.toList(),
       'collectedAvatars': instance.collectedAvatars,
       'collectedBadges':
       instance.collectedBadges.map((e) => e.toJson()).toList(),

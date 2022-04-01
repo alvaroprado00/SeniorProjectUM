@@ -148,7 +148,7 @@ class MyApp extends StatelessWidget {
         CategoryBadges.routeName: (context)=> const CategoryBadges(),
         AllCoursesPage.routeName: (context)=> const AllCoursesPage(),
         CategoryCourses.routeName: (context)=> const CategoryCourses(),
-        GroupHome.routeName: (context)=> const GroupHome(),
+        GroupsHome.routeName: (context)=> GroupsHome(),
         CreateGroup.routeName: (context)=> const CreateGroup(),
 
       },

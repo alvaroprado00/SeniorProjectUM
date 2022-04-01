@@ -57,6 +57,9 @@ class ActiveUserController extends GetxController{
     return this.level.value.totalXP;
   }
 
+  getUserGroupCode(int n){
+    return this.userGroups.value.elementAt(n);
+  }
 
   isCompleted({required String courseID}){
 
@@ -264,6 +267,11 @@ class ActiveUserController extends GetxController{
     Badge newBadge=Badge(courseID: activeCourse!.id!, picture: activeCourse!.badgeIcon, timeEarned: DateTime.now());
     this.collectedBadges.add(newBadge);
     await UserController.updateComplexListUserField(nameOfField: 'collectedBadges', field: this.collectedBadges.value);
+  }
+
+  Future updateUserGroups({required String groupCode}){
+    this.userGroups.add(groupCode);
+    return UserController.updateSimpleUserField(nameOfField: 'userGroups', field: this.userGroups.value);
   }
 
   /**

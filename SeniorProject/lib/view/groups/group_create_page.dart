@@ -1,10 +1,10 @@
 import 'dart:io';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/groups/group_created_page.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -435,6 +435,7 @@ class _CreateGroupState extends State<CreateGroup> {
                             });
                         }
                         UserController.addGroupCodeToUser(groupCode: [groupCode]);
+                        ActiveUserController().updateUserGroups(groupCode: groupCode);
                       }
                     },
                     child: Text(

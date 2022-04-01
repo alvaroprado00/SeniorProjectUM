@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/view/groups/group_info_page.dart';
 import 'package:flutter/material.dart';
 
@@ -7,9 +8,9 @@ import '../util/k_styles.dart';
 import '../util/k_values.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key, required this.groupName}) : super(key: key);
+  const ChatPage({Key? key, required this.snapshot}) : super(key: key);
 
-  final String groupName;
+  final AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot;
   static final String routeName = "/ChatPage";
 
   @override
@@ -129,7 +130,7 @@ class _ChatPageState extends State<ChatPage> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    widget.groupName,
+                    "Group Name",
                     style: const TextStyle(
                       color: primaryColor,
                       fontSize: 27,
@@ -137,7 +138,7 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfoPage(groupName: widget.groupName, usernames: usernames)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfoPage(groupName: "Group Name", usernames: usernames)));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
