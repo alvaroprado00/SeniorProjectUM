@@ -249,7 +249,7 @@ getFakeUser() {
     email: 'Fake@gmail.com',
     username: 'FakeUser',
     profilePictureActive: 'FakeUser',
-    userGroups: ['7011ac59',],
+    userGroups: groups,
     collectedBadges: fakeCollectedBadges,
     level: Level(totalXP: 1100, levelNumber: 2, xpEarnedInLevel: 100),
     collectedAvatars: fakeCollectedAvatars,
@@ -259,6 +259,8 @@ getFakeUser() {
     isAdmin: false,
   );
 }
+
+List<String> groups = ['7011ac59',];
 
 List<Badge> fakeCollectedBadges = [
   Badge(

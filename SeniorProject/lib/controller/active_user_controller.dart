@@ -16,6 +16,7 @@ class ActiveUserController extends GetxController {
   final level = Level(xpEarnedInLevel: 0, levelNumber: 0, totalXP: 0).obs;
   final email = 'email@gmail.com'.obs;
   final isAdmin = true.obs;
+  final userGroups = <String>[].obs;
   final coursesSaved = <String>[].obs;
   final completedCourses = <CompletedCourse>[].obs;
   final collectedBadges = <Badge>[].obs;
@@ -31,11 +32,13 @@ class ActiveUserController extends GetxController {
     level.value = activeUser!.level;
     email.value = activeUser!.email;
     isAdmin.value = activeUser!.isAdmin;
+    userGroups.value = activeUser!.userGroups;
     coursesSaved.value = activeUser!.coursesSaved;
     currentCourse.value = activeUser!.currentCourse;
     completedCourses.value = activeUser!.completedCourses;
     collectedBadges.value = activeUser!.collectedBadges;
     collectedAvatars.value = activeUser!.collectedAvatars;
+
   }
 
   getNumBadges() {
@@ -299,9 +302,18 @@ class ActiveUserController extends GetxController {
         nameOfField: 'username', field: this.username.value);
   }
 
+  updateUserGroups({required String groupCode}) {
+    this.userGroups.add(groupCode);
+    return UserController.addGroupCodeToUser(groupCode: [groupCode]);
+  }
+
+  getUserGroups() {
+    return this.userGroups.value;
+  }
 
   @override
   void dispose() {
     super.dispose();
   }
+
 }

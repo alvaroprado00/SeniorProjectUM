@@ -96,7 +96,7 @@ class MyApp extends StatelessWidget {
         SignUpUsernamePage.routeName: (context) => const SignUpUsernamePage(),
         ProfileCreated.routeName: (context) => const ProfileCreated(),
         PageViewScreen.routeName: (context) =>
-            PageViewScreen(buildContext: context),
+            PageViewScreen(),
 
         SignUpSummary.routeName: (context) => const SignUpSummary(),
         MultipleChoiceQuestionPage.routeName: (context) =>
@@ -187,7 +187,7 @@ class HomePage extends StatelessWidget {
           {
             // FirebaseAuth.instance.signOut();
             //return DashboardPage();
-            return PageViewScreen(buildContext: context);
+            return PageViewScreen();
           }
         case ApplicationLoginState.loggedOut:
           {

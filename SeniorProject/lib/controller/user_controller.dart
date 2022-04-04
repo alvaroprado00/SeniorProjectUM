@@ -118,6 +118,23 @@ class UserController {
     return addUserToFireStore(userCustom: activeUser!, userId: uidOfActiveUser);
   }
 
+  static Future updatePassword({required String currentPassword, required String newPassword}) async {
+    final user = await FirebaseAuth.instance.currentUser;
+    final cred = EmailAuthProvider.credential(
+        email: user!.email!, password: currentPassword);
+
+    return user.reauthenticateWithCredential(cred).then((value) {
+      return user.updatePassword(newPassword).then((_) {
+        print('Password changed for active user');
+        return true;
+      }).catchError((error) {
+        print('Error when updating password');
+        return false;
+      });
+    }).catchError((err) {
+
+    });}
+
   /**
    * Method to sign out the active user
    */
@@ -170,7 +187,9 @@ static Future deleteActiveUser() async {
     return false;
   });
 
-}
+  }
+
+  
 
   static Future updateComplexListUserField({required String nameOfField, required dynamic field}){
     CollectionReference users =

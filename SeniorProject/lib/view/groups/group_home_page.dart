@@ -412,16 +412,15 @@ class GroupChats extends GetView<ActiveUserController> {
 
   @override
   Widget build(BuildContext context) {
-    print(ActiveUserController().userGroups.obs);
-    print(ActiveUserController().userGroups.value.toList(growable: false));
-    return Obx(() => ActiveUserController().userGroups.value.toList(growable: false) != null && ActiveUserController().userGroups.value.isNotEmpty ?
+    List<String> userGroups = controller.userGroups;
+    return Obx(() => controller.userGroups != null && controller.userGroups.value.isNotEmpty ?
     ListView.builder(
       padding: const EdgeInsets.all(2.0),
-      itemBuilder: (BuildContext context, int i) {
-        return _buildGroupTile(groupCode: ActiveUserController().getUserGroupCode(i));
+      itemBuilder: (BuildContext context, int index) {
+        return _buildGroupTile(groupCode: controller.userGroups.value.elementAt(index));
       },
       shrinkWrap: true,
-      itemCount: ActiveUserController().userGroups.value.length,
+      itemCount: controller.userGroups.value.length,
       physics: const NeverScrollableScrollPhysics(),
     ) : Padding(
       padding: const EdgeInsets.all(10.0),

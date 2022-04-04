@@ -1,5 +1,6 @@
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:cyber/view/featured/featured_course.dart';
+import 'package:cyber/view/groups/group_home_page.dart';
 import 'package:cyber/view/profile/profile.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
@@ -77,7 +78,7 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
         children: [
           DashboardPage(),
           NewCoursePage(),
-          FeaturedCoursePage(),
+          GroupsHome(),
           ProfilePage(),
         ],
       ),
