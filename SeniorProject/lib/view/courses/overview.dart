@@ -1,6 +1,9 @@
 import 'package:cyber/config/fixed_values.dart';
 import 'package:cyber/controller/active_user_controller.dart';
+import 'package:cyber/controller/group_controller.dart';
 import 'package:cyber/globals.dart';
+import 'package:cyber/model/badge.dart';
+import 'package:cyber/model/custom_notification.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/overview_dialog.dart';
@@ -11,7 +14,7 @@ import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
-
+import '../util/functions.dart';
 import 'category_progress.dart';
 
 class Overview extends GetView<ActiveUserController> {
@@ -51,6 +54,36 @@ class ContentForOverview extends GetView<ActiveUserController> {
   final bool earnedBadge;
   final bool levelUp;
   final int balanceXP;
+
+  sendUserMessage(BuildContext context) {
+
+    CustomNotification notif = CustomNotification(
+      userName: controller.username.toString(),
+      badge: Badge(courseID: activeCourse!.id.toString(), picture: activeCourse!.badgeIcon.toString(), timeEarned: DateTime.now()),
+      date: "${DateTime.now().day.toString()} ${DateTime.now().month.toString()} ${DateTime.now().year.toString()}",
+      message: getRandomUpdateMessage(activeCourse!.title).toString(),
+    );
+
+    GroupController.addNotification(notif: notif, groupCodes: controller.userGroups.toList());
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          'You earned a new badge.',
+          style: getNormalTextStyleBlue(),
+        ),
+        SizedBox(
+          height: 0.025 * heightOfScreen,
+        ),
+        getSeeBadgeButton(context: context),
+        SizedBox(
+          height: 0.025 * heightOfScreen,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,24 +150,8 @@ class ContentForOverview extends GetView<ActiveUserController> {
                 height: heightOfScreen * 0.05,
               ),
               earnedBadge
-                  ? Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'You earned a new badge.',
-                          style: getNormalTextStyleBlue(),
-                        ),
-                        SizedBox(
-                          height: 0.025 * heightOfScreen,
-                        ),
-                        getSeeBadgeButton(context: context),
-                        SizedBox(
-                          height: 0.025 * heightOfScreen,
-                        ),
-                      ],
-                    )
-                  : SizedBox(
+                  ?
+                  sendUserMessage(context) : SizedBox(
                       height: 0.1 * heightOfScreen,
                     ),
               Row(

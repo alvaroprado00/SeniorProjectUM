@@ -535,3 +535,4 @@ getContainerForBadge({required String nameOfIcon, required double size}) {
     ),
   );
 }
+

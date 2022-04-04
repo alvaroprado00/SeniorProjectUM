@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/view/groups/group_info_page.dart';
 import 'package:flutter/material.dart';
-
-import '../useful/components.dart';
+import '../../model/group.dart';
+import '../util/cards.dart';
+import '../util/components.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
 import '../util/k_values.dart';
@@ -10,7 +11,7 @@ import '../util/k_values.dart';
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key, required this.snapshot}) : super(key: key);
 
-  final AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot;
+  final Group snapshot;
   static final String routeName = "/ChatPage";
 
   @override
@@ -48,56 +49,34 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Widget _buildNotifications({required BuildContext context,
-    required List<String> courseNames,
-    required List<String> usernames}) {
+  Widget _buildNotifications({required BuildContext context,}) {
 
-    if (usernames != null) {
-      String day = 'Today';
-      return Column(
-          children: [
-            getDayTitle(day),
-            ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemBuilder: (BuildContext context, int i) {
-                return getCardForNotification(
-                    username: usernames[i],
-                    widthOfCard: getWidthOfLargeButton(),
-                    nameOfCourse: courseNames[i],
-                    heightOfCard: heightOfScreen * 0.12,
-                );
-              },
-              shrinkWrap: true,
-              itemCount: usernames.length,
-              physics: const NeverScrollableScrollPhysics(),
-            ),
-          ]
-      );
-    }
-    else {
-      return const Center(
-        child: Text(
-          'You have no notifications at the moment.',
-          style: TextStyle(
-            color: primaryColor,
-            fontSize: 16,
-            fontFamily: 'Roboto',
+    return Column(
+        children: [
+          ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemBuilder: (BuildContext context, int i) {
+              return getCardForNotification(
+                  username: widget.snapshot.groupNotifications[i].userName.toString(),
+                  widthOfCard: getWidthOfLargeButton(),
+                  nameOfCourse: widget.snapshot.groupNotifications[i].message.toString(),
+                  heightOfCard: heightOfScreen * 0.12,
+              );
+            },
+            shrinkWrap: true,
+            itemCount: widget.snapshot.groupNotifications.length,
+            physics: const NeverScrollableScrollPhysics(),
           ),
-        ),
-      );
-    }
+        ]
+    );
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
-
-    double bannerHeight = (screenHeight * 211.0) / 844.0;
-
     List<String> courseNames = ['NFTs', 'Crypto', 'Passwords', 'Social Engineering', 'Twitter', 'Instagram'];
     List<String> usernames = ['Alvarito_007', 'Pablo22', 'elVacan', 'beltrus', 'kerryCaverga', 'Siuu'];
+
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -107,12 +86,11 @@ class _ChatPageState extends State<ChatPage> {
             Stack(
               children: [
                 SizedBox(
-                  child: Image.asset(
-                    'assets/images/default_chat_banner.png',
-                    fit: BoxFit.fitHeight,
+                  child: Image.network(
+                    widget.snapshot.groupImageURL,
+                    fit: BoxFit.fitWidth,
                   ),
-                  width: screenWidth,
-                  height: bannerHeight,
+                  width: widthOfScreen,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30.0),
@@ -130,7 +108,7 @@ class _ChatPageState extends State<ChatPage> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    "Group Name",
+                    widget.snapshot.groupName.toString(),
                     style: const TextStyle(
                       color: primaryColor,
                       fontSize: 27,
@@ -150,11 +128,7 @@ class _ChatPageState extends State<ChatPage> {
                 ],
               ),
             ),
-            _buildNotifications(
-                context: context,
-                usernames: usernames,
-                courseNames: courseNames,
-            ),
+            _buildNotifications(context: context),
           ],
         ),
       ),

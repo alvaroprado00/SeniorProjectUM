@@ -9,7 +9,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:uuid/uuid.dart';
-import '../useful/components.dart';
+import '../util/components.dart';
 import '../util/functions.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
@@ -224,7 +224,7 @@ class _CreateGroupState extends State<CreateGroup> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              getTitleAndDivider('Group Name'),
+              SubtitleDivider(subtitle: 'Group Name'),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
                 child: TextFormField(
@@ -240,7 +240,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 ),
               ),
               SizedBox(height: heightOfScreen * 0.03,),
-              getTitleAndDivider('Group Image'),
+              SubtitleDivider(subtitle: 'Group Image'),
               cameraImage != null ? Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Container(
@@ -396,6 +396,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                   groupName: _controllerJoin.text,
                                   groupMembers: [activeUser!.username,],
                                   groupImageURL: imageUrl,
+                                  groupNotifications: [],
                                 ).toJson();
                                 _groupController.addGroup(newGroup, groupCode)
                                     .whenComplete(() {
@@ -421,7 +422,9 @@ class _CreateGroupState extends State<CreateGroup> {
                                       groupCode: groupCode,
                                       groupName: _controllerJoin.text,
                                       groupMembers: [activeUser!.username,],
-                                      groupImageURL: imageUrl,).toJson();
+                                      groupImageURL: imageUrl,
+                                      groupNotifications: [],
+                                    ).toJson();
                                     _groupController.addGroup(newGroup, groupCode)
                                         .whenComplete(() {
                                       setState(() {

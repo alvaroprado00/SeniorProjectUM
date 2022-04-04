@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../useful/components.dart';
+import '../util/components.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
 

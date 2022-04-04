@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/group_controller.dart';
-import 'package:cyber/view/useful/components.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../model/group.dart';
+import '../util/components.dart';
 import '../util/functions.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
@@ -289,9 +289,9 @@ class GroupsHome extends StatelessWidget {
                 width: widthOfScreen,
               ),
             ),
-            getTitleAndDivider('Groups'),
+            SubtitleDivider(subtitle: 'Groups',),
             GroupChats(),
-            getTitleAndDivider('Join'),
+            SubtitleDivider(subtitle: 'Join',),
             Padding(
               padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
               child: TextFormField(
@@ -341,7 +341,7 @@ class GroupsHome extends StatelessWidget {
                     style: blueButtonStyle,
                   )),
             ),
-            getTitleAndDivider('Create'),
+            SubtitleDivider(subtitle: 'Create',),
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
               child: SizedBox(
@@ -378,7 +378,7 @@ class GroupChats extends GetView<ActiveUserController> {
             padding: const EdgeInsets.only(top: 4.0, bottom: 4.0,),
             child: ListTile(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(snapshot: snapshot,)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(snapshot: createdGroup,)));
               },
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(createdGroup.groupImageURL,),

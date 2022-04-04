@@ -1,5 +1,4 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'group.dart';
 
 // **************************************************************************
@@ -11,6 +10,9 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
     groupName: json['groupName'] as String,
     groupMembers: List<String>.from(json['groupMembers']),
     groupImageURL: json['groupImageURL'] as String,
+    groupNotifications: (json['groupNotifications'] as List<dynamic>)
+        .map((e) => CustomNotification.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 
 Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{

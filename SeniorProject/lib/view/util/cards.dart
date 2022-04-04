@@ -225,7 +225,7 @@ Card getCardForNotification(
             ),
             Flexible(
               child: Text(
-                  '$username just completed a new-course on $nameOfCourse. ${getRandomEncouragingMessage()}',
+                  '$username just completed a new course on $nameOfCourse. ${getRandomEncouragingMessage()}',
                   style: getNormalTextStyleWhite()),
             ),
             Padding(

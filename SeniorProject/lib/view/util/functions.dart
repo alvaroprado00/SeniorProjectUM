@@ -134,6 +134,11 @@ String? getRandomEncouragingMessage() {
   return encouragingMessages[Random().nextInt(encouragingMessages.length - 1)];
 }
 
+String? getRandomUpdateMessage(String courseName) {
+  return updateMessages[Random().nextInt(updateMessages.length - 1)].toString() + courseName + getRandomEncouragingMessage().toString();
+}
+
+
 /**
  * Function that returns a random string of the length specified
  */
