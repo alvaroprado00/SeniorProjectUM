@@ -302,6 +302,8 @@ class ActiveUserController extends GetxController {
         nameOfField: 'username', field: this.username.value);
   }
 
+
+
   updateUserGroups({required String groupCode}) {
     this.userGroups.add(groupCode);
     return UserController.addGroupCodeToUser(groupCode: [groupCode]);
