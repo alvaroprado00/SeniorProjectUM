@@ -131,9 +131,9 @@ class ContentForOverview extends GetView<ActiveUserController> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                        '${getQuestionsRightFromProgress(progress: userProgress).toString()}/${activeCourse!.numberOfQuestions.toString()}',
-                        style: getHeadingStyleBlue(),
-                      ),
+                    '${getQuestionsRightFromProgress(progress: userProgress).toString()}/${activeCourse!.numberOfQuestions.toString()}',
+                    style: getHeadingStyleBlue(),
+                  ),
                   Text(
                     '+ ${balanceXP.toString()} EXP',
                     style: getHeadingStyleBlue(),
@@ -143,9 +143,9 @@ class ContentForOverview extends GetView<ActiveUserController> {
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
-               getCirclesProgressBarForCourseProgression(
+              getCirclesProgressBarForCourseProgression(
                   answers: userProgress,
-                  numberOfCircles:activeCourse!.numberOfQuestions),
+                  numberOfCircles: activeCourse!.numberOfQuestions),
               SizedBox(
                 height: heightOfScreen * 0.05,
               ),
@@ -250,13 +250,12 @@ getCircularProgressCustom({required String xp, required String level}) {
   );
 }
 
-
-int getQuestionsRightFromProgress({required List<bool> progress}){
-
-  int numQuestionsRight=0;
-  for (bool b in progress){
-    if(b){numQuestionsRight++;}
+int getQuestionsRightFromProgress({required List<bool> progress}) {
+  int numQuestionsRight = 0;
+  for (bool b in progress) {
+    if (b) {
+      numQuestionsRight++;
+    }
   }
   return numQuestionsRight;
-
 }

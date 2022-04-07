@@ -23,129 +23,147 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
 
     numberOfOptions = question.solution.length;
 
+    //Here i define the function to execute
+
+    void Function() fillInTheBlanksFunction=(){
+
+      //In case the user has not picked 3 options, dont continue
+      if(proposedSolution.length<question.solution.length){
+
+        SnackBar snBar = SnackBar(
+          content: Text(
+            'Pick more options',
+            style: getNormalTextStyleBlue(),
+          ),
+          backgroundColor: secondaryColor,
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snBar);
+        return;
+      }
+
+
+      int numberOfMatches = 0;
+      bool isRight = false;
+      for (int i = 1; i <= question.solution.length; i++) {
+        if (question.solution[i] == proposedSolution[i]) {
+          numberOfMatches++;
+        }
+      }
+
+      if (numberOfMatches == question.solution.length) {
+        isRight = true;
+      }
+
+      //I update the global variables once answer submitted
+      globals.userProgress.add(isRight);
+      globals.activeQuestionNum =
+          globals.activeQuestionNum! + 1;
+
+      // Before navigating to the next page we have to
+      // reset all the variables that we have used so far
+
+      blankCounter = 1;
+      proposedSolution = {};
+
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) {
+            return QuestionFeedback(
+                args: FeedbackArguments(
+                    isRight,
+                    question.longFeedback,
+                    question.getSolutionAsString()));
+          });
+    };
+
     return Scaffold(
       backgroundColor: tertiaryColor,
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              //Number of question + options menu
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: widthOfScreen * 0.4,
-                  ),
-                  Text(
-                    '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
-                    style: getNormalTextStyleBlue(),
-                  ),
-                  SizedBox(
-                    width: widthOfScreen * 0.25,
-                  ),
-                  getOptionsButton(
-                      context: context,
-                      courseTitle: globals.activeCourse!.title,
-                      categoryTitle:
-                          categoryToString[globals.activeCourse!.category] ??
-                              'No category found',
-                      question: question.number,
-                      numberOfQuestions:
-                          globals.activeCourse!.numberOfQuestions)
-                ],
-              ),
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                //Number of question + options menu
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: widthOfScreen * 0.4,
+                    ),
+                    Text(
+                      '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
+                      style: getNormalTextStyleBlue(),
+                    ),
+                    SizedBox(
+                      width: widthOfScreen * 0.25,
+                    ),
+                    getOptionsButton(
+                        context: context,
+                        courseTitle: globals.activeCourse!.title,
+                        categoryTitle:
+                            categoryToString[globals.activeCourse!.category] ??
+                                'No category found',
+                        question: question.number,
+                        numberOfQuestions:
+                            globals.activeCourse!.numberOfQuestions)
+                  ],
+                ),
 
-              //Progress Indicator
+                //Progress Indicator
 
-              Container(
-                  alignment: Alignment.topCenter,
-                  child: LinearProgressIndicator(
-                    color: secondaryColor,
-                    value: (question.number.toDouble() /
-                        globals.activeCourse!.numberOfQuestions.toDouble()),
-                  )),
-              SizedBox(
-                height: 0.08 * heightOfScreen,
-              ),
+                Container(
+                    alignment: Alignment.topCenter,
+                    child: LinearProgressIndicator(
+                      color: secondaryColor,
+                      value: (question.number.toDouble() /
+                          globals.activeCourse!.numberOfQuestions.toDouble()),
+                    )),
+                SizedBox(
+                  height: 0.05* heightOfScreen,
+                ),
 
-              Text(
-                'Fill In The Blanks.',
-                style: getNormalTextStyleBlueItalicBold(),
-              ),
-              SizedBox(
-                height: 0.03 * heightOfScreen,
-              ),
+                Text(
+                  'Fill In The Blanks.',
+                  style: getNormalTextStyleBlueItalicBold(),
+                ),
+                SizedBox(
+                  height: 0.03 * heightOfScreen,
+                ),
 
-              //Here comes the text of the question
 
-              FillInTheBlanksContent(
-                text: question.text,
-              ),
+                //Here comes the text of the question
 
-              SizedBox(
-                height: 0.07 * heightOfScreen,
-              ),
+                FillInTheBlanksContent(
+                  text: question.text,
+                ),
 
-              //Options offered to the user
+                Spacer(),
 
-              getOptions(options: question.options),
+                //Options offered to the user
 
-              //Button to submit the info
-              Padding(
-                padding: EdgeInsets.only(top: 0.23 * heightOfScreen),
-                child: SizedBox(
+                getOptions(options: question.options),
+
+                Spacer(flex: 2,),
+                //Button to submit the info
+                SizedBox(
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
-                      onPressed: () {
-                        int numberOfMatches = 0;
-                        bool isRight = false;
-                        for (int i = 1; i <= question.solution.length; i++) {
-                          if (question.solution[i] == proposedSolution[i]) {
-                            numberOfMatches++;
-                          }
-                        }
-
-                        if (numberOfMatches == question.solution.length) {
-                          isRight = true;
-                        }
-
-                        //I update the global variables once answer submitted
-                        globals.userProgress.add(isRight);
-                        globals.activeQuestionNum =
-                            globals.activeQuestionNum! + 1;
-
-                        // Before navigating to the next page we have to
-                        // reset all the variables that we have used so far
-
-                        blankCounter = 1;
-                        proposedSolution = {};
-
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (_) {
-                              return QuestionFeedback(
-                                  args: FeedbackArguments(
-                                      isRight,
-                                      question.longFeedback,
-                                      question.getSolutionAsString()));
-                            });
-                      },
+                      onPressed: fillInTheBlanksFunction,
                       child: Text('Submit', style: getNormalTextStyleWhite()),
                       style: blueButtonStyle,
                     )),
-              ),
-            ],
-          ),
-        ),
-      )),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

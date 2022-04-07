@@ -5,6 +5,7 @@ import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/services.dart';
 
 import '../../util/components.dart';
 import 'new_fill_blanks_page_blanks.dart';
@@ -63,6 +64,25 @@ class _TextFormState extends State<TextForm> {
 
     void Function() addText = () {
       if (_formKey.currentState!.validate()) {
+
+        //I get the text
+        String text=_controllerText.text.trim();
+
+        //Then I get the number of blanks
+        int numberOfBlanks=text.split('X').length - 1;
+
+        if(numberOfBlanks>3){
+          SnackBar snBar=SnackBar(
+            content: Text(
+              'You exceeded the number of blanks',
+              style: getNormalTextStyleBlue(),
+            ),
+            backgroundColor: secondaryColor,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snBar);
+          return;
+        }
+
         //Create a new Fill In the blanks Question
         FillInTheBlanksQuestion newQuestion = FillInTheBlanksQuestion(
             longFeedback: '',
@@ -96,11 +116,14 @@ class _TextFormState extends State<TextForm> {
                   left: 0.03 * widthOfScreen,
                   right: 0.03 * widthOfScreen),
               child: TextFormField(
+                inputFormatters: [
+                  new LengthLimitingTextInputFormatter(300),
+                ],
                 validator: validatorForEmptyTextField,
                 controller: _controllerText,
                 decoration: getInputDecoration(
                     hintText:
-                        'Enter the text of the question and place an X where the blank will appear',
+                        'Enter the text of the question and place an X where the blank will appear. Max Blanks 3',
                     icon: Icon(
                       Icons.article_outlined,
                       color: secondaryColor,

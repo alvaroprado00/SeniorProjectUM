@@ -1,10 +1,14 @@
+import 'package:cyber/view/admin/check-user-progress/user_progress.dart';
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
+import 'package:cyber/view/admin/delete-course/delete_course.dart';
+import 'package:cyber/view/admin/featured-recommended/pick_course.dart';
 import 'package:cyber/view/admin/new-course/new_course_page.dart';
+import 'package:cyber/view/admin/new-course/new_course_page_badge.dart';
 import 'package:cyber/view/admin/new-course/new_course_page_description.dart';
 import 'package:cyber/view/admin/new-course/new_course_page_outcomes.dart';
 import 'package:cyber/view/admin/new-course/new_question_feedback_page.dart';
 import 'package:cyber/view/admin/new-course/new_question_page.dart';
-import 'package:cyber/view/admin/recommended/new_recommended_page.dart';
+import 'package:cyber/view/admin/featured-recommended/new_recommended_page.dart';
 import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
@@ -27,8 +31,10 @@ import 'package:cyber/view/util/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
 import 'package:provider/provider.dart';
 
+import 'admin/featured-recommended/new_featured_page.dart';
 import 'admin/new-course/new_fill_blanks_page_blanks.dart';
 import 'admin/new-course/new_fill_blanks_page_text.dart';
 import 'admin/new-course/new_multiple_choice_page_description.dart';
@@ -76,6 +82,7 @@ class ApplicationState extends ChangeNotifier {
   }
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -83,9 +90,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Cyber',
       initialRoute: '/',
+      /*
+      onGenerateRoute: (settings) {
+        if (settings.name == "/someRoute") {
+          return PageRouteBuilder(
+              settings: settings, // Pass this to make popUntil(), pushNamedAndRemoveUntil(), works
+              pageBuilder: (_, __, ___) => SomePage(),
+              transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c)
+          );
+        }
+        // Unknown route
+        return MaterialPageRoute(builder: (_) => UnknownPage());
+      },
+      */
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const HomePage(),
@@ -95,8 +116,7 @@ class MyApp extends StatelessWidget {
         SignUpPasswordPage.routeName: (context) => const SignUpPasswordPage(),
         SignUpUsernamePage.routeName: (context) => const SignUpUsernamePage(),
         ProfileCreated.routeName: (context) => const ProfileCreated(),
-        PageViewScreen.routeName: (context) =>
-            PageViewScreen(),
+        PageViewScreen.routeName: (context) => const PageViewScreen(),
 
         SignUpSummary.routeName: (context) => const SignUpSummary(),
         MultipleChoiceQuestionPage.routeName: (context) =>
@@ -140,8 +160,7 @@ class MyApp extends StatelessWidget {
         CourseDescription.routeName: (context) => const CourseDescription(),
         Overview.routeName: (context) => const Overview(),
         CategoryProgress.routeName: (context) => const CategoryProgress(),
-        NewRecommendedCoursePage.routeName: (context) =>
-            const NewRecommendedCoursePage(),
+
         AdminDashboardPage.routeName: (context) => const AdminDashboardPage(),
         AllBadgesPage.routeName: (context)=> const AllBadgesPage(),
         AllAvatarsPage.routeName: (context)=> const AllAvatarsPage(),
@@ -150,6 +169,26 @@ class MyApp extends StatelessWidget {
         CategoryCourses.routeName: (context)=> const CategoryCourses(),
         GroupsHome.routeName: (context)=> GroupsHome(),
         CreateGroup.routeName: (context)=> const CreateGroup(),
+
+        CategoryBadges.routeName: (context) => const CategoryBadges(),
+        AllCoursesPage.routeName: (context) => const AllCoursesPage(),
+        CategoryCourses.routeName: (context) => const CategoryCourses(),
+
+        EditProfilePage.routeName: (context) => const EditProfilePage(),
+        ChangePasswordPage.routeName: (context) => const ChangePasswordPage(),
+
+        DeleteCoursePage.routeName: (context) => const DeleteCoursePage(),
+
+        UpdateRecommendedCoursePage.routeName: (context) =>
+            const UpdateRecommendedCoursePage(),
+
+        UpdateFeaturedCoursePage.routeName: (context) =>
+            const UpdateFeaturedCoursePage(),
+
+        PickACoursePage.routeName: (context) => const PickACoursePage(),
+
+        BadgePage.routeName:(context)=> const BadgePage(),
+        UserProgressPage.routeName:(context)=> const UserProgressPage(),
 
       },
       theme: ThemeData(
@@ -161,8 +200,12 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+
   }
+
+
 }
+
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -185,8 +228,6 @@ class HomePage extends StatelessWidget {
       switch (appState._loginState) {
         case ApplicationLoginState.loggedIn:
           {
-            // FirebaseAuth.instance.signOut();
-            //return DashboardPage();
             return PageViewScreen();
           }
         case ApplicationLoginState.loggedOut:

@@ -77,6 +77,7 @@ class _OptionsFormState extends State<OptionsForm> {
         if (_numberOfOption <= 4) {
           widget.question.options.add(_controllerOption.text);
           setState(() {
+            _controllerOption.clear();
             _numberOfOption++;
             if (_numberOfOption == 5) {
               _completedOptions = true;
@@ -174,6 +175,9 @@ List<Widget> getTextFormFieldForOption(
           left: 0.03 * widthOfScreen,
           right: 0.03 * widthOfScreen),
       child: TextFormField(
+        inputFormatters: [
+          new LengthLimitingTextInputFormatter(72),
+        ],
         validator: validatorForEmptyTextField,
         controller: te,
         decoration: inputDecorationForLongText,

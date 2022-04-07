@@ -53,23 +53,31 @@ class NewQuestionPage extends StatelessWidget {
       } else {
         final CourseController courseController = CourseController();
 
+        String message='';
+
         //Before uploading the new-course we have to set the number of questions
 
         newCourse!.numberOfQuestions = newCourse!.questions.length;
 
         //After adding the new-course we show a message of success
-        courseController.addCourseToFirebase().then((value) {
+        courseController
+            .addCourseToFirebase(courseToAdd: newCourse!)
+            .then((value) {
+            message='Course added';
+        }).catchError((error){
+            message='Course not added';
+        });
+
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(
-              value,
-              style: getNormalTextStyleBlue(),
-            ),
-            backgroundColor: secondaryColor,
-          ));
+          content: Text(
+          message,
+          style: getNormalTextStyleBlue(),
+          ),
+          backgroundColor: secondaryColor,));
 
           //After that I navigate
           Navigator.pushNamed(context, NewCoursePage.routeName);
-        });
+
       }
     };
 

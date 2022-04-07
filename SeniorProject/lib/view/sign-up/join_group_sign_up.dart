@@ -13,12 +13,17 @@ class SignUpGroupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        //By doing this you use the color specified in the app colorScheme
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(
-            //This is to solve the problem of the overflow caused by the keyboard
-            child: SingleChildScrollView(child: GroupForm())));
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          //By doing this you use the color specified in the app colorScheme
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: SafeArea(
+              //This is to solve the problem of the overflow caused by the keyboard
+              child: SingleChildScrollView(child: GroupForm()))),
+    );
   }
 }
 

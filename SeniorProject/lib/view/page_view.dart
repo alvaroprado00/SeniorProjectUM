@@ -1,3 +1,4 @@
+import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:cyber/view/featured/featured_course.dart';
 import 'package:cyber/view/groups/group_home_page.dart';
@@ -15,7 +16,6 @@ import '../globals.dart';
 import '../model/user_custom.dart';
 import 'admin/new-course/new_course_page.dart';
 
-
 class PageViewScreen extends StatelessWidget {
   const PageViewScreen({Key? key}) : super(key: key);
   static final routeName = '/PageViewScreen';
@@ -26,17 +26,15 @@ class PageViewScreen extends StatelessWidget {
       future: initializeUser(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-
-
           return PageViewScreenContent();
         } else if (snapshot.hasError) {
           return Scaffold(
               body: Center(
-                child: Text(
-                  'Error: ${snapshot.error}',
-                  style: getNormalTextStyleBlue(),
-                ),
-              ));
+            child: Text(
+              'Error: ${snapshot.error}',
+              style: getNormalTextStyleBlue(),
+            ),
+          ));
         } else {
           return Scaffold(body: Center(child: CircularProgressIndicator()));
         }
@@ -46,8 +44,7 @@ class PageViewScreen extends StatelessWidget {
 }
 
 class PageViewScreenContent extends StatefulWidget {
-  const PageViewScreenContent({Key? key})
-      : super(key: key);
+  const PageViewScreenContent({Key? key}) : super(key: key);
 
   @override
   _PageViewScreenContentState createState() => _PageViewScreenContentState();
@@ -57,7 +54,6 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
   PageController pageController = PageController(initialPage: 0);
 
   int _selectedIndex = 0;
-
 
   void onTapped(int index) {
     setState(() {
@@ -69,16 +65,15 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-
-    ActiveUserController activeUserController=Get.find();
+    ActiveUserController activeUserController = Get.find();
     return Scaffold(
       body: PageView(
         controller: pageController,
         physics: NeverScrollableScrollPhysics(),
         children: [
           DashboardPage(),
-          NewCoursePage(),
-          GroupsHome(),
+          FeaturedCoursePage(),
+          GroupsHome(),,
           ProfilePage(),
         ],
       ),
@@ -116,11 +111,12 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     border: Border.all(color: primaryColor, width: 0.5)),
-                child: Obx(()=>CircleAvatar(
-                  backgroundImage: NetworkImage('https://robohash.org/${activeUserController.profilePictureActive}'),
-                  backgroundColor: Colors.transparent,
-                  radius: 12,
-                )),
+                child: Obx(() => CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          'https://robohash.org/${activeUserController.profilePictureActive}'),
+                      backgroundColor: Colors.transparent,
+                      radius: 12,
+                    )),
               ),
               label: 'Profile')
         ],
@@ -128,15 +124,15 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
     );
   }
 }
-Future initializeUser() async {
 
-  try{
+Future initializeUser() async {
+  try {
     //I get the active user
-    UserCustom uc=await UserController.getActiveUser();
+    UserCustom uc = await UserController.getActiveUser();
 
     //I initialize the global variable activeUser that is used by the GetX
     //controller to initialize the info
-    activeUser=uc;
+    activeUser = uc;
 
     if (Get.isRegistered<ActiveUserController>()) {
       Get.delete<ActiveUserController>();
@@ -144,9 +140,7 @@ Future initializeUser() async {
     Get.put(ActiveUserController());
 
     return Future.value('Done');
-
-  }catch(error){
+  } catch (error) {
     throw Exception('Error initializing the user');
   }
 }
-

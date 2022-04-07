@@ -56,33 +56,36 @@ class _OutcomesFormState extends State<OutcomesForm> {
 
   @override
   Widget build(BuildContext context) {
-    final SnackBar snBar = SnackBar(
-      content: Text(
-        'Outcome $_outcomeNumber added',
-        style: getNormalTextStyleBlue(),
-      ),
-      backgroundColor: secondaryColor,
-    );
-
     //I define the function that is going to be used with the button add
 
     void Function() addOutcomeToCourse = () {
+      String message = '';
       //Returns true if the form is valid
       if (_formKey.currentState!.validate()) {
-        widget.course.outcomes.add(_controllerOutcome.text);
+        if (_outcomeNumber < 4) {
+          widget.course.outcomes.add(_controllerOutcome.text.trim());
 
-        //Give feedback to user
+          //Update state variable
+          message = 'Outcome added';
+          setState(() {
+            _outcomeNumber++;
+          });
+        } else {
+          message = 'No more outcomes allowed';
+        }
 
-        ScaffoldMessenger.of(context).showSnackBar(snBar);
-
-        //Update state variable
-
-        setState(() {
-          _outcomeNumber++;
-        });
+        final SnackBar snBar = SnackBar(
+          content: Text(
+            message,
+            style: getNormalTextStyleBlue(),
+          ),
+          backgroundColor: secondaryColor,
+        );
 
         //And also clear the field
         _controllerOutcome.clear();
+        //Give feedback to user
+        ScaffoldMessenger.of(context).showSnackBar(snBar);
       }
     };
 
@@ -149,7 +152,7 @@ class _OutcomesFormState extends State<OutcomesForm> {
                 ],
               ),
               SizedBox(height: 0.04 * heightOfScreen),
-              getCirclesProgressBar(position: 2, numberOfCircles: 3),
+              getCirclesProgressBar(position: 2, numberOfCircles: 4),
               SizedBox(height: 0.01 * heightOfScreen),
             ],
           ),

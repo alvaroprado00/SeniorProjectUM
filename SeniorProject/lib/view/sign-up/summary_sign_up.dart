@@ -25,7 +25,7 @@ class SignUpSummary extends StatelessWidget {
                   child: getBackButton(context: context)),
               Padding(
                 padding: EdgeInsets.only(
-                    top: (0.015 * heightOfScreen),
+                    top: (0.03 * heightOfScreen),
                     bottom: 0.04 * heightOfScreen,
                     left: widthOfScreen * 0.08),
                 child: Align(
@@ -142,7 +142,8 @@ class SignUpSummary extends StatelessWidget {
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, HomePage.routeName);
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil(HomePage.routeName, (Route<dynamic> route) => false);
                       },
                       child: Text('Finish', style: getNormalTextStyleBlue()),
                       style: yellowButtonStyle,
