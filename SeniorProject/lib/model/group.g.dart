@@ -8,6 +8,7 @@ part of 'group.dart';
 Group _$GroupFromJson(Map<String, dynamic> json) => Group(
     groupCode: json['groupCode'] as String,
     groupName: json['groupName'] as String,
+    dateCreated: json['dateCreated'] as String,
     groupMembers: List<String>.from(json['groupMembers']),
     groupImageURL: json['groupImageURL'] as String,
     groupNotifications: (json['groupNotifications'] as List<dynamic>)
@@ -18,6 +19,8 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
 Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
     'groupCode': instance.groupCode,
     'groupName': instance.groupName,
+    'dateCreated': instance.dateCreated,
     'groupMembers': instance.groupMembers,
     'groupImageURL': instance.groupImageURL,
+    'groupNotifications': instance.groupNotifications,
   };

@@ -1,63 +1,94 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/model/group.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import '../../controller/group_controller.dart';
 import '../util/k_values.dart';
 
-class GroupCreated extends StatefulWidget {
-  const GroupCreated({Key? key, required this.groupCode}) : super(key: key);
+class GroupCreated extends GetView<ActiveUserController> {
+  GroupCreated({Key? key, required this.groupCode}) : super(key: key);
 
-  static final String routeName = "/GroupCreated";
+  final GroupController _groupController = new GroupController();
   final String groupCode;
 
   @override
-  State<GroupCreated> createState() => _GroupCreatedState();
-}
-
-class _GroupCreatedState extends State<GroupCreated> {
-
-  final GroupController _groupController = new GroupController();
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: tertiaryColor,
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: Text('Group Created!', style: getHeadingStyleBlue(),),
-      ),
-      body: StreamBuilder(
-        stream: _groupController.getGroupByCode(widget.groupCode),
-        builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-          if(snapshot.hasData) {
-            Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
-            return GroupSuccess(createdGroup: createdGroup);
-          }
-          else {
-            return Center(
-              child: Container(
-                child: CircularProgressIndicator(color: primaryColor,),
-              ),
-            );
-          }
-        },
-      ),
+    return Obx(() =>
+      Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          backgroundColor: tertiaryColor,
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          title: Text('Group Created!', style: getHeadingStyleBlue(),),
+        ),
+        body: StreamBuilder(
+          stream: _groupController.getGroupByCode(controller.userGroups.last.toString()),
+          builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+            if(snapshot.hasData) {
+              Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+              return GroupSuccess(createdGroup: createdGroup,controller: controller,);
+            }
+            else {
+              return Center(
+                child: Container(
+                  child: CircularProgressIndicator(color: primaryColor,),
+                ),
+              );
+            }
+          },
+        ),
+      )
     );
   }
 }
 
+// class GroupCreated extends StatelessWidget {
+//   GroupCreated({Key? key, required this.groupCode}) : super(key: key);
+//
+//   final String groupCode;
+//   final GroupController _groupController = new GroupController();
+//   ActiveUserController userController = Get.put(ActiveUserController()); // Rather Controller controller = Controller();
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         elevation: 0.0,
+//         backgroundColor: tertiaryColor,
+//         automaticallyImplyLeading: false,
+//         centerTitle: true,
+//         title: Text('Group Created!', style: getHeadingStyleBlue(),),
+//       ),
+//       body: StreamBuilder(
+//         stream: _groupController.getGroupByCode(groupCode),
+//         builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+//           if(snapshot.hasData) {
+//             Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+//             return GroupSuccess(createdGroup: createdGroup);
+//           }
+//           else {
+//             return Center(
+//               child: Container(
+//                 child: CircularProgressIndicator(color: primaryColor,),
+//               ),
+//             );
+//           }
+//         },
+//       ),
+//     );
+//   }
+// }
+
 class GroupSuccess extends StatelessWidget {
-  const GroupSuccess({Key? key, required this.createdGroup}) : super(key: key);
+  const GroupSuccess({Key? key, required this.createdGroup, required this.controller}) : super(key: key);
   final Group createdGroup;
-
-  static const List months = ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','November','December'];
-
+  final ActiveUserController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +215,7 @@ class GroupSuccess extends StatelessWidget {
             child: Text("Done", style: getNormalTextStyleWhite(),),
             style: blueButtonStyle,
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(context);
             },
           ),
         ),

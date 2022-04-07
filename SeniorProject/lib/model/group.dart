@@ -8,6 +8,7 @@ part 'group.g.dart';
 class Group {
   final String groupCode;
   final String groupName;
+  final String dateCreated;
   final List<String> groupMembers;
   final String groupImageURL;
   final List<CustomNotification> groupNotifications;
@@ -15,9 +16,10 @@ class Group {
   Group({
     required this.groupCode,
     required this.groupName,
+    required this.dateCreated,
     required this.groupMembers,
     required this.groupImageURL,
-    required this.groupNotifications
+    required this.groupNotifications,
   });
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);

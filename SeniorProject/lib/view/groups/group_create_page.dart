@@ -5,6 +5,8 @@ import 'package:cyber/globals.dart';
 import 'package:cyber/view/groups/group_created_page.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -32,11 +34,13 @@ class _CreateGroupState extends State<CreateGroup> {
   final ImageCropper _cropper = ImageCropper();
   var uuid = Uuid();
   final GroupController _groupController = new GroupController();
+  final ActiveUserController activeUserController = Get.put(ActiveUserController());
   XFile? cameraImage;
   File? groupImage;
   bool gettingImage = false;
   late var imageUrl;
   late String groupCode;
+  late String date;
   late Map<String, dynamic> newGroup;
 
   @override
@@ -391,9 +395,11 @@ class _CreateGroupState extends State<CreateGroup> {
                               setState(() {
                                 gettingImage = true;
                                 imageUrl = value;
+                                date = getDateCreatedForGroup().toString();
                                 newGroup = new Group(
                                   groupCode: groupCode,
                                   groupName: _controllerJoin.text,
+                                  dateCreated: date,
                                   groupMembers: [activeUser!.username,],
                                   groupImageURL: imageUrl,
                                   groupNotifications: [],
@@ -418,9 +424,11 @@ class _CreateGroupState extends State<CreateGroup> {
                                   setState(() {
                                     gettingImage = true;
                                     imageUrl = value;
+                                    date = getDateCreatedForGroup().toString();
                                     newGroup = Group(
                                       groupCode: groupCode,
                                       groupName: _controllerJoin.text,
+                                      dateCreated: date,
                                       groupMembers: [activeUser!.username,],
                                       groupImageURL: imageUrl,
                                       groupNotifications: [],
@@ -438,7 +446,8 @@ class _CreateGroupState extends State<CreateGroup> {
                             });
                         }
                         UserController.addGroupCodeToUser(groupCode: [groupCode]);
-                        ActiveUserController().updateUserGroups(groupCode: groupCode);
+                        activeUserController.updateUserGroups(groupCode: groupCode);
+                        print(activeUserController.userGroups.toString());
                       }
                     },
                     child: Text(

@@ -10,11 +10,9 @@ import 'package:cyber/view/courses/multiple_choice_question_page.dart';
 import 'package:cyber/view/courses/fill_in_the_blanks_question_page.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:uuid/uuid.dart';
 
 
 import '../../config/fixed_values.dart';
-import '../../controller/group_controller.dart';
 import 'k_values.dart';
 
 Function nextQuestion=(BuildContext context) async {
@@ -144,6 +142,16 @@ String? getRandomUpdateMessage(String courseName) {
  */
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
+
+
+String getDateCreatedForGroup() {
+  DateTime today = DateTime.now();
+  String day = today.day.toString();
+  String month = months[(today.month) - 1];
+  String year = today.year.toString();
+
+  return "${day} ${month} ${year}";
+}
 
 // /**
 //  * Function to generate a random Group Code using uid v4. If uid exists in
