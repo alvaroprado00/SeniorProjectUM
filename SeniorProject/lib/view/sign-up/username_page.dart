@@ -47,6 +47,7 @@ class UsernameForm extends StatefulWidget {
 class _UsernameFormState extends State<UsernameForm> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _controllerUsername;
+  late bool _buttonWorking;
 
   get smallTextStyleYellow => TextStyle(
       fontWeight: FontWeight.w400,
@@ -58,6 +59,7 @@ class _UsernameFormState extends State<UsernameForm> {
   void initState() {
     super.initState();
     _controllerUsername = TextEditingController();
+    _buttonWorking = true;
   }
 
   @override
@@ -70,12 +72,15 @@ class _UsernameFormState extends State<UsernameForm> {
   Widget build(BuildContext context) {
     //Here I define the function to execute when the button is pressed
     void Function() signUpUser = () async {
-      if (_formKey.currentState!.validate()) {
+      if (_formKey.currentState!.validate() && _buttonWorking) {
+        //Disable the button to avoid another click
+        _buttonWorking = false;
+
         //Once validated the form we create the user
 
         UserCustom userCreated = UserCustom(
             email: widget.args[0],
-            username: _controllerUsername.text,
+            username: _controllerUsername.text.trim(),
             level: Level(totalXP: 0, levelNumber: 1, xpEarnedInLevel: 0),
             profilePictureActive: _controllerUsername.text,
             collectedAvatars: [_controllerUsername.text],
@@ -90,33 +95,30 @@ class _UsernameFormState extends State<UsernameForm> {
         await UserController.addUserToAuthAndFirestore(
                 u: userCreated, password: widget.args[1])
             .then((value) {
-          String message = '';
-          bool showSnack = true;
+
+          String message = 'Error when adding user to Firestore DB';
+
           //value will be bool if The user is added to the Auth DB
           if (value is bool) {
             if (value) {
-              showSnack = false;
               Navigator.pushNamed(context, ProfileCreated.routeName,
                   arguments: userCreated);
-            } else {
-              message = 'Error when adding user to Firestore DB';
             }
           } else {
             //In case value returned by the Future is a String, it means
             //it couldnt be added to the Auth DB
             message = value;
           }
-          if (showSnack) {
-            SnackBar snBar = SnackBar(
-              content: Text(
-                message,
-                style: getNormalTextStyleBlue(),
-              ),
-              backgroundColor: secondaryColor,
-            );
-            ScaffoldMessenger.of(context).showSnackBar(snBar);
-            Navigator.pushNamed(context, HomePage.routeName);
-          }
+
+          SnackBar snBar = SnackBar(
+            content: Text(
+              message,
+              style: getNormalTextStyleBlue(),
+            ),
+            backgroundColor: secondaryColor,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snBar);
+          Navigator.pushNamed(context, HomePage.routeName,);
         });
       }
     };

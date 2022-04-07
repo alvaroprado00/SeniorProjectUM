@@ -52,6 +52,18 @@ String? validatorForEmptyTextField(value) {
 }
 
 /**
+ * Validates the value is not null or empty and at least
+ * 6 characters long
+ */
+String? validatorForPassword(value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter some text';
+  }else if(value.length<6){
+    return 'Password should be at least 6 char long';
+  }
+  return null;
+}
+/**
  * Validator for TextFormField. It verifies the value is not empty
  */
 String? validatorForEmail(String? val) {

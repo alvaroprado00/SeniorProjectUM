@@ -4,6 +4,7 @@ import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/current_course.dart';
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
+import 'package:cyber/view/courses/category.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
@@ -14,49 +15,18 @@ import 'package:get/get.dart';
 import '../util/cards.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({Key? key, }) : super(key: key);
+  const DashboardPage({
+    Key? key,
+  }) : super(key: key);
 
   static final routeName = '/dashboard';
 
   @override
   Widget build(BuildContext context) {
-
     return ContentForDashboard();
-    /*
-    return FutureBuilder(
-      future: UserController.getActiveUser(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          //This is the moment to save our active user in the global variable
 
-          activeUser = snapshot.data;
-
-          //This is the moment to initialize my controller too
-          if (Get.isRegistered<ActiveUserController>()) {
-            Get.delete<ActiveUserController>();
-          }
-          Get.put(ActiveUserController());
-
-          return ContentForDashboard();
-        } else if (snapshot.hasError) {
-          return Scaffold(
-              body: Center(
-            child: Text(
-              'Error: ${snapshot.error}',
-              style: getHeadingStyleBlue(),
-            ),
-          ));
-        } else {
-          return Scaffold(body: Center(child: CircularProgressIndicator()));
-        }
-      },
-    );
-
-     */
   }
 }
-
-
 
 /**
  * Class to show the info for the Dashboard. It receives the active user as a
@@ -73,19 +43,32 @@ class ContentForDashboard extends GetView<ActiveUserController> {
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           backgroundColor: tertiaryColor,
           appBar: AppBar(
-            title: Text(
-              'Welcome ${controller.username.value}!',
+              title:
+                Padding(
+                  padding: EdgeInsets.only(top:8.0, bottom: 8.0),
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    decoration:BoxDecoration(
+                    color: quaternaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Text(
+                      'Welcome ${controller.username.value}!',
+                    ),
+                  ),
+                ),
+
+              leadingWidth: 0,
+              backgroundColor: tertiaryColor,
+              elevation: 0,
+              centerTitle: false,
+              titleTextStyle: TextStyle(
+                color: primaryColor,
+                fontSize: 0.08 * widthOfScreen,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'roboto',
+              ),
             ),
-            backgroundColor: tertiaryColor,
-            elevation: 0,
-            centerTitle: false,
-            titleTextStyle: TextStyle(
-              color: primaryColor,
-              fontSize: 0.08 * widthOfScreen,
-              fontWeight: FontWeight.w500,
-              fontFamily: 'roboto',
-            ),
-          ),
+
           body: SafeArea(
             child: Padding(
               padding: EdgeInsets.only(
@@ -132,21 +115,24 @@ class AdminButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-      hoverColor: primaryColor,
-      hoverElevation: 50,
-      onPressed: () {
-        Navigator.pushNamed(context, AdminDashboardPage.routeName);
-      },
-      label: Text(
-        'Admin',
-        style: getNormalTextStyleWhite(),
+    return Container(
+      width: 70,
+      height: 70,
+      child: FloatingActionButton(
+
+        hoverColor: primaryColor,
+        hoverElevation: 50,
+        onPressed: () {
+          Navigator.pushNamed(context, AdminDashboardPage.routeName);
+        },
+
+        child: const Icon(
+          Icons.admin_panel_settings,
+          color: tertiaryColor,
+          size: 50,
+        ),
+        backgroundColor: secondaryColor,
       ),
-      icon: const Icon(
-        Icons.admin_panel_settings,
-        color: tertiaryColor,
-      ),
-      backgroundColor: secondaryColor,
     );
   }
 }
@@ -366,12 +352,16 @@ class CategoryCards extends StatelessWidget {
                 category: Category.devices,
                 widthOfCard: 0.4 * widthOfScreen,
                 heightOfCard: 0.2 * heightOfScreen,
+                routeToNavigate: CategoryPage.routeName,
+                arguments: Category.devices,
                 isTemplate: false),
             getCardForCategory(
                 context: context,
                 category: Category.info,
                 widthOfCard: 0.4 * widthOfScreen,
                 heightOfCard: 0.2 * heightOfScreen,
+                routeToNavigate: CategoryPage.routeName,
+                arguments: Category.info,
                 isTemplate: false),
           ],
         ),
@@ -383,12 +373,16 @@ class CategoryCards extends StatelessWidget {
                 category: Category.socialMedia,
                 widthOfCard: 0.4 * widthOfScreen,
                 heightOfCard: 0.2 * heightOfScreen,
+                routeToNavigate: CategoryPage.routeName,
+                arguments: Category.socialMedia,
                 isTemplate: false),
             getCardForCategory(
                 context: context,
                 category: Category.web,
                 widthOfCard: 0.4 * widthOfScreen,
                 heightOfCard: 0.2 * heightOfScreen,
+                routeToNavigate: CategoryPage.routeName,
+                arguments: Category.web,
                 isTemplate: false),
           ],
         )

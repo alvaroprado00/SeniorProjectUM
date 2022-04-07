@@ -20,7 +20,7 @@ class ActiveUserController extends GetxController {
   final completedCourses = <CompletedCourse>[].obs;
   final collectedBadges = <Badge>[].obs;
   final collectedAvatars = <String>[].obs;
-  final Rx<CurrentCourse?> currentCourse = null.obs;
+  final currentCourse = Rxn<CurrentCourse?>();
 
   @override
   void onInit() {
@@ -112,7 +112,7 @@ class ActiveUserController extends GetxController {
     CurrentCourse cc =
         CurrentCourse(courseID: activeCourse!.id!, progress: userProgress);
     this.currentCourse.value = cc;
-    return UserController.updateComplexUserField(
+    await UserController.updateComplexUserField(
         nameOfField: 'currentCourse', field: cc);
   }
 
@@ -162,8 +162,8 @@ class ActiveUserController extends GetxController {
             questionsRight)
         .round();
 
-    if(activeCourse!.isFeatured!){
-      xpEarned=xpEarned*2;
+    if (activeCourse!.isFeatured!) {
+      xpEarned = xpEarned * 2;
     }
 
     int percentageCompleted =
@@ -293,12 +293,23 @@ class ActiveUserController extends GetxController {
   /**
    * Function to change the username of the user
    */
-  Future changeUsername({required String newUsername}) {
-    this.username.value = newUsername;
-    return UserController.updateSimpleUserField(
-        nameOfField: 'username', field: this.username.value);
-  }
+  Future changeUsername({required String newUsername}) async {
 
+    return UserController.updateUsername(newUsername: newUsername).then((value){
+
+      if(value is bool){
+        if(value){
+          this.username.value = newUsername;
+          return 'Username updated';
+        }
+        return 'Error updating username';
+      }
+      return value;
+    }).catchError((error) {
+      print('An error occurred when updating the username');
+      return 'Error occurred';
+    });
+  }
 
   @override
   void dispose() {

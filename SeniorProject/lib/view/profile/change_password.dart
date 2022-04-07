@@ -15,21 +15,25 @@ class ChangePasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: tertiaryColor,
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          'New Password',
-          style: getSubheadingStyleBlue(),
-        ),
-        centerTitle: true,
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
         backgroundColor: tertiaryColor,
-        leading: getBackButton(context: context),
-      ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: ChangePasswordForm(),
+        appBar: AppBar(
+          elevation: 0,
+          title: Text(
+            'New Password',
+            style: getSubheadingStyleBlue(),
+          ),
+          centerTitle: true,
+          backgroundColor: tertiaryColor,
+          leading: getBackButton(context: context),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: ChangePasswordForm(),
+          ),
         ),
       ),
     );
@@ -64,7 +68,8 @@ class ChangePasswordForm extends GetView<ActiveUserController> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: EdgeInsets.only(left: 0.03*widthOfScreen, right: 0.03*widthOfScreen),
+        padding: EdgeInsets.only(
+            left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,10 +154,10 @@ class AlertDialogPassword extends StatelessWidget {
               if (value) {
                 message = 'Updated password';
               } else {
-                message = 'Error when updating password';
+                message = 'Weak new password';
               }
             }).catchError((onError) {
-              message = 'Error when updating password';
+              message = 'Wrong password for this user';
             });
 
             var snackBar = SnackBar(

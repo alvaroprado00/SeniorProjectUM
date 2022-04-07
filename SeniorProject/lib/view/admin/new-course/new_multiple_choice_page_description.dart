@@ -5,6 +5,7 @@ import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/services.dart';
 
 import '../../util/components.dart';
 import 'new_multiple_choice_page_options.dart';
@@ -67,7 +68,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
         //I create a Multiple Choice Question
         Question newQuestion = MultipleChoiceQuestion(
             number: newQuestionNum!,
-            description: _controllerDescription.text,
+            description: _controllerDescription.text.trim(),
             typeOfQuestion: TypeOfQuestion.multipleChoice,
             longFeedback: '',
             options: [],
@@ -98,6 +99,9 @@ class _DescriptionFormState extends State<DescriptionForm> {
                   left: 0.03 * widthOfScreen,
                   right: 0.03 * widthOfScreen),
               child: TextFormField(
+                inputFormatters: [
+                  new LengthLimitingTextInputFormatter(210),
+                ],
                 validator: validatorForEmptyTextField,
                 controller: _controllerDescription,
                 decoration: inputDecorationForLongText,

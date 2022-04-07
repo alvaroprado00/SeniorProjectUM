@@ -19,116 +19,115 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
     final question =
         ModalRoute.of(context)!.settings.arguments as MultipleChoiceQuestion;
 
+    //Here I define the function executed when the user presses the button
+
+    void Function() submitMultipleChoiceFunction = () {
+      int i = 0;
+      int optSelected = 0;
+      //With this loop I get what option the user has selected
+      for (bool selected in ToggleButtonOptions.isSelected) {
+        if (selected) {
+          optSelected = i;
+        }
+        i++;
+      }
+      bool isRight = false;
+      if (optSelected == question.rightOption) {
+        isRight = true;
+      }
+
+      //I update the global variables once answer submitted
+      globals.userProgress.add(isRight);
+      globals.activeQuestionNum = globals.activeQuestionNum! + 1;
+
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) {
+            return QuestionFeedback(
+                args: FeedbackArguments(isRight, question.longFeedback,
+                    question.getSolutionAsString()));
+          });
+    };
+
     return Scaffold(
       backgroundColor: tertiaryColor,
       body: SafeArea(
-          child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: widthOfScreen * 0.4,
-                  ),
-                  Text(
-                    '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: widthOfScreen * 0.4,
+                    ),
+                    Text(
+                      '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
+                      style: getNormalTextStyleBlue(),
+                    ),
+                    SizedBox(
+                      width: widthOfScreen * 0.25,
+                    ),
+                    getOptionsButton(
+                        context: context,
+                        courseTitle: globals.activeCourse!.title,
+                        categoryTitle:
+                            categoryToString[globals.activeCourse!.category] ??
+                                'No category found',
+                        question: question.number,
+                        numberOfQuestions:
+                            globals.activeCourse!.numberOfQuestions)
+                  ],
+                ),
+                Container(
+                    alignment: Alignment.topCenter,
+                    child: LinearProgressIndicator(
+                      color: secondaryColor,
+                      value: (question.number.toDouble() /
+                          globals.activeCourse!.numberOfQuestions.toDouble()),
+                    )),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+                getGreyTextHolderContainer(
+                    child: Padding(
+                  padding: EdgeInsets.all(0.02 * widthOfScreen),
+                  child: Text(
+                    question.description,
                     style: getNormalTextStyleBlue(),
                   ),
-                  SizedBox(
-                    width: widthOfScreen * 0.25,
-                  ),
-                  getOptionsButton(
-                      context: context,
-                      courseTitle: globals.activeCourse!.title,
-                      categoryTitle:
-                          categoryToString[globals.activeCourse!.category] ??
-                              'No category found',
-                      question: question.number,
-                      numberOfQuestions:
-                          globals.activeCourse!.numberOfQuestions)
-                ],
-              ),
-              Container(
-                  alignment: Alignment.topCenter,
-                  child: LinearProgressIndicator(
-                    color: secondaryColor,
-                    value: (question.number.toDouble() /
-                        globals.activeCourse!.numberOfQuestions.toDouble()),
-                  )),
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              getGreyTextHolderContainer(
-                  child: Padding(
-                padding: EdgeInsets.all(0.02 * widthOfScreen),
-                child: Text(
-                  question.description,
-                  style: getNormalTextStyleBlue(),
+                )),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
                 ),
-              )),
-              SizedBox(
-                height: 0.03 * heightOfScreen,
-              ),
-              Text(
-                'Choose the correct answer.',
-                style: getNormalTextStyleBlueItalicBold(),
-              ),
-              SizedBox(
-                height: 0.03 * heightOfScreen,
-              ),
-              ToggleButtonOptions(options: question.options),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.07 * heightOfScreen, bottom: 0.05 * heightOfScreen),
-                child: SizedBox(
+                Text(
+                  'Choose the correct answer.',
+                  style: getNormalTextStyleBlueItalicBold(),
+                ),
+                Spacer(),
+
+                ToggleButtonOptions(options: question.options),
+
+                Spacer(flex: 2,),
+                SizedBox(
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
-                      onPressed: () {
-                        int i = 0;
-                        int optSelected = 0;
-                        //With this loop I get what option the user has selected
-                        for (bool selected in ToggleButtonOptions.isSelected) {
-                          if (selected) {
-                            optSelected = i;
-                          }
-                          i++;
-                        }
-                        bool isRight = false;
-                        if (optSelected == question.rightOption) {
-                          isRight = true;
-                        }
-
-                        //I update the global variables once answer submitted
-                        globals.userProgress.add(isRight);
-                        globals.activeQuestionNum =
-                            globals.activeQuestionNum! + 1;
-
-                        showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (_) {
-                              return QuestionFeedback(
-                                  args: FeedbackArguments(
-                                      isRight,
-                                      question.longFeedback,
-                                      question.getSolutionAsString()));
-                            });
-                      },
+                      onPressed: submitMultipleChoiceFunction,
                       child: Text('Submit', style: getNormalTextStyleWhite()),
                       style: blueButtonStyle,
                     )),
-              ),
-            ],
-          ),
-        ),
-      )),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+              ],
+            ),
+          )),
     );
   }
 }

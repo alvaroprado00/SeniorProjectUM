@@ -1,5 +1,4 @@
-import 'package:cyber/globals.dart' as globals;
-import 'package:cyber/view/admin/new-course/new_question_page.dart';
+import 'package:cyber/view/admin/new-course/new_course_page_badge.dart';
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_colors.dart';
@@ -43,21 +42,18 @@ class DescriptionForm extends StatefulWidget {
 class _DescriptionFormState extends State<DescriptionForm> {
   final _formKey = GlobalKey<FormState>();
   late final _controllerDescription;
-  late final _controllerBadge;
   late final _controllerOrder;
 
   @override
   void initState() {
     super.initState();
     _controllerDescription = TextEditingController();
-    _controllerBadge = TextEditingController();
     _controllerOrder = TextEditingController();
   }
 
   @override
   void dispose() {
     _controllerDescription.dispose();
-    _controllerBadge.dispose();
     _controllerOrder.dispose();
     super.dispose();
   }
@@ -68,23 +64,14 @@ class _DescriptionFormState extends State<DescriptionForm> {
 
     void Function() setFinalFields = () {
       if (_formKey.currentState!.validate()) {
-        widget.course.description = _controllerDescription.text;
-        widget.course.badgeIcon = _controllerBadge.text;
-        widget.course.positionInCategory = int.parse(_controllerOrder.text);
+        widget.course.description = _controllerDescription.text.trim();
+        widget.course.positionInCategory = int.parse(_controllerOrder.text.trim());
 
-        // I have to set the global variable to 1
 
-        globals.newQuestionNum = 1;
-
-        //Instead of passing the formed new-course to the next page
-        //I will create a global variable since
-        //the page NewQuestionPage is going to be receiving
-        //questions as arguments
-
-        globals.newCourse = widget.course;
         Navigator.pushNamed(
           context,
-          NewQuestionPage.routeName,
+          BadgePage.routeName,
+          arguments: widget.course,
         );
       }
     };
@@ -96,17 +83,17 @@ class _DescriptionFormState extends State<DescriptionForm> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 0.05 * heightOfScreen),
+              SizedBox(height: 0.1 * heightOfScreen),
               Text(
-                'Enter a new-course description.',
+                'Enter a course description.',
                 style: getNormalTextStyleWhite(),
                 textAlign: TextAlign.center,
               ),
               Padding(
                 padding: EdgeInsets.only(
                     top: 0.025 * heightOfScreen,
-                    left: 0.03 * widthOfScreen,
-                    right: 0.03 * widthOfScreen),
+                    left: 0.07 * widthOfScreen,
+                    right: 0.07 * widthOfScreen),
                 child: TextFormField(
                   validator: validatorForEmptyTextField,
                   controller: _controllerDescription,
@@ -114,30 +101,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
                   decoration: inputDecorationForLongText,
                 ),
               ),
-              SizedBox(height: 0.05 * heightOfScreen),
-              Text(
-                'Enter the badge.',
-                style: getNormalTextStyleWhite(),
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.025 * heightOfScreen,
-                    left: 0.03 * widthOfScreen,
-                    right: 0.03 * widthOfScreen),
-                child: TextFormField(
-                  validator: validatorForEmptyTextField,
-                  controller: _controllerBadge,
-                  decoration: getInputDecoration(
-                    hintText: 'Enter the name of the icon from Font-Awesome',
-                    icon: Icon(
-                      Icons.photo,
-                      color: secondaryColor,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 0.05 * heightOfScreen),
+              SizedBox(height: 0.15 * heightOfScreen),
               Text(
                 'Enter position in category.',
                 style: getNormalTextStyleWhite(),
@@ -161,11 +125,11 @@ class _DescriptionFormState extends State<DescriptionForm> {
                 ),
               ),
               SizedBox(
-                height: 0.05 * heightOfScreen,
+                height: 0.12 * heightOfScreen,
               ),
               getNextButton(todo: setFinalFields, large: true),
               SizedBox(height: 0.04 * heightOfScreen),
-              getCirclesProgressBar(position: 3, numberOfCircles: 3),
+              getCirclesProgressBar(position: 3, numberOfCircles: 4),
               SizedBox(height: 0.01 * heightOfScreen),
             ],
           ),

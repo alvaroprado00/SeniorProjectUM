@@ -29,19 +29,7 @@ class OverviewDialog extends StatelessWidget {
       content: isBadge ? BadgeContent() : LevelUpContent(),
       insetPadding: EdgeInsets.all(10),
       actionsAlignment: MainAxisAlignment.center,
-      actions: <Widget>[
-        SizedBox(
-            height: getHeightOfSmallButton(),
-            width: getWidthOfSmallButton(),
-            child: ElevatedButton(
-              onPressed: () {
-                print('Popo');
-              },
-              child: Text(isBadge ? 'All Badges' : 'All Avatars',
-                  style: getNormalTextStyleBlue()),
-              style: greyButtonStyle,
-            )),
-      ],
+
     );
   }
 }
@@ -88,7 +76,7 @@ class BadgeContent extends GetView<ActiveUserController> {
           height: 0.05 * heightOfScreen,
         ),
         Text(
-          'Course:${activeCourse!.title}',
+          'Course: ${activeCourse!.title}',
           style: getNormalTextStyleBlue(),
         ),
       ],

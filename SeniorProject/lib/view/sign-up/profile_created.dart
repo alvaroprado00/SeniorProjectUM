@@ -70,7 +70,7 @@ class ProfileCreated extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  left: 0.1 * widthOfScreen, bottom: 0.17 * heightOfScreen),
+                  left: 0.1 * widthOfScreen, bottom: 0.2 * heightOfScreen),
               child: Row(children: [
                 Icon(
                   Icons.lock,
