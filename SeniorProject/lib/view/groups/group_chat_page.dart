@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/view/groups/group_info_page.dart';
 import 'package:flutter/material.dart';
 import '../../model/group.dart';
@@ -71,10 +70,11 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
+  //TODO Separate listview and buildtile methods, create message GetX to use GetBuilder, and Change Notifications card
+
   @override
   Widget build(BuildContext context) {
 
-    List<String> courseNames = ['NFTs', 'Crypto', 'Passwords', 'Social Engineering', 'Twitter', 'Instagram'];
     List<String> usernames = ['Alvarito_007', 'Pablo22', 'elVacan', 'beltrus', 'kerryCaverga', 'Siuu'];
 
 

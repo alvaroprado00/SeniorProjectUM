@@ -317,7 +317,9 @@ class ActiveUserController extends GetxController {
 
   updateUserGroups({required String groupCode}) {
     this.userGroups.add(groupCode);
-    return UserController.addGroupCodeToUser(groupCode: [groupCode]);
+    UserController.addGroupCodeToUser(groupCode: [groupCode]);
+    update();
+    return this.userGroups.last;
   }
 
   getUserGroups() {

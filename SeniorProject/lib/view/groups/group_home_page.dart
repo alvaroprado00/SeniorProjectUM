@@ -65,19 +65,60 @@ class GroupsHome extends StatelessWidget {
 class GroupChats extends GetView<ActiveUserController> {
   const GroupChats({Key? key}) : super(key: key);
 
-  Widget _buildGroupTile({required String groupCode}) {
-    GroupController _groupController = new GroupController();
+  @override
+  Widget build(BuildContext context) {
+    return controller.userGroups != null && controller.userGroups.value.isNotEmpty ?
+    GetBuilder<ActiveUserController>(
+      builder: (controller) => ListView.builder(
+        padding: const EdgeInsets.all(2.0),
+        itemBuilder: (BuildContext context, int index) {
+          return GroupTile(groupCode: controller.userGroups.value.elementAt(index));
+        },
+        shrinkWrap: true,
+        itemCount: controller.userGroups.value.length,
+        physics: const NeverScrollableScrollPhysics(),
+      ),
+    ) : Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'You are currently not in a group.',
+            style: getNormalTextStyleBlue(),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class GroupTile extends StatelessWidget {
+  GroupTile({Key? key, required this.groupCode}) : super(key: key);
+
+  final String groupCode;
+  final GroupController _groupController = new GroupController();
+
+  @override
+  Widget build(BuildContext context) {
     return StreamBuilder(
       stream: _groupController.getGroupByCode(groupCode),
       builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-        if(snapshot.hasData) {
-          Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(color: primaryColor,),
+          );
+        }
+        else if(snapshot.hasData && snapshot.data!.exists) {
+          Group createdGroup = Group.fromJson(
+              snapshot.data!.data() as Map<String, dynamic>);
           return Padding(
             padding: const EdgeInsets.only(top: 4.0, bottom: 4.0,),
             child: ListTile(
               onTap: () {
                 // Get.to(ChatPage(snapshot: createdGroup,));
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ChatPage(snapshot: createdGroup,)));
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => ChatPage(snapshot: createdGroup,)));
               },
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(createdGroup.groupImageURL,),
@@ -101,39 +142,14 @@ class GroupChats extends GetView<ActiveUserController> {
           );
         }
         else {
-          return Center(
-            child: CircularProgressIndicator(color: primaryColor,),
-          );
+          print("waiting on snapshot");
+          return CircularProgressIndicator();
         }
       }
     );
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Obx(() => controller.userGroups != null && controller.userGroups.value.isNotEmpty ?
-    ListView.builder(
-      padding: const EdgeInsets.all(2.0),
-      itemBuilder: (BuildContext context, int index) {
-        return _buildGroupTile(groupCode: controller.userGroups.value.elementAt(index));
-      },
-      shrinkWrap: true,
-      itemCount: controller.userGroups.value.length,
-      physics: const NeverScrollableScrollPhysics(),
-    ) : Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            'You are currently not in a group.',
-            style: getNormalTextStyleBlue(),
-          ),
-        ],
-      ),
-    ));
-  }
 }
+
 
 class JoinGroup extends StatefulWidget {
   const JoinGroup({Key? key, required this.userController}) : super(key: key);
@@ -209,7 +225,6 @@ class _JoinGroupState extends State<JoinGroup> {
                     );
                   });
                   GroupController.addCurrentUserToGroup(groupCode: _controllerJoin.text);
-
                 },
                 child: Text('Join Group', style: getNormalTextStyleWhite()),
                 style: blueButtonStyle,

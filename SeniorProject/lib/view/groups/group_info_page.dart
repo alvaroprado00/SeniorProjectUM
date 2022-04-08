@@ -5,6 +5,8 @@ import '../util/components.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
 
+  //TODO: add Functionality ASAP + use previous snapshot
+
 class GroupInfoPage extends StatefulWidget {
   const GroupInfoPage({Key? key, required this.groupName, required this.usernames}) : super(key: key);
 
