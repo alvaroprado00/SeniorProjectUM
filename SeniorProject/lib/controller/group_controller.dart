@@ -67,7 +67,7 @@ class GroupController {
   static Future addNotification({required CustomNotification notif, required List<String> groupCodes}) async {
 
     for(String code in groupCodes) {
-      var upvotesRef = FirebaseFirestore.instance
+      FirebaseFirestore.instance
           .collection("groupCollection")
           .doc(code)
           .update({"groupNotifications": FieldValue.arrayUnion([notif.toJson()])});
@@ -107,4 +107,14 @@ class GroupController {
 //
 //     return
   }
+
+
+  getGroupMessages({required String groupCode}) {
+    var group = FirebaseFirestore.instance
+        .collection("groupCollection")
+        .doc(groupCode)
+        .collection("groupNotifications");
+    return group.snapshots();
+  }
+
 }

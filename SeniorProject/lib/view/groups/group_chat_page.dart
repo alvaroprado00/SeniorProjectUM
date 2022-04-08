@@ -65,6 +65,7 @@ class _ChatPageState extends State<ChatPage> {
             shrinkWrap: true,
             itemCount: widget.snapshot.groupNotifications.length,
             physics: const NeverScrollableScrollPhysics(),
+            reverse: true,
           ),
         ]
     );
