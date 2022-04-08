@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="New commit changed some code in Create group but group home is not updating.">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/user_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/user_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/main.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/page_view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/page_view.dart" afterDir="false" />
-    </list>
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Merged main into pablo branch to account for ne changes still need to change UI and group functions." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,7 +66,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649374172529</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Merged main into pablo branch to account for ne changes still need to change UI and group functions.">
+      <created>1649376724892</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1649376724892</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -88,6 +90,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="New commit changed some code in Create group but group home is not updating." />
-    <option name="LAST_COMMIT_MESSAGE" value="New commit changed some code in Create group but group home is not updating." />
+    <MESSAGE value="Merged main into pablo branch to account for ne changes still need to change UI and group functions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Merged main into pablo branch to account for ne changes still need to change UI and group functions." />
   </component>
 </project>
