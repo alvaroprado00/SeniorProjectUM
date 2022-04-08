@@ -18,8 +18,7 @@ class GroupCreated extends GetView<ActiveUserController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() =>
-      Scaffold(
+    return Scaffold(
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: tertiaryColor,
@@ -28,7 +27,7 @@ class GroupCreated extends GetView<ActiveUserController> {
           title: Text('Group Created!', style: getHeadingStyleBlue(),),
         ),
         body: StreamBuilder(
-          stream: _groupController.getGroupByCode(controller.userGroups.last.toString()),
+          stream: _groupController.getGroupByCode(groupCode),
           builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
             if(snapshot.hasData) {
               Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
@@ -43,7 +42,6 @@ class GroupCreated extends GetView<ActiveUserController> {
             }
           },
         ),
-      )
     );
   }
 }
