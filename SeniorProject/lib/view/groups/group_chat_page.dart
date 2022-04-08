@@ -1,4 +1,5 @@
 import 'package:cyber/view/groups/group_info_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../model/group.dart';
 import '../util/cards.dart';
@@ -80,27 +81,22 @@ class _ChatPageState extends State<ChatPage> {
 
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: getBackButton(context: context),
+        elevation: 0.0,
+      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                SizedBox(
-                  child: Image.network(
-                    widget.snapshot.groupImageURL,
-                    fit: BoxFit.fitWidth,
-                  ),
-                  width: widthOfScreen,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: getBackButton(context: context),
-                  ),
-                ),
-              ],
+            SizedBox(
+              child: Image.network(
+                widget.snapshot.groupImageURL,
+                fit: BoxFit.fitWidth,
+              ),
+              width: widthOfScreen,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 23.0, right: 10.0, top: 10.0),
@@ -124,7 +120,7 @@ class _ChatPageState extends State<ChatPage> {
                       backgroundColor: MaterialStateProperty.all<Color>(secondaryColor),
                       minimumSize: MaterialStateProperty.all<Size>(Size(40, 40)),
                     ),
-                    child: Icon(Icons.person_add),
+                    child: Icon(CupertinoIcons.group_solid),
                   ),
                 ],
               ),

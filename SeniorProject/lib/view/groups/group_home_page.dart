@@ -36,7 +36,7 @@ class GroupsHome extends StatelessWidget {
             SubtitleDivider(subtitle: 'Groups',),
             GroupChats(),
             SubtitleDivider(subtitle: 'Join',),
-            JoinGroup(userController: userController),
+            JoinGroup(),
             SubtitleDivider(subtitle: 'Create',),
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
@@ -152,9 +152,7 @@ class GroupTile extends StatelessWidget {
 
 
 class JoinGroup extends StatefulWidget {
-  const JoinGroup({Key? key, required this.userController}) : super(key: key);
-
-  final ActiveUserController userController;
+  const JoinGroup({Key? key}) : super(key: key);
 
   @override
   State<JoinGroup> createState() => _JoinGroupState();
@@ -162,7 +160,8 @@ class JoinGroup extends StatefulWidget {
 
 class _JoinGroupState extends State<JoinGroup> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _controllerJoin;
+  TextEditingController _controllerJoin = new TextEditingController();
+  ActiveUserController userController = Get.put(ActiveUserController());
 
   //When the widget is created we initialize the text form fields controllers
   @override
@@ -187,7 +186,7 @@ class _JoinGroupState extends State<JoinGroup> {
           child: TextFormField(
             key: _formKey,
             controller: _controllerJoin,
-            validator: validatorForEmptyTextField,
+            validator: groupCodeValidator,
             decoration: getInputDecoration(
               hintText: 'Join with Group Code',
               icon: const Icon(
@@ -204,17 +203,34 @@ class _JoinGroupState extends State<JoinGroup> {
               width: getWidthOfLargeButton(),
               child: ElevatedButton(
                 onPressed: () {
-                  widget.userController.updateUserGroups(groupCode: _controllerJoin.text)
-                      .whenComplete(() {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => JoinPopup(groupCode: _controllerJoin.text),
-                    );
-                  }).catchError((e) {
+                  if (groupCodeValidator(_controllerJoin.text) == null) {
+                    userController.updateUserGroups(groupCode: _controllerJoin.text)
+                        .whenComplete(() {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => JoinPopup(groupCode: _controllerJoin.text),
+                      );
+                    }).catchError((e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Group not found. Please enter the correct group code.',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: secondaryColor,
+                          )
+                      );
+                    });
+                    GroupController.addCurrentUserToGroup(groupCode: _controllerJoin.text);
+                  }
+                  else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
-                            'Group not found. Please enter the correct group code.',
+                            'Invalid Group Code',
                             style: TextStyle(
                               color: primaryColor,
                               fontSize: 14,
@@ -223,8 +239,7 @@ class _JoinGroupState extends State<JoinGroup> {
                           backgroundColor: secondaryColor,
                         )
                     );
-                  });
-                  GroupController.addCurrentUserToGroup(groupCode: _controllerJoin.text);
+                  }
                 },
                 child: Text('Join Group', style: getNormalTextStyleWhite()),
                 style: blueButtonStyle,

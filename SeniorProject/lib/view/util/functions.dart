@@ -153,7 +153,7 @@ String? getRandomUpdateMessage(String courseName) {
  * Function that returns a random string of the length specified
  */
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-    length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
+  length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
 
 
 String getDateCreatedForGroup() {
@@ -163,6 +163,18 @@ String getDateCreatedForGroup() {
   String year = today.year.toString();
 
   return "${day} ${month} ${year}";
+}
+
+String? groupCodeValidator(val) {
+  String groupCodePattern = r'(^([a-z0-9]{8})$)';
+  RegExp regex = new RegExp(groupCodePattern);
+  if (val.length == 0) {
+    return "Group Codes must be 8 digits long";
+  }
+  else if (!regex.hasMatch(val)) {
+    return "Please enter a valid Group Code";
+  }
+  return null;
 }
 
 // /**
