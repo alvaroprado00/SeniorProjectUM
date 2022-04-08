@@ -1,4 +1,3 @@
-import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:cyber/view/featured/featured_course.dart';
 import 'package:cyber/view/groups/group_home_page.dart';
@@ -14,7 +13,6 @@ import '../controller/active_user_controller.dart';
 import '../controller/user_controller.dart';
 import '../globals.dart';
 import '../model/user_custom.dart';
-import 'admin/new-course/new_course_page.dart';
 
 class PageViewScreen extends StatelessWidget {
   const PageViewScreen({Key? key}) : super(key: key);
@@ -73,7 +71,7 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
         children: [
           DashboardPage(),
           FeaturedCoursePage(),
-          GroupsHome(),,
+          GroupsHome(),
           ProfilePage(),
         ],
       ),

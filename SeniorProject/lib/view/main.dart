@@ -20,6 +20,8 @@ import 'package:cyber/view/profile/all_badges.dart';
 import 'package:cyber/view/profile/all_courses.dart';
 import 'package:cyber/view/profile/category_badges.dart';
 import 'package:cyber/view/profile/category_courses.dart';
+import 'package:cyber/view/profile/change_password.dart';
+import 'package:cyber/view/profile/edit_profile.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
 import 'package:cyber/view/sign-up/join_group_sign_up.dart';
 import 'package:cyber/view/sign-up/password_page.dart';

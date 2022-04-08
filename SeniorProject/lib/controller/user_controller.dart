@@ -343,6 +343,26 @@ static Future deleteActiveUser() async {
 
   }
 
+  static Future updateComplexUserField(
+      {required String nameOfField, required dynamic field}) {
+    CollectionReference users =
+    FirebaseFirestore.instance.collection(userCollectionName);
+
+    //I get the id of the active user
+    String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
+
+    //Access specific entry and set info
+    return users.doc(uidOfActiveUser).update({
+      nameOfField: field.toJson(),
+    }).then((value) {
+      print("Updated field ${nameOfField}");
+      return true;
+    }).catchError((error) {
+      print("Error updating field ${nameOfField}");
+      return false;
+    });
+  }
+
   static Future addGroupCodeToUser({required List<String> groupCode}) async {
     CollectionReference users = await FirebaseFirestore
         .instance.collection(userCollectionName);
