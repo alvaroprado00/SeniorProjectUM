@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../model/group.dart';
 import '../util/components.dart';
 import '../util/k_colors.dart';
 import '../util/k_styles.dart';
@@ -8,10 +9,9 @@ import '../util/k_styles.dart';
   //TODO: add Functionality ASAP + use previous snapshot
 
 class GroupInfoPage extends StatefulWidget {
-  const GroupInfoPage({Key? key, required this.groupName, required this.usernames}) : super(key: key);
+  const GroupInfoPage({Key? key, required this.groupSnapshot}) : super(key: key);
 
-  final String groupName;
-  final List<String> usernames;
+  final Group groupSnapshot;
   static final String routeName = "/GroupInfo";
 
 
@@ -149,7 +149,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              widget.groupName,
+                              widget.groupSnapshot.groupName,
                               style: const TextStyle(
                                 color: primaryColor,
                                 fontSize: 30,
@@ -176,7 +176,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
             _buildSuggestions(
               context: context,
               avatarPaths: avatarPaths,
-              groupMembers: widget.usernames,
+              groupMembers: widget.groupSnapshot.groupMembers,
               userLevels: userLevels,
             ),
             const Padding(
@@ -200,7 +200,7 @@ class _GroupInfoPageState extends State<GroupInfoPage> {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: widget.usernames.length.toString(),
+                            text: widget.groupSnapshot.groupMembers.length.toString(),
                             style: const TextStyle(
                               fontSize: 16,
                               color: primaryColor,

@@ -118,7 +118,7 @@ class GroupTile extends StatelessWidget {
               onTap: () {
                 // Get.to(ChatPage(snapshot: createdGroup,));
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => ChatPage(snapshot: createdGroup,)));
+                    builder: (context) => ChatPage(groupSnapshot: createdGroup,)));
               },
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(createdGroup.groupImageURL,),

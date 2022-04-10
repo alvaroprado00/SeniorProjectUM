@@ -401,11 +401,11 @@ class _CreateGroupState extends State<CreateGroup> {
                                 dateCreated: date,
                                 groupMembers: [activeUser!.username,],
                                 groupImageURL: imageUrl,
-                                groupNotifications: [],
                               ).toJson();
                               _groupController.addGroup(newGroup, groupCode)
                                   .whenComplete(() {
                                 setState(() {
+                                  GroupController.initNotifications(groupCode: groupCode);
                                   gettingImage = false;
                                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GroupCreated(groupCode: groupCode,)));
                                 });
@@ -430,11 +430,11 @@ class _CreateGroupState extends State<CreateGroup> {
                                   dateCreated: date,
                                   groupMembers: [activeUser!.username,],
                                   groupImageURL: imageUrl,
-                                  groupNotifications: [],
                                 ).toJson();
                                 _groupController.addGroup(newGroup, groupCode)
                                     .whenComplete(() {
                                   setState(() {
+                                    GroupController.initNotifications(groupCode: groupCode);
                                     gettingImage = false;
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GroupCreated(groupCode: groupCode,)));
                                   });

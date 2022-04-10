@@ -11,9 +11,6 @@ Group _$GroupFromJson(Map<String, dynamic> json) => Group(
     dateCreated: json['dateCreated'] as String,
     groupMembers: List<String>.from(json['groupMembers']),
     groupImageURL: json['groupImageURL'] as String,
-    groupNotifications: (json['groupNotifications'] as List<dynamic>)
-        .map((e) => CustomNotification.fromJson(e as Map<String, dynamic>))
-        .toList(),
   );
 
 Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
@@ -22,5 +19,4 @@ Map<String, dynamic> _$GroupToJson(Group instance) => <String, dynamic>{
     'dateCreated': instance.dateCreated,
     'groupMembers': instance.groupMembers,
     'groupImageURL': instance.groupImageURL,
-    'groupNotifications': instance.groupNotifications,
   };

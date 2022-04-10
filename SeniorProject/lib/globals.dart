@@ -15,3 +15,5 @@ int? newQuestionNum;
 Course? newCourse;
 
 UserCustom? activeUser;
+
+late final String userMessagingToken;

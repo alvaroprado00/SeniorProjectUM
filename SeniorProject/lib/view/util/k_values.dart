@@ -8,19 +8,19 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 late double widthOfScreen;
 late double heightOfScreen;
 
-const Map<int, String> encouragingMessages = {
-  1: 'Do it now!',
-  2: 'Do you think you can?',
-  3: 'What are you waiting for?',
-  4: 'It seems like a nice new-course...'
-};
+const List<String> encouragingMessages = [
+  'Try it now!',
+  'Check it out!',
+  'What are you waiting for?',
+  'Learn it.'
+];
 
-const Map<int, String> updateMessages = {
-  1: ' just completed ',
-  2: ' just finished ',
-  3: ' earned a badge in ',
-  4: ' learned about ',
-};
+const List<String> updateMessages = [
+  ' just completed ',
+  ' just finished ',
+  ' earned a badge in ',
+  ' learned about ',
+];
 
 Map<int, String> numberToOptionLetter = {
   0: 'A',

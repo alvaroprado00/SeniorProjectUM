@@ -65,14 +65,14 @@ class GroupController {
   }
 
   static Future addNotification({required CustomNotification notif, required List<String> groupCodes}) async {
-
-    for(String code in groupCodes) {
+    for (String code in groupCodes) {
       FirebaseFirestore.instance
           .collection("groupCollection")
           .doc(code)
-          .update({"groupNotifications": FieldValue.arrayUnion([notif.toJson()])});
+          .collection("groupNotifications")
+          .add(notif.toJson());
     }
-
+  }
 
 //
 //
@@ -106,15 +106,24 @@ class GroupController {
 //     userGroups.docs.forEach((element) { });
 //
 //     return
+
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> getGroupNotifications({required String groupCode}) {
+    return FirebaseFirestore.instance
+        .collection("groupCollection")
+        .doc(groupCode)
+        .collection("groupNotifications")
+        .where('userName', isNotEqualTo: activeUser!.username.toString())
+        .orderBy('userName')
+        .orderBy('dateSent', descending: true)
+        .snapshots();
   }
 
-
-  getGroupMessages({required String groupCode}) {
-    var group = FirebaseFirestore.instance
+  static initNotifications({required String groupCode}) {
+    return FirebaseFirestore.instance
         .collection("groupCollection")
         .doc(groupCode)
         .collection("groupNotifications");
-    return group.snapshots();
   }
 
 }
