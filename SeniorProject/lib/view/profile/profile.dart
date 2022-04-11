@@ -212,8 +212,9 @@ class ProfilePageContent extends GetView<ActiveUserController> {
  * Class to display the Avatar picture of the user
  */
 class AvatarPic extends GetView<ActiveUserController> {
-  const AvatarPic({Key? key}) : super(key: key);
+  const AvatarPic({Key? key, required double this.size}) : super(key: key);
 
+  final double size;
   @override
   Widget build(BuildContext context) {
     return Align(

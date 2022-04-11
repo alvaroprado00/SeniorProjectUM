@@ -52,47 +52,48 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
     };
 
     return Scaffold(
-      backgroundColor: tertiaryColor,
-      body: SafeArea(
-          child:  Padding(
-          padding: EdgeInsets.only(
-              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: getOptionsButton(
-                          context: context,
-                          courseTitle: globals.activeCourse!.title,
-                          categoryTitle: categoryToString[
-                                  globals.activeCourse!.category] ??
-                              'No category found',
-                          question: question.number,
-                          numberOfQuestions:
-                              globals.activeCourse!.numberOfQuestions)),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
-                      style: getNormalTextStyleBlue(),
+        backgroundColor: tertiaryColor,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: getOptionsButton(
+                            context: context,
+                            courseTitle: globals.activeCourse!.title,
+                            categoryTitle: categoryToString[
+                                    globals.activeCourse!.category] ??
+                                'No category found',
+                            question: question.number,
+                            numberOfQuestions:
+                                globals.activeCourse!.numberOfQuestions)),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
+                        style: getNormalTextStyleBlue(),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              Container(
+                  ],
+                ),
+                Container(
                   alignment: Alignment.center,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: LinearProgressIndicator(
-                      color: secondaryColor,
-                      value: (question.number.toDouble() /
-                          globals.activeCourse!.numberOfQuestions.toDouble()),
-                    )),
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: LinearProgressIndicator(
+                        color: secondaryColor,
+                        value: (question.number.toDouble() /
+                            globals.activeCourse!.numberOfQuestions.toDouble()),
+                      )),
+                ),
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
@@ -112,10 +113,10 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                   style: getNormalTextStyleBlueItalicBold(),
                 ),
                 Spacer(),
-
                 ToggleButtonOptions(options: question.options),
-
-                Spacer(flex: 2,),
+                Spacer(
+                  flex: 2,
+                ),
                 SizedBox(
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
@@ -130,7 +131,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
               ],
             ),
           ),
-    );
+        ));
   }
 }
 

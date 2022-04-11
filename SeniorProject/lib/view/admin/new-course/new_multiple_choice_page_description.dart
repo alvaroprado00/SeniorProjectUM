@@ -83,30 +83,29 @@ class _DescriptionFormState extends State<DescriptionForm> {
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 0.22 * heightOfScreen),
-            Text(
-              'Enter the question.',
-              style: getNormalTextStyleWhite(),
-              textAlign: TextAlign.center,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 0.025 * heightOfScreen,
-                  left: 0.03 * widthOfScreen,
-                  right: 0.03 * widthOfScreen),
-              child: TextFormField(
-                inputFormatters: [
-                  new LengthLimitingTextInputFormatter(210),
-                ],
-                validator: validatorForEmptyTextField,
-                controller: _controllerDescription,
-                decoration: inputDecorationForLongText,
-                maxLines: 5,
-              ),
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 0.22 * heightOfScreen),
+          Text(
+            'Enter the question.',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * heightOfScreen,
+                left: 0.03 * widthOfScreen,
+                right: 0.03 * widthOfScreen),
+            child: TextFormField(
+              inputFormatters: [
+                new LengthLimitingTextInputFormatter(210),
+              ],
+              validator: validatorForEmptyTextField,
+              controller: _controllerDescription,
+              decoration: inputDecorationForLongText,
+              maxLines: 5,
             ),
           ),
           Spacer(),
@@ -115,7 +114,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
           getCirclesProgressBar(position: 1, numberOfCircles: 3),
           SizedBox(height: 0.01 * heightOfScreen),
         ],
-      ),
+      )),
     );
   }
 }

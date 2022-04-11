@@ -19,7 +19,8 @@ class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
         backgroundColor: tertiaryColor,
@@ -79,7 +80,9 @@ class AvatarSection extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        AvatarPic(),
+        AvatarPic(
+          size: 0.2 * heightOfScreen,
+        ),
         SizedBox(
           height: 0.03 * heightOfScreen,
         ),
@@ -272,8 +275,7 @@ class AlertDialogUsername extends StatelessWidget {
             await activeUserController
                 .changeUsername(newUsername: newUsername)
                 .then((value) {
-                  message=value;
-
+              message = value;
             }).catchError((onError) {
               message = 'Couldn\'t change username';
             });

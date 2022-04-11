@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../util/components.dart';
+import '../../util/k_colors.dart';
 import 'new_fill_blanks_page_blanks.dart';
 
 class FillInTheBlanksTextPage extends StatelessWidget {
@@ -130,13 +131,13 @@ class _TextFormState extends State<TextForm> {
                 maxLines: 5,
               ),
             ),
-          ),
+
           Spacer(),
           getNextButton(todo: addText, large: true),
           SizedBox(height: 0.04 * heightOfScreen),
           getCirclesProgressBar(position: 1, numberOfCircles: 3),
           SizedBox(height: 0.01 * heightOfScreen),
-        ],
+        ],)
       ),
     );
   }

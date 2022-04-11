@@ -65,8 +65,8 @@ class _DescriptionFormState extends State<DescriptionForm> {
     void Function() setFinalFields = () {
       if (_formKey.currentState!.validate()) {
         widget.course.description = _controllerDescription.text.trim();
-        widget.course.positionInCategory = int.parse(_controllerOrder.text.trim());
-
+        widget.course.positionInCategory =
+            int.parse(_controllerOrder.text.trim());
 
         Navigator.pushNamed(
           context,
@@ -77,68 +77,62 @@ class _DescriptionFormState extends State<DescriptionForm> {
     };
 
     return Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 0.1 * heightOfScreen),
-              Text(
-                'Enter a course description.',
-                style: getNormalTextStyleWhite(),
-                textAlign: TextAlign.center,
+      key: _formKey,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 0.1 * heightOfScreen),
+            Text(
+              'Enter a course description.',
+              style: getNormalTextStyleWhite(),
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 0.025 * heightOfScreen,
+                  left: 0.07 * widthOfScreen,
+                  right: 0.07 * widthOfScreen),
+              child: TextFormField(
+                validator: validatorForEmptyTextField,
+                controller: _controllerDescription,
+                maxLines: 7,
+                decoration: inputDecorationForLongText,
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.025 * heightOfScreen,
-                    left: 0.07 * widthOfScreen,
-                    right: 0.07 * widthOfScreen),
-                child: TextFormField(
-                  validator: validatorForEmptyTextField,
-                  controller: _controllerDescription,
-                  maxLines: 7,
-                  decoration: inputDecorationForLongText,
-                ),
+            ),
+            SizedBox(height: 0.15 * heightOfScreen),
+            Text(
+              'Enter position in category.',
+              style: getNormalTextStyleWhite(),
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 0.025 * heightOfScreen,
+                  left: 0.35 * widthOfScreen,
+                  right: 0.35 * widthOfScreen),
+              child: TextFormField(
+                validator: validatorForPositiveNumber,
+                keyboardType: TextInputType.number,
+                controller: _controllerOrder,
+                decoration: getInputDecoration(
+                    hintText: 'Order',
+                    icon: Icon(
+                      Icons.list,
+                      color: secondaryColor,
+                    )),
               ),
-              SizedBox(height: 0.15 * heightOfScreen),
-              Text(
-                'Enter position in category.',
-                style: getNormalTextStyleWhite(),
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.025 * heightOfScreen,
-                    left: 0.35 * widthOfScreen,
-                    right: 0.35 * widthOfScreen),
-                child: TextFormField(
-                  validator: validatorForPositiveNumber,
-                  keyboardType: TextInputType.number,
-                  controller: _controllerOrder,
-                  decoration: getInputDecoration(
-                      hintText: 'Order',
-                      icon: Icon(
-                        Icons.list,
-                        color: secondaryColor,
-                      )),
-                ),
-              ),
-              SizedBox(
-                height: 0.12 * heightOfScreen,
-              ),
-              getNextButton(todo: setFinalFields, large: true),
-              SizedBox(height: 0.04 * heightOfScreen),
-              getCirclesProgressBar(position: 3, numberOfCircles: 4),
-              SizedBox(height: 0.01 * heightOfScreen),
-            ],
-          ),
-          Spacer(),
-          getNextButton(todo: setFinalFields, large: true),
-          SizedBox(height: 0.04 * heightOfScreen),
-          getCirclesProgressBar(position: 3, numberOfCircles: 3),
-          SizedBox(height: 0.01 * heightOfScreen),
-        ],
+            ),
+            SizedBox(
+              height: 0.12 * heightOfScreen,
+            ),
+            getNextButton(todo: setFinalFields, large: true),
+            SizedBox(height: 0.04 * heightOfScreen),
+            getCirclesProgressBar(position: 3, numberOfCircles: 4),
+            SizedBox(height: 0.01 * heightOfScreen),
+          ],
+        ),
       ),
     );
   }
