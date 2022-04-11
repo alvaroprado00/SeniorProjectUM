@@ -74,11 +74,11 @@ class _EmailFormState extends State<EmailForm> {
     return Form(
         key: _formKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Spacer(),
             Padding(
               padding: EdgeInsets.only(
+                  top: 0.27 * heightOfScreen,
                   bottom: 0.05 * heightOfScreen,
                   left: 0.03 * widthOfScreen,
                   right: 0.03 * widthOfScreen),
@@ -87,7 +87,9 @@ class _EmailFormState extends State<EmailForm> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+                  bottom: 0.35 * heightOfScreen,
+                  left: 0.03 * widthOfScreen,
+                  right: 0.03 * widthOfScreen),
               child: TextFormField(
                 validator: validatorForEmail,
                 controller: _controllerEmail,
@@ -99,7 +101,6 @@ class _EmailFormState extends State<EmailForm> {
                     )),
               ),
             ),
-            Spacer(),
             SizedBox(
                 height: getHeightOfLargeButton(),
                 width: getWidthOfLargeButton(),
@@ -115,9 +116,6 @@ class _EmailFormState extends State<EmailForm> {
                 numberOfCircles: 5,
               ),
             ),
-            SizedBox(
-              height: 10,
-            )
           ],
         ));
   }
