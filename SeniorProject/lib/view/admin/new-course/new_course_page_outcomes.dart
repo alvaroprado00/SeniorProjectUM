@@ -111,49 +111,50 @@ class _OutcomesFormState extends State<OutcomesForm> {
 
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 0.2 * heightOfScreen),
-          Text(
-            'Outcome ${_outcomeNumber}',
-            style: getNormalTextStyleWhite(),
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: 0.025 * heightOfScreen,
-                left: 0.03 * widthOfScreen,
-                right: 0.03 * widthOfScreen),
-            child: TextFormField(
-              autofocus: false,
-              scrollPadding: EdgeInsets.only(left: 1),
-              validator: validatorForEmptyTextField,
-              controller: _controllerOutcome,
-              maxLines: 4,
-              decoration: inputDecorationForLongText,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 0.2 * heightOfScreen),
+            Text(
+              'Outcome ${_outcomeNumber}',
+              style: getNormalTextStyleWhite(),
+              textAlign: TextAlign.center,
             ),
-          ),
-          Spacer(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              SizedBox(
-                  height: getHeightOfSmallButton(),
-                  width: getWidthOfSmallButton(),
-                  child: ElevatedButton(
-                    onPressed: addOutcomeToCourse,
-                    child: Text('Add', style: getNormalTextStyleBlue()),
-                    style: yellowButtonStyle,
-                  )),
-              getNextButton(todo: nextPage, large: false)
-            ],
-          ),
-          SizedBox(height: 0.04 * heightOfScreen),
-          getCirclesProgressBar(position: 2, numberOfCircles: 3),
-          SizedBox(height: 0.01 * heightOfScreen),
-        ],
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 0.025 * heightOfScreen,
+                  left: 0.03 * widthOfScreen,
+                  right: 0.03 * widthOfScreen),
+              child: TextFormField(
+                autofocus: false,
+                scrollPadding: EdgeInsets.only(left: 1),
+                validator: validatorForEmptyTextField,
+                controller: _controllerOutcome,
+                maxLines: 4,
+                decoration: inputDecorationForLongText,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                SizedBox(
+                    height: getHeightOfSmallButton(),
+                    width: getWidthOfSmallButton(),
+                    child: ElevatedButton(
+                      onPressed: addOutcomeToCourse,
+                      child: Text('Add', style: getNormalTextStyleBlue()),
+                      style: yellowButtonStyle,
+                    )),
+                getNextButton(todo: nextPage, large: false)
+              ],
+            ),
+            SizedBox(height: 0.04 * heightOfScreen),
+            getCirclesProgressBar(position: 2, numberOfCircles: 3),
+            SizedBox(height: 0.01 * heightOfScreen),
+          ],
+        ),
       ),
     );
   }
