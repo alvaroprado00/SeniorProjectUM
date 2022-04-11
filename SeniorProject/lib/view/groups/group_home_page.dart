@@ -104,12 +104,12 @@ class GroupTile extends StatelessWidget {
     return StreamBuilder(
       stream: _groupController.getGroupByCode(groupCode),
       builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-        if (!snapshot.hasData) {
+        if (!snapshot.hasData || !snapshot.data!.exists) {
           return Center(
             child: CircularProgressIndicator(color: primaryColor,),
           );
         }
-        else if(snapshot.hasData && snapshot.data!.exists) {
+        else {
           Group createdGroup = Group.fromJson(
               snapshot.data!.data() as Map<String, dynamic>);
           return Padding(
@@ -118,7 +118,7 @@ class GroupTile extends StatelessWidget {
               onTap: () {
                 // Get.to(ChatPage(snapshot: createdGroup,));
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => ChatPage(groupSnapshot: createdGroup,)));
+                    builder: (context) => new ChatPage(groupSnapshot: createdGroup,)));
               },
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(createdGroup.groupImageURL,),
@@ -140,10 +140,6 @@ class GroupTile extends StatelessWidget {
               ),
             ),
           );
-        }
-        else {
-          print("waiting on snapshot");
-          return CircularProgressIndicator();
         }
       }
     );

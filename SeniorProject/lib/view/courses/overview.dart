@@ -57,7 +57,7 @@ class ContentForOverview extends GetView<ActiveUserController> {
 
   sendUserMessage(BuildContext context) {
 
-    CustomNotification notif = CustomNotification(
+    CustomNotification notif = new CustomNotification(
       userName: controller.username.toString(),
       badge: Badge(courseID: activeCourse!.id.toString(), picture: activeCourse!.badgeIcon.toString(), timeEarned: DateTime.now()),
       dateSent: DateTime.now(),

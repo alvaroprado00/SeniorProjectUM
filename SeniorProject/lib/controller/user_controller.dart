@@ -332,7 +332,7 @@ static Future deleteActiveUser() async {
 
     //Access specific entry and set info
     return users.doc(uidOfActiveUser).update({
-      nameOfField:field.toJson(),
+      nameOfField: field.map((e) => e.toJson()).toList(),
     }).then((value) {
       print("Updated field ${nameOfField}");
       return true;
@@ -340,8 +340,8 @@ static Future deleteActiveUser() async {
       print("Error updating field ${nameOfField}");
       return false;
     });
-
   }
+
 
   static Future updateComplexUserField(
       {required String nameOfField, required dynamic field}) {

@@ -1,4 +1,5 @@
 import 'package:cyber/controller/active_user_controller.dart';
+import 'package:cyber/globals.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -255,7 +256,7 @@ getNotificationTile({required String username,
       text: TextSpan(
         children: [
           TextSpan(
-            text: username,
+            text: username == activeUser!.username ? "You" : username,
             style: const TextStyle(
               fontSize: 14,
               color: Color(0xFF14213D),

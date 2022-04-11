@@ -15,7 +15,7 @@ CustomNotification _$CustomNotificationFromJson(Map<String, dynamic> json) => Cu
 
 Map<String, dynamic> _$CustomNotificationToJson(CustomNotification instance) => <String, dynamic>{
   'userName': instance.userName,
-  'date': instance.dateSent,
+  'dateSent': instance.dateSent.toIso8601String(),
   'message': instance.message,
   'badge': instance.badge.toJson(),
 };

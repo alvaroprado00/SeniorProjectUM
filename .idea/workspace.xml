@@ -4,26 +4,15 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Fixed join group button to validate group code using regex and to display snackbar if group code is not valid or group does not exist.">
-      <change afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/message_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Updated Android Studio with new Dart lang">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/globals.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/globals.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/model/custom_notification.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/model/custom_notification.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/user_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/user_controller.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/model/custom_notification.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/model/custom_notification.g.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/model/group.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/model/group.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/model/group.g.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/model/group.g.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/courses/overview.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/courses/overview.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_home_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/main.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/util/cards.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/util/cards.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/util/k_values.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/util/k_values.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

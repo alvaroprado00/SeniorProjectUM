@@ -74,47 +74,11 @@ class GroupController {
     }
   }
 
-//
-//
-//
-//
-//     WriteBatch batch = FirebaseFirestore.instance.batch();
-//
-//     var upvotesRef = FirebaseFirestore.instance.collection("groupCollection").where();
-// upvotesRef.runTransaction(new Transaction.Handler() {
-//     @Override
-//     public Transaction.Result doTransaction(MutableData currentData) {
-//         if(currentData.getValue() == null) {
-//             currentData.setValue(1);
-//         } else {
-//             currentData.setValue((Long) currentData.getValue() + 1);
-//         }
-//         return Transaction.success(currentData); //we can also abort by calling Transaction.abort()
-//     }
-//     @Override
-//     public void onComplete(FirebaseError firebaseError, boolean committed, DataSnapshot currentData) {
-//         //This method will be called once with the results of the transaction.
-//     }
-// });
-//
-//
-//     var notifJson = notif.toJson();
-//
-//     var userGroups = await FirebaseFirestore
-//         .instance.collection("groupCollection").where("userName", arrayContains: notif.userName).get();
-//
-//     userGroups.docs.forEach((element) { });
-//
-//     return
-
-
   Stream<QuerySnapshot<Map<String, dynamic>>> getGroupNotifications({required String groupCode}) {
     return FirebaseFirestore.instance
         .collection("groupCollection")
         .doc(groupCode)
         .collection("groupNotifications")
-        .where('userName', isNotEqualTo: activeUser!.username.toString())
-        .orderBy('userName')
         .orderBy('dateSent', descending: true)
         .snapshots();
   }
