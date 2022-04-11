@@ -19,7 +19,7 @@ class UpdateRecommendedCoursePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Recommended',
-          style: getSubheadingStyleYellow(),
+          style: getSubheadingStyleWhite(),
         ),
         centerTitle: true,
         elevation: 0,

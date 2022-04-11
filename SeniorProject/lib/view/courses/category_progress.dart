@@ -76,7 +76,9 @@ class CategoryProgressContent extends GetView<ActiveUserController> {
             Obx(() => getProgressInCategory(
                 coursesInCategory: categoryCourses,
                 userCompletedCourses: controller.completedCourses.value)),
-            SizedBox(height: 0.05*heightOfScreen,),
+            SizedBox(
+              height: 0.02 * heightOfScreen,
+            ),
             SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),

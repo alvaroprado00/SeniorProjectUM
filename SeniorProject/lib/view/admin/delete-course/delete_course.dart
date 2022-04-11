@@ -20,8 +20,8 @@ class DeleteCoursePage extends StatelessWidget {
       backgroundColor: primaryColor,
       appBar: AppBar(
         title: Text(
-          'Delete',
-          style: getSubheadingStyleYellow(),
+          'Delete Course',
+          style: getSubheadingStyleWhite(),
         ),
         centerTitle: true,
         elevation: 0,
@@ -87,10 +87,11 @@ class _CourseListState extends State<CourseList> {
   @override
   Widget build(BuildContext context) {
     void Function() deleteFunction = () async {
-
       String message = '';
 
-      await cc.deleteCourseByTitle(widget.courses[_selectedCourseID!]!).then((value) {
+      await cc
+          .deleteCourseByTitle(widget.courses[_selectedCourseID!]!)
+          .then((value) {
         message = 'Deleted course with ID: ${value}';
       }).catchError((onError) {
         message = 'Error deleting course';
@@ -119,16 +120,19 @@ class _CourseListState extends State<CourseList> {
         SizedBox(
           height: 0.05 * heightOfScreen,
         ),
-        Text(
-          'Pick one to delete.',
-          style: getNormalTextStyleWhite(),
-          textAlign: TextAlign.center,
+        Padding(
+          padding: const EdgeInsets.only(left: 15.0, right: 15),
+          child: Text(
+            'Choose the course to be deleted. This action cannot be undone.',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
         ),
         SizedBox(
           height: 0.05 * heightOfScreen,
         ),
         SizedBox(
-            height: 0.6 * heightOfScreen,
+            height: 0.5 * heightOfScreen,
             width: widthOfScreen,
             child: RawScrollbar(
                 isAlwaysShown: true,

@@ -166,7 +166,6 @@ class _UsernameFormState extends State<UsernameForm> {
                   )),
             ),
           ),
-          Spacer(),
           SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),

@@ -89,7 +89,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
         children: [
           SizedBox(height: 0.22 * heightOfScreen),
           Text(
-            'Enter the question.',
+            'Question',
             style: getNormalTextStyleWhite(),
             textAlign: TextAlign.center,
           ),
@@ -108,6 +108,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
               maxLines: 5,
             ),
           ),
+          SizedBox(height: 0.29 * heightOfScreen),
           getNextButton(todo: setQuestionDescription, large: true),
           SizedBox(height: 0.04 * heightOfScreen),
           getCirclesProgressBar(position: 1, numberOfCircles: 3),

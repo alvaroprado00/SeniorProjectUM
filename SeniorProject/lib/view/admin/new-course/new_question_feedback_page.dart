@@ -33,8 +33,10 @@ class QuestionLongFeedbackPage extends StatelessWidget {
           ],
         ),
         body: SafeArea(
-            child: FeedbackForm(
-          question: newQuestion,
+            child: SingleChildScrollView(
+          child: FeedbackForm(
+            question: newQuestion,
+          ),
         )));
   }
 }
@@ -123,7 +125,7 @@ class _FeedbackFormState extends State<FeedbackForm> {
               maxLines: 5,
             ),
           ),
-          Spacer(),
+          SizedBox(height: 0.33 * heightOfScreen),
           getAddQuestionButton(todo: addQuestionToCourse),
           SizedBox(height: 0.04 * heightOfScreen),
           getCirclesProgressBar(position: 3, numberOfCircles: 3),

@@ -4,7 +4,6 @@
  * or the recommendedOption. Also with the ID that identifies
  * the recommended/featured course to be able to build the radiobuttons
  */
-
 import 'package:flutter/material.dart';
 
 import '../../../controller/course_controller.dart';
@@ -29,7 +28,7 @@ class PickACoursePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           categoryToString[args.category]!,
-          style: getSubheadingStyleYellow(),
+          style: getSubheadingStyleWhite(),
         ),
         centerTitle: true,
         elevation: 0,
@@ -46,8 +45,8 @@ class PickACoursePage extends StatelessWidget {
                     left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
                 child: Center(
                   child: Text(
-                    'No Courses in ${categoryToString[args.category]}',
-                    style: getHeadingStyleWhite(),
+                    'There are no courses in ${categoryToString[args.category]}',
+                    style: getSubheadingStyleWhite(),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -112,12 +111,12 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
 
         await futureToExecute(courseID: _selectedCourseID!).then((val) {
           message =
-              'Update took place. New course: ${widget.coursesMap[_selectedCourseID]!}';
+              'Successful update. New course: ${widget.coursesMap[_selectedCourseID]!}';
         }).catchError((error) {
-          message = 'Update did not took place';
+          message = 'Update was not successful.';
         });
       } else {
-        message = 'Course Already Selected';
+        message = 'This course is already selected.';
       }
 
       var snackBar = SnackBar(
@@ -138,7 +137,7 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
           height: 0.05 * heightOfScreen,
         ),
         Text(
-          'Pick a Course.',
+          'Choose a course.',
           style: getNormalTextStyleWhite(),
           textAlign: TextAlign.center,
         ),

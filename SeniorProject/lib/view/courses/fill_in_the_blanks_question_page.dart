@@ -25,11 +25,9 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
 
     //Here i define the function to execute
 
-    void Function() fillInTheBlanksFunction=(){
-
+    void Function() fillInTheBlanksFunction = () {
       //In case the user has not picked 3 options, dont continue
-      if(proposedSolution.length<question.solution.length){
-
+      if (proposedSolution.length < question.solution.length) {
         SnackBar snBar = SnackBar(
           content: Text(
             'Pick more options',
@@ -40,7 +38,6 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
         ScaffoldMessenger.of(context).showSnackBar(snBar);
         return;
       }
-
 
       int numberOfMatches = 0;
       bool isRight = false;
@@ -56,8 +53,7 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
 
       //I update the global variables once answer submitted
       globals.userProgress.add(isRight);
-      globals.activeQuestionNum =
-          globals.activeQuestionNum! + 1;
+      globals.activeQuestionNum = globals.activeQuestionNum! + 1;
 
       // Before navigating to the next page we have to
       // reset all the variables that we have used so far
@@ -70,9 +66,7 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
           barrierDismissible: false,
           builder: (_) {
             return QuestionFeedback(
-                args: FeedbackArguments(
-                    isRight,
-                    question.longFeedback,
+                args: FeedbackArguments(isRight, question.longFeedback,
                     question.getSolutionAsString()));
           });
     };
@@ -81,28 +75,20 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
       backgroundColor: tertiaryColor,
       body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.only(
-                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
+        padding: EdgeInsets.only(
+            left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            //Number of question + options menu
+            Stack(
+              alignment: Alignment.center,
               children: [
-                //Number of question + options menu
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      width: widthOfScreen * 0.4,
-                    ),
-                    Text(
-                      '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
-                      style: getNormalTextStyleBlue(),
-                    ),
-                    SizedBox(
-                      width: widthOfScreen * 0.25,
-                    ),
-                    getOptionsButton(
+                Align(
+                    alignment: Alignment.centerRight,
+                    child: getOptionsButton(
                         context: context,
                         courseTitle: globals.activeCourse!.title,
                         categoryTitle:
@@ -110,60 +96,71 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
                                 'No category found',
                         question: question.number,
                         numberOfQuestions:
-                            globals.activeCourse!.numberOfQuestions)
-                  ],
-                ),
-
-                //Progress Indicator
-
-                Container(
-                    alignment: Alignment.topCenter,
-                    child: LinearProgressIndicator(
-                      color: secondaryColor,
-                      value: (question.number.toDouble() /
-                          globals.activeCourse!.numberOfQuestions.toDouble()),
-                    )),
-                SizedBox(
-                  height: 0.05* heightOfScreen,
-                ),
-
-                Text(
-                  'Fill In The Blanks.',
-                  style: getNormalTextStyleBlueItalicBold(),
-                ),
-                SizedBox(
-                  height: 0.03 * heightOfScreen,
-                ),
-
-
-                //Here comes the text of the question
-
-                FillInTheBlanksContent(
-                  text: question.text,
-                ),
-
-                Spacer(),
-
-                //Options offered to the user
-
-                getOptions(options: question.options),
-
-                Spacer(flex: 2,),
-                //Button to submit the info
-                SizedBox(
-                    height: getHeightOfLargeButton(),
-                    width: getWidthOfLargeButton(),
-                    child: ElevatedButton(
-                      onPressed: fillInTheBlanksFunction,
-                      child: Text('Submit', style: getNormalTextStyleWhite()),
-                      style: blueButtonStyle,
-                    )),
-                SizedBox(
-                  height: 0.05 * heightOfScreen,
+                            globals.activeCourse!.numberOfQuestions)),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
+                    style: getNormalTextStyleBlue(),
+                  ),
                 ),
               ],
             ),
-          )),
+            Container(
+              alignment: Alignment.center,
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: LinearProgressIndicator(
+                    color: secondaryColor,
+                    value: (question.number.toDouble() /
+                        globals.activeCourse!.numberOfQuestions.toDouble()),
+                  )),
+            ),
+            SizedBox(
+              height: 0.05 * heightOfScreen,
+            ),
+
+            //Here comes the text of the question
+
+            Padding(
+              padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              child: FillInTheBlanksContent(
+                text: question.text,
+              ),
+            ),
+
+            SizedBox(
+              height: 0.05 * heightOfScreen,
+            ),
+            Text(
+              'Fill In The Blanks.',
+              style: getNormalTextStyleBlueItalicBold(),
+            ),
+
+            Spacer(),
+
+            //Options offered to the user
+
+            getOptions(options: question.options),
+
+            Spacer(
+              flex: 2,
+            ),
+            //Button to submit the info
+            SizedBox(
+                height: getHeightOfLargeButton(),
+                width: getWidthOfLargeButton(),
+                child: ElevatedButton(
+                  onPressed: fillInTheBlanksFunction,
+                  child: Text('Submit', style: getNormalTextStyleWhite()),
+                  style: blueButtonStyle,
+                )),
+            SizedBox(
+              height: 0.05 * heightOfScreen,
+            ),
+          ],
+        ),
+      )),
     );
   }
 }
@@ -179,8 +176,8 @@ Widget getOptions({required List<String> options}) {
     height: 0.28 * heightOfScreen,
     child: Wrap(
       children: children,
-      spacing: 0.1 * widthOfScreen,
-      runSpacing: 0.05 * heightOfScreen,
+      spacing: 0.05 * widthOfScreen,
+      runSpacing: 0.03 * heightOfScreen,
     ),
   );
 }
@@ -201,7 +198,7 @@ class _ButtonForOptionState extends State<ButtonForOption> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: heightOfScreen * 0.07,
-      width: widthOfScreen * 0.3,
+      width: widthOfScreen * 0.4,
       child: ElevatedButton(
           onPressed: () {
             setState(() {
@@ -250,7 +247,12 @@ class FillInTheBlanksContent extends StatelessWidget {
         //I create the first part of the text up to the first blank space
         text: TextSpan(
       text: split[0],
-      style: getNormalTextStyleBlue(),
+      style: TextStyle(
+          color: primaryColor,
+          fontFamily: fontFamily,
+          fontSize: 0.045 * widthOfScreen,
+          fontWeight: FontWeight.w400,
+          height: 1.4),
       //Now for each blank space I return a blank space and the following text up to the next blank
       children: getRestOfText(splittedText: split.sublist(1)),
     ));

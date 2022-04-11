@@ -201,7 +201,7 @@ class AdminDashboardPage extends StatelessWidget {
                         height: 0.03 * heightOfScreen,
                       ),
                       ButtonToNavigate(
-                          text: 'User progress',
+                          text: 'User Progress',
                           route: UserProgressPage.routeName),
                     ]),
               )

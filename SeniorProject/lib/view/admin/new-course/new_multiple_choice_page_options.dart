@@ -103,25 +103,27 @@ class _OptionsFormState extends State<OptionsForm> {
     };
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 0.25 * heightOfScreen),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: _completedOptions
-                ? getTextFormFieldForRightOption(te: _controllerRightOption)
-                : getTextFormFieldForOption(
-                    numberOfOption: _numberOfOption, te: _controllerOption),
-          ),
-          Spacer(),
-          getNextButton(todo: addOption, large: true),
-          SizedBox(height: 0.04 * heightOfScreen),
-          getCirclesProgressBar(position: 2, numberOfCircles: 3),
-          SizedBox(height: 0.01 * heightOfScreen),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 0.25 * heightOfScreen),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: _completedOptions
+                  ? getTextFormFieldForRightOption(te: _controllerRightOption)
+                  : getTextFormFieldForOption(
+                      numberOfOption: _numberOfOption, te: _controllerOption),
+            ),
+            SizedBox(height: 0.33 * heightOfScreen),
+            getNextButton(todo: addOption, large: true),
+            SizedBox(height: 0.04 * heightOfScreen),
+            getCirclesProgressBar(position: 2, numberOfCircles: 3),
+            SizedBox(height: 0.01 * heightOfScreen),
+          ],
+        ),
       ),
     );
   }
