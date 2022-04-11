@@ -15,16 +15,22 @@ class SignUpPasswordPage extends StatelessWidget {
     //I get the email from the previous page
     final email = ModalRoute.of(context)!.settings.arguments as String;
 
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: getBackButton(context: context),
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          leading: getBackButton(context: context),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: PasswordForm(
+          email: email,
+        ))),
       ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-          child: PasswordForm(
-        email: email,
-      )),
     );
   }
 }

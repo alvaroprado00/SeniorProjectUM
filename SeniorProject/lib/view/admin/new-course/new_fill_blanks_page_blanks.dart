@@ -80,8 +80,15 @@ class _OptionsFormState extends State<OptionsForm> {
 
     //Here I define the function to execute
     void Function() addOption = () {
-      if (_formKey.currentState!.validate()) {
-        widget.question.options.add(_controllerOption.text);
+
+      int totalNumberOfOptions=6-widget.question.text.split('X').length + 1;
+
+      if (_formKey.currentState!.validate() && _optionNumber<=totalNumberOfOptions) {
+
+        //You will be able to add an option if
+        //number of options is less than 6-numberOfSolutions
+
+        widget.question.options.add(_controllerOption.text.trim());
 
         //Update counter
         setState(() {
@@ -89,12 +96,18 @@ class _OptionsFormState extends State<OptionsForm> {
           _controllerOption.clear();
         });
       }
+
+      if(_optionNumber>totalNumberOfOptions){
+        SnackBar snBar =
+        getSnackBar(message: 'Exceeded number of options');
+        ScaffoldMessenger.of(context).showSnackBar(snBar);
+      }
     };
 
     void Function() addSolution = () {
       if (_formKey.currentState!.validate()) {
         if (widget.question.text.split('X').length - 1 >= _blankNumber) {
-          widget.question.solution[_blankNumber] = _controllerOption.text;
+          widget.question.solution[_blankNumber] = _controllerOption.text.trim();
 
           //Also add the solution as option
           widget.question.options.add(_controllerOption.text);
@@ -102,7 +115,6 @@ class _OptionsFormState extends State<OptionsForm> {
           //After adding solution increment counter
           setState(() {
             _blankNumber++;
-            _optionNumber++;
             _controllerOption.clear();
           });
         } else {
@@ -149,7 +161,7 @@ class _OptionsFormState extends State<OptionsForm> {
                 validator: validatorForEmptyTextField,
                 controller: _controllerOption,
                 decoration: getInputDecoration(
-                    hintText: 'Option $_optionNumber',
+                    hintText: 'Option ${_optionNumber+_blankNumber-1}',
                     icon: Icon(
                       Icons.view_list,
                       color: secondaryColor,

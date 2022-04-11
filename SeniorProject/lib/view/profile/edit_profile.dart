@@ -18,47 +18,51 @@ class EditProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: tertiaryColor,
-      appBar: AppBar(
-        title: Text(
-          'Edit Profile',
-          style: getSubheadingStyleBlue(),
-        ),
-        leading: getBackButton(context: context),
-        elevation: 0,
-        centerTitle: true,
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
         backgroundColor: tertiaryColor,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              AvatarSection(),
-              SizedBox(
-                height: 0.03 * heightOfScreen,
-              ),
-              SubtitleDivider(subtitle: 'Username'),
-              UsernameForm(),
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              PasswordSection(),
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              EmailSection(),
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-            ],
+        appBar: AppBar(
+          title: Text(
+            'Edit Profile',
+            style: getSubheadingStyleBlue(),
+          ),
+          leading: getBackButton(context: context),
+          elevation: 0,
+          centerTitle: true,
+          backgroundColor: tertiaryColor,
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+                AvatarSection(),
+                SizedBox(
+                  height: 0.03 * heightOfScreen,
+                ),
+                SubtitleDivider(subtitle: 'Username'),
+                UsernameForm(),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+                PasswordSection(),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+                EmailSection(),
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -268,11 +272,8 @@ class AlertDialogUsername extends StatelessWidget {
             await activeUserController
                 .changeUsername(newUsername: newUsername)
                 .then((value) {
-              if (value) {
-                message = 'New username';
-              } else {
-                message = 'Couldn\'t change username';
-              }
+                  message=value;
+
             }).catchError((onError) {
               message = 'Couldn\'t change username';
             });

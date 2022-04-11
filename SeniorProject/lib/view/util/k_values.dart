@@ -15,6 +15,13 @@ const Map<int, String> encouragingMessages = {
   4: 'It seems like a nice new-course...'
 };
 
+const Map<int, String> updateMessages = {
+  1: ' just completed ',
+  2: ' just finished ',
+  3: ' earned a badge in ',
+  4: ' learned about ',
+};
+
 Map<int, String> numberToOptionLetter = {
   0: 'A',
   1: 'B',
@@ -61,3 +68,6 @@ Map<String, TypeOfQuestion> typeOfQuestionFromString = {
 Map<String, IconData> stringToBadgeIcon = {
   'key': FontAwesomeIcons.key,
 };
+
+const List months = ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','November','December'];
+

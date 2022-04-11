@@ -16,11 +16,12 @@ class ActiveUserController extends GetxController {
   final level = Level(xpEarnedInLevel: 0, levelNumber: 0, totalXP: 0).obs;
   final email = 'email@gmail.com'.obs;
   final isAdmin = true.obs;
+  final userGroups = <String>[].obs;
   final coursesSaved = <String>[].obs;
   final completedCourses = <CompletedCourse>[].obs;
   final collectedBadges = <Badge>[].obs;
   final collectedAvatars = <String>[].obs;
-  final Rx<CurrentCourse?> currentCourse = null.obs;
+  final currentCourse = Rxn<CurrentCourse?>();
 
   @override
   void onInit() {
@@ -31,11 +32,13 @@ class ActiveUserController extends GetxController {
     level.value = activeUser!.level;
     email.value = activeUser!.email;
     isAdmin.value = activeUser!.isAdmin;
+    userGroups.value = activeUser!.userGroups;
     coursesSaved.value = activeUser!.coursesSaved;
     currentCourse.value = activeUser!.currentCourse;
     completedCourses.value = activeUser!.completedCourses;
     collectedBadges.value = activeUser!.collectedBadges;
     collectedAvatars.value = activeUser!.collectedAvatars;
+
   }
 
   getNumBadges() {
@@ -112,7 +115,7 @@ class ActiveUserController extends GetxController {
     CurrentCourse cc =
         CurrentCourse(courseID: activeCourse!.id!, progress: userProgress);
     this.currentCourse.value = cc;
-    return UserController.updateComplexUserField(
+    await UserController.updateComplexUserField(
         nameOfField: 'currentCourse', field: cc);
   }
 
@@ -162,8 +165,8 @@ class ActiveUserController extends GetxController {
             questionsRight)
         .round();
 
-    if(activeCourse!.isFeatured!){
-      xpEarned=xpEarned*2;
+    if (activeCourse!.isFeatured!) {
+      xpEarned = xpEarned * 2;
     }
 
     int percentageCompleted =
@@ -293,15 +296,39 @@ class ActiveUserController extends GetxController {
   /**
    * Function to change the username of the user
    */
-  Future changeUsername({required String newUsername}) {
-    this.username.value = newUsername;
-    return UserController.updateSimpleUserField(
-        nameOfField: 'username', field: this.username.value);
+  Future changeUsername({required String newUsername}) async {
+
+    return UserController.updateUsername(newUsername: newUsername).then((value){
+
+      if(value is bool){
+        if(value){
+          this.username.value = newUsername;
+          return 'Username updated';
+        }
+        return 'Error updating username';
+      }
+      return value;
+    }).catchError((error) {
+      print('An error occurred when updating the username');
+      return 'Error occurred';
+    });
   }
 
+
+  updateUserGroups({required String groupCode}) {
+    this.userGroups.add(groupCode);
+    UserController.addGroupCodeToUser(groupCode: [groupCode]);
+    update();
+    return this.userGroups.last;
+  }
+
+  getUserGroups() {
+    return this.userGroups.value;
+  }
 
   @override
   void dispose() {
     super.dispose();
   }
+
 }

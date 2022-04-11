@@ -5,7 +5,7 @@ import 'package:cyber/view/util/k_values.dart';
 import 'package:cyber/view/util/k_values.dart' as k_values;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../model/course.dart';
 import '../../util/components.dart';
 import 'new_course_page_outcomes.dart';
@@ -17,8 +17,7 @@ class NewCoursePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: primaryColor,
         appBar: AppBar(
           leading: getBackButton(context: context),
           title: Text(
@@ -44,8 +43,8 @@ class NewCourseForm extends StatefulWidget {
 class _NewCourseFormState extends State<NewCourseForm> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _controllerTitle;
-  late TextEditingController _controllerImage;
   late TextEditingController _controllerXP;
+  late bool activeButton;
 
   // The following list is used for the dropdown button
   static final List<k_values.Category> items = [
@@ -63,15 +62,14 @@ class _NewCourseFormState extends State<NewCourseForm> {
   void initState() {
     super.initState();
     _controllerTitle = TextEditingController();
-    _controllerImage = TextEditingController();
     _controllerXP = TextEditingController();
+    activeButton = true;
   }
 
   //Free memory
   @override
   void dispose() {
     _controllerTitle.dispose();
-    _controllerImage.dispose();
     _controllerXP.dispose();
     super.dispose();
   }
@@ -79,10 +77,24 @@ class _NewCourseFormState extends State<NewCourseForm> {
   @override
   Widget build(BuildContext context) {
     //I define the function to be used when submitting the form
-    void Function() updateCourseFields = () {
+    void Function() updateCourseFields = () async {
+      bool imageIsValid = await checkImageSF();
+
+      if (!imageIsValid) {
+        var snackBar = SnackBar(
+          backgroundColor: secondaryColor,
+          content: Text(
+            'Valid image not found',
+            style: getNormalTextStyleWhite(),
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      }
+
       //Returns true if the form is valid
-      if (_formKey.currentState!.validate()) {
+      if (_formKey.currentState!.validate() && activeButton && imageIsValid) {
         //I create a new-course with dummy values
+        activeButton = false;
 
         Course newCourse = Course(
             imageURL: '',
@@ -97,10 +109,10 @@ class _NewCourseFormState extends State<NewCourseForm> {
             questions: []);
 
         //I update the fields
-        newCourse.title = _controllerTitle.text;
-        newCourse.experiencePoints = int.parse(_controllerXP.text);
+        newCourse.title = _controllerTitle.text.trim();
+        newCourse.experiencePoints = int.parse(_controllerXP.text.trim());
         newCourse.category = value;
-        newCourse.imageURL = _controllerImage.text;
+        newCourse.imageURL = await getImageUrlSF();
 
         Navigator.pushNamed(context, NewCourseOutcomesPage.routeName,
             arguments: newCourse);
@@ -109,7 +121,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
 
     return Form(
       key: _formKey,
-      child: Column(
+     /* child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -207,7 +219,91 @@ class _NewCourseFormState extends State<NewCourseForm> {
           SizedBox(height: 0.04 * k_values.heightOfScreen),
           getCirclesProgressBar(position: 1, numberOfCircles: 3),
           SizedBox(height: 0.01 * heightOfScreen),
-        ],
+        ],*/
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.only(
+              left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 0.05 * k_values.heightOfScreen),
+              Text(
+                'Title.',
+                style: getNormalTextStyleWhite(),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 0.025 * k_values.heightOfScreen),
+              TextFormField(
+                validator: validatorForEmptyTextField,
+                controller: _controllerTitle,
+                decoration: getInputDecoration(
+                    hintText: 'Title',
+                    icon: Icon(
+                      Icons.format_italic,
+                      color: secondaryColor,
+                    )),
+              ),
+              SizedBox(height: 0.05 * k_values.heightOfScreen),
+              Text(
+                'Category.',
+                style: getNormalTextStyleWhite(),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 0.025 * k_values.heightOfScreen),
+              buildDropdown(),
+              SizedBox(height: 0.05 * k_values.heightOfScreen),
+              Text(
+                'XP.',
+                style: getNormalTextStyleWhite(),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 0.025 * k_values.heightOfScreen),
+              TextFormField(
+                validator: validatorForExp,
+                keyboardType: TextInputType.number,
+                controller: _controllerXP,
+                decoration: getInputDecoration(
+                    hintText: 'XP',
+                    icon: Icon(
+                      Icons.star,
+                      color: secondaryColor,
+                    )),
+              ),
+              SizedBox(height: 0.05 * k_values.heightOfScreen),
+              Text(
+                'Image.',
+                style: getNormalTextStyleWhite(),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 0.025 * k_values.heightOfScreen),
+              SizedBox(
+                width: getWidthOfSmallButton(),
+                height: getHeightOfSmallButton(),
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (_) {
+                          return ImageDialog();
+                        });
+                  },
+                  style: yellowButtonStyle,
+                  child: Text(
+                    'Pick one',
+                    style: getNormalTextStyleWhite(),
+                  ),
+                ),
+              ),
+              SizedBox(height: 0.1 * k_values.heightOfScreen),
+              getNextButton(todo: updateCourseFields, large: true),
+              SizedBox(height: 0.04 * k_values.heightOfScreen),
+              getCirclesProgressBar(position: 1, numberOfCircles: 4),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -245,4 +341,159 @@ class _NewCourseFormState extends State<NewCourseForm> {
           }),
         ),
       );
+}
+
+class ImageDialog extends StatefulWidget {
+  const ImageDialog({Key? key}) : super(key: key);
+
+  @override
+  _ImageDialogState createState() => _ImageDialogState();
+}
+
+class _ImageDialogState extends State<ImageDialog> {
+  late bool _imageSelected;
+  late final _formKeyDialog;
+  late final _controllerImage;
+  late String _imageURL;
+
+  @override
+  void initState() {
+    super.initState();
+    _formKeyDialog = GlobalKey<FormState>();
+    _imageSelected = false;
+    _controllerImage = TextEditingController();
+    _imageURL = '';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      title: Text(
+        _imageSelected ? 'Picture' : 'Paste your URL',
+        style: getSubheadingStyleBlue(),
+        textAlign: TextAlign.center,
+      ),
+      content: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Form(
+            key: _formKeyDialog,
+            child: TextFormField(
+              validator: validatorForURL,
+              controller: _controllerImage,
+              decoration: getInputDecoration(
+                  hintText: 'Enter valid URL',
+                  icon: Icon(
+                    Icons.photo,
+                    color: secondaryColor,
+                  )),
+            ),
+          ),
+          _imageSelected
+              ? Column(children: [
+                  SizedBox(
+                    height: 0.02 * heightOfScreen,
+                  ),
+                  ImageContent(imageURL: _imageURL)
+                ])
+              : SizedBox(
+                  height: 0,
+                  width: 0,
+                ),
+        ],
+      ),
+      insetPadding: EdgeInsets.all(10),
+      actionsAlignment: MainAxisAlignment.center,
+      actions: <Widget>[
+        _imageSelected
+            ? SizedBox(
+                height: getHeightOfSmallButton(),
+                width: getWidthOfSmallButton(),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: Text('Save', style: getNormalTextStyleBlue()),
+                  style: greyButtonStyle,
+                ),
+              )
+            : SizedBox(
+                height: 0,
+                width: 0,
+              ),
+        SizedBox(
+            height: getHeightOfSmallButton(),
+            width: getWidthOfSmallButton(),
+            child: ElevatedButton(
+              onPressed: () {
+                if (_formKeyDialog.currentState!.validate()) {
+                  setState(() {
+                    _imageSelected = !_imageSelected;
+                    if (_imageSelected) {
+                      _imageURL = _controllerImage.text;
+                      setImageSelectedToSF(imageURL: _imageURL);
+                    }
+                  });
+                }
+              },
+              child: Text(_imageSelected ? 'Cancel' : 'Submit',
+                  style: getNormalTextStyleBlue()),
+              style: greyButtonStyle,
+            )),
+      ],
+    );
+  }
+}
+
+class ImageContent extends StatelessWidget {
+  const ImageContent({Key? key, required String this.imageURL})
+      : super(key: key);
+
+  final String imageURL;
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(
+      imageURL,
+      width: 0.5 * widthOfScreen,
+      height: 0.2 * heightOfScreen,
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        //We change the state of the pic in shared preferences
+        setImageAsUnavailableSF();
+        return const Text('Wrong URL, try again');
+      },
+    );
+  }
+}
+
+setImageSelectedToSF({required String imageURL}) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('imageURL', imageURL);
+  prefs.setBool('valid', true);
+}
+
+setImageAsUnavailableSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('valid', false);
+}
+
+checkImageSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  if (prefs.containsKey('imageURL') && prefs.containsKey('valid')) {
+    return prefs.get('valid');
+  } else {
+    return false;
+  }
+}
+
+getImageUrlSF() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  return prefs.getString('imageURL')!.trim();
 }

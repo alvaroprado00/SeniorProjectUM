@@ -4,16 +4,16 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="">
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Fixed the Create Group Function to update groups list when new group is created. UI still needs work. Need to add group Info and GetX controller for Chats.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/profile/profile.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/profile/profile.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/beltranmorenodealboran/.android/avd/Pixel_5_API_30.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\pablo\.android\avd\Pixel_4_API_30.avd]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -23,6 +23,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="24T7YscP4f77rfm1MwnG3h4DuCK" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -62,6 +70,35 @@
       <option name="presentableId" value="Default" />
       <updated>1643642775449</updated>
     </task>
+    <task id="LOCAL-00001" summary="New commit changed some code in Create group but group home is not updating.">
+      <created>1649374172529</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1649374172529</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Merged main into pablo branch to account for ne changes still need to change UI and group functions.">
+      <created>1649376724892</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1649376724892</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Changed the created page to use the passed in group code">
+      <created>1649378434604</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1649378434604</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fixed the Create Group Function to update groups list when new group is created. UI still needs work. Need to add group Info and GetX controller for Chats.">
+      <created>1649382052088</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1649382052088</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -75,5 +112,12 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="New commit changed some code in Create group but group home is not updating." />
+    <MESSAGE value="Merged main into pablo branch to account for ne changes still need to change UI and group functions." />
+    <MESSAGE value="Changed the created page to use the passed in group code" />
+    <MESSAGE value="Fixed the Create Group Function to update groups list when new group is created. UI still needs work. Need to add group Info and GetX controller for Chats." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed the Create Group Function to update groups list when new group is created. UI still needs work. Need to add group Info and GetX controller for Chats." />
   </component>
 </project>

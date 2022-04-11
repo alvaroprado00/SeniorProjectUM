@@ -11,34 +11,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+
 import '../../config/fixed_values.dart';
 import 'k_values.dart';
 
-Function nextQuestion = (BuildContext context) async {
-  if (globals.activeCourse!.numberOfQuestions >= globals.activeQuestionNum!) {
+Function nextQuestion=(BuildContext context) async {
+
+  if(globals.activeCourse!.numberOfQuestions>=globals.activeQuestionNum!){
     //I get the question in the new-course
-    Question q =
-        globals.activeCourse!.questions[globals.activeQuestionNum! - 1];
+    Question q= globals.activeCourse!.questions[globals.activeQuestionNum!-1];
 
     //Once I have the first question I check what type of question it is
     //to navigate to the appropriate page
 
-    if (q.typeOfQuestion == TypeOfQuestion.multipleChoice) {
-      Navigator.pushNamedAndRemoveUntil(
-          context, MultipleChoiceQuestionPage.routeName, (r) => false,
-          arguments: q);
-    } else {
-      Navigator.pushNamedAndRemoveUntil(
-          context, FillInTheBlanksQuestionPage.routeName, (r) => false,
-          arguments: q);
+    if(q.typeOfQuestion==TypeOfQuestion.multipleChoice){
+      Navigator.pushNamedAndRemoveUntil(context, MultipleChoiceQuestionPage.routeName, (r) => false, arguments: q);
+    }else{
+      Navigator.pushNamedAndRemoveUntil(context, FillInTheBlanksQuestionPage.routeName, (r) => false, arguments: q);
     }
-  } else {
-    ActiveUserController activeUserController = Get.find();
-    final SaveCompletedCourseArgs args =
-        await activeUserController.saveCompletedCourse();
-    Navigator.pushNamedAndRemoveUntil(context, Overview.routeName, (r) => false,
-        arguments: args);
+
+  }else{
+    ActiveUserController activeUserController=Get.find();
+    final SaveCompletedCourseArgs args= await activeUserController.saveCompletedCourse();
+    Navigator.pushNamedAndRemoveUntil(context, Overview.routeName, (r) => false, arguments: args);
   }
+
+
 };
 
 /**
@@ -52,16 +50,26 @@ String? validatorForEmptyTextField(value) {
 }
 
 /**
+ * Validates the value is not null or empty and at least
+ * 6 characters long
+ */
+String? validatorForPassword(value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter some text';
+  }else if(value.length<6){
+    return 'Password should be at least 6 char long';
+  }
+  return null;
+}
+/**
  * Validator for TextFormField. It verifies the value is not empty
  */
-String? validatorForEmail(String? val) {
-  if (val == null || val.isEmpty) {
+String? validatorForEmail(String? val){
+  if (val==null|| val.isEmpty) {
     return 'Field is required';
-  } else if (!RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(val)) {
-    return 'Please use a valid email.';
-  } else {
+  }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val)){
+    return 'Please use a valid email';
+  }else{
     return null;
   }
 }
@@ -84,10 +92,11 @@ String? validatorForURL(value) {
  * the value is a int between 0 and 1000
  */
 String? validatorForExp(value) {
-  value = int.tryParse(value);
-  if (value == null) {
+  value=int.tryParse(value);
+  if (value == null ) {
     return 'Number';
-  } else if (value < 0 || value > 1000) {
+
+  }else if(value<0 || value >1000){
     return '[0-1000]';
   }
   return null;
@@ -132,8 +141,34 @@ String? getRandomEncouragingMessage() {
   return encouragingMessages[Random().nextInt(encouragingMessages.length - 1)];
 }
 
+String? getRandomUpdateMessage(String courseName) {
+  return updateMessages[Random().nextInt(updateMessages.length - 1)].toString() + courseName + getRandomEncouragingMessage().toString();
+}
+
+
 /**
  * Function that returns a random string of the length specified
  */
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
     length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
+
+
+String getDateCreatedForGroup() {
+  DateTime today = DateTime.now();
+  String day = today.day.toString();
+  String month = months[(today.month) - 1];
+  String year = today.year.toString();
+
+  return "${day} ${month} ${year}";
+}
+
+// /**
+//  * Function to generate a random Group Code using uid v4. If uid exists in
+//  * Firebase it will recursively find a new one until it is unique.
+//  */
+// String getGroupCode() async {
+//   final GroupController _groupController = new GroupController();
+//   var uuid = new Uuid();
+//   String groupCode = uuid.v4().substring(0,8);
+//   ;
+// }

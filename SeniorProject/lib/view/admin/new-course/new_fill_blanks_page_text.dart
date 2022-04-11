@@ -4,6 +4,7 @@ import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../util/components.dart';
 import 'new_fill_blanks_page_blanks.dart';
@@ -62,6 +63,25 @@ class _TextFormState extends State<TextForm> {
 
     void Function() addText = () {
       if (_formKey.currentState!.validate()) {
+
+        //I get the text
+        String text=_controllerText.text.trim();
+
+        //Then I get the number of blanks
+        int numberOfBlanks=text.split('X').length - 1;
+
+        if(numberOfBlanks>3){
+          SnackBar snBar=SnackBar(
+            content: Text(
+              'You exceeded the number of blanks',
+              style: getNormalTextStyleBlue(),
+            ),
+            backgroundColor: secondaryColor,
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snBar);
+          return;
+        }
+
         //Create a new Fill In the blanks Question
         FillInTheBlanksQuestion newQuestion = FillInTheBlanksQuestion(
             longFeedback: '',
@@ -78,26 +98,37 @@ class _TextFormState extends State<TextForm> {
     };
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 0.1 * heightOfScreen),
-          Text(
-            'Enter the text. Place an X where the blank must appear.',
-            style: getNormalTextStyleWhite(),
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: 0.025 * heightOfScreen,
-                left: 0.03 * widthOfScreen,
-                right: 0.03 * widthOfScreen),
-            child: TextFormField(
-              validator: validatorForEmptyTextField,
-              controller: _controllerText,
-              decoration: inputDecorationForLongText,
-              maxLines: 10,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 0.22 * heightOfScreen),
+            Text(
+              'Enter the text. Place an X where the blank must appear. Maximum of 3 Blanks.',
+              style: getNormalTextStyleWhite(),
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 0.025 * heightOfScreen,
+                  left: 0.03 * widthOfScreen,
+                  right: 0.03 * widthOfScreen),
+              child: TextFormField(
+                inputFormatters: [
+                  new LengthLimitingTextInputFormatter(300),
+                ],
+                validator: validatorForEmptyTextField,
+                controller: _controllerText,
+                decoration: getInputDecoration(
+                    hintText:
+                        'Enter text',
+                    icon: Icon(
+                      Icons.article_outlined,
+                      color: secondaryColor,
+                    )),
+                maxLines: 5,
+              ),
             ),
           ),
           Spacer(),

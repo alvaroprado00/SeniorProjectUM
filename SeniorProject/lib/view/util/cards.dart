@@ -170,10 +170,12 @@ Card getCardForCategory(
     required Category category,
     required double widthOfCard,
     required double heightOfCard,
+    String routeToNavigate = '',
+    dynamic arguments,
     required bool isTemplate}) {
   //Function to be executed if the card is not a template
   void Function() navigateToCategory = () {
-    Navigator.pushNamed(context, CategoryPage.routeName, arguments: category);
+    Navigator.pushNamed(context, routeToNavigate, arguments: arguments);
   };
 
   return Card(
@@ -234,7 +236,7 @@ Card getCardForNotification(
             ),
             Flexible(
               child: Text(
-                  '$username just completed a new-course on $nameOfCourse. ${getRandomEncouragingMessage()}',
+                  '$username just completed a new course on $nameOfCourse. ${getRandomEncouragingMessage()}',
                   style: getNormalTextStyleWhite()),
             ),
             Padding(

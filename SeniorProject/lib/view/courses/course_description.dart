@@ -334,7 +334,7 @@ class FeaturedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
+    return FloatingActionButton(
       hoverColor: primaryColor,
       hoverElevation: 50,
       onPressed: () {
@@ -356,14 +356,11 @@ class FeaturedButton extends StatelessWidget {
               );
             });
       },
-      icon: const Icon(
+      child: const Icon(
         Icons.bolt,
         color: tertiaryColor,
       ),
-      label: Text(
-        'Featured',
-        style: getSubheadingStyleWhite(),
-      ),
+
       backgroundColor: secondaryColor,
     );
   }

@@ -1,10 +1,12 @@
 import 'package:cyber/controller/active_user_controller.dart';
+import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../../config/fixed_values.dart';
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -32,7 +34,7 @@ class _TextFormFieldForPasswordState extends State<TextFormFieldForPassword> {
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: _isObscure,
-      validator: validatorForEmptyTextField,
+      validator: validatorForPassword,
       controller: widget.controller,
       decoration: InputDecoration(
           hintStyle: getTexFieldTextStyle(),
@@ -241,10 +243,9 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
                               'Yes',
                               style: getNormalTextStyleBlue(),
                             ),
-                            onPressed: () {
-                              Navigator.popUntil(context,
-                                  ModalRoute.withName('/adminDashboard'));
-                            },
+                            onPressed: (){
+                              Navigator.of(context)
+                                  .pushNamedAndRemoveUntil(HomePage.routeName, (Route<dynamic> route) => false);                            },
                           ),
                         ),
                       ],
@@ -357,10 +358,11 @@ getSaveCurrentCourseButton({required BuildContext context}) {
           style: getNormalTextStyleBlue(),
         ),
         onPressed: () async {
-          await activeUserController.updateCurrentCourse();
+          await activeUserController.updateCurrentCourse().then((value){
+            Navigator.pushNamedAndRemoveUntil(
+                context, HomePage.routeName, (r) => false);
+          });
           //Once the user is updated, then we go to the dashboard
-          Navigator.pushNamedAndRemoveUntil(
-              context, HomePage.routeName, (r) => false);
         }),
   );
 }
@@ -585,9 +587,10 @@ getContainerForBadge({required String nameOfIcon, required double size}) {
       color: primaryColor,
     ),
     child: Icon(
-      stringToBadgeIcon[nameOfIcon],
+      FontAwesomeIconsMap[nameOfIcon],
       color: secondaryColor,
       size: 0.4 * size,
     ),
   );
 }
+

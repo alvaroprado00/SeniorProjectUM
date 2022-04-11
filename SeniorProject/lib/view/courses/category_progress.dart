@@ -29,6 +29,7 @@ class CategoryProgress extends StatelessWidget {
           centerTitle: true,
           backgroundColor: tertiaryColor,
           elevation: 0,
+          leading: getBackButton(context: context),
         ),
         body: FutureBuilder(
             future: courseController.getCourseNamesFromCategory(
@@ -75,6 +76,7 @@ class CategoryProgressContent extends GetView<ActiveUserController> {
             Obx(() => getProgressInCategory(
                 coursesInCategory: categoryCourses,
                 userCompletedCourses: controller.completedCourses.value)),
+            SizedBox(height: 0.05*heightOfScreen,),
             SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),

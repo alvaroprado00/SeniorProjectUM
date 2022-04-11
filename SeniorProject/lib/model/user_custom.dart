@@ -22,6 +22,7 @@ class UserCustom {
   String username;
   Level level;
   String profilePictureActive;
+  List<String> userGroups;
   List<String> collectedAvatars;
   List<Badge> collectedBadges;
   List<String> coursesSaved;
@@ -34,6 +35,7 @@ class UserCustom {
       required String this.username,
       required Level this.level,
       required String this.profilePictureActive,
+      required List<String> this.userGroups,
       required List<String> this.collectedAvatars,
       required List<Badge> this.collectedBadges,
       required List<String> this.coursesSaved,
@@ -247,6 +249,7 @@ getFakeUser() {
     email: 'Fake@gmail.com',
     username: 'FakeUser',
     profilePictureActive: 'FakeUser',
+    userGroups: groups,
     collectedBadges: fakeCollectedBadges,
     level: Level(totalXP: 1100, levelNumber: 2, xpEarnedInLevel: 100),
     collectedAvatars: fakeCollectedAvatars,
@@ -256,6 +259,8 @@ getFakeUser() {
     isAdmin: false,
   );
 }
+
+List<String> groups = ['7011ac59',];
 
 List<Badge> fakeCollectedBadges = [
   Badge(

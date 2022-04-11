@@ -5,6 +5,7 @@ import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../util/components.dart';
 import 'new_multiple_choice_page_options.dart';
@@ -67,7 +68,7 @@ class _DescriptionFormState extends State<DescriptionForm> {
         //I create a Multiple Choice Question
         Question newQuestion = MultipleChoiceQuestion(
             number: newQuestionNum!,
-            description: _controllerDescription.text,
+            description: _controllerDescription.text.trim(),
             typeOfQuestion: TypeOfQuestion.multipleChoice,
             longFeedback: '',
             options: [],
@@ -81,26 +82,31 @@ class _DescriptionFormState extends State<DescriptionForm> {
 
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 0.1 * heightOfScreen),
-          Text(
-            'Enter the question.',
-            style: getNormalTextStyleWhite(),
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: 0.025 * heightOfScreen,
-                left: 0.03 * widthOfScreen,
-                right: 0.03 * widthOfScreen),
-            child: TextFormField(
-              validator: validatorForEmptyTextField,
-              controller: _controllerDescription,
-              decoration: inputDecorationForLongText,
-              maxLines: 5,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 0.22 * heightOfScreen),
+            Text(
+              'Enter the question.',
+              style: getNormalTextStyleWhite(),
+              textAlign: TextAlign.center,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 0.025 * heightOfScreen,
+                  left: 0.03 * widthOfScreen,
+                  right: 0.03 * widthOfScreen),
+              child: TextFormField(
+                inputFormatters: [
+                  new LengthLimitingTextInputFormatter(210),
+                ],
+                validator: validatorForEmptyTextField,
+                controller: _controllerDescription,
+                decoration: inputDecorationForLongText,
+                maxLines: 5,
+              ),
             ),
           ),
           Spacer(),

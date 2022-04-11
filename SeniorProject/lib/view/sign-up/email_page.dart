@@ -13,14 +13,21 @@ class SignUpEmailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        leading: getBackButton(context: context),
-      ),
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        child: EmailForm(),
+    return GestureDetector(
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          leading: getBackButton(context: context),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: EmailForm(),
+          ),
+        ),
       ),
     );
   }
@@ -59,7 +66,7 @@ class _EmailFormState extends State<EmailForm> {
         Navigator.pushNamed(
           context,
           PasswordForm.routeName,
-          arguments: _controllerEmail.text,
+          arguments: _controllerEmail.text.trim(),
         );
       }
     };

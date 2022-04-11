@@ -114,7 +114,9 @@ class ProfilePageContent extends GetView<ActiveUserController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     //When the profile picture of the user changes, we need to change this
-                    AvatarPic(),
+                    AvatarPic(
+                      size: 0.3 * heightOfScreen,
+                    ),
                     Padding(
                         padding: EdgeInsets.only(
                             top: heightOfScreen * 0.03,
@@ -217,8 +219,7 @@ class AvatarPic extends GetView<ActiveUserController> {
     return Align(
       alignment: Alignment.center,
       child: Obx(() => Avatar(
-          nameOfAvatar: controller.profilePictureActive.value,
-          size: 0.3 * heightOfScreen)),
+          nameOfAvatar: controller.profilePictureActive.value, size: size)),
     );
   }
 }
