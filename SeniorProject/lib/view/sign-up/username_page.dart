@@ -94,7 +94,6 @@ class _UsernameFormState extends State<UsernameForm> {
         await UserController.addUserToAuthAndFirestore(
                 u: userCreated, password: widget.args[1])
             .then((value) {
-
           String message = 'Error when adding user to Firestore DB';
 
           //value will be bool if The user is added to the Auth DB
@@ -117,7 +116,10 @@ class _UsernameFormState extends State<UsernameForm> {
             backgroundColor: secondaryColor,
           );
           ScaffoldMessenger.of(context).showSnackBar(snBar);
-          Navigator.pushNamed(context, HomePage.routeName,);
+          Navigator.pushNamed(
+            context,
+            HomePage.routeName,
+          );
         });
       }
     };
