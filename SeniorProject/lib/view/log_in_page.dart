@@ -141,7 +141,7 @@ class _LogInPageState extends State<LogInPage> {
                   Padding(
                     padding: EdgeInsets.only(
                         left: 0.03 * widthOfScreen,
-                        top: 0.28 * heightOfScreen,
+                        top: 0.2 * heightOfScreen,
                         bottom: 0.03 * widthOfScreen),
                     child: Align(
                       alignment: Alignment.centerLeft,
