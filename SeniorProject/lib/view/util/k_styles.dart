@@ -156,7 +156,7 @@ InputDecoration getInputDecoration(
       fillColor: tertiaryColor,
       hintText: hintText,
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(10),
         borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
       ),
       prefixIcon: icon,

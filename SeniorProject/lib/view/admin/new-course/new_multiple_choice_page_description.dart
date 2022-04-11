@@ -108,7 +108,6 @@ class _DescriptionFormState extends State<DescriptionForm> {
               maxLines: 5,
             ),
           ),
-          Spacer(),
           getNextButton(todo: setQuestionDescription, large: true),
           SizedBox(height: 0.04 * heightOfScreen),
           getCirclesProgressBar(position: 1, numberOfCircles: 3),

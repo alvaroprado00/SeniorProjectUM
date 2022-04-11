@@ -589,7 +589,7 @@ getContainerForBadge({required String nameOfIcon, required double size}) {
     child: Icon(
       FontAwesomeIconsMap[nameOfIcon],
       color: secondaryColor,
-      size: 0.4 * size,
+      size: 0.3 * size,
     ),
   );
 }
