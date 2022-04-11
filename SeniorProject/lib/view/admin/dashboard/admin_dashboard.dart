@@ -1,7 +1,7 @@
 import 'package:cyber/view/admin/check-user-progress/user_progress.dart';
 import 'package:cyber/view/admin/delete-course/delete_course.dart';
-import 'package:cyber/view/admin/new-course/new_course_page.dart';
 import 'package:cyber/view/admin/featured-recommended/new_recommended_page.dart';
+import 'package:cyber/view/admin/new-course/new_course_page.dart';
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
@@ -29,7 +29,7 @@ class AdminDashboardPage extends StatelessWidget {
         leading: getBackButton(context: context),
       ),
       body: SafeArea(
-       /* child: SingleChildScrollView(
+        /* child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
                 left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
@@ -164,15 +164,15 @@ class AdminDashboardPage extends StatelessWidget {
               Divider(
                 color: secondaryColor,
                 thickness: 2,
-                indent: 0.07 * widthOfScreen,
-                endIndent: 0.07 * widthOfScreen,
+                indent: 0.03 * widthOfScreen,
+                endIndent: 0.03 * widthOfScreen,
               ),
               SizedBox(
                 height: 0.04 * heightOfScreen,
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(
-                    0.07 * widthOfScreen, 0, 0.07 * widthOfScreen, 0),
+                    0.03 * widthOfScreen, 0, 0.03 * widthOfScreen, 0),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.center,

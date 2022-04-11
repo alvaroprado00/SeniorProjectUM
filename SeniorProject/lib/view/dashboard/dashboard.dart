@@ -1,7 +1,5 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
-import 'package:cyber/controller/user_controller.dart';
-import 'package:cyber/globals.dart';
 import 'package:cyber/model/current_course.dart';
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/courses/category.dart';
@@ -10,6 +8,7 @@ import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,7 +24,6 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContentForDashboard();
-
   }
 }
 
@@ -44,33 +42,35 @@ class ContentForDashboard extends GetView<ActiveUserController> {
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           backgroundColor: tertiaryColor,
           appBar: AppBar(
-              automaticallyImplyLeading: false,
-              title:
-                Padding(
-                  padding: EdgeInsets.only(top:8.0, bottom: 8.0),
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration:BoxDecoration(
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Welcome ${controller.username.value}!',
+              style: getSubheadingStyleBlue(),
+            ),
+            /*Padding(
+              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
                     color: quaternaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Text(
-                      'Welcome ${controller.username.value}!',
-                    ),
-                  ),
+                child: Text(
+                  'Welcome ${controller.username.value}!',
+                  style: getSubheadingStyleBlue(),
                 ),
-
-              leadingWidth: 0,
-              backgroundColor: tertiaryColor,
-              elevation: 0,
-              centerTitle: false,
-              titleTextStyle: TextStyle(
-                color: primaryColor,
-                fontSize: 0.08 * widthOfScreen,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'roboto',
               ),
+            ),*/
+            leadingWidth: 0,
+            backgroundColor: tertiaryColor,
+            elevation: 0,
+            centerTitle: false,
+            titleTextStyle: TextStyle(
+              color: primaryColor,
+              fontSize: 0.08 * widthOfScreen,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'roboto',
             ),
-
+          ),
           body: SafeArea(
             child: Padding(
               padding: EdgeInsets.only(
@@ -116,20 +116,18 @@ class AdminButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 70,
-      height: 70,
+      width: 60,
+      height: 60,
       child: FloatingActionButton(
-
         hoverColor: primaryColor,
-        hoverElevation: 50,
+        hoverElevation: 20,
         onPressed: () {
           Navigator.pushNamed(context, AdminDashboardPage.routeName);
         },
-
         child: const Icon(
           Icons.admin_panel_settings,
           color: tertiaryColor,
-          size: 50,
+          size: 32,
         ),
         backgroundColor: secondaryColor,
       ),

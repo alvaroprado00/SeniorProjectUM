@@ -6,6 +6,7 @@ import 'package:cyber/view/util/k_values.dart' as k_values;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../model/course.dart';
 import '../../util/components.dart';
 import 'new_course_page_outcomes.dart';
@@ -121,7 +122,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
 
     return Form(
       key: _formKey,
-     /* child: Column(
+      /* child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -230,7 +231,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
             children: [
               SizedBox(height: 0.05 * k_values.heightOfScreen),
               Text(
-                'Title.',
+                'Title',
                 style: getNormalTextStyleWhite(),
                 textAlign: TextAlign.center,
               ),
@@ -241,13 +242,13 @@ class _NewCourseFormState extends State<NewCourseForm> {
                 decoration: getInputDecoration(
                     hintText: 'Title',
                     icon: Icon(
-                      Icons.format_italic,
+                      Icons.label_important,
                       color: secondaryColor,
                     )),
               ),
               SizedBox(height: 0.05 * k_values.heightOfScreen),
               Text(
-                'Category.',
+                'Category',
                 style: getNormalTextStyleWhite(),
                 textAlign: TextAlign.center,
               ),
@@ -255,7 +256,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
               buildDropdown(),
               SizedBox(height: 0.05 * k_values.heightOfScreen),
               Text(
-                'XP.',
+                'XP',
                 style: getNormalTextStyleWhite(),
                 textAlign: TextAlign.center,
               ),
@@ -273,7 +274,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
               ),
               SizedBox(height: 0.05 * k_values.heightOfScreen),
               Text(
-                'Image.',
+                'Image',
                 style: getNormalTextStyleWhite(),
                 textAlign: TextAlign.center,
               ),
@@ -292,7 +293,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
                   },
                   style: yellowButtonStyle,
                   child: Text(
-                    'Pick one',
+                    'Choose',
                     style: getNormalTextStyleWhite(),
                   ),
                 ),
@@ -309,9 +310,9 @@ class _NewCourseFormState extends State<NewCourseForm> {
   }
 
   Widget buildDropdown() => Container(
-        width: 0.93 * k_values.widthOfScreen,
+        width: 0.97 * k_values.widthOfScreen,
         padding: EdgeInsets.symmetric(
-            horizontal: 0.04 * k_values.widthOfScreen,
+            horizontal: 0.03 * k_values.widthOfScreen,
             vertical: 0.005 * k_values.heightOfScreen),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
@@ -372,7 +373,7 @@ class _ImageDialogState extends State<ImageDialog> {
         borderRadius: BorderRadius.circular(10),
       ),
       title: Text(
-        _imageSelected ? 'Picture' : 'Paste your URL',
+        _imageSelected ? 'Picture' : 'Enter URL',
         style: getSubheadingStyleBlue(),
         textAlign: TextAlign.center,
       ),
@@ -387,7 +388,7 @@ class _ImageDialogState extends State<ImageDialog> {
               validator: validatorForURL,
               controller: _controllerImage,
               decoration: getInputDecoration(
-                  hintText: 'Enter valid URL',
+                  hintText: 'URL',
                   icon: Icon(
                     Icons.photo,
                     color: secondaryColor,
@@ -407,6 +408,8 @@ class _ImageDialogState extends State<ImageDialog> {
                 ),
         ],
       ),
+      actionsPadding: EdgeInsets.only(bottom: 12.0),
+      contentPadding: EdgeInsets.fromLTRB(15.0, 20.0, 15.0, 24.0),
       insetPadding: EdgeInsets.all(10),
       actionsAlignment: MainAxisAlignment.center,
       actions: <Widget>[
