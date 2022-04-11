@@ -92,11 +92,16 @@ class CourseDescriptionContent extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: getBackButton(context: context),
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: this.comesFromFeaturePage
+          ? AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+            )
+          : AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              leading: getBackButton(context: context),
+            ),
       floatingActionButton: course.isFeatured! ? FeaturedButton() : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
       body: SingleChildScrollView(
@@ -116,14 +121,6 @@ class CourseDescriptionContent extends StatelessWidget {
                     ),
                   ),
                 ),
-                this.comesFromFeaturePage
-                    ? SizedBox(
-                        height: 0,
-                      )
-                    : Positioned(
-                        top: 0.08 * heightOfScreen,
-                        child: getBackButton(context: context),
-                      ),
               ],
             ),
             Padding(

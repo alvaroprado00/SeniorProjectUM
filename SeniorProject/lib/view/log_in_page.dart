@@ -79,86 +79,84 @@ class _LogInPageState extends State<LogInPage> {
     };
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: SafeArea(
-        child: Form(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: SafeArea(
+            child: SingleChildScrollView(
+                child: Form(
           key: _formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              Image.asset(
-                'assets/images/logoNoText.png',
-                width: 0.2 * widthOfScreen,
-                height: 0.08 * heightOfScreen,
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.025 * heightOfScreen, bottom: 0.01 * heightOfScreen),
-                child: Text('Cyber', style: getHeadingStyleWhite()),
-              ),
-              Text('Learn to be safe.', style: getSubheadingStyleYellow()),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.1 * heightOfScreen,
-                    bottom: 0.015 * heightOfScreen,
-                    left: 0.03 * widthOfScreen,
-                    right: 0.03 * widthOfScreen),
-                child: TextFormField(
-                  controller: _controllerEmail,
-                  validator: validatorForEmptyTextField,
-                  decoration: getInputDecoration(
-                      hintText: 'Email',
-                      icon: Icon(
-                        Icons.email,
-                        color: secondaryColor,
-                      )),
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  height: 0.05 * heightOfScreen,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    bottom: 0.015 * heightOfScreen,
-                    left: 0.03 * widthOfScreen,
-                    right: 0.03 * widthOfScreen),
-                child: TextFormFieldForPassword(_controllerPassword),
-              ),
-              SizedBox(
-                  height: getHeightOfLargeButton(),
-                  width: getWidthOfLargeButton(),
-                  child: ElevatedButton(
-                    onPressed: login,
-                    child: Text('Login', style: getNormalTextStyleBlue()),
-                    style: yellowButtonStyle,
-                  )),
-              Spacer(),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 0.03 * widthOfScreen, bottom: 0.03 * widthOfScreen),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Don\'t have an account?',
-                    style: getSmallTextStyle(),
+                Image.asset(
+                  'assets/images/logoNoText.png',
+                  width: 0.2 * widthOfScreen,
+                  height: 0.08 * heightOfScreen,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 0.025 * heightOfScreen,
+                      bottom: 0.01 * heightOfScreen),
+                  child: Text('Cyber', style: getHeadingStyleWhite()),
+                ),
+                Text('Learn to be safe.', style: getSubheadingStyleYellow()),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 0.1 * heightOfScreen,
+                      bottom: 0.015 * heightOfScreen,
+                      left: 0.03 * widthOfScreen,
+                      right: 0.03 * widthOfScreen),
+                  child: TextFormField(
+                    controller: _controllerEmail,
+                    validator: validatorForEmptyTextField,
+                    decoration: getInputDecoration(
+                        hintText: 'Email',
+                        icon: Icon(
+                          Icons.email,
+                          color: secondaryColor,
+                        )),
                   ),
                 ),
-              ),
-              SizedBox(
-                  height: getHeightOfLargeButton(),
-                  width: getWidthOfLargeButton(),
-                  child: ElevatedButton(
-                    onPressed: goToSignUp,
-                    child: Text('Sign Up', style: getNormalTextStyleBlue()),
-                    style: greyButtonStyle,
-                  )),
-              SizedBox(
-                height: 20,
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: 0.015 * heightOfScreen,
+                      left: 0.03 * widthOfScreen,
+                      right: 0.03 * widthOfScreen),
+                  child: TextFormFieldForPassword(_controllerPassword),
+                ),
+                SizedBox(
+                    height: getHeightOfLargeButton(),
+                    width: getWidthOfLargeButton(),
+                    child: ElevatedButton(
+                      onPressed: login,
+                      child: Text('Login', style: getNormalTextStyleBlue()),
+                      style: yellowButtonStyle,
+                    )),
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 0.21 * heightOfScreen,
+                      left: 0.03 * widthOfScreen,
+                      bottom: 0.03 * widthOfScreen),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Don\'t have an account?',
+                      style: getSmallTextStyle(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                    height: getHeightOfLargeButton(),
+                    width: getWidthOfLargeButton(),
+                    child: ElevatedButton(
+                      onPressed: goToSignUp,
+                      child: Text('Sign Up', style: getNormalTextStyleBlue()),
+                      style: greyButtonStyle,
+                    ))
+              ]),
+        ))));
   }
 }

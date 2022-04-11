@@ -17,6 +17,7 @@ class NewCoursePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
           leading: getBackButton(context: context),
@@ -29,7 +30,7 @@ class NewCoursePage extends StatelessWidget {
         ),
         body: SafeArea(
             //This widget solves the problem of the overflow caused by the keyboard
-            child: NewCourseForm()));
+            child: SingleChildScrollView(child: NewCourseForm())));
   }
 }
 
@@ -109,7 +110,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
     return Form(
       key: _formKey,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 0.05 * k_values.heightOfScreen),
@@ -134,15 +135,18 @@ class _NewCourseFormState extends State<NewCourseForm> {
                   )),
             ),
           ),
-          Spacer(),
+          SizedBox(height: 0.05 * k_values.heightOfScreen),
           Text(
             'Category',
             style: getNormalTextStyleWhite(),
             textAlign: TextAlign.center,
           ),
-          Spacer(),
+          Padding(
+              padding: EdgeInsets.only(
+            top: 0.025 * k_values.heightOfScreen,
+          )),
           buildDropdown(),
-          Spacer(),
+          SizedBox(height: 0.05 * k_values.heightOfScreen),
           Text(
             'Image',
             style: getNormalTextStyleWhite(),
@@ -164,7 +168,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
                   )),
             ),
           ),
-          Spacer(),
+          SizedBox(height: 0.05 * k_values.heightOfScreen),
           Text(
             'XP',
             style: getNormalTextStyleWhite(),
@@ -198,7 +202,7 @@ class _NewCourseFormState extends State<NewCourseForm> {
                       top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen)),
             ),
           ),
-          Spacer(),
+          SizedBox(height: 0.05 * k_values.heightOfScreen),
           getNextButton(todo: updateCourseFields, large: true),
           SizedBox(height: 0.04 * k_values.heightOfScreen),
           getCirclesProgressBar(position: 1, numberOfCircles: 3),

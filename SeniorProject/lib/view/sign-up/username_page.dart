@@ -124,9 +124,9 @@ class _UsernameFormState extends State<UsernameForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Spacer(),
           Padding(
             padding: EdgeInsets.only(
-                top: 0.2 * heightOfScreen,
                 bottom: 0.025 * heightOfScreen,
                 left: 0.03 * widthOfScreen,
                 right: 0.03 * widthOfScreen),
@@ -147,7 +147,6 @@ class _UsernameFormState extends State<UsernameForm> {
                   TextSpan(text: 'ROBOHASH', style: smallTextStyleYellow),
                 ]),
               )),
-
           Padding(
             padding: EdgeInsets.only(
                 left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
@@ -178,6 +177,9 @@ class _UsernameFormState extends State<UsernameForm> {
               numberOfCircles: 5,
             ),
           ),
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
     );

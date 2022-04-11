@@ -71,8 +71,8 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
         physics: NeverScrollableScrollPhysics(),
         children: [
           DashboardPage(),
-          NewCoursePage(),
           FeaturedCoursePage(),
+          NewCoursePage(),
           ProfilePage(),
         ],
       ),

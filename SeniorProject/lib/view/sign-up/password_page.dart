@@ -72,9 +72,9 @@ class _PasswordFormState extends State<PasswordForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Spacer(),
           Padding(
             padding: EdgeInsets.only(
-                top: 0.27 * heightOfScreen,
                 bottom: 0.05 * heightOfScreen,
                 left: 0.03 * widthOfScreen,
                 right: 0.03 * widthOfScreen),
@@ -83,9 +83,7 @@ class _PasswordFormState extends State<PasswordForm> {
           ),
           Padding(
             padding: EdgeInsets.only(
-
-                left: 0.03 * widthOfScreen,
-                right: 0.03 * widthOfScreen),
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
             child: TextFormFieldForPassword(_controllerPassword),
           ),
           Spacer(),
@@ -104,6 +102,9 @@ class _PasswordFormState extends State<PasswordForm> {
               numberOfCircles: 5,
             ),
           ),
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
     );
