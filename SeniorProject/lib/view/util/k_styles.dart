@@ -84,6 +84,14 @@ TextStyle getNormalTextStyleBlue() {
       fontWeight: FontWeight.w400);
 }
 
+TextStyle getNormalTextStyleBlueBold() {
+  return TextStyle(
+      color: primaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.045 * widthOfScreen,
+      fontWeight: FontWeight.bold);
+}
+
 TextStyle getNormalTextStyleBlueItalicBold() {
   return TextStyle(
       color: primaryColor,
@@ -107,6 +115,14 @@ TextStyle getNormalTextStyleYellow() {
       fontFamily: fontFamily,
       fontSize: 0.045 * widthOfScreen,
       fontWeight: FontWeight.w400);
+}
+
+TextStyle getNormalTextStyleYellowBold() {
+  return TextStyle(
+      color: secondaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.045 * widthOfScreen,
+      fontWeight: FontWeight.bold);
 }
 
 TextStyle getSmallTextStyle() {

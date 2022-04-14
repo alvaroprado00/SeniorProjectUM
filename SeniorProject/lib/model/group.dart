@@ -5,6 +5,7 @@ part 'group.g.dart';
 class Group {
   final String groupCode;
   final String groupName;
+  final String groupAdmin;
   final String dateCreated;
   final List<String> groupMembers;
   final String groupImageURL;
@@ -12,6 +13,7 @@ class Group {
   Group({
     required this.groupCode,
     required this.groupName,
+    required this.groupAdmin,
     required this.dateCreated,
     required this.groupMembers,
     required this.groupImageURL,

@@ -52,14 +52,14 @@ class ChatPage extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfoPage(groupSnapshot: groupSnapshot,)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfo(groupSnapshot: groupSnapshot,)));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
                       backgroundColor: MaterialStateProperty.all<Color>(secondaryColor),
                       minimumSize: MaterialStateProperty.all<Size>(Size(40, 40)),
                     ),
-                    child: Icon(CupertinoIcons.group_solid),
+                    child: Icon(CupertinoIcons.ellipsis),
                   ),
                 ],
               ),

@@ -1,7 +1,9 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/config/k_collection_names_firebase.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/custom_notification.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
@@ -45,7 +47,7 @@ class GroupController {
         .snapshots();
   }
 
-  Future<String> uploadImage(String groupCode ,File imageFile) async {
+  static Future<String> uploadImage(String groupCode ,File imageFile) async {
     String fileName = imageFile.path.toString().split('/').last;
     var ref = FirebaseStorage.instance.ref()
         .child("groupImages")
@@ -88,6 +90,79 @@ class GroupController {
         .collection("groupCollection")
         .doc(groupCode)
         .collection("groupNotifications");
+  }
+  
+  static Future removeCurrentUserFromGroup({required String groupCode}) {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    return FirebaseFirestore.instance
+      .collection(userCollectionName)
+      .doc(uid)
+      .update({"userGroups" : FieldValue.arrayRemove([groupCode])});
+  }
+
+  static deleteGroup({required String groupCode}) {
+    String uid = FirebaseAuth.instance.currentUser!.uid;
+    FirebaseFirestore.instance
+        .collection(userCollectionName)
+        .doc(uid)
+        .update({"userGroups" : FieldValue.arrayRemove([groupCode])});
+  }
+
+  static Future groupNameExists({required String groupCode, required String groupName}){
+    CollectionReference groupRef =
+    FirebaseFirestore.instance.collection("groupCollection");
+
+    return groupRef.doc(groupCode).get().then((querySnapshot) {
+      Map<String, dynamic> json = querySnapshot.data() as Map<String, dynamic>;
+      if(json['groupName']==groupName){
+        return true;
+      }
+      return false;
+
+    }).catchError((error) {
+      print('Error checking if username exists');
+      throw Exception('Error checking if username exists');
+    });
+  }
+
+  static Future updateGroupName(
+      {required String groupCode, required String groupName}) async {
+    CollectionReference groupRef =
+    FirebaseFirestore.instance.collection("groupCollection");
+
+
+    bool exists = await groupNameExists(groupCode: groupCode, groupName: groupName,);
+
+    if(exists){
+      return 'Username already exists';
+    }
+
+    //Access specific entry and set info
+    return groupRef.doc(groupCode).update({
+      'groupName': groupName,
+    }).then((value) {
+      print("Updated username");
+      return true;
+    }).catchError((error) {
+      print("Error updating username");
+      return false;
+    });
+  }
+
+  static updateSingleGroupField({required String groupCode, required String groupField, required String fieldValue}) {
+    CollectionReference groups =
+    FirebaseFirestore.instance.collection("groupCollection");
+
+    //Access specific entry and set info
+    return groups.doc(groupCode).update({
+      groupField: fieldValue,
+    }).then((value) {
+      print("Updated field ${groupField}");
+      return true;
+    }).catchError((error) {
+      print("Error updating field ${groupField}");
+      return false;
+    });
   }
 
 }

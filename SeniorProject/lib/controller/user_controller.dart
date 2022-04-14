@@ -372,5 +372,20 @@ static Future deleteActiveUser() async {
     return users.doc(uidOfActiveUser).update({"userGroups": FieldValue.arrayUnion(groupCode)});
   }
 
+  static Future<UserCustom> getUserByUserName({required String userName}){
+    var user = FirebaseFirestore.instance
+      .collection(userCollectionName)
+      .where("username", isEqualTo: userName)
+      .get().then((value) {
+        Map<String, dynamic> json = value.docs.single.data();
+
+        return UserCustom.fromJson(json);
+      })
+      .catchError((error) {
+        print('Failed to get User: ${error.toString()}');
+        throw Exception('Error getting active user');
+      });
+    return user;
+  }
 
 }

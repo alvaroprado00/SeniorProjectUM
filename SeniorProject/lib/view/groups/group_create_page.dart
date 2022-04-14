@@ -389,7 +389,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     onPressed: () async {
                       groupCode = uuid.v4().substring(0,8);
                       if(groupImage != null) {
-                        _groupController.uploadImage(groupCode,groupImage!)
+                        GroupController.uploadImage(groupCode,groupImage!)
                           .then((value) {
                             setState(() {
                               gettingImage = true;
@@ -398,6 +398,7 @@ class _CreateGroupState extends State<CreateGroup> {
                               newGroup = new Group(
                                 groupCode: groupCode,
                                 groupName: _controllerJoin.text,
+                                groupAdmin: activeUser!.username,
                                 dateCreated: date,
                                 groupMembers: [activeUser!.username,],
                                 groupImageURL: imageUrl,
@@ -418,7 +419,7 @@ class _CreateGroupState extends State<CreateGroup> {
                         _groupController.getImageFileFromAssets("default_chat_banner.png")
                           .then((value) {setState(() {
                             defaultImage = value;
-                            _groupController.uploadImage(groupCode, defaultImage)
+                            GroupController.uploadImage(groupCode, defaultImage)
                                 .then((value) {
                               setState(() {
                                 gettingImage = true;
@@ -427,6 +428,7 @@ class _CreateGroupState extends State<CreateGroup> {
                                 newGroup = Group(
                                   groupCode: groupCode,
                                   groupName: _controllerJoin.text,
+                                  groupAdmin: activeUser!.username,
                                   dateCreated: date,
                                   groupMembers: [activeUser!.username,],
                                   groupImageURL: imageUrl,
