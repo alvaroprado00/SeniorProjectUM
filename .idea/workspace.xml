@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Added group Admin features to change image and group name.">
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_edit_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_edit_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_home_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/util/functions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/util/functions.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649910358049</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button.">
+      <created>1650122997024</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1650122997024</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -148,6 +152,7 @@
     <MESSAGE value="Fixed join group button to validate group code using regex and to display snackbar if group code is not valid or group does not exist." />
     <MESSAGE value="Fixed group notifications page to show current notifications from latest to oldest." />
     <MESSAGE value="Added group Admin features to change image and group name." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added group Admin features to change image and group name." />
+    <MESSAGE value="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button." />
   </component>
 </project>

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
@@ -135,7 +136,8 @@ class GroupInfo extends StatelessWidget {
                   onPressed: () {
                     GroupController.deleteGroup(groupCode: groupSnapshot.groupCode)
                         .then((value) {
-                        Navigator.of(context).pop(context);
+                      ActiveUserController().userGroups.refresh();
+                      Navigator.of(context).pop(context);
                     });
                   },
                   child: Text('Delete Group', style: getNormalTextStyleWhite(),),
@@ -151,7 +153,8 @@ class GroupInfo extends StatelessWidget {
                   onPressed: () {
                       GroupController.removeCurrentUserFromGroup(groupCode: groupSnapshot.groupCode)
                           .then((value) {
-                            Navigator.of(context).pop(context);
+                        ActiveUserController().userGroups.refresh();
+                        Navigator.of(context).pop(context);
                       });
                   },
                   child: Text('Leave Group', style: getNormalTextStyleWhite(),),

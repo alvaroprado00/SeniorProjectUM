@@ -145,7 +145,7 @@ String? getRandomEncouragingMessage() {
 }
 
 String? getRandomUpdateMessage(String courseName) {
-  return updateMessages[Random().nextInt(updateMessages.length - 1)].toString() + courseName + getRandomEncouragingMessage().toString();
+  return updateMessages[Random().nextInt(updateMessages.length - 1)].toString() + courseName + ". " + getRandomEncouragingMessage().toString();
 }
 
 

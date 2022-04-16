@@ -105,9 +105,7 @@ class GroupTile extends StatelessWidget {
       stream: _groupController.getGroupByCode(groupCode),
       builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
         if (!snapshot.hasData || !snapshot.data!.exists) {
-          return Center(
-            child: CircularProgressIndicator(color: primaryColor,),
-          );
+          return SizedBox(height: 0.01,);
         }
         else {
           Group createdGroup = Group.fromJson(

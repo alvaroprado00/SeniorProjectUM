@@ -16,10 +16,10 @@ const List<String> encouragingMessages = [
 ];
 
 const List<String> updateMessages = [
-  ' just completed ',
-  ' just finished ',
-  ' earned a badge in ',
-  ' learned about ',
+  'just completed ',
+  'just finished ',
+  'earned a badge in ',
+  'learned about ',
 ];
 
 Map<int, String> numberToOptionLetter = {
