@@ -45,35 +45,15 @@ class _EditGroupState extends State<EditGroup> {
 
   Widget _buildPopupDialog(BuildContext context) {
     return new AlertDialog(
-      title: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop(context);
-                },
-                child: Icon(Icons.close, color: primaryColor,),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                  elevation: MaterialStateProperty.all<double>(0.0),
-                ),
-              ),
-            ],
+      title: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text('Add image from...',
+          style: TextStyle(
+            color: primaryColor,
+            fontSize: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text('Add image from...',
-              style: TextStyle(
-                color: primaryColor,
-                fontSize: 20,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+          textAlign: TextAlign.center,
+        ),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -150,6 +130,18 @@ class _EditGroupState extends State<EditGroup> {
           ),
         ],
       ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(context);
+          },
+          child: Text("Close",style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+      ],
     );
   }
 
@@ -397,11 +389,31 @@ class _EditGroupState extends State<EditGroup> {
                               );
                               changingImage = false;
                               Navigator.of(context).pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text(
+                                  'Group Info Updated!',
+                                  style: TextStyle(
+                                    color: primaryColor,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                backgroundColor: secondaryColor,
+                              ));
                             });
                           });
                         }
                         else {
                           Navigator.of(context).pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                              'Group Info Updated!',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: secondaryColor,
+                          ));
                         }
                       }
                       else if(groupImage != null && groupImage!.path.isNotEmpty) {
@@ -415,6 +427,16 @@ class _EditGroupState extends State<EditGroup> {
                             );
                             changingImage = false;
                             Navigator.of(context).pop(context);
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              content: Text(
+                                'Group Info Updated!',
+                                style: TextStyle(
+                                  color: primaryColor,
+                                  fontSize: 14,
+                                ),
+                              ),
+                              backgroundColor: secondaryColor,
+                            ));
                           });
                         });
                       }

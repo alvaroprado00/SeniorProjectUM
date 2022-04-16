@@ -256,32 +256,12 @@ class JoinPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new AlertDialog(
-      title: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Icon(Icons.close, color: primaryColor,),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                  elevation: MaterialStateProperty.all<double>(0.0),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              'You Joined',
-              style: getHeadingStyleBlue(),
-            ),
-          ),
-        ],
+      title: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text(
+          'You Joined',
+          style: getHeadingStyleBlue(),
+        ),
       ),
       content: StreamBuilder(
           stream: _groupController.getGroupByCode(groupCode),
@@ -314,6 +294,18 @@ class JoinPopup extends StatelessWidget {
             }
           }
       ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(context);
+          },
+          child: Text("Close",style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+      ],
     );
   }
 }

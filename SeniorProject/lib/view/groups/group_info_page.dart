@@ -38,8 +38,7 @@ class GroupInfo extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => EditGroup(groupSnapshot: groupSnapshot,)))
-                    .then((value) => Navigator.of(context).pop(context));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EditGroup(groupSnapshot: groupSnapshot,)));
               },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
@@ -127,24 +126,39 @@ class GroupInfo extends StatelessWidget {
               ),
             ),
             GroupCode(groupCode: groupSnapshot.groupCode),
-            Padding(
+            groupSnapshot.groupAdmin == activeUser!.username ? Padding(
               padding: const EdgeInsets.only(bottom: 20.0, left: 16.0, right: 16.0, top: 50.0),
               child: SizedBox(
                 height: 50.0,
                 width: 384.0,
                 child: ElevatedButton(
                   onPressed: () {
-                    groupSnapshot.groupAdmin != activeUser!.username && groupSnapshot.groupMembers.length > 1 ?
+                    GroupController.deleteGroup(groupCode: groupSnapshot.groupCode)
+                        .then((value) {
+                        Navigator.of(context).pop(context);
+                    });
+                  },
+                  child: Text('Delete Group', style: getNormalTextStyleWhite(),),
+                  style: blueButtonStyle,
+                ),
+              ),
+            ) : groupSnapshot.groupMembers.length > 1 ? Padding(
+              padding: const EdgeInsets.only(bottom: 20.0, left: 16.0, right: 16.0, top: 50.0),
+              child: SizedBox(
+                height: 50.0,
+                width: 384.0,
+                child: ElevatedButton(
+                  onPressed: () {
                       GroupController.removeCurrentUserFromGroup(groupCode: groupSnapshot.groupCode)
                           .then((value) {
-                      })
-                      : SizedBox(height: 0.01,);
+                            Navigator.of(context).pop(context);
+                      });
                   },
                   child: Text('Leave Group', style: getNormalTextStyleWhite(),),
                   style: blueButtonStyle,
                 ),
               ),
-            ),
+            ) : SizedBox(height: 0.01,),
           ],
         ),
       ),

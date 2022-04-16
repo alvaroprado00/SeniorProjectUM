@@ -94,10 +94,14 @@ class GroupController {
   
   static Future removeCurrentUserFromGroup({required String groupCode}) {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    return FirebaseFirestore.instance
+    FirebaseFirestore.instance
       .collection(userCollectionName)
       .doc(uid)
       .update({"userGroups" : FieldValue.arrayRemove([groupCode])});
+    return FirebaseFirestore.instance
+        .collection("groupCollection")
+        .doc(groupCode)
+        .update({"groupMembers" : FieldValue.arrayRemove([activeUser!.username])});
   }
 
   static deleteGroup({required String groupCode}) {
@@ -106,6 +110,10 @@ class GroupController {
         .collection(userCollectionName)
         .doc(uid)
         .update({"userGroups" : FieldValue.arrayRemove([groupCode])});
+    return FirebaseFirestore.instance
+        .collection("groupCollection")
+        .doc(groupCode)
+        .delete();
   }
 
   static Future groupNameExists({required String groupCode, required String groupName}){

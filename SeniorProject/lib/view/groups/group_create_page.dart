@@ -58,35 +58,15 @@ class _CreateGroupState extends State<CreateGroup> {
 
   Widget _buildPopupDialog(BuildContext context) {
     return new AlertDialog(
-      title: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Icon(Icons.close, color: primaryColor,),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                  elevation: MaterialStateProperty.all<double>(0.0),
-                ),
-              ),
-            ],
+      title: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text('Add image from...',
+          style: TextStyle(
+            color: primaryColor,
+            fontSize: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text('Add image from...',
-              style: TextStyle(
-                color: primaryColor,
-                fontSize: 20,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
+          textAlign: TextAlign.center,
+        ),
       ),
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -163,6 +143,18 @@ class _CreateGroupState extends State<CreateGroup> {
           ),
         ],
       ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(context);
+          },
+          child: Text("Close",style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+      ],
     );
   }
 
