@@ -52,7 +52,8 @@ class ChatPage extends StatelessWidget {
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfo(groupSnapshot: groupSnapshot,)));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfo(groupSnapshot: groupSnapshot,)))
+                          .then((value) => Navigator.of(context).pop(context));
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),

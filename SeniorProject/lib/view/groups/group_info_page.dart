@@ -38,7 +38,8 @@ class GroupInfo extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => EditGroup(groupSnapshot: groupSnapshot,)));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => EditGroup(groupSnapshot: groupSnapshot,)))
+                    .then((value) => Navigator.of(context).pop(context));
               },
               style: ButtonStyle(
                 shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
