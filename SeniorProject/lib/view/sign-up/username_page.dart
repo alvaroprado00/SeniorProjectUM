@@ -82,14 +82,14 @@ class _UsernameFormState extends State<UsernameForm> {
             email: widget.args[0],
             username: _controllerUsername.text.trim(),
             level: Level(totalXP: 0, levelNumber: 1, xpEarnedInLevel: 0),
-            profilePictureActive: _controllerUsername.text,
+            profilePictureActive: _controllerUsername.text.trim(),
             userGroups: [],
-            collectedAvatars: [_controllerUsername.text],
+            collectedAvatars: [_controllerUsername.text.trim()],
             collectedBadges: [],
             coursesSaved: [],
             completedCourses: [],
             currentCourse: null,
-            isAdmin: true);
+            isAdmin: false);
 
         //We have to persist the info
 
@@ -109,17 +109,18 @@ class _UsernameFormState extends State<UsernameForm> {
             //In case value returned by the Future is a String, it means
             //it couldnt be added to the Auth DB
             message = value;
-          }
 
-          SnackBar snBar = SnackBar(
-            content: Text(
-              message,
-              style: getNormalTextStyleBlue(),
-            ),
-            backgroundColor: secondaryColor,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snBar);
-          Navigator.pushNamed(context, HomePage.routeName,);
+
+            SnackBar snBar = SnackBar(
+              content: Text(
+                message,
+                style: getNormalTextStyleBlue(),
+              ),
+              backgroundColor: secondaryColor,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snBar);
+            Navigator.pushNamed(context, HomePage.routeName,);
+          }
         });
       }
     };

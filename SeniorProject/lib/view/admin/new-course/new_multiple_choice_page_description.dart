@@ -16,19 +16,23 @@ class MultipleChoiceDescriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text('Multiple Choice'),
-          centerTitle: true,
-          titleTextStyle: getSubheadingStyleWhite(),
-          elevation: 0,
-          actions: <Widget>[
-            getExitButtonAdmin(context: context),
-          ],
-        ),
-        body: SafeArea(child: DescriptionForm()));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text('Multiple Choice'),
+            centerTitle: true,
+            titleTextStyle: getSubheadingStyleWhite(),
+            elevation: 0,
+            actions: <Widget>[
+              getExitButtonAdmin(context: context),
+            ],
+          ),
+          body: SafeArea(child: DescriptionForm())),
+    );
   }
 }
 

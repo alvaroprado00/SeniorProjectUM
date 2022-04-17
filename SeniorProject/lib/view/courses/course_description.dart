@@ -128,9 +128,7 @@ class CourseDescriptionContent extends StatelessWidget {
                         course.title,
                         style: getHeadingStyleBlue(),
                       ),
-                      SizedBox(
-                        width: 0.35 * widthOfScreen,
-                      ),
+                      Spacer(flex: 2,),
                       isCompleted
                           ? Icon(
                               Icons.check_circle_rounded,

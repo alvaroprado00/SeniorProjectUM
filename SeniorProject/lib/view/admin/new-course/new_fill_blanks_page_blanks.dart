@@ -20,19 +20,23 @@ class FillInTheBlanksOptionsPage extends StatelessWidget {
     final newQuestion =
         ModalRoute.of(context)!.settings.arguments as FillInTheBlanksQuestion;
 
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text('Fill In The Blanks'),
-          centerTitle: true,
-          titleTextStyle: getSubheadingStyleWhite(),
-          elevation: 0,
-          actions: <Widget>[
-            getExitButtonAdmin(context: context),
-          ],
-        ),
-        body: SafeArea(child: OptionsForm(question: newQuestion)));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text('Fill In The Blanks'),
+            centerTitle: true,
+            titleTextStyle: getSubheadingStyleWhite(),
+            elevation: 0,
+            actions: <Widget>[
+              getExitButtonAdmin(context: context),
+            ],
+          ),
+          body: SafeArea(child: OptionsForm(question: newQuestion))),
+    );
   }
 }
 
@@ -98,7 +102,7 @@ class _OptionsFormState extends State<OptionsForm> {
         });
       }
 
-      if(_optionNumber>totalNumberOfOptions){
+      if(_optionNumber>totalNumberOfOptions+1){
         SnackBar snBar =
         getSnackBar(message: 'Exceeded number of options');
         ScaffoldMessenger.of(context).showSnackBar(snBar);

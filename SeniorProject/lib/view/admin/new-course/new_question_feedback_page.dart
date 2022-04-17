@@ -19,22 +19,26 @@ class QuestionLongFeedbackPage extends StatelessWidget {
 
     final newQuestion = ModalRoute.of(context)!.settings.arguments as Question;
 
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text(stringFromTypeOfQuestion[newQuestion.typeOfQuestion]!),
-          centerTitle: true,
-          titleTextStyle: getSubheadingStyleWhite(),
-          elevation: 0,
-          actions: <Widget>[
-            getExitButtonAdmin(context: context),
-          ],
-        ),
-        body: SafeArea(
-            child: FeedbackForm(
-          question: newQuestion,
-        )));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text(stringFromTypeOfQuestion[newQuestion.typeOfQuestion]!),
+            centerTitle: true,
+            titleTextStyle: getSubheadingStyleWhite(),
+            elevation: 0,
+            actions: <Widget>[
+              getExitButtonAdmin(context: context),
+            ],
+          ),
+          body: SafeArea(
+              child: FeedbackForm(
+            question: newQuestion,
+          ))),
+    );
   }
 }
 

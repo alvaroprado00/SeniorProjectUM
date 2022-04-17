@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../controller/course_controller.dart';
+import '../../main.dart';
 import '../../util/components.dart';
 import '../../util/k_colors.dart';
 import '../../util/k_styles.dart';
@@ -53,7 +54,7 @@ class PickACoursePage extends StatelessWidget {
                 ),
               );
             } else {
-              return CoursesInCategory(args: args, coursesMap: fakeMap);
+              return CoursesInCategory(args: args, coursesMap: snapshot.data);
             }
           } else if (snapshot.hasError) {
             return Center(
@@ -128,6 +129,8 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
+
     };
 
     return Column(
@@ -220,20 +223,3 @@ class PickACourseArgs {
       required bool this.isFeatured});
 }
 
-Map<String, String> fakeMap = {
-  'wfefwefwef': 'Passwords',
-  'GkdOmqvEUEW5mzVz9f2K': 'Passwords',
-  'wfefsefwef': 'Passwords',
-  'wfedefwef': 'Passwords',
-  'wffwefwef': 'Passwords',
-  'wfegwefwef': 'Passwords',
-  'wfefwcefwef': 'Passwords',
-  'wfefwesfwef': 'Passwords',
-  'wfefwefawef': 'Passwords',
-  'wfefwefwddef': 'Passwords',
-  'wfefwefwddddef': 'Passwords',
-  'wfefwefwddffef': 'Passwords',
-  'wfefwefwdddef': 'Passwords',
-  'wfefwefwfwfddef': 'Passwords',
-  'wfefwefwewfweddef': 'Passwords',
-};
