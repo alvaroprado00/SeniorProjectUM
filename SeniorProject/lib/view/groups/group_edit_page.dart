@@ -1,21 +1,22 @@
-import 'package:cyber/controller/group_controller.dart';
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'dart:io';
-import '../../model/group.dart';
+import '../../controller/active_group_controller.dart';
 import '../util/functions.dart';
 import '../util/k_colors.dart';
 import '../util/k_values.dart';
 
 class EditGroup extends StatefulWidget {
-  const EditGroup({Key? key, required this.groupSnapshot}) : super(key: key);
+  const EditGroup({Key? key, required this.groupCode}) : super(key: key);
 
   static final routeName = '/EditGroup';
-  final Group groupSnapshot;
+  final String groupCode;
 
   @override
   State<EditGroup> createState() => _EditGroupState();
@@ -189,6 +190,8 @@ class _EditGroupState extends State<EditGroup> {
 
   @override
   Widget build(BuildContext context) {
+    final ActiveGroupController activeGroupController = Get.find<ActiveGroupController>(tag: widget.groupCode);
+
     return LoadingOverlay(
       isLoading: changingImage,
       child: Scaffold(
@@ -213,7 +216,7 @@ class _EditGroupState extends State<EditGroup> {
                   controller: nameController,
                   validator: validatorForEmptyTextField,
                   decoration: getInputDecoration(
-                    hintText: '${widget.groupSnapshot.groupName}',
+                    hintText: '${activeGroupController.groupName.value.toString()}',
                     icon: const Icon(
                       Icons.group,
                       color: secondaryColor,
@@ -321,7 +324,7 @@ class _EditGroupState extends State<EditGroup> {
                     Container(
                       height: heightOfScreen * 0.28,
                       width: getWidthOfLargeButton(),
-                      child: Image.network(widget.groupSnapshot.groupImageURL, fit: BoxFit.fitWidth),
+                      child: Image.network(activeGroupController.groupImageURL.value.toString(), fit: BoxFit.fitWidth),
                       clipBehavior: Clip.hardEdge,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20.0),
@@ -374,57 +377,10 @@ class _EditGroupState extends State<EditGroup> {
                     onPressed: () {
                       changingImage = true;
                       if(nameController.value.text != null && nameController.value.text.isNotEmpty) {
-                        GroupController.updateGroupName(
-                          groupCode: widget.groupSnapshot.groupCode,
-                          groupName: nameController.text,
-                        );
+                        activeGroupController.updateGroupName(inGroupName: nameController.text);
                         if(groupImage != null && groupImage!.path.isNotEmpty) {
-                          GroupController.uploadImage(widget.groupSnapshot.groupCode, groupImage!).then((value) {
-                            setState(() {
-                              changingImage = true;
-                              GroupController.updateSingleGroupField(
-                                groupCode: widget.groupSnapshot.groupCode,
-                                groupField: "groupImageURL",
-                                fieldValue: value.toString(),
-                              );
-                              changingImage = false;
-                              Navigator.of(context).pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                content: Text(
-                                  'Group Info Updated!',
-                                  style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                                backgroundColor: secondaryColor,
-                              ));
-                            });
-                          });
-                        }
-                        else {
-                          Navigator.of(context).pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                            content: Text(
-                              'Group Info Updated!',
-                              style: TextStyle(
-                                color: primaryColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                            backgroundColor: secondaryColor,
-                          ));
-                        }
-                      }
-                      else if(groupImage != null && groupImage!.path.isNotEmpty) {
-                        GroupController.uploadImage(widget.groupSnapshot.groupCode, groupImage!).then((value) {
+                          activeGroupController.updateGroupImage(groupImage: groupImage!);
                           setState(() {
-                            changingImage = true;
-                            GroupController.updateSingleGroupField(
-                              groupCode: widget.groupSnapshot.groupCode,
-                              groupField: "groupImageURL",
-                              fieldValue: value.toString(),
-                            );
                             changingImage = false;
                             Navigator.of(context).pop(context);
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -438,6 +394,36 @@ class _EditGroupState extends State<EditGroup> {
                               backgroundColor: secondaryColor,
                             ));
                           });
+                        }
+                        else {
+                          Navigator.of(context).pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                              'Group Name Updated!',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: secondaryColor,
+                          ));
+                        }
+                      }
+                      else if(groupImage != null && groupImage!.path.isNotEmpty) {
+                        activeGroupController.updateGroupImage(groupImage: groupImage!);
+                        setState(() {
+                          changingImage = true;
+                          Navigator.of(context).pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                              'Group Image Updated!',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: secondaryColor,
+                          ));
                         });
                       }
                     },

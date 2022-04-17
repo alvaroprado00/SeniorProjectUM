@@ -8,6 +8,9 @@ import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../../controller/active_group_controller.dart';
 import '../../controller/group_controller.dart';
 import '../../globals.dart';
 import '../../model/group.dart';
@@ -16,155 +19,159 @@ import '../util/k_colors.dart';
 import '../util/k_styles.dart';
 
 class GroupInfo extends StatelessWidget {
-  GroupInfo({Key? key, required this.groupSnapshot}) : super(key: key);
+  GroupInfo({Key? key, required this.groupCode}) : super(key: key);
 
-  static final String routeName = "/GroupInfo";
-  final Group groupSnapshot;
+  final String groupCode;
   final GroupController _groupController = new GroupController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0.0,
-        leading: getBackButton(context: context),
-        title: Text(
-          groupSnapshot.groupName,
-          style: getHeadingStyleBlue(),
-        ),
-        centerTitle: true,
-        actions: [
-          groupSnapshot.groupAdmin == activeUser!.username ? Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => EditGroup(groupSnapshot: groupSnapshot,)));
-              },
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                minimumSize: MaterialStateProperty.all<Size>(Size(40, 40)),
-                elevation: MaterialStateProperty.all<double>(0.0),
+    final ActiveGroupController activeGroupController = Get.find<ActiveGroupController>(tag: groupCode);
+
+    return Obx(() =>
+      Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          leading: getBackButton(context: context),
+          title: Text(
+            activeGroupController.groupName.value.toString(),
+            style: getHeadingStyleBlue(),
+          ),
+          centerTitle: true,
+          actions: [
+            activeGroupController.groupAdmin.value.toString() == activeUser!.username ? Padding(
+              padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => EditGroup(groupCode: groupCode,)));
+                },
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+                  minimumSize: MaterialStateProperty.all<Size>(Size(40, 40)),
+                  elevation: MaterialStateProperty.all<double>(0.0),
+                ),
+                child: Icon(CupertinoIcons.pencil_circle, color: secondaryColor,size: widthOfScreen * 0.1),
               ),
-              child: Icon(CupertinoIcons.pencil_circle, color: secondaryColor,size: widthOfScreen * 0.1),
-            ),
-          ) : SizedBox(width: 0.01,),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 30.0, right: 23.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Icon(
-                    Icons.group,
-                    color: secondaryColor,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 34.0),
-                    child: Text(
-                      groupSnapshot.groupMembers.length > 1 ? "${groupSnapshot.groupMembers.length.toString()} Members": "${groupSnapshot.groupMembers.length.toString()} Member",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: primaryColor,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.bold,
+            ) : SizedBox(width: 0.01,),
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 30.0, right: 23.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Icon(
+                      Icons.group,
+                      color: secondaryColor,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 34.0),
+                      child: Text(
+                        activeGroupController.groupMembers.value.length > 1 ? "${activeGroupController.groupMembers.value.length.toString()} Members"
+                            : "${activeGroupController.groupMembers.value.length.toString()} Member",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: primaryColor,
+                          fontFamily: 'Roboto',
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Divider(
-                color: primaryColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: StreamBuilder(
-                stream: _groupController.getGroupByCode(groupSnapshot.groupCode),
-                builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-                  if (!snapshot.hasData || !snapshot.data!.exists) {
-                    return Center(
-                      child: CircularProgressIndicator(color: primaryColor,),
-                    );
-                  }
-                  else {
-                    Group currentGroup = Group.fromJson(
-                        snapshot.data!.data() as Map<String, dynamic>);
-                    return GroupMembers(groupSnapshot: currentGroup);
-                  }
-                },
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16.0),
-              child: Divider(
-                color: primaryColor,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 50.0, bottom: 8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Text(
-                    'Group Code',
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: primaryColor,
-                      fontFamily: 'Roboto',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            GroupCode(groupCode: groupSnapshot.groupCode),
-            groupSnapshot.groupAdmin == activeUser!.username ? Padding(
-              padding: const EdgeInsets.only(bottom: 20.0, left: 16.0, right: 16.0, top: 50.0),
-              child: SizedBox(
-                height: 50.0,
-                width: 384.0,
-                child: ElevatedButton(
-                  onPressed: () {
-                    GroupController.deleteGroup(groupCode: groupSnapshot.groupCode)
-                        .then((value) {
-                      ActiveUserController().userGroups.refresh();
-                      Navigator.of(context).pop(context);
-                    });
-                  },
-                  child: Text('Delete Group', style: getNormalTextStyleWhite(),),
-                  style: blueButtonStyle,
+                  ],
                 ),
               ),
-            ) : groupSnapshot.groupMembers.length > 1 ? Padding(
-              padding: const EdgeInsets.only(bottom: 20.0, left: 16.0, right: 16.0, top: 50.0),
-              child: SizedBox(
-                height: 50.0,
-                width: 384.0,
-                child: ElevatedButton(
-                  onPressed: () {
-                      GroupController.removeCurrentUserFromGroup(groupCode: groupSnapshot.groupCode)
+              const Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Divider(
+                  color: primaryColor,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                child: StreamBuilder(
+                  stream: _groupController.getGroupByCode(activeGroupController.groupCode.value.toString()),
+                  builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+                    if (!snapshot.hasData || !snapshot.data!.exists) {
+                      return Center(
+                        child: CircularProgressIndicator(color: primaryColor,),
+                      );
+                    }
+                    else {
+                      Group currentGroup = Group.fromJson(
+                          snapshot.data!.data() as Map<String, dynamic>);
+                      return GroupMembers(groupSnapshot: currentGroup);
+                    }
+                  },
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Divider(
+                  color: primaryColor,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 50.0, bottom: 8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      'Group Code',
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: primaryColor,
+                        fontFamily: 'Roboto',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              GroupCode(groupCode: groupCode),
+              activeGroupController.groupAdmin.value.toString() == activeUser!.username ? Padding(
+                padding: const EdgeInsets.only(bottom: 20.0, left: 16.0, right: 16.0, top: 50.0),
+                child: SizedBox(
+                  height: 50.0,
+                  width: 384.0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      GroupController.deleteGroup(groupCode: groupCode)
                           .then((value) {
                         ActiveUserController().userGroups.refresh();
                         Navigator.of(context).pop(context);
                       });
-                  },
-                  child: Text('Leave Group', style: getNormalTextStyleWhite(),),
-                  style: blueButtonStyle,
+                    },
+                    child: Text('Delete Group', style: getNormalTextStyleWhite(),),
+                    style: blueButtonStyle,
+                  ),
                 ),
-              ),
-            ) : SizedBox(height: 0.01,),
-          ],
+              ) : activeGroupController.groupMembers.value.length > 1 ? Padding(
+                padding: const EdgeInsets.only(bottom: 20.0, left: 16.0, right: 16.0, top: 50.0),
+                child: SizedBox(
+                  height: 50.0,
+                  width: 384.0,
+                  child: ElevatedButton(
+                    onPressed: () {
+                        GroupController.removeCurrentUserFromGroup(groupCode: groupCode)
+                            .then((value) {
+                          ActiveUserController().userGroups.refresh();
+                          Navigator.of(context).pop(context);
+                        });
+                    },
+                    child: Text('Leave Group', style: getNormalTextStyleWhite(),),
+                    style: blueButtonStyle,
+                  ),
+                ),
+              ) : SizedBox(height: 0.01,),
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }

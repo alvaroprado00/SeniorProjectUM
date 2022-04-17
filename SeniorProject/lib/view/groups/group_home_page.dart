@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/active_group_controller.dart';
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/group_controller.dart';
 import 'package:flutter/material.dart';
@@ -114,9 +115,15 @@ class GroupTile extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4.0, bottom: 4.0,),
             child: ListTile(
               onTap: () {
-                // Get.to(ChatPage(snapshot: createdGroup,));
+                Get.put(ActiveGroupController(
+                  inGroupCode: createdGroup.groupCode,
+                  inGroupName: createdGroup.groupName,
+                  inGroupAdmin: createdGroup.groupAdmin,
+                  inDateCreated: createdGroup.dateCreated,
+                  inGroupMembers: createdGroup.groupMembers,
+                  inGroupImageURL: createdGroup.groupImageURL,), tag: createdGroup.groupCode);
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => new ChatPage(groupSnapshot: createdGroup,)));
+                    builder: (context) => new ChatPage(groupCode: createdGroup.groupCode,)));
               },
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(createdGroup.groupImageURL,),
