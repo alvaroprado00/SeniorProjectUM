@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_home_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/util/functions.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/util/functions.dart" afterDir="false" />
-    </list>
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -129,7 +124,28 @@
       <option name="project" value="LOCAL" />
       <updated>1650122997024</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Changed the Notifications messages and the delete and leave group functions">
+      <created>1650124263653</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1650124263653</updated>
+    </task>
+    <task id="LOCAL-00010" summary="deleted unused code">
+      <created>1650125678611</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1650125678611</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group.">
+      <created>1650176633280</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1650176633280</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -153,6 +169,9 @@
     <MESSAGE value="Fixed group notifications page to show current notifications from latest to oldest." />
     <MESSAGE value="Added group Admin features to change image and group name." />
     <MESSAGE value="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button." />
+    <MESSAGE value="Changed the Notifications messages and the delete and leave group functions" />
+    <MESSAGE value="deleted unused code" />
+    <MESSAGE value="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
   </component>
 </project>
