@@ -325,6 +325,7 @@ class ActiveUserController extends GetxController {
   removeUserFromGroup({required String groupCode}) {
     this.userGroups.value.remove(groupCode);
     update();
+    userGroups.refresh();
   }
 
   @override

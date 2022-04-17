@@ -426,17 +426,6 @@ class _CreateGroupState extends State<CreateGroup> {
                                   groupMembers: [activeUser!.username,],
                                   groupImageURL: imageUrl,
                                 ).toJson();
-                                Get.put(
-                                  ActiveGroupController(
-                                    inGroupCode: groupCode,
-                                    inGroupName: _controllerJoin.text,
-                                    inGroupAdmin: activeUser!.username,
-                                    inDateCreated: date,
-                                    inGroupMembers: [activeUser!.username,],
-                                    inGroupImageURL: imageUrl,
-                                  ),
-                                  tag: groupCode,
-                                );
                                 _groupController.addGroup(newGroup, groupCode)
                                     .whenComplete(() {
                                   setState(() {
@@ -452,6 +441,17 @@ class _CreateGroupState extends State<CreateGroup> {
                         }
                         UserController.addGroupCodeToUser(groupCode: [groupCode]);
                         activeUserController.updateUserGroups(groupCode: groupCode);
+                        Get.put(
+                          ActiveGroupController(
+                            inGroupCode: groupCode,
+                            inGroupName: _controllerJoin.text,
+                            inGroupAdmin: activeUser!.username,
+                            inDateCreated: date,
+                            inGroupMembers: [activeUser!.username,],
+                            inGroupImageURL: imageUrl,
+                          ),
+                          tag: groupCode,
+                        );
                         print(activeUserController.userGroups.toString());
                     },
                     child: Text(

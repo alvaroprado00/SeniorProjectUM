@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Fixed the delete group and leave group functions, added popup dialogs, and added to join and create group features" />
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Fixed the delete group and leave group functions, added popup dialogs, and added to join and create group features">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/active_group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/active_group_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/active_user_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/active_user_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
