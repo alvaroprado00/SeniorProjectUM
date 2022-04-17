@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Fixed the delete group and leave group functions, added popup dialogs, and added to join and create group features">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/active_group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/active_group_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/active_user_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/active_user_controller.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" afterDir="false" />
-    </list>
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed the delete and leave group functions again and added functionality to the group create page" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -157,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650183296078</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Changed the delete and leave group functions again and added functionality to the group create page">
+      <created>1650210943561</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1650210943561</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,6 +187,7 @@
     <MESSAGE value="deleted unused code" />
     <MESSAGE value="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
     <MESSAGE value="Fixed the delete group and leave group functions, added popup dialogs, and added to join and create group features" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the delete group and leave group functions, added popup dialogs, and added to join and create group features" />
+    <MESSAGE value="Changed the delete and leave group functions again and added functionality to the group create page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed the delete and leave group functions again and added functionality to the group create page" />
   </component>
 </project>
