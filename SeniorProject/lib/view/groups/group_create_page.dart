@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cyber/controller/active_group_controller.dart';
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
@@ -425,6 +426,17 @@ class _CreateGroupState extends State<CreateGroup> {
                                   groupMembers: [activeUser!.username,],
                                   groupImageURL: imageUrl,
                                 ).toJson();
+                                Get.put(
+                                  ActiveGroupController(
+                                    inGroupCode: groupCode,
+                                    inGroupName: _controllerJoin.text,
+                                    inGroupAdmin: activeUser!.username,
+                                    inDateCreated: date,
+                                    inGroupMembers: [activeUser!.username,],
+                                    inGroupImageURL: imageUrl,
+                                  ),
+                                  tag: groupCode,
+                                );
                                 _groupController.addGroup(newGroup, groupCode)
                                     .whenComplete(() {
                                   setState(() {

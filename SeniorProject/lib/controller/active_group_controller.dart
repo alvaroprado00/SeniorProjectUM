@@ -66,6 +66,13 @@ class ActiveGroupController extends GetxController {
       fieldValue: newImageURL,
     );
     this.groupImageURL.value = newImageURL;
+    update();
+  }
+
+  removeCurrentUserFromGroup() {
+    this.groupMembers.value.remove(activeUser!.username);
+    GroupController.removeCurrentUserFromGroup(groupCode: groupCode.value.toString());
+    update();
   }
 
 }

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/model/user_custom.dart';
 import 'package:cyber/view/avatar.dart';
@@ -140,11 +139,10 @@ class GroupInfo extends StatelessWidget {
                   width: 384.0,
                   child: ElevatedButton(
                     onPressed: () {
-                      GroupController.deleteGroup(groupCode: groupCode)
-                          .then((value) {
-                        ActiveUserController().userGroups.refresh();
-                        Navigator.of(context).pop(context);
-                      });
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => DeleteGroup(groupCode: groupCode),
+                      );
                     },
                     child: Text('Delete Group', style: getNormalTextStyleWhite(),),
                     style: blueButtonStyle,
@@ -157,11 +155,10 @@ class GroupInfo extends StatelessWidget {
                   width: 384.0,
                   child: ElevatedButton(
                     onPressed: () {
-                        GroupController.removeCurrentUserFromGroup(groupCode: groupCode)
-                            .then((value) {
-                          ActiveUserController().userGroups.refresh();
-                          Navigator.of(context).pop(context);
-                        });
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => LeaveGroup(activeGroupController: activeGroupController),
+                      );
                     },
                     child: Text('Leave Group', style: getNormalTextStyleWhite(),),
                     style: blueButtonStyle,
@@ -172,6 +169,86 @@ class GroupInfo extends StatelessWidget {
           ),
         ),
       )
+    );
+  }
+}
+
+class DeleteGroup extends StatelessWidget {
+  const DeleteGroup({Key? key, required this.groupCode}) : super(key: key);
+
+  final String groupCode;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        "Are you sure you want to delete this group? All data will be lost.",
+        style: getNormalTextStyleBlueBold(),
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(context);
+          },
+          child: Text("No",style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            GroupController.deleteGroup(groupCode: groupCode);
+            Navigator.of(context).pop();
+          },
+          child: Text("Yes",style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+      ],
+      backgroundColor: tertiaryColor,
+    );
+  }
+}
+
+class LeaveGroup extends StatelessWidget {
+  const LeaveGroup({Key? key, required this.activeGroupController}) : super(key: key);
+
+  final ActiveGroupController activeGroupController;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        "Are you sure you want to leave this group? You will no longer be able to see group members and group notifications.",
+        style: getNormalTextStyleBlueBold(),
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(context);
+          },
+          child: Text("No",style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            activeGroupController.removeCurrentUserFromGroup();
+            Navigator.of(context).pop();
+          },
+          child: Text("Yes",style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+      ],
+      backgroundColor: tertiaryColor,
     );
   }
 }

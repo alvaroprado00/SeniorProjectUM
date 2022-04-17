@@ -261,6 +261,7 @@ class JoinPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new AlertDialog(
+      alignment: Alignment.center,
       title: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Text(
@@ -273,6 +274,17 @@ class JoinPopup extends StatelessWidget {
           builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
             if(snapshot.hasData) {
               Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+              Get.put(
+                ActiveGroupController(
+                  inGroupCode: createdGroup.groupCode,
+                  inGroupName: createdGroup.groupName,
+                  inGroupAdmin: createdGroup.groupAdmin,
+                  inDateCreated: createdGroup.dateCreated,
+                  inGroupMembers: createdGroup.groupMembers,
+                  inGroupImageURL: createdGroup.groupImageURL,
+                ),
+                tag: createdGroup.groupCode
+              );
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,

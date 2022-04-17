@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/group_controller.dart';
 import 'package:cyber/model/custom_notification.dart';
 import 'package:cyber/view/groups/group_info_page.dart';
@@ -14,9 +15,12 @@ import '../util/k_values.dart';
 class ChatPage extends StatelessWidget {
   ChatPage({Key? key, required this.groupCode}) : super(key: key);
 
+  static final routeName = '/ChatPage';
+
   final String groupCode;
   final List<CustomNotification> groupMessages = [];
   final GroupController _groupController = new GroupController();
+  final ActiveUserController userController = ActiveUserController();
 
   @override
   Widget build(BuildContext context) {

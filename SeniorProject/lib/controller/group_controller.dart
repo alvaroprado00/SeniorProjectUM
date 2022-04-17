@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/config/k_collection_names_firebase.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/custom_notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,19 +20,6 @@ class GroupController {
 
     return file;
   }
-
-  // Future<bool> checkGroupCode(groupCode) async {
-  //   var group = FirebaseFirestore.instance
-  //       .collection("groupCollection")
-  //       .doc(groupCode)
-  //       .get();
-  //   if() {
-  //     return true;
-  //   }
-  //   else {
-  //     return false;
-  //   }
-  // }
 
   Future addGroup(groupMap, groupCode) async {
     return FirebaseFirestore.instance
@@ -106,14 +94,24 @@ class GroupController {
 
   static deleteGroup({required String groupCode}) {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance
-        .collection(userCollectionName)
-        .doc(uid)
-        .update({"userGroups" : FieldValue.arrayRemove([groupCode])});
-    return FirebaseFirestore.instance
+    var users = FirebaseFirestore.instance
+        .collection(userCollectionName);
+    var group = FirebaseFirestore.instance
         .collection("groupCollection")
-        .doc(groupCode)
-        .delete();
+        .doc(groupCode);
+    users.where('userGroups', arrayContains: groupCode).get().then((value) {
+      for(DocumentSnapshot val in value.docs) {
+        users.doc(val.id)
+            .update({"userGroups" : FieldValue.arrayRemove([groupCode])});
+      }
+    });
+    group.collection('groupNotifications').get().then((value) {
+      for(DocumentSnapshot val in value.docs) {
+        group.collection('groupNotifications').doc(val.id).delete();
+      }
+    });
+    group.delete();
+    ActiveUserController().removeUserFromGroup(groupCode: groupCode);
   }
 
   static Future groupNameExists({required String groupCode, required String groupName}){

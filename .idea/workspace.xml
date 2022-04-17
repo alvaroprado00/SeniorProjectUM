@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/active_group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/active_group_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/active_user_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/active_user_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_info_page.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
