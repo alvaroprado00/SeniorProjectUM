@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed the delete and leave group functions again and added functionality to the group create page">
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" afterDir="false" />
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed the removeCurrentUserFromGroup and deleteGroup function in the active group controller and group controller.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_chat_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_home_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650210943561</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Changed the removeCurrentUserFromGroup and deleteGroup function in the active group controller and group controller.">
+      <created>1650295660283</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1650295660283</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -190,6 +199,7 @@
     <MESSAGE value="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
     <MESSAGE value="Fixed the delete group and leave group functions, added popup dialogs, and added to join and create group features" />
     <MESSAGE value="Changed the delete and leave group functions again and added functionality to the group create page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed the delete and leave group functions again and added functionality to the group create page" />
+    <MESSAGE value="Changed the removeCurrentUserFromGroup and deleteGroup function in the active group controller and group controller." />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed the removeCurrentUserFromGroup and deleteGroup function in the active group controller and group controller." />
   </component>
 </project>

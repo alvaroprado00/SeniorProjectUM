@@ -122,7 +122,7 @@ class AlertDialogPassword extends StatelessWidget {
   final String currentPassword;
   final String newPassword;
 
-  final ActiveUserController activeUserController = Get.find();
+  final ActiveUserController activeUserController = Get.find<ActiveUserController>();
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

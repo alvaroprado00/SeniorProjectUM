@@ -107,7 +107,7 @@ class SaveButton extends StatefulWidget {
 class _SaveButtonState extends State<SaveButton> {
   @override
   Widget build(BuildContext context) {
-    ActiveUserController activeUserController = Get.find();
+    ActiveUserController activeUserController = Get.find<ActiveUserController>();
 
     return IconButton(
       onPressed: () {

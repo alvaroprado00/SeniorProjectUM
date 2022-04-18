@@ -20,7 +20,7 @@ class ChatPage extends StatelessWidget {
   final String groupCode;
   final List<CustomNotification> groupMessages = [];
   final GroupController _groupController = new GroupController();
-  final ActiveUserController userController = ActiveUserController();
+  final ActiveUserController userController = Get.find<ActiveUserController>();
 
   @override
   Widget build(BuildContext context) {

@@ -17,7 +17,7 @@ class GroupsHome extends StatelessWidget {
   GroupsHome({Key? key}) : super(key: key);
 
   static final String routeName = '/GroupHome';
-  ActiveUserController userController = Get.put(ActiveUserController()); // Rather Controller controller = Controller();
+  ActiveUserController userController = Get.find<ActiveUserController>(); // Rather Controller controller = Controller();
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +162,7 @@ class JoinGroup extends StatefulWidget {
 class _JoinGroupState extends State<JoinGroup> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _controllerJoin = new TextEditingController();
-  ActiveUserController userController = Get.put(ActiveUserController());
+  ActiveUserController userController = Get.find<ActiveUserController>();
 
   //When the widget is created we initialize the text form fields controllers
   @override
@@ -207,10 +207,11 @@ class _JoinGroupState extends State<JoinGroup> {
                   if (groupCodeValidator(_controllerJoin.text) == null) {
                     userController.updateUserGroups(groupCode: _controllerJoin.text)
                         .whenComplete(() {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => JoinPopup(groupCode: _controllerJoin.text),
-                      );
+                          userController.update();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => JoinPopup(groupCode: _controllerJoin.text),
+                          );
                     }).catchError((e) {
                       ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(

@@ -31,7 +31,7 @@ Function nextQuestion=(BuildContext context) async {
     }
 
   }else{
-    ActiveUserController activeUserController=Get.find();
+    ActiveUserController activeUserController = Get.find<ActiveUserController>();
     final SaveCompletedCourseArgs args= await activeUserController.saveCompletedCourse();
     Navigator.pushNamedAndRemoveUntil(context, Overview.routeName, (r) => false, arguments: args);
   }

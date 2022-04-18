@@ -1,5 +1,4 @@
 import 'package:cyber/controller/active_user_controller.dart';
-import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +107,7 @@ class AvatarButton extends StatelessWidget {
   final String avatarName;
   final double size;
 
-  ActiveUserController activeUserController = Get.find();
+  ActiveUserController activeUserController = Get.find<ActiveUserController>();
 
   @override
   Widget build(BuildContext context) {

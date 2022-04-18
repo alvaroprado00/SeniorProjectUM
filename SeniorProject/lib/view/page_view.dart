@@ -63,7 +63,7 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
 
   @override
   Widget build(BuildContext context) {
-    ActiveUserController activeUserController = Get.find();
+    ActiveUserController activeUserController = Get.find<ActiveUserController>();
     return Scaffold(
       body: PageView(
         controller: pageController,
