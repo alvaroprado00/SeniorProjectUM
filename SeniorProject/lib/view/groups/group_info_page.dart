@@ -98,7 +98,7 @@ class GroupInfo extends StatelessWidget {
                   builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
                     if (!snapshot.hasData || !snapshot.data!.exists) {
                       return Center(
-                        child: CircularProgressIndicator(color: primaryColor,),
+                        child: Container(child: CircularProgressIndicator(color: primaryColor,)),
                       );
                     }
                     else {
@@ -289,7 +289,7 @@ class MemberTile extends StatelessWidget {
       future: UserController.getUserByUserName(userName: userName),
       builder: (context, AsyncSnapshot<UserCustom> groupMember) {
         if(!groupMember.hasData) {
-          return ListTile(title: Container(child: CircularProgressIndicator(),));
+          return ListTile(title: Container(width: widthOfScreen * 0.1,child: CircularProgressIndicator(),));
         }
         return ListTile(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
