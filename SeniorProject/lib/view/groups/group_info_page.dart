@@ -289,7 +289,7 @@ class MemberTile extends StatelessWidget {
       future: UserController.getUserByUserName(userName: userName),
       builder: (context, AsyncSnapshot<UserCustom> groupMember) {
         if(!groupMember.hasData) {
-          return Container(child: CircularProgressIndicator(),);
+          return ListTile(title: Container(child: CircularProgressIndicator(),));
         }
         return ListTile(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
