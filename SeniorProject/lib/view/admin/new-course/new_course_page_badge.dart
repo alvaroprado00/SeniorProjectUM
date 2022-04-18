@@ -19,22 +19,24 @@ class BadgePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final newCourse = ModalRoute.of(context)!.settings.arguments as Course;
 
-    return Scaffold(
-      backgroundColor: primaryColor,
-      appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'Badge',
-          style: getSubheadingStyleWhite(),
-        ),
-        leading: getBackButton(context: context),
-        actions: [getExitButtonAdmin(context: context)],
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
         backgroundColor: primaryColor,
-      ),
-      body: SafeArea(
-        child: BadgePageContent(
-          newCourse: newCourse,
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: Text(
+            'Badge',
+            style: getSubheadingStyleWhite(),
+          ),
+          leading: getBackButton(context: context),
+          actions: [getExitButtonAdmin(context: context)],
+          backgroundColor: primaryColor,
+        ),
+        body: SafeArea(
+          child: BadgePageContent(newCourse: newCourse,),
         ),
       ),
     );

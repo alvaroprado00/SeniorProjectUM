@@ -17,20 +17,24 @@ class NewCoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: primaryColor,
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text(
-            'New Course',
-            style: getSubheadingStyleWhite(),
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: primaryColor,
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text(
+              'New Course',
+              style: getSubheadingStyleWhite(),
+            ),
+            centerTitle: true,
+            elevation: 0,
           ),
-          centerTitle: true,
-          elevation: 0,
-        ),
-        body: SafeArea(
-            //This widget solves the problem of the overflow caused by the keyboard
-            child: SingleChildScrollView(child: NewCourseForm())));
+          body: SafeArea(
+              //This widget solves the problem of the overflow caused by the keyboard
+              child: NewCourseForm())),
+    );
   }
 }
 

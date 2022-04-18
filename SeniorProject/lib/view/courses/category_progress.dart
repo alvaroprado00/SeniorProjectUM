@@ -109,6 +109,7 @@ getProgressInCategory(
   bool isCompleted = false;
   coursesInCategory.forEach((key, value) {
     for (CompletedCourse cc in userCompletedCourses) {
+
       if (cc.courseID == key) {
         isCompleted = true;
       }
@@ -128,6 +129,7 @@ getProgressInCategory(
         ),
       ],
     ));
+    isCompleted=false;
   });
 
   return SizedBox(

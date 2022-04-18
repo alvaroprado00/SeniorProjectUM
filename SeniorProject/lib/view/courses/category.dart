@@ -146,7 +146,7 @@ Widget getAllCourses(
         isSaved: isSaved,
         context: context,
         title: value,
-        widthOfCard: 0.4 * widthOfScreen,
+        widthOfCard: 0.42 * widthOfScreen,
         heightOfCard: 0.12 * heightOfScreen,
         isTemplate: false));
   });
@@ -163,7 +163,7 @@ Widget getAllCourses(
   return Wrap(
     //alignment: WrapAlignment.center,
     runSpacing: 15,
-    spacing: 0.1 * widthOfScreen,
+    spacing: 0.04 * widthOfScreen,
     runAlignment: WrapAlignment.start,
     crossAxisAlignment: WrapCrossAlignment.center,
     children: childrenOfRow,

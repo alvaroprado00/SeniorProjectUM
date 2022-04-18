@@ -15,16 +15,20 @@ class NewCourseOutcomesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final newCourse = ModalRoute.of(context)!.settings.arguments as Course;
-    return Scaffold(
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text('Outcomes', style: getSubheadingStyleWhite()),
-          centerTitle: true,
-          elevation: 0,
-          actions: [getExitButtonAdmin(context: context)],
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(child: OutcomesForm(course: newCourse)));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text('Outcomes', style: getSubheadingStyleWhite()),
+            centerTitle: true,
+            elevation: 0,
+            actions: [getExitButtonAdmin(context: context)],
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: SafeArea(child: OutcomesForm(course: newCourse))),
+    );
   }
 }
 

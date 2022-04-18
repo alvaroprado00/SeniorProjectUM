@@ -93,7 +93,7 @@ Widget getAllBadges(
 
   return Wrap(
     children: childrenOfRow,
+    spacing: 0.045*widthOfScreen,
     runSpacing: 6,
-    spacing: 6,
   );
 }

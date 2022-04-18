@@ -315,11 +315,11 @@ class ActiveUserController extends GetxController {
   }
 
 
-  updateUserGroups({required String groupCode}) {
+  Future<void> updateUserGroups({required String groupCode}) {
     this.userGroups.add(groupCode);
-    UserController.addGroupCodeToUser(groupCode: [groupCode]);
+    var res = UserController.addGroupCodeToUser(groupCode: [groupCode]);
     update();
-    return this.userGroups.last;
+    return res;
   }
 
   getUserGroups() {

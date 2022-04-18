@@ -204,6 +204,8 @@ class CourseController {
       snapshot.docs.forEach((doc) {
         coursesInCategory[doc.id] = doc['title'];
       });
+
+      
       return coursesInCategory;
     }).catchError((error) {
       print('Error when looking for a category');
@@ -387,11 +389,29 @@ class CourseController {
   Future deleteCourseByTitle(String title) async {
     try {
       Course courseToDelete = await getCourseByTitle(title: title);
+
+      //Before deleting the document of the course, you have to delete the subcollection questions
+      await deleteQuestionsFromCourse(cr:coursesRef.doc(courseToDelete.id).collection(questionCollectionName));
       await coursesRef.doc(courseToDelete.id!).delete();
       return courseToDelete.id;
     } catch (error) {
       print('Error deleting a course');
       throw Exception('Error deleting the course');
     }
+  }
+
+  Future deleteQuestionsFromCourse({required CollectionReference cr}){
+
+    //Get the documents in the collection
+
+    return cr.get().then((QdSnapshot) {
+      for (int i = 0; i < QdSnapshot.size; i++) {
+        //I delete each document
+        QdSnapshot.docs[i].reference.delete();
+      }
+    }).catchError((error) {
+      print('Error deleting questions from course');
+      throw Exception('Error deleting questions from course');
+    });
   }
 }

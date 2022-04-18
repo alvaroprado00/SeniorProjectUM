@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/active_group_controller.dart';
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/group_controller.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class GroupsHome extends StatelessWidget {
             SubtitleDivider(subtitle: 'Groups',),
             GroupChats(),
             SubtitleDivider(subtitle: 'Join',),
-            JoinGroup(userController: userController),
+            JoinGroup(),
             SubtitleDivider(subtitle: 'Create',),
             Padding(
               padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
@@ -104,21 +105,25 @@ class GroupTile extends StatelessWidget {
     return StreamBuilder(
       stream: _groupController.getGroupByCode(groupCode),
       builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(color: primaryColor,),
-          );
+        if (!snapshot.hasData || !snapshot.data!.exists) {
+          return SizedBox(height: 0.01,);
         }
-        else if(snapshot.hasData && snapshot.data!.exists) {
+        else {
           Group createdGroup = Group.fromJson(
               snapshot.data!.data() as Map<String, dynamic>);
           return Padding(
             padding: const EdgeInsets.only(top: 4.0, bottom: 4.0,),
             child: ListTile(
               onTap: () {
-                // Get.to(ChatPage(snapshot: createdGroup,));
+                Get.put(ActiveGroupController(
+                  inGroupCode: createdGroup.groupCode,
+                  inGroupName: createdGroup.groupName,
+                  inGroupAdmin: createdGroup.groupAdmin,
+                  inDateCreated: createdGroup.dateCreated,
+                  inGroupMembers: createdGroup.groupMembers,
+                  inGroupImageURL: createdGroup.groupImageURL,), tag: createdGroup.groupCode);
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => ChatPage(snapshot: createdGroup,)));
+                    builder: (context) => new ChatPage(groupCode: createdGroup.groupCode,)));
               },
               leading: CircleAvatar(
                 backgroundImage: NetworkImage(createdGroup.groupImageURL,),
@@ -141,10 +146,6 @@ class GroupTile extends StatelessWidget {
             ),
           );
         }
-        else {
-          print("waiting on snapshot");
-          return CircularProgressIndicator();
-        }
       }
     );
   }
@@ -152,9 +153,7 @@ class GroupTile extends StatelessWidget {
 
 
 class JoinGroup extends StatefulWidget {
-  const JoinGroup({Key? key, required this.userController}) : super(key: key);
-
-  final ActiveUserController userController;
+  const JoinGroup({Key? key}) : super(key: key);
 
   @override
   State<JoinGroup> createState() => _JoinGroupState();
@@ -162,7 +161,8 @@ class JoinGroup extends StatefulWidget {
 
 class _JoinGroupState extends State<JoinGroup> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _controllerJoin;
+  TextEditingController _controllerJoin = new TextEditingController();
+  ActiveUserController userController = Get.put(ActiveUserController());
 
   //When the widget is created we initialize the text form fields controllers
   @override
@@ -187,7 +187,7 @@ class _JoinGroupState extends State<JoinGroup> {
           child: TextFormField(
             key: _formKey,
             controller: _controllerJoin,
-            validator: validatorForEmptyTextField,
+            validator: groupCodeValidator,
             decoration: getInputDecoration(
               hintText: 'Join with Group Code',
               icon: const Icon(
@@ -204,17 +204,34 @@ class _JoinGroupState extends State<JoinGroup> {
               width: getWidthOfLargeButton(),
               child: ElevatedButton(
                 onPressed: () {
-                  widget.userController.updateUserGroups(groupCode: _controllerJoin.text)
-                      .whenComplete(() {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => JoinPopup(groupCode: _controllerJoin.text),
-                    );
-                  }).catchError((e) {
+                  if (groupCodeValidator(_controllerJoin.text) == null) {
+                    userController.updateUserGroups(groupCode: _controllerJoin.text)
+                        .whenComplete(() {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => JoinPopup(groupCode: _controllerJoin.text),
+                      );
+                    }).catchError((e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'Group not found. Please enter the correct group code.',
+                              style: TextStyle(
+                                color: primaryColor,
+                                fontSize: 14,
+                              ),
+                            ),
+                            backgroundColor: secondaryColor,
+                          )
+                      );
+                    });
+                    GroupController.addCurrentUserToGroup(groupCode: _controllerJoin.text);
+                  }
+                  else {
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
-                            'Group not found. Please enter the correct group code.',
+                            'Invalid Group Code',
                             style: TextStyle(
                               color: primaryColor,
                               fontSize: 14,
@@ -223,8 +240,7 @@ class _JoinGroupState extends State<JoinGroup> {
                           backgroundColor: secondaryColor,
                         )
                     );
-                  });
-                  GroupController.addCurrentUserToGroup(groupCode: _controllerJoin.text);
+                  }
                 },
                 child: Text('Join Group', style: getNormalTextStyleWhite()),
                 style: blueButtonStyle,
@@ -245,32 +261,12 @@ class JoinPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new AlertDialog(
-      title: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Icon(Icons.close, color: primaryColor,),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-                  elevation: MaterialStateProperty.all<double>(0.0),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text(
-              'You Joined',
-              style: getHeadingStyleBlue(),
-            ),
-          ),
-        ],
+      title: Padding(
+        padding: const EdgeInsets.only(top: 8.0),
+        child: Text(
+          'You Joined',
+          style: getHeadingStyleBlue(),
+        ),
       ),
       content: StreamBuilder(
           stream: _groupController.getGroupByCode(groupCode),
@@ -303,6 +299,18 @@ class JoinPopup extends StatelessWidget {
             }
           }
       ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(context);
+          },
+          child: Text("Close",style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -7,10 +7,10 @@ part 'custom_notification.g.dart';
 class CustomNotification {
   final String userName;
   final Badge badge;
-  final String date;
+  final DateTime dateSent;
   final String message;
 
-  CustomNotification({required this.userName,required this.badge,required this.date,required this.message});
+  CustomNotification({required this.userName,required this.badge,required this.dateSent,required this.message});
 
   factory CustomNotification.fromJson(Map<String, dynamic> json) => _$CustomNotificationFromJson(json);
 

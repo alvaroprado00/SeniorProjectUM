@@ -4,16 +4,12 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Fixed the Create Group Function to update groups list when new group is created. UI still needs work. Need to add group Info and GetX controller for Chats.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/controller/group_controller.dart" afterDir="false" />
-    </list>
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\pablo\.android\avd\Pixel_4_API_30.avd]" />
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
@@ -41,7 +37,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="RunOnceActivity.cidr.known.project.marker" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
+    <property name="cidr.known.project.marker" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -98,7 +96,56 @@
       <option name="project" value="LOCAL" />
       <updated>1649382052088</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Fixed join group button to validate group code using regex and to display snackbar if group code is not valid or group does not exist.">
+      <created>1649438690115</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1649438690115</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fixed group notifications page to show current notifications from latest to oldest.">
+      <created>1649708645773</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1649708645773</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Added group Admin features to change image and group name.">
+      <created>1649910358049</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1649910358049</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button.">
+      <created>1650122997024</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1650122997024</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Changed the Notifications messages and the delete and leave group functions">
+      <created>1650124263653</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1650124263653</updated>
+    </task>
+    <task id="LOCAL-00010" summary="deleted unused code">
+      <created>1650125678611</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1650125678611</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group.">
+      <created>1650176633280</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1650176633280</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -118,6 +165,13 @@
     <MESSAGE value="Merged main into pablo branch to account for ne changes still need to change UI and group functions." />
     <MESSAGE value="Changed the created page to use the passed in group code" />
     <MESSAGE value="Fixed the Create Group Function to update groups list when new group is created. UI still needs work. Need to add group Info and GetX controller for Chats." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed the Create Group Function to update groups list when new group is created. UI still needs work. Need to add group Info and GetX controller for Chats." />
+    <MESSAGE value="Fixed join group button to validate group code using regex and to display snackbar if group code is not valid or group does not exist." />
+    <MESSAGE value="Fixed group notifications page to show current notifications from latest to oldest." />
+    <MESSAGE value="Added group Admin features to change image and group name." />
+    <MESSAGE value="Changed the update group info feature and changed the look of the popup dialogs as well as the delete or leave group button." />
+    <MESSAGE value="Changed the Notifications messages and the delete and leave group functions" />
+    <MESSAGE value="deleted unused code" />
+    <MESSAGE value="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
   </component>
 </project>

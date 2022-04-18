@@ -18,16 +18,20 @@ class NewCourseDescriptionPage extends StatelessWidget {
     //I get the new-course to add final fields
     final newCourse = ModalRoute.of(context)!.settings.arguments as Course;
 
-    return Scaffold(
-        appBar: AppBar(
-          leading: (getBackButton(context: context)),
-          title: Text('Description', style: getSubheadingStyleWhite()),
-          centerTitle: true,
-          elevation: 0,
-          actions: [getExitButtonAdmin(context: context)],
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(child: DescriptionForm(course: newCourse)));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            leading: (getBackButton(context: context)),
+            title: Text('Description', style: getSubheadingStyleWhite()),
+            centerTitle: true,
+            elevation: 0,
+            actions: [getExitButtonAdmin(context: context)],
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: SafeArea(child: DescriptionForm(course: newCourse))),
+    );
   }
 }
 

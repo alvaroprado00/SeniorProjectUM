@@ -1,138 +1,126 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/group_controller.dart';
+import 'package:cyber/model/custom_notification.dart';
 import 'package:cyber/view/groups/group_info_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../model/group.dart';
+import 'package:get/get.dart';
+import '../../controller/active_group_controller.dart';
 import '../util/cards.dart';
 import '../util/components.dart';
 import '../util/k_colors.dart';
-import '../util/k_styles.dart';
 import '../util/k_values.dart';
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key, required this.snapshot}) : super(key: key);
+class ChatPage extends StatelessWidget {
+  ChatPage({Key? key, required this.groupCode}) : super(key: key);
 
-  final Group snapshot;
-  static final String routeName = "/ChatPage";
+  final String groupCode;
+  final List<CustomNotification> groupMessages = [];
+  final GroupController _groupController = new GroupController();
 
   @override
-  _ChatPageState createState() => _ChatPageState();
-}
+  Widget build(BuildContext context) {
+    final ActiveGroupController activeGroupController = Get.find<ActiveGroupController>(tag: groupCode);
 
-class _ChatPageState extends State<ChatPage> {
-
-  Column getDayTitle(String day) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 23.0, right: 23.0, top: 20.0),
-          child: Row(
+    return Obx(() =>
+      Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: getBackButton(context: context),
+          elevation: 0.0,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                day,
-                style: const TextStyle(
-                  color: primaryColor,
-                  fontSize: 20,
+              SizedBox(
+                child: Image.network(
+                  activeGroupController.groupImageURL.value.toString(),
+                  fit: BoxFit.fitWidth,
                 ),
+                width: widthOfScreen,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 23.0, right: 10.0, top: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Text(
+                      activeGroupController.groupName.value.toString(),
+                      style: const TextStyle(
+                        color: primaryColor,
+                        fontSize: 27,
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfo(groupCode: groupCode)));
+                      },
+                      style: ButtonStyle(
+                        shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
+                        backgroundColor: MaterialStateProperty.all<Color>(secondaryColor),
+                        minimumSize: MaterialStateProperty.all<Size>(Size(40, 40)),
+                      ),
+                      child: Icon(CupertinoIcons.ellipsis),
+                    ),
+                  ],
+                ),
+              ),
+              StreamBuilder(
+                stream: _groupController.getGroupNotifications(groupCode: activeGroupController.groupCode.value.toString()),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Text("Loading...");
+                  }
+                  if (snapshot.hasData) {
+                    List<DocumentSnapshot> messageList = snapshot.data!.docs;
+                    messageList.forEach((element) {
+                      groupMessages.add(CustomNotification.fromJson(element.data() as Map<String, dynamic>));
+                    });
+                    return GroupNotifs(groupMessages: groupMessages);
+                  }
+                  else {
+                    return Container(child: CircularProgressIndicator(),);
+                  }
+                },
               ),
             ],
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.only(left: 16.0, right: 16.0),
-          child: Divider(
-            color: primaryColor,
-          ),
-        ),
-      ],
+      )
     );
   }
+}
 
-  Widget _buildNotifications({required BuildContext context,}) {
+class GroupNotifs extends StatelessWidget {
+  const GroupNotifs({Key? key, required this.groupMessages}) : super(key: key);
 
+  final List<CustomNotification> groupMessages;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
         children: [
           ListView.builder(
             padding: const EdgeInsets.all(16),
             itemBuilder: (BuildContext context, int i) {
-              return getCardForNotification(
-                  username: widget.snapshot.groupNotifications[i].userName.toString(),
-                  widthOfCard: getWidthOfLargeButton(),
-                  nameOfCourse: widget.snapshot.groupNotifications[i].message.toString(),
-                  heightOfCard: heightOfScreen * 0.12,
+              return Padding(
+                padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                child: getNotificationTile(
+                  username: groupMessages[i].userName.toString(),
+                  badgeImage: groupMessages[i].badge.picture.toString(),
+                  message: groupMessages[i].message.toString(),
+                ),
               );
             },
             shrinkWrap: true,
-            itemCount: widget.snapshot.groupNotifications.length,
+            itemCount: groupMessages.length.toInt(),
             physics: const NeverScrollableScrollPhysics(),
-            reverse: true,
           ),
         ]
     );
   }
-
-  //TODO Separate listview and buildtile methods, create message GetX to use GetBuilder, and Change Notifications card
-
-  @override
-  Widget build(BuildContext context) {
-
-    List<String> usernames = ['Alvarito_007', 'Pablo22', 'elVacan', 'beltrus', 'kerryCaverga', 'Siuu'];
-
-
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                SizedBox(
-                  child: Image.network(
-                    widget.snapshot.groupImageURL,
-                    fit: BoxFit.fitWidth,
-                  ),
-                  width: widthOfScreen,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: getBackButton(context: context),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 23.0, right: 10.0, top: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    widget.snapshot.groupName.toString(),
-                    style: const TextStyle(
-                      color: primaryColor,
-                      fontSize: 27,
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => GroupInfoPage(groupName: "Group Name", usernames: usernames)));
-                    },
-                    style: ButtonStyle(
-                      shape: MaterialStateProperty.all<OutlinedBorder>(const CircleBorder()),
-                      backgroundColor: MaterialStateProperty.all<Color>(secondaryColor),
-                      minimumSize: MaterialStateProperty.all<Size>(Size(40, 40)),
-                    ),
-                    child: Icon(Icons.person_add),
-                  ),
-                ],
-              ),
-            ),
-            _buildNotifications(context: context),
-          ],
-        ),
-      ),
-    );
-  }
 }
+

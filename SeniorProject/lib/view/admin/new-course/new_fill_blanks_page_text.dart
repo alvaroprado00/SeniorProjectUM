@@ -17,19 +17,23 @@ class FillInTheBlanksTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text('Fill In The Blanks'),
-          centerTitle: true,
-          titleTextStyle: getSubheadingStyleWhite(),
-          elevation: 0,
-          actions: <Widget>[
-            getExitButtonAdmin(context: context),
-          ],
-        ),
-        body: SafeArea(child: TextForm()));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text('Fill In The Blanks'),
+            centerTitle: true,
+            titleTextStyle: getSubheadingStyleWhite(),
+            elevation: 0,
+            actions: <Widget>[
+              getExitButtonAdmin(context: context),
+            ],
+          ),
+          body: SafeArea(child: TextForm())),
+    );
   }
 }
 

@@ -46,43 +46,6 @@ class GroupCreated extends GetView<ActiveUserController> {
   }
 }
 
-// class GroupCreated extends StatelessWidget {
-//   GroupCreated({Key? key, required this.groupCode}) : super(key: key);
-//
-//   final String groupCode;
-//   final GroupController _groupController = new GroupController();
-//   ActiveUserController userController = Get.put(ActiveUserController()); // Rather Controller controller = Controller();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         elevation: 0.0,
-//         backgroundColor: tertiaryColor,
-//         automaticallyImplyLeading: false,
-//         centerTitle: true,
-//         title: Text('Group Created!', style: getHeadingStyleBlue(),),
-//       ),
-//       body: StreamBuilder(
-//         stream: _groupController.getGroupByCode(groupCode),
-//         builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-//           if(snapshot.hasData) {
-//             Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
-//             return GroupSuccess(createdGroup: createdGroup);
-//           }
-//           else {
-//             return Center(
-//               child: Container(
-//                 child: CircularProgressIndicator(color: primaryColor,),
-//               ),
-//             );
-//           }
-//         },
-//       ),
-//     );
-//   }
-// }
-
 class GroupSuccess extends StatelessWidget {
   const GroupSuccess({Key? key, required this.createdGroup, required this.controller}) : super(key: key);
   final Group createdGroup;

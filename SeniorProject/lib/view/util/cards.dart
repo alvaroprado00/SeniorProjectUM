@@ -2,9 +2,10 @@ import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cyber/globals.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
+import 'components.dart';
 import '../avatar.dart';
 import 'functions.dart';
 import 'k_colors.dart';
@@ -207,9 +208,10 @@ Card getCardForCategory(
 
 Card getCardForNotification(
     {required String username,
-    required String nameOfCourse,
-    required double widthOfCard,
-    required double heightOfCard}) {
+      required String nameOfCourse,
+      required double widthOfCard,
+      required double heightOfCard,
+    }) {
   return Card(
     color: primaryColor,
     borderOnForeground: true,
@@ -245,6 +247,54 @@ Card getCardForNotification(
             ),
           ])),
     ),
+  );
+}
+
+getNotificationTile({required String username,
+  required String message,
+  required String badgeImage,}) {
+  return ListTile(
+    tileColor: quinaryColor,
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0)),
+    leading: Avatar(nameOfAvatar: username, size: widthOfScreen * 0.1),
+    title: RichText(
+      text: TextSpan(
+        children: [
+          TextSpan(
+            text: username == activeUser!.username ? "You" : username,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF14213D),
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          TextSpan(
+            text: ' ',
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF14213D),
+              fontFamily: 'Roboto',
+            ),
+          ),
+          TextSpan(
+            text: message,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xFF14213D),
+              fontFamily: 'Roboto',
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+        ],
+      ),
+    ),
+    trailing: getContainerForBadge(
+      nameOfIcon: badgeImage,
+      size: widthOfScreen * 0.1,
+    ),
+    onTap: () {},
   );
 }
 

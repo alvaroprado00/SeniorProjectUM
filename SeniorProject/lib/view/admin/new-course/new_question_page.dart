@@ -1,5 +1,6 @@
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart';
+import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/admin/new-course/new_course_page.dart';
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
@@ -7,6 +8,7 @@ import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
+import '../../main.dart';
 import 'new_fill_blanks_page_text.dart';
 import 'new_multiple_choice_page_description.dart';
 
@@ -18,7 +20,7 @@ class NewQuestionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //Function to be executed when submitting a new-course
 
-    void Function() addCourse = () {
+    void Function() addCourse = () async {
       if (newCourse!.questions.length < 5) {
         showDialog<void>(
           context: context,
@@ -62,7 +64,7 @@ class NewQuestionPage extends StatelessWidget {
         newCourse!.numberOfQuestions = newCourse!.questions.length;
 
         //After adding the new-course we show a message of success
-        courseController
+       await courseController
             .addCourseToFirebase(courseToAdd: newCourse!)
             .then((value) {
             message='Course added';
@@ -78,7 +80,7 @@ class NewQuestionPage extends StatelessWidget {
           backgroundColor: secondaryColor,));
 
           //After that I navigate
-          Navigator.pushNamed(context, NewCoursePage.routeName);
+        Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
 
       }
     };
