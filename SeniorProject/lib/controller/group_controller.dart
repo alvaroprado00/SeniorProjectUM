@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/config/k_collection_names_firebase.dart';
+import 'package:cyber/controller/active_group_controller.dart';
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/custom_notification.dart';
@@ -92,7 +93,6 @@ class GroupController {
         .collection("groupCollection")
         .doc(groupCode)
         .update({"groupMembers" : FieldValue.arrayRemove([activeUser!.username])});
-
   }
 
   static deleteGroup({required String groupCode}) {
@@ -115,6 +115,9 @@ class GroupController {
       }
     });
     group.delete();
+    if(Get.isRegistered<ActiveGroupController>(tag: groupCode)) {
+      Get.find<ActiveGroupController>(tag: groupCode).dispose();
+    }
     activeUserController.removeUserFromGroup(groupCode: groupCode);
     activeUserController.update();
   }

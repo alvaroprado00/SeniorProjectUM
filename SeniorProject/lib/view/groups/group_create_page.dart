@@ -39,9 +39,8 @@ class _CreateGroupState extends State<CreateGroup> {
   XFile? cameraImage;
   File? groupImage;
   bool gettingImage = false;
-  late var imageUrl;
   late String groupCode;
-  late String date;
+  late String imageURLForController;
   late Map<String, dynamic> newGroup;
 
   @override
@@ -386,16 +385,27 @@ class _CreateGroupState extends State<CreateGroup> {
                           .then((value) {
                             setState(() {
                               gettingImage = true;
-                              imageUrl = value;
-                              date = getDateCreatedForGroup().toString();
+                              String imageUrl = value;
+                              imageURLForController = value;
                               newGroup = new Group(
                                 groupCode: groupCode,
                                 groupName: _controllerJoin.text,
                                 groupAdmin: activeUser!.username,
-                                dateCreated: date,
+                                dateCreated: getDateCreatedForGroup().toString(),
                                 groupMembers: [activeUser!.username,],
                                 groupImageURL: imageUrl,
                               ).toJson();
+                              Get.put(
+                                ActiveGroupController(
+                                  inGroupCode: groupCode,
+                                  inGroupName: _controllerJoin.text,
+                                  inGroupAdmin: activeUser!.username,
+                                  inDateCreated: getDateCreatedForGroup().toString(),
+                                  inGroupMembers: [activeUser!.username,],
+                                  inGroupImageURL: imageURLForController,
+                                ),
+                                tag: groupCode,
+                              );
                               _groupController.addGroup(newGroup, groupCode)
                                   .whenComplete(() {
                                 setState(() {
@@ -416,16 +426,27 @@ class _CreateGroupState extends State<CreateGroup> {
                                 .then((value) {
                               setState(() {
                                 gettingImage = true;
-                                imageUrl = value;
-                                date = getDateCreatedForGroup().toString();
+                                String imageUrl = value;
+                                imageURLForController = value;
                                 newGroup = Group(
                                   groupCode: groupCode,
                                   groupName: _controllerJoin.text,
                                   groupAdmin: activeUser!.username,
-                                  dateCreated: date,
+                                  dateCreated: getDateCreatedForGroup().toString(),
                                   groupMembers: [activeUser!.username,],
                                   groupImageURL: imageUrl,
                                 ).toJson();
+                                Get.put(
+                                  ActiveGroupController(
+                                    inGroupCode: groupCode,
+                                    inGroupName: _controllerJoin.text,
+                                    inGroupAdmin: activeUser!.username,
+                                    inDateCreated: getDateCreatedForGroup().toString(),
+                                    inGroupMembers: [activeUser!.username,],
+                                    inGroupImageURL: imageURLForController,
+                                  ),
+                                  tag: groupCode,
+                                );
                                 _groupController.addGroup(newGroup, groupCode)
                                     .whenComplete(() {
                                   setState(() {
@@ -441,17 +462,6 @@ class _CreateGroupState extends State<CreateGroup> {
                         }
                         UserController.addGroupCodeToUser(groupCode: [groupCode]);
                         activeUserController.updateUserGroups(groupCode: groupCode);
-                        Get.put(
-                          ActiveGroupController(
-                            inGroupCode: groupCode,
-                            inGroupName: _controllerJoin.text,
-                            inGroupAdmin: activeUser!.username,
-                            inDateCreated: date,
-                            inGroupMembers: [activeUser!.username,],
-                            inGroupImageURL: imageUrl,
-                          ),
-                          tag: groupCode,
-                        );
                         print(activeUserController.userGroups.toString());
                     },
                     child: Text(

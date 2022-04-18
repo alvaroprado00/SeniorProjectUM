@@ -239,6 +239,9 @@ class LeaveGroup extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             activeGroupController.removeCurrentUserFromGroup();
+            if(Get.isRegistered<ActiveGroupController>(tag: activeGroupController.groupCode.toString())) {
+              Get.find<ActiveGroupController>(tag: activeGroupController.groupCode.toString()).dispose();
+            }
             Navigator.of(context).pop();
           },
           child: Text("Yes",style: getNormalTextStyleBlue()),

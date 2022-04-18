@@ -250,15 +250,19 @@ Card getCardForNotification(
   );
 }
 
-getNotificationTile({required String username,
+getNotificationTile({required BuildContext context,
+  required String username,
   required String message,
-  required String badgeImage,}) {
+  required String badgeImage,
+  required String courseID}) {
   return ListTile(
     tileColor: quinaryColor,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0)),
     leading: Avatar(nameOfAvatar: username, size: widthOfScreen * 0.1),
     title: RichText(
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
       text: TextSpan(
         children: [
           TextSpan(
@@ -294,7 +298,10 @@ getNotificationTile({required String username,
       nameOfIcon: badgeImage,
       size: widthOfScreen * 0.1,
     ),
-    onTap: () {},
+    onTap: () {
+      Navigator.pushReplacementNamed(context, CourseDescription.routeName,
+          arguments: courseID);
+    },
   );
 }
 

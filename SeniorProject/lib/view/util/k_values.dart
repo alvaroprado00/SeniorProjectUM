@@ -11,8 +11,8 @@ late double heightOfScreen;
 const List<String> encouragingMessages = [
   'Try it now!',
   'Check it out!',
-  'What are you waiting for?',
-  'Learn it.'
+  'Earn the badge too!',
+  'Learn it.',
 ];
 
 const List<String> updateMessages = [

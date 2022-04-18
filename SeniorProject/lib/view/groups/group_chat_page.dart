@@ -113,9 +113,11 @@ class GroupNotifs extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
                 child: getNotificationTile(
+                  context: context,
                   username: groupMessages[i].userName.toString(),
                   badgeImage: groupMessages[i].badge.picture.toString(),
                   message: groupMessages[i].message.toString(),
+                  courseID: groupMessages[i].badge.courseID.toString(),
                 ),
               );
             },
