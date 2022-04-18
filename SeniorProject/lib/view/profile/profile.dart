@@ -326,7 +326,7 @@ class ProfileSection extends GetView<ActiveUserController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SubtitleDivider(subtitle: "My ${typeOfSectionToString[typeOfSection]}"),
+        SubtitleDivider(subtitle: typeOfSection==TypeOfSection.Courses? "My Saved Courses": "My ${typeOfSectionToString[typeOfSection]}"),
         widgetToShow,
         SizedBox(
           height: 0.05 * heightOfScreen,

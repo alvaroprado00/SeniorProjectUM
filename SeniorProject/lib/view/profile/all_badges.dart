@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 
+import '../../config/fixed_values.dart';
 import '../../controller/active_user_controller.dart';
 import '../../model/badge.dart';
 import '../util/components.dart';
@@ -195,29 +196,26 @@ Widget getIconButtonForBadge(
     required String nameOfCourse,
     required double size,
     required BuildContext context}) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 6, right: 6),
-    child: Container(
-      decoration: BoxDecoration(
-        color: primaryColor,
-        shape: BoxShape.circle,
-      ),
-      width: size,
-      height: size,
-      child: IconButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (_) {
-                return BadgeDialog(badge: badge, nameOfCourse: nameOfCourse);
-              });
-        },
-        icon: Icon(
-          stringToBadgeIcon[badge.picture],
-          color: secondaryColor,
-          size: 0.5 * size,
-        ),
+  return Container(
+    decoration: BoxDecoration(
+      color: primaryColor,
+      shape: BoxShape.circle,
+    ),
+    width: size,
+    height: size,
+    child: IconButton(
+      onPressed: () {
+        showDialog(
+            context: context,
+            barrierDismissible: true,
+            builder: (_) {
+              return BadgeDialog(badge: badge, nameOfCourse: nameOfCourse);
+            });
+      },
+      icon: Icon(
+        FontAwesomeIconsMap[badge.picture],
+        color: secondaryColor,
+        size: 0.4 * size,
       ),
     ),
   );
