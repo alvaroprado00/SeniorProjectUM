@@ -7,7 +7,6 @@ import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
-
 import 'package:flutter/material.dart';
 
 import '../main.dart';
@@ -28,10 +27,9 @@ class SignUpUsernamePage extends StatelessWidget {
           leading: getBackButton(context: context),
         ),
         body: SafeArea(
-            child: SingleChildScrollView(
-                child: UsernameForm(
+            child: UsernameForm(
           args: args,
-        ))));
+        )));
   }
 }
 
@@ -82,21 +80,20 @@ class _UsernameFormState extends State<UsernameForm> {
             email: widget.args[0],
             username: _controllerUsername.text.trim(),
             level: Level(totalXP: 0, levelNumber: 1, xpEarnedInLevel: 0),
-            profilePictureActive: _controllerUsername.text,
+            profilePictureActive: _controllerUsername.text.trim(),
             userGroups: [],
-            collectedAvatars: [_controllerUsername.text],
+            collectedAvatars: [_controllerUsername.text.trim()],
             collectedBadges: [],
             coursesSaved: [],
             completedCourses: [],
             currentCourse: null,
-            isAdmin: true);
+            isAdmin: false);
 
         //We have to persist the info
 
         await UserController.addUserToAuthAndFirestore(
                 u: userCreated, password: widget.args[1])
             .then((value) {
-
           String message = 'Error when adding user to Firestore DB';
 
           //value will be bool if The user is added to the Auth DB
@@ -109,7 +106,6 @@ class _UsernameFormState extends State<UsernameForm> {
             //In case value returned by the Future is a String, it means
             //it couldnt be added to the Auth DB
             message = value;
-          }
 
           SnackBar snBar = SnackBar(
             content: Text(
@@ -119,8 +115,11 @@ class _UsernameFormState extends State<UsernameForm> {
             backgroundColor: secondaryColor,
           );
           ScaffoldMessenger.of(context).showSnackBar(snBar);
-          Navigator.pushNamed(context, HomePage.routeName,);
-        });
+          Navigator.pushNamed(
+            context,
+            HomePage.routeName,
+          );
+        }});
       }
     };
 
@@ -129,9 +128,9 @@ class _UsernameFormState extends State<UsernameForm> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          Spacer(),
           Padding(
             padding: EdgeInsets.only(
-                top: 0.2 * heightOfScreen,
                 bottom: 0.025 * heightOfScreen,
                 left: 0.03 * widthOfScreen,
                 right: 0.03 * widthOfScreen),
@@ -154,9 +153,7 @@ class _UsernameFormState extends State<UsernameForm> {
               )),
           Padding(
             padding: EdgeInsets.only(
-                bottom: 0.37 * heightOfScreen,
-                left: 0.03 * widthOfScreen,
-                right: 0.03 * widthOfScreen),
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
             child: TextFormField(
               validator: validatorForEmptyTextField,
               controller: _controllerUsername,
@@ -183,6 +180,9 @@ class _UsernameFormState extends State<UsernameForm> {
               numberOfCircles: 5,
             ),
           ),
+          SizedBox(
+            height: 10,
+          )
         ],
       ),
     );

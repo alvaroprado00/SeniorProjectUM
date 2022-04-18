@@ -122,7 +122,7 @@ class ContentForOverview extends GetView<ActiveUserController> {
               ),
               Obx(() => Text(
                     'Level ${controller.level.value.levelNumber.toString()}',
-                    style: getSubheadingStyleBlue(),
+                    style: getHeadingStyleBlue(),
                   )),
               SizedBox(
                 height: heightOfScreen * 0.05,
@@ -135,7 +135,7 @@ class ContentForOverview extends GetView<ActiveUserController> {
                     style: getHeadingStyleBlue(),
                   ),
                   Text(
-                    '+ ${balanceXP.toString()} EXP',
+                    '+ ${balanceXP.toString()} XP',
                     style: getHeadingStyleBlue(),
                   ),
                 ],
@@ -216,13 +216,14 @@ getCircularProgressCustom({required String xp, required String level}) {
       children: <Widget>[
         Center(
           child: Container(
-            width: 0.5 * widthOfScreen,
-            height: 0.27 * heightOfScreen,
+            width: 200,
+            height: 200,
             child: CircularProgressIndicator(
-              strokeWidth: 25,
+              strokeWidth: 20,
               value: double.parse(xp) /
                   (double.parse(level) * levelScale + baseLevel),
               color: secondaryColor,
+              backgroundColor: quaternaryColor,
             ),
           ),
         ),
@@ -236,11 +237,11 @@ getCircularProgressCustom({required String xp, required String level}) {
               style: TextStyle(
                   fontFamily: 'roboto',
                   color: primaryColor,
-                  fontSize: 0.1 * widthOfScreen,
+                  fontSize: 42,
                   fontWeight: FontWeight.bold),
             ),
             Text(
-              'EXP',
+              'XP',
               style: getNormalTextStyleBlue(),
             )
           ],

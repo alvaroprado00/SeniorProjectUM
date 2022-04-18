@@ -3,8 +3,8 @@ import 'package:cyber/model/multiple_choice_question.dart';
 import 'package:cyber/model/question.dart';
 import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_styles.dart';
-import 'package:flutter/material.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../util/components.dart';
@@ -16,19 +16,23 @@ class MultipleChoiceDescriptionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text('Multiple Choice'),
-          centerTitle: true,
-          titleTextStyle: getSubheadingStyleWhite(),
-          elevation: 0,
-          actions: <Widget>[
-            getExitButtonAdmin(context: context),
-          ],
-        ),
-        body: SafeArea(child: DescriptionForm()));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text('Multiple Choice'),
+            centerTitle: true,
+            titleTextStyle: getSubheadingStyleWhite(),
+            elevation: 0,
+            actions: <Widget>[
+              getExitButtonAdmin(context: context),
+            ],
+          ),
+          body: SafeArea(child: DescriptionForm())),
+    );
   }
 }
 
@@ -83,39 +87,38 @@ class _DescriptionFormState extends State<DescriptionForm> {
     return Form(
       key: _formKey,
       child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 0.22 * heightOfScreen),
-            Text(
-              'Enter the question.',
-              style: getNormalTextStyleWhite(),
-              textAlign: TextAlign.center,
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 0.22 * heightOfScreen),
+          Text(
+            'Question',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: 0.025 * heightOfScreen,
+                left: 0.03 * widthOfScreen,
+                right: 0.03 * widthOfScreen),
+            child: TextFormField(
+              inputFormatters: [
+                new LengthLimitingTextInputFormatter(210),
+              ],
+              validator: validatorForEmptyTextField,
+              controller: _controllerDescription,
+              decoration: inputDecorationForLongText,
+              maxLines: 5,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: 0.025 * heightOfScreen,
-                  left: 0.03 * widthOfScreen,
-                  right: 0.03 * widthOfScreen),
-              child: TextFormField(
-                inputFormatters: [
-                  new LengthLimitingTextInputFormatter(210),
-                ],
-                validator: validatorForEmptyTextField,
-                controller: _controllerDescription,
-                decoration: inputDecorationForLongText,
-                maxLines: 5,
-              ),
-            ),
-            SizedBox(height: 0.29 * heightOfScreen),
-            getNextButton(todo: setQuestionDescription, large: true),
-            SizedBox(height: 0.04 * heightOfScreen),
-            getCirclesProgressBar(position: 1, numberOfCircles: 3),
-            SizedBox(height: 0.01 * heightOfScreen),
-          ],
-        ),
-      ),
+          ),
+          SizedBox(height: 0.29 * heightOfScreen),
+          getNextButton(todo: setQuestionDescription, large: true),
+          SizedBox(height: 0.04 * heightOfScreen),
+          getCirclesProgressBar(position: 1, numberOfCircles: 3),
+          SizedBox(height: 0.01 * heightOfScreen),
+        ],
+      )),
     );
   }
 }

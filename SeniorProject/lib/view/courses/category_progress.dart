@@ -62,28 +62,23 @@ class CategoryProgressContent extends GetView<ActiveUserController> {
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(
-            left: 0.05 * widthOfScreen,
-            right: 0.05 * widthOfScreen,
-            top: 0.03 * heightOfScreen),
+            left: 0.03 * widthOfScreen,
+            right: 0.03 * widthOfScreen,
+            top: 0.01 * heightOfScreen),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Progress',
-              style: getHeadingStyleBlue(),
-            ),
-            Divider(
-              thickness: 2,
-              color: primaryColor,
-            ),
+            SubtitleDivider(subtitle: 'Progress'),
             SizedBox(
               height: 0.01 * heightOfScreen,
             ),
             Obx(() => getProgressInCategory(
                 coursesInCategory: categoryCourses,
                 userCompletedCourses: controller.completedCourses.value)),
-            SizedBox(height: 0.05*heightOfScreen,),
+            SizedBox(
+              height: 0.02 * heightOfScreen,
+            ),
             SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),
@@ -114,6 +109,7 @@ getProgressInCategory(
   bool isCompleted = false;
   coursesInCategory.forEach((key, value) {
     for (CompletedCourse cc in userCompletedCourses) {
+
       if (cc.courseID == key) {
         isCompleted = true;
       }
@@ -121,21 +117,19 @@ getProgressInCategory(
     childrenOfColumn.add(Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        SizedBox(width: 5),
         getCircle(
-            color: isCompleted ? secondaryColor : quinaryColor,
-            size: 0.05 * widthOfScreen),
-        SizedBox(
-          width: 0.05 * widthOfScreen,
+            color: isCompleted ? secondaryColor : quaternaryColor, size: 15),
+        Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Text(
+            value,
+            style: getSubheadingStyleBlue(),
+          ),
         ),
-        Text(
-          value,
-          style: getSubheadingStyleBlue(),
-        ),
-        SizedBox(
-          height: 0.05 * heightOfScreen,
-        )
       ],
     ));
+    isCompleted=false;
   });
 
   return SizedBox(

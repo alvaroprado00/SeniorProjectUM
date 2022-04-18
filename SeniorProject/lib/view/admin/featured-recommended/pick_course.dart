@@ -4,10 +4,10 @@
  * or the recommendedOption. Also with the ID that identifies
  * the recommended/featured course to be able to build the radiobuttons
  */
-
 import 'package:flutter/material.dart';
 
 import '../../../controller/course_controller.dart';
+import '../../main.dart';
 import '../../util/components.dart';
 import '../../util/k_colors.dart';
 import '../../util/k_styles.dart';
@@ -29,7 +29,7 @@ class PickACoursePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           categoryToString[args.category]!,
-          style: getSubheadingStyleYellow(),
+          style: getSubheadingStyleWhite(),
         ),
         centerTitle: true,
         elevation: 0,
@@ -46,14 +46,14 @@ class PickACoursePage extends StatelessWidget {
                     left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
                 child: Center(
                   child: Text(
-                    'No Courses in ${categoryToString[args.category]}',
-                    style: getHeadingStyleWhite(),
+                    'There are no courses in ${categoryToString[args.category]}',
+                    style: getSubheadingStyleWhite(),
                     textAlign: TextAlign.center,
                   ),
                 ),
               );
             } else {
-              return CoursesInCategory(args: args, coursesMap: fakeMap);
+              return CoursesInCategory(args: args, coursesMap: snapshot.data);
             }
           } else if (snapshot.hasError) {
             return Center(
@@ -112,12 +112,12 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
 
         await futureToExecute(courseID: _selectedCourseID!).then((val) {
           message =
-              'Update took place. New course: ${widget.coursesMap[_selectedCourseID]!}';
+              'Successful update. New course: ${widget.coursesMap[_selectedCourseID]!}';
         }).catchError((error) {
-          message = 'Update did not took place';
+          message = 'Update was not successful.';
         });
       } else {
-        message = 'Course Already Selected';
+        message = 'This course is already selected.';
       }
 
       var snackBar = SnackBar(
@@ -128,6 +128,8 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
+
     };
 
     return Column(
@@ -138,7 +140,7 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
           height: 0.05 * heightOfScreen,
         ),
         Text(
-          'Pick a Course.',
+          'Choose a course.',
           style: getNormalTextStyleWhite(),
           textAlign: TextAlign.center,
         ),
@@ -220,20 +222,3 @@ class PickACourseArgs {
       required bool this.isFeatured});
 }
 
-Map<String, String> fakeMap = {
-  'wfefwefwef': 'Passwords',
-  'GkdOmqvEUEW5mzVz9f2K': 'Passwords',
-  'wfefsefwef': 'Passwords',
-  'wfedefwef': 'Passwords',
-  'wffwefwef': 'Passwords',
-  'wfegwefwef': 'Passwords',
-  'wfefwcefwef': 'Passwords',
-  'wfefwesfwef': 'Passwords',
-  'wfefwefawef': 'Passwords',
-  'wfefwefwddef': 'Passwords',
-  'wfefwefwddddef': 'Passwords',
-  'wfefwefwddffef': 'Passwords',
-  'wfefwefwdddef': 'Passwords',
-  'wfefwefwfwfddef': 'Passwords',
-  'wfefwefwewfweddef': 'Passwords',
-};

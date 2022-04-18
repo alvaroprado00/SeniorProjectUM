@@ -1,6 +1,5 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/view/profile/all_avatars.dart';
-
 import 'package:cyber/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +19,8 @@ class EditProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      onTap: () {
+        FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
         backgroundColor: tertiaryColor,
@@ -275,8 +275,7 @@ class AlertDialogUsername extends StatelessWidget {
             await activeUserController
                 .changeUsername(newUsername: newUsername)
                 .then((value) {
-                  message=value;
-
+              message = value;
             }).catchError((onError) {
               message = 'Couldn\'t change username';
             });

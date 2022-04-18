@@ -85,7 +85,7 @@ class _PasswordFormState extends State<PasswordForm> {
                 left: 0.03 * widthOfScreen,
                 right: 0.03 * widthOfScreen),
             child:
-                Text('Enter your password.', style: getSubheadingStyleWhite()),
+            Text('Enter your password.', style: getSubheadingStyleWhite()),
           ),
           Padding(
             padding: EdgeInsets.only(

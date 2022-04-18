@@ -1,13 +1,13 @@
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/fill_in_the_blanks_question.dart';
 import 'package:cyber/view/util/functions.dart';
-import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
-import 'package:flutter/material.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../util/components.dart';
+import '../../util/k_colors.dart';
 import 'new_fill_blanks_page_blanks.dart';
 
 class FillInTheBlanksTextPage extends StatelessWidget {
@@ -17,19 +17,23 @@ class FillInTheBlanksTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text('Fill In The Blanks'),
-          centerTitle: true,
-          titleTextStyle: getSubheadingStyleWhite(),
-          elevation: 0,
-          actions: <Widget>[
-            getExitButtonAdmin(context: context),
-          ],
-        ),
-        body: SafeArea(child: TextForm()));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text('Fill In The Blanks'),
+            centerTitle: true,
+            titleTextStyle: getSubheadingStyleWhite(),
+            elevation: 0,
+            actions: <Widget>[
+              getExitButtonAdmin(context: context),
+            ],
+          ),
+          body: SafeArea(child: TextForm())),
+    );
   }
 }
 
@@ -106,7 +110,7 @@ class _TextFormState extends State<TextForm> {
           children: [
             SizedBox(height: 0.22 * heightOfScreen),
             Text(
-              'Enter the text',
+              'Enter the text. Place an X where the blank must appear. Maximum of 3 Blanks.',
               style: getNormalTextStyleWhite(),
               textAlign: TextAlign.center,
             ),
@@ -123,7 +127,7 @@ class _TextFormState extends State<TextForm> {
                 controller: _controllerText,
                 decoration: getInputDecoration(
                     hintText:
-                        'Enter the text of the question and place an X where the blank will appear. Max Blanks 3',
+                        'Enter text',
                     icon: Icon(
                       Icons.article_outlined,
                       color: secondaryColor,
@@ -131,13 +135,13 @@ class _TextFormState extends State<TextForm> {
                 maxLines: 5,
               ),
             ),
-            SizedBox(height: 0.33 * heightOfScreen),
-            getNextButton(todo: addText, large: true),
-            SizedBox(height: 0.04 * heightOfScreen),
-            getCirclesProgressBar(position: 1, numberOfCircles: 3),
-            SizedBox(height: 0.01 * heightOfScreen),
-          ],
-        ),
+
+          Spacer(),
+          getNextButton(todo: addText, large: true),
+          SizedBox(height: 0.04 * heightOfScreen),
+          getCirclesProgressBar(position: 1, numberOfCircles: 3),
+          SizedBox(height: 0.01 * heightOfScreen),
+        ],)
       ),
     );
   }

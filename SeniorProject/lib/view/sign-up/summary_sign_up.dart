@@ -14,15 +14,18 @@ class SignUpSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: getBackButton(context: context),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
+      extendBodyBehindAppBar: true,
       backgroundColor: Theme.of(context).colorScheme.background,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: getBackButton(context: context)),
               Padding(
                 padding: EdgeInsets.only(
                     top: (0.03 * heightOfScreen),
@@ -38,22 +41,22 @@ class SignUpSummary extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: widthOfScreen * 0.08, right: widthOfScreen * 0.1),
+                    left: widthOfScreen * 0.05, right: widthOfScreen * 0.05),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Take Courses. Or save them for later.',
+                    'Take courses. Or save them for later.',
                     style: getSubheadingStyleWhite(),
                   ),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: widthOfScreen * 0.08,
-                    top: heightOfScreen * 0.03,
-                    bottom: heightOfScreen * 0.03),
+                    left: widthOfScreen * 0.05,
+                    top: heightOfScreen * 0.01,
+                    bottom: heightOfScreen * 0.02),
                 child: Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: getCardForCourse(
                       context: context,
                       title: 'Passwords',
@@ -64,13 +67,13 @@ class SignUpSummary extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(
-                    left: widthOfScreen * 0.08,
-                    bottom: 0.03 * heightOfScreen,
-                    right: widthOfScreen * 0.08),
+                    left: widthOfScreen * 0.05,
+                    bottom: 0.02 * heightOfScreen,
+                    right: widthOfScreen * 0.05),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Browse courses in four different categories.',
+                    'Browse courses in 4 different categories.',
                     style: getSubheadingStyleWhite(),
                   ),
                 ),
@@ -85,13 +88,13 @@ class SignUpSummary extends StatelessWidget {
                       getCardForCategory(
                           context: context,
                           category: Category.socialMedia,
-                          widthOfCard: 0.4 * widthOfScreen,
+                          widthOfCard: 0.44 * widthOfScreen,
                           heightOfCard: 0.09 * heightOfScreen,
                           isTemplate: true),
                       getCardForCategory(
                           context: context,
                           category: Category.info,
-                          widthOfCard: 0.4 * widthOfScreen,
+                          widthOfCard: 0.44 * widthOfScreen,
                           heightOfCard: 0.09 * heightOfScreen,
                           isTemplate: true),
                     ],
@@ -102,13 +105,13 @@ class SignUpSummary extends StatelessWidget {
                       getCardForCategory(
                           context: context,
                           category: Category.web,
-                          widthOfCard: 0.4 * widthOfScreen,
+                          widthOfCard: 0.44 * widthOfScreen,
                           heightOfCard: 0.09 * heightOfScreen,
                           isTemplate: true),
                       getCardForCategory(
                           context: context,
                           category: Category.info,
-                          widthOfCard: 0.4 * widthOfScreen,
+                          widthOfCard: 0.44 * widthOfScreen,
                           heightOfCard: 0.09 * heightOfScreen,
                           isTemplate: true),
                     ],
@@ -118,13 +121,13 @@ class SignUpSummary extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(
                     top: 0.03 * heightOfScreen,
-                    left: widthOfScreen * 0.08,
-                    right: widthOfScreen * 0.1,
-                    bottom: 0.03 * heightOfScreen),
+                    left: widthOfScreen * 0.05,
+                    right: widthOfScreen * 0.05,
+                    bottom: 0.02 * heightOfScreen),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    'Join Groups. Keep Motivated',
+                    'Join Groups. Keep Motivated.',
                     style: getSubheadingStyleWhite(),
                   ),
                 ),
@@ -132,8 +135,8 @@ class SignUpSummary extends StatelessWidget {
               getCardForNotification(
                   username: 'Alvaro',
                   nameOfCourse: 'Passwords',
-                  widthOfCard: 0.9 * widthOfScreen,
-                  heightOfCard: 0.13 * heightOfScreen),
+                  widthOfCard: 0.925 * widthOfScreen,
+                  heightOfCard: 0.12 * heightOfScreen),
               Padding(
                 padding: EdgeInsets.only(
                     top: 0.03 * heightOfScreen, bottom: 0.03 * heightOfScreen),

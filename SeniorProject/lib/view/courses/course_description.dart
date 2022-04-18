@@ -5,7 +5,9 @@ import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../controller/active_user_controller.dart';
@@ -89,127 +91,145 @@ class CourseDescriptionContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        floatingActionButton: course.isFeatured! ? FeaturedButton() : null,
-        floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
-        body: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    width: widthOfScreen,
-                    height: 0.3 * heightOfScreen,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: NetworkImage(course.imageURL),
-                      ),
+      backgroundColor: Colors.white,
+      extendBodyBehindAppBar: true,
+      appBar: this.comesFromFeaturePage
+          ? AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+            )
+          : AppBar(
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              leading: getBackButton(context: context),
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+            ),
+      floatingActionButton: course.isFeatured! ? FeaturedButton() : null,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(height: heightOfScreen * 0.05),
+            Stack(
+              children: [
+                Container(
+                  width: widthOfScreen,
+                  height: 0.3 * heightOfScreen,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: NetworkImage(course.imageURL),
                     ),
                   ),
-                  this.comesFromFeaturePage
-                      ? SizedBox(
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          course.title,
+                          style: getHeadingStyleBlue(),
+                        ),
+                        Row(
+                          children: [
+                            isCompleted
+                                ? Icon(
+                                    CupertinoIcons.checkmark_alt_circle_fill,
+                                    color: secondaryColor,
+                                  )
+                                : SizedBox(
+                                    width: 0,
+                                  ),
+                            SaveButton(isFilled: isSaved, courseID: course.id!),
+                          ],
+                        ),
+                      ]),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        course.isFeatured!
+                            ? '${course.experiencePoints} XP x2'
+                            : '${course.experiencePoints} XP',
+                        style: getNormalTextStyleYellow(),
+                      ),
+                      SizedBox(
+                        width: 0.05 * widthOfScreen,
+                      ),
+                      Text(
+                        '${course.numberOfQuestions} Questions',
+                        style: getNormalTextStyleYellow(),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    height: 0.03 * heightOfScreen,
+                  ),
+                  Text(course.description.toString(),
+                      style: getNormalTextStyleBlue()),
+                  SizedBox(
+                    height: 0.03 * heightOfScreen,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+              child: SubtitleDivider(subtitle: 'Key Outcomes'),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+              child: getGreyTextHolderContainer(
+                  child: getContentForOutcomes(outcomes: course.outcomes)),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+              child: Column(
+                children: [
+                  isCurrentCourse
+                      ? getContentForCurrentCourse()
+                      : SizedBox(
                           height: 0,
-                        )
-                      : Positioned(
-                          top: 0.08 * heightOfScreen,
-                          child: getBackButton(context: context),
+                        ),
+                  isCompleted
+                      ? getContentForCompletedCourse()
+                      : SizedBox(
+                          height: 0,
                         ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                    left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                      Text(
-                        course.title,
-                        style: getHeadingStyleBlue(),
-                      ),
-                      SizedBox(
-                        width: 0.35 * widthOfScreen,
-                      ),
-                      isCompleted
-                          ? Icon(
-                              Icons.check_circle_rounded,
-                              color: secondaryColor,
-                            )
-                          : SizedBox(
-                              width: 0,
-                            ),
-                      SaveButton(isFilled: isSaved, courseID: course.id!),
-                    ]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          course.isFeatured!
-                              ? '${course.experiencePoints} XP x2'
-                              : '${course.experiencePoints} XP',
-                          style: getNormalTextStyleYellow(),
-                        ),
-                        SizedBox(
-                          width: 0.05 * widthOfScreen,
-                        ),
-                        Text(
-                          '${course.numberOfQuestions} Questions',
-                          style: getNormalTextStyleYellow(),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 0.03 * heightOfScreen,
-                    ),
-                    Text(course.description.toString(),
-                        style: getNormalTextStyleBlue()),
-                    SizedBox(
-                      height: 0.03 * heightOfScreen,
-                    ),
-                    Text(
-                      'Key Outcomes',
-                      style: getSubheadingStyleBlue(),
-                    ),
-                    Divider(
-                      indent: 0,
-                      endIndent: 0,
-                      thickness: 1,
-                    ),
-                    getGreyTextHolderContainer(
-                        child:
-                            getContentForOutcomes(outcomes: course.outcomes)),
-                    isCurrentCourse
-                        ? getContentForCurrentCourse()
-                        : SizedBox(
-                            height: 0,
-                          ),
-                    isCompleted
-                        ? getContentForCompletedCourse()
-                        : SizedBox(
-                            height: 0,
-                          ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                    top: 0.05 * heightOfScreen, bottom: 0.05 * heightOfScreen),
-                child: SizedBox(
-                    height: getHeightOfLargeButton(),
-                    width: getWidthOfLargeButton(),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        nextQuestion(context);
-                      },
-                      child: Text(isCurrentCourse ? 'Resume' : 'Begin',
-                          style: getNormalTextStyleWhite()),
-                      style: blueButtonStyle,
-                    )),
-              ),
-            ],
-          ),
-        ));
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 0.03 * heightOfScreen, bottom: 0.05 * heightOfScreen),
+              child: SizedBox(
+                  height: getHeightOfLargeButton(),
+                  width: getWidthOfLargeButton(),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      nextQuestion(context);
+                    },
+                    child: Text(isCurrentCourse ? 'Resume' : 'Begin',
+                        style: getNormalTextStyleWhite()),
+                    style: blueButtonStyle,
+                  )),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -248,7 +268,7 @@ getContentForOutcomes({required List<String> outcomes}) {
 }
 
 /**
- * Method to get Container Showing two lines of text. Used for both 
+ * Method to get Container Showing two lines of text. Used for both
  * showing the content for the last completed new-course and the progress in the
  * current new-course
  */
@@ -261,28 +281,10 @@ getNewSection(
     mainAxisAlignment: MainAxisAlignment.start,
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      SizedBox(
-        height: 0.03 * heightOfScreen,
-      ),
-      Text(
-        sectionName,
-        style: getSubheadingStyleBlue(),
-      ),
-      Divider(
-        indent: 0,
-        endIndent: 0,
-        thickness: 1,
-      ),
-      SizedBox(
-        height: 0.01 * heightOfScreen,
-      ),
+      SubtitleDivider(subtitle: 'Best Attempt'),
       Container(
-          padding: EdgeInsets.all(widthOfScreen * 0.03),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            color: primaryColor,
-          ),
-          child: Column(
+          padding: EdgeInsets.only(left: widthOfScreen * 0.04),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -311,7 +313,7 @@ getContentForCurrentCourse() {
                   .round())
               .toString() +
           '%',
-      txt2ForBox: 'Completed'));
+      txt2ForBox: ' Completed'));
 }
 
 getContentForCompletedCourse() {
@@ -323,7 +325,7 @@ getContentForCompletedCourse() {
           .firstWhere((element) => element.courseID == globals.activeCourse!.id)
           .experiencePointsEarned
           .toString(),
-      txt2ForBox: 'EXP'));
+      txt2ForBox: ' XP'));
 }
 
 /**
@@ -361,7 +363,6 @@ class FeaturedButton extends StatelessWidget {
         Icons.bolt,
         color: tertiaryColor,
       ),
-
       backgroundColor: secondaryColor,
     );
   }

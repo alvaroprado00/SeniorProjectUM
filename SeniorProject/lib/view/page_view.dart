@@ -1,3 +1,4 @@
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/view/dashboard/dashboard.dart';
 import 'package:cyber/view/featured/featured_course.dart';
 import 'package:cyber/view/groups/group_home_page.dart';
@@ -76,7 +77,7 @@ class _PageViewScreenContentState extends State<PageViewScreenContent> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xffFfffff),
+        backgroundColor: tertiaryColor,
         unselectedItemColor: primaryColor,
         selectedItemColor: secondaryColor,
         showUnselectedLabels: true,

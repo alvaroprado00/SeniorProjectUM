@@ -15,16 +15,20 @@ class NewCourseOutcomesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final newCourse = ModalRoute.of(context)!.settings.arguments as Course;
-    return Scaffold(
-        appBar: AppBar(
-          leading: getBackButton(context: context),
-          title: Text('Outcomes', style: getSubheadingStyleWhite()),
-          centerTitle: true,
-          elevation: 0,
-          actions: [getExitButtonAdmin(context: context)],
-        ),
-        backgroundColor: Theme.of(context).colorScheme.background,
-        body: SafeArea(child: OutcomesForm(course: newCourse)));
+    return GestureDetector(
+      onTap: (){        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            leading: getBackButton(context: context),
+            title: Text('Outcomes', style: getSubheadingStyleWhite()),
+            centerTitle: true,
+            elevation: 0,
+            actions: [getExitButtonAdmin(context: context)],
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+          body: SafeArea(child: OutcomesForm(course: newCourse))),
+    );
   }
 }
 
@@ -95,7 +99,7 @@ class _OutcomesFormState extends State<OutcomesForm> {
       if (widget.course.outcomes.isEmpty) {
         SnackBar snBar = SnackBar(
           content: Text(
-            'You need to add at least one outcome',
+            'You need to add at least one outcome.',
             style: getNormalTextStyleBlue(),
           ),
           backgroundColor: secondaryColor,
@@ -135,7 +139,7 @@ class _OutcomesFormState extends State<OutcomesForm> {
                 ),
               ),
               SizedBox(
-                height: 0.3 * heightOfScreen,
+                height: 0.35 * heightOfScreen,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

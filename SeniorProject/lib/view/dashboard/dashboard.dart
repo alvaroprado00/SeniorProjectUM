@@ -1,14 +1,14 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
-import 'package:cyber/controller/user_controller.dart';
-import 'package:cyber/globals.dart';
 import 'package:cyber/model/current_course.dart';
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/courses/category.dart';
 import 'package:cyber/view/courses/course_description.dart';
+import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +24,6 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContentForDashboard();
-
   }
 }
 
@@ -43,36 +42,39 @@ class ContentForDashboard extends GetView<ActiveUserController> {
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           backgroundColor: tertiaryColor,
           appBar: AppBar(
-              title:
-                Padding(
-                  padding: EdgeInsets.only(top:8.0, bottom: 8.0),
-                  child: Container(
-                    padding: EdgeInsets.all(5),
-                    decoration:BoxDecoration(
+            automaticallyImplyLeading: false,
+            title: Text(
+              'Welcome ${controller.username.value}!',
+              style: getSubheadingStyleBlue(),
+            ),
+            /*Padding(
+              padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
                     color: quaternaryColor,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: Text(
-                      'Welcome ${controller.username.value}!',
-                    ),
-                  ),
+                child: Text(
+                  'Welcome ${controller.username.value}!',
+                  style: getSubheadingStyleBlue(),
                 ),
-
-              leadingWidth: 0,
-              backgroundColor: tertiaryColor,
-              elevation: 0,
-              centerTitle: false,
-              titleTextStyle: TextStyle(
-                color: primaryColor,
-                fontSize: 0.08 * widthOfScreen,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'roboto',
               ),
+            ),*/
+            leadingWidth: 0,
+            backgroundColor: tertiaryColor,
+            elevation: 0,
+            centerTitle: false,
+            titleTextStyle: TextStyle(
+              color: primaryColor,
+              fontSize: 0.08 * widthOfScreen,
+              fontWeight: FontWeight.w500,
+              fontFamily: 'roboto',
             ),
-
+          ),
           body: SafeArea(
             child: Padding(
               padding: EdgeInsets.only(
-                  left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+                  left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
               child: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -85,16 +87,14 @@ class ContentForDashboard extends GetView<ActiveUserController> {
                         : ResumeCourseContent(
                             currentCourse: controller.currentCourse.value!),
                     SizedBox(
-                      height: 0.05 * heightOfScreen,
+                      height: 0.03 * heightOfScreen,
                     ),
                     RecommendedCourseContent(),
                     SizedBox(
-                      height: 0.05 * heightOfScreen,
+                      height: 0.03 * heightOfScreen,
                     ),
-                    Text('Categories', style: getNormalTextStyleBlue()),
-                    Divider(
-                      color: primaryColor,
-                      thickness: 2,
+                    SubtitleDivider(
+                      subtitle: 'Categories',
                     ),
                     CategoryCards(),
                   ],
@@ -116,20 +116,18 @@ class AdminButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 70,
-      height: 70,
+      width: 60,
+      height: 60,
       child: FloatingActionButton(
-
         hoverColor: primaryColor,
-        hoverElevation: 50,
+        hoverElevation: 20,
         onPressed: () {
           Navigator.pushNamed(context, AdminDashboardPage.routeName);
         },
-
         child: const Icon(
           Icons.admin_panel_settings,
           color: tertiaryColor,
-          size: 50,
+          size: 32,
         ),
         backgroundColor: secondaryColor,
       ),
@@ -157,10 +155,8 @@ class RecommendedCourseContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Recommended', style: getNormalTextStyleBlue()),
-                Divider(
-                  color: primaryColor,
-                  thickness: 2,
+                SubtitleDivider(
+                  subtitle: 'Recommended',
                 ),
                 ContainerForCourse(
                     courseID: snapshot.data.id,
@@ -263,9 +259,10 @@ class ContainerForCourse extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(15),
+      margin: EdgeInsets.fromLTRB(5, 0, 5, 0),
       decoration: BoxDecoration(
         color: primaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+        borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -297,7 +294,7 @@ class ContainerForCourse extends StatelessWidget {
                     style: getSmallTextStyle(),
                   ))
               : SizedBox(
-                  height: 0.03 * heightOfScreen,
+                  height: 0.02 * heightOfScreen,
                 ),
           SizedBox(
               width: 0.5 * widthOfScreen,
@@ -350,16 +347,16 @@ class CategoryCards extends StatelessWidget {
             getCardForCategory(
                 context: context,
                 category: Category.devices,
-                widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen,
+                widthOfCard: 0.43 * widthOfScreen,
+                heightOfCard: 0.15 * heightOfScreen,
                 routeToNavigate: CategoryPage.routeName,
                 arguments: Category.devices,
                 isTemplate: false),
             getCardForCategory(
                 context: context,
                 category: Category.info,
-                widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen,
+                widthOfCard: 0.43 * widthOfScreen,
+                heightOfCard: 0.15 * heightOfScreen,
                 routeToNavigate: CategoryPage.routeName,
                 arguments: Category.info,
                 isTemplate: false),
@@ -371,21 +368,22 @@ class CategoryCards extends StatelessWidget {
             getCardForCategory(
                 context: context,
                 category: Category.socialMedia,
-                widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen,
+                widthOfCard: 0.43 * widthOfScreen,
+                heightOfCard: 0.15 * heightOfScreen,
                 routeToNavigate: CategoryPage.routeName,
                 arguments: Category.socialMedia,
                 isTemplate: false),
             getCardForCategory(
                 context: context,
                 category: Category.web,
-                widthOfCard: 0.4 * widthOfScreen,
-                heightOfCard: 0.2 * heightOfScreen,
+                widthOfCard: 0.43 * widthOfScreen,
+                heightOfCard: 0.15 * heightOfScreen,
                 routeToNavigate: CategoryPage.routeName,
                 arguments: Category.web,
                 isTemplate: false),
           ],
-        )
+        ),
+        SizedBox(height: heightOfScreen * 0.1)
       ],
     );
   }

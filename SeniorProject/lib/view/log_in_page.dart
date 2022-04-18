@@ -1,15 +1,13 @@
+import 'package:cyber/controller/user_controller.dart';
 import 'package:cyber/view/main.dart';
-import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
+import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/functions.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cyber/controller/user_controller.dart';
-
-import 'dashboard/dashboard.dart';
 
 class LogInPage extends StatefulWidget {
   const LogInPage({Key? key}) : super(key: key);
@@ -143,7 +141,7 @@ class _LogInPageState extends State<LogInPage> {
                   Padding(
                     padding: EdgeInsets.only(
                         left: 0.03 * widthOfScreen,
-                        top: 0.28 * heightOfScreen,
+                        top: 0.2 * heightOfScreen,
                         bottom: 0.03 * widthOfScreen),
                     child: Align(
                       alignment: Alignment.centerLeft,

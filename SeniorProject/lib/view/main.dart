@@ -1,6 +1,7 @@
 import 'package:cyber/view/admin/check-user-progress/user_progress.dart';
 import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/admin/delete-course/delete_course.dart';
+import 'package:cyber/view/admin/featured-recommended/new_recommended_page.dart';
 import 'package:cyber/view/admin/featured-recommended/pick_course.dart';
 import 'package:cyber/view/admin/new-course/new_course_page.dart';
 import 'package:cyber/view/admin/new-course/new_course_page_badge.dart';
@@ -8,7 +9,6 @@ import 'package:cyber/view/admin/new-course/new_course_page_description.dart';
 import 'package:cyber/view/admin/new-course/new_course_page_outcomes.dart';
 import 'package:cyber/view/admin/new-course/new_question_feedback_page.dart';
 import 'package:cyber/view/admin/new-course/new_question_page.dart';
-import 'package:cyber/view/admin/featured-recommended/new_recommended_page.dart';
 import 'package:cyber/view/courses/category_progress.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:cyber/view/courses/multiple_choice_question_page.dart';
@@ -34,6 +34,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import 'admin/featured-recommended/new_featured_page.dart';
 import 'admin/new-course/new_fill_blanks_page_blanks.dart';
 import 'admin/new-course/new_fill_blanks_page_text.dart';
@@ -47,7 +48,7 @@ import 'log_in_page.dart';
 
 void main() {
   //WidgetsFlutterBinding.ensureInitialized();
-
+  //await Firebase.initializeApp();
   runApp(
     //The notifier provider provides an instance of ApplicationState to all its descendants
     ChangeNotifierProvider(
@@ -57,6 +58,7 @@ void main() {
   );
 }
 
+// Hello
 enum ApplicationLoginState { loggedIn, loggedOut }
 
 class ApplicationState extends ChangeNotifier {
@@ -79,10 +81,8 @@ class ApplicationState extends ChangeNotifier {
       }
       notifyListeners();
     });
-
   }
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -91,10 +91,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Cyber',
       initialRoute: '/',
+      debugShowCheckedModeBanner: false,
       /*
       onGenerateRoute: (settings) {
         if (settings.name == "/someRoute") {
@@ -163,13 +163,13 @@ class MyApp extends StatelessWidget {
         CategoryProgress.routeName: (context) => const CategoryProgress(),
 
         AdminDashboardPage.routeName: (context) => const AdminDashboardPage(),
-        AllBadgesPage.routeName: (context)=> const AllBadgesPage(),
-        AllAvatarsPage.routeName: (context)=> const AllAvatarsPage(),
-        CategoryBadges.routeName: (context)=> const CategoryBadges(),
-        AllCoursesPage.routeName: (context)=> const AllCoursesPage(),
-        CategoryCourses.routeName: (context)=> const CategoryCourses(),
-        GroupsHome.routeName: (context)=> GroupsHome(),
-        CreateGroup.routeName: (context)=> const CreateGroup(),
+        AllBadgesPage.routeName: (context) => const AllBadgesPage(),
+        AllAvatarsPage.routeName: (context) => const AllAvatarsPage(),
+        CategoryBadges.routeName: (context) => const CategoryBadges(),
+        AllCoursesPage.routeName: (context) => const AllCoursesPage(),
+        CategoryCourses.routeName: (context) => const CategoryCourses(),
+        GroupsHome.routeName: (context) => GroupsHome(),
+        CreateGroup.routeName: (context) => const CreateGroup(),
 
         CategoryBadges.routeName: (context) => const CategoryBadges(),
         AllCoursesPage.routeName: (context) => const AllCoursesPage(),
@@ -188,9 +188,8 @@ class MyApp extends StatelessWidget {
 
         PickACoursePage.routeName: (context) => const PickACoursePage(),
 
-        BadgePage.routeName:(context)=> const BadgePage(),
-        UserProgressPage.routeName:(context)=> const UserProgressPage(),
-
+        BadgePage.routeName: (context) => const BadgePage(),
+        UserProgressPage.routeName: (context) => const UserProgressPage(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -201,12 +200,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
-
   }
-
-
 }
-
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

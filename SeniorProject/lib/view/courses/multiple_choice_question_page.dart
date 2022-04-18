@@ -5,6 +5,7 @@ import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Global variable to save the optionSelected
@@ -51,8 +52,8 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
     };
 
     return Scaffold(
-      backgroundColor: tertiaryColor,
-      body: SafeArea(
+        backgroundColor: tertiaryColor,
+        body: SafeArea(
           child: Padding(
             padding: EdgeInsets.only(
                 left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
@@ -60,37 +61,39 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                Stack(
+                  alignment: Alignment.center,
                   children: [
-                    SizedBox(
-                      width: widthOfScreen * 0.4,
-                    ),
-                    Text(
-                      '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
-                      style: getNormalTextStyleBlue(),
-                    ),
-                    SizedBox(
-                      width: widthOfScreen * 0.25,
-                    ),
-                    getOptionsButton(
-                        context: context,
-                        courseTitle: globals.activeCourse!.title,
-                        categoryTitle:
-                            categoryToString[globals.activeCourse!.category] ??
+                    Align(
+                        alignment: Alignment.centerRight,
+                        child: getOptionsButton(
+                            context: context,
+                            courseTitle: globals.activeCourse!.title,
+                            categoryTitle: categoryToString[
+                                    globals.activeCourse!.category] ??
                                 'No category found',
-                        question: question.number,
-                        numberOfQuestions:
-                            globals.activeCourse!.numberOfQuestions)
+                            question: question.number,
+                            numberOfQuestions:
+                                globals.activeCourse!.numberOfQuestions)),
+                    Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        '${question.number} of ${globals.activeCourse?.numberOfQuestions}',
+                        style: getNormalTextStyleBlue(),
+                      ),
+                    ),
                   ],
                 ),
                 Container(
-                    alignment: Alignment.topCenter,
-                    child: LinearProgressIndicator(
-                      color: secondaryColor,
-                      value: (question.number.toDouble() /
-                          globals.activeCourse!.numberOfQuestions.toDouble()),
-                    )),
+                  alignment: Alignment.center,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: LinearProgressIndicator(
+                        color: secondaryColor,
+                        value: (question.number.toDouble() /
+                            globals.activeCourse!.numberOfQuestions.toDouble()),
+                      )),
+                ),
                 SizedBox(
                   height: 0.05 * heightOfScreen,
                 ),
@@ -110,10 +113,10 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                   style: getNormalTextStyleBlueItalicBold(),
                 ),
                 Spacer(),
-
                 ToggleButtonOptions(options: question.options),
-
-                Spacer(flex: 2,),
+                Spacer(
+                  flex: 2,
+                ),
                 SizedBox(
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
@@ -127,8 +130,8 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                 ),
               ],
             ),
-          )),
-    );
+          ),
+        ));
   }
 }
 
@@ -148,7 +151,7 @@ class _ToggleButtonOptionsState extends State<ToggleButtonOptions> {
     return ToggleButtons(
       children: getWidgetsForOptions(widget.options),
       isSelected: ToggleButtonOptions.isSelected,
-      borderRadius: BorderRadius.circular(0.05 * widthOfScreen),
+      //borderRadius: BorderRadius.circular(15),
       fillColor: secondaryColor,
       renderBorder: false,
       direction: Axis.vertical,
@@ -189,7 +192,7 @@ class ButtonForOption extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
         width: 0.94 * widthOfScreen,
         //height: 0.1*heightOfScreen,
 
@@ -197,7 +200,7 @@ class ButtonForOption extends StatelessWidget {
           padding: EdgeInsets.only(
               top: 0.05 * widthOfScreen,
               bottom: 0.05 * widthOfScreen,
-              left: 0.02 * widthOfScreen,
+              left: 0.04 * widthOfScreen,
               right: 0.02 * widthOfScreen),
           child: Row(
             children: [
@@ -206,7 +209,7 @@ class ButtonForOption extends StatelessWidget {
                 style: getNormalTextStyleBlue(),
               ),
               SizedBox(
-                width: 0.1 * widthOfScreen,
+                width: 0.05 * widthOfScreen,
               ),
               Expanded(
                   child: Text(

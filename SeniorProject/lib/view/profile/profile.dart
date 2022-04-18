@@ -1,12 +1,11 @@
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
-
+import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
 import 'package:cyber/view/main.dart';
 import 'package:cyber/view/profile/all_avatars.dart';
 import 'package:cyber/view/profile/all_badges.dart';
 import 'package:cyber/view/profile/all_courses.dart';
-
 import 'package:cyber/view/profile/edit_profile.dart';
 import 'package:cyber/view/util/cards.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,9 +69,9 @@ class ProfilePageContent extends GetView<ActiveUserController> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialogSignOutDelete(
+            return AlertDialogCustom(
               todo: controller.signOut,
-              messageToDisplay: 'Do you really want to go?',
+              isDelete: false,
             );
           });
     };
@@ -81,9 +80,9 @@ class ProfilePageContent extends GetView<ActiveUserController> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return AlertDialogSignOutDelete(
+            return AlertDialogCustom(
               todo: controller.delete,
-              messageToDisplay: 'You should stay with us!',
+              isDelete: true,
             );
           });
     };
@@ -95,12 +94,14 @@ class ProfilePageContent extends GetView<ActiveUserController> {
           elevation: 0,
           actions: [
             IconButton(
-                color: secondaryColor,
-                iconSize: 0.06 * heightOfScreen,
-                icon: Icon(CupertinoIcons.pencil_circle),
-                onPressed: () {
-                  Navigator.pushNamed(context, EditProfilePage.routeName);
-                }),
+              color: secondaryColor,
+              iconSize: 32,
+              icon: Icon(CupertinoIcons.pencil_circle),
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => EditProfilePage()));
+              },
+            ),
           ],
         ),
         body: SafeArea(
@@ -238,24 +239,39 @@ class LevelProgress extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          Container(
               height: 0.01 * heightOfScreen,
-              child: LinearProgressIndicator(
-                value:
-                    (userLevel.xpEarnedInLevel / userLevel.xpAvailableInLevel),
-                valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
-                backgroundColor: primaryColor,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: LinearProgressIndicator(
+                  value: (userLevel.xpEarnedInLevel /
+                      userLevel.xpAvailableInLevel),
+                  valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
+                  backgroundColor: primaryColor,
+                ),
               )),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Stack(
+            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      widthOfScreen * 0.03,
-                      heightOfScreen * 0.01,
-                      widthOfScreen * 0.00,
-                      heightOfScreen * 0.01),
-                  child: Text("0")),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          widthOfScreen * 0.01,
+                          heightOfScreen * 0.01,
+                          widthOfScreen * 0.00,
+                          heightOfScreen * 0.01),
+                      child: Text("0")),
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(
+                          widthOfScreen * 0.00,
+                          heightOfScreen * 0.01,
+                          widthOfScreen * 0.01,
+                          heightOfScreen * 0.01),
+                      child: Text(userLevel.xpAvailableInLevel.toString())),
+                ],
+              ),
               Align(
                 alignment: Alignment.center,
                 child: Padding(
@@ -268,13 +284,6 @@ class LevelProgress extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                  padding: EdgeInsets.fromLTRB(
-                      widthOfScreen * 0.00,
-                      heightOfScreen * 0.01,
-                      widthOfScreen * 0.04,
-                      heightOfScreen * 0.01),
-                  child: Text(userLevel.xpAvailableInLevel.toString())),
             ],
           ),
         ]);
@@ -326,10 +335,10 @@ class ProfileSection extends GetView<ActiveUserController> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SubtitleDivider(subtitle: "My ${typeOfSectionToString[typeOfSection]}"),
+        SubtitleDivider(subtitle: typeOfSection==TypeOfSection.Courses? "My Saved Courses": "My ${typeOfSectionToString[typeOfSection]}"),
         widgetToShow,
         SizedBox(
-          height: 0.05 * heightOfScreen,
+          height: 0.03 * heightOfScreen,
         ),
         SizedBox(
           height: getHeightOfLargeButton(),
@@ -338,7 +347,7 @@ class ProfileSection extends GetView<ActiveUserController> {
             style: greyButtonStyle,
             onPressed: todo,
             child: Text(
-              'See all ${typeOfSectionToString[typeOfSection]}',
+              'All ${typeOfSectionToString[typeOfSection]}',
               style: getNormalTextStyleBlue(),
             ),
           ),
@@ -459,14 +468,19 @@ getLastSavedCoursesFromUser(
         height: 0.12 * heightOfScreen,
         decoration: BoxDecoration(
             color: quinaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(10))),
+            borderRadius: BorderRadius.all(Radius.circular(15))),
       ));
     }
   }
 
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: childrenForRow,
+  return Container(
+    margin: EdgeInsets.only(
+        left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+    height: 0.12 * heightOfScreen,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: childrenForRow,
+    ),
   );
 }
 
@@ -475,15 +489,15 @@ getLastSavedCoursesFromUser(
  * It uses a boolean to differentiate between the two mentioned cases.
  * A function is provided to be executed when the user clicks confirm
  */
-class AlertDialogSignOutDelete extends StatelessWidget {
-  const AlertDialogSignOutDelete(
+class AlertDialogCustom extends StatelessWidget {
+  const AlertDialogCustom(
       {Key? key,
       required Future Function() this.todo,
-      required String this.messageToDisplay})
+      required bool this.isDelete})
       : super(key: key);
 
   final Future Function() todo;
-  final String messageToDisplay;
+  final bool isDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -493,10 +507,12 @@ class AlertDialogSignOutDelete extends StatelessWidget {
       ),
       title: Text(
         'Are you sure?',
-        style: getNormalTextStyleBlue(),
+        style: getSubheadingStyleBlue(),
       ),
       content: Text(
-        messageToDisplay,
+        isDelete
+            ? "This action cannot be undone."
+            : "${activeUser!.username} will sign out.",
         style: getNormalTextStyleBlue(),
       ),
       actions: <Widget>[
@@ -528,7 +544,7 @@ class AlertDialogSignOutDelete extends StatelessWidget {
             Navigator.pushNamed(context, HomePage.routeName);
           },
           child: Text(
-            'Confirm',
+            isDelete ? "Delete" : 'Sign Out',
             style: getNormalTextStyleYellow(),
           ),
         ),

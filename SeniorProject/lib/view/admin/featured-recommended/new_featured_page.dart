@@ -21,7 +21,7 @@ class UpdateFeaturedCoursePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Featured',
-          style: getSubheadingStyleYellow(),
+          style: getSubheadingStyleWhite(),
         ),
         centerTitle: true,
         elevation: 0,
