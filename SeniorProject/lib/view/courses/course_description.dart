@@ -7,6 +7,7 @@ import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../controller/active_user_controller.dart';
@@ -96,11 +97,13 @@ class CourseDescriptionContent extends StatelessWidget {
           ? AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
             )
           : AppBar(
               elevation: 0,
               backgroundColor: Colors.transparent,
               leading: getBackButton(context: context),
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
             ),
       floatingActionButton: course.isFeatured! ? FeaturedButton() : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
@@ -360,7 +363,6 @@ class FeaturedButton extends StatelessWidget {
         Icons.bolt,
         color: tertiaryColor,
       ),
-
       backgroundColor: secondaryColor,
     );
   }
