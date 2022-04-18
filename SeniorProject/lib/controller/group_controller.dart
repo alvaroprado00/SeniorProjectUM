@@ -8,6 +8,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:path_provider/path_provider.dart';
 
 class GroupController {
@@ -90,10 +92,12 @@ class GroupController {
         .collection("groupCollection")
         .doc(groupCode)
         .update({"groupMembers" : FieldValue.arrayRemove([activeUser!.username])});
+
   }
 
   static deleteGroup({required String groupCode}) {
     String uid = FirebaseAuth.instance.currentUser!.uid;
+    ActiveUserController activeUserController = Get.find<ActiveUserController>();
     var users = FirebaseFirestore.instance
         .collection(userCollectionName);
     var group = FirebaseFirestore.instance
@@ -111,7 +115,8 @@ class GroupController {
       }
     });
     group.delete();
-    ActiveUserController().removeUserFromGroup(groupCode: groupCode);
+    activeUserController.removeUserFromGroup(groupCode: groupCode);
+    activeUserController.update();
   }
 
   static Future groupNameExists({required String groupCode, required String groupName}){
