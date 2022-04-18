@@ -473,9 +473,14 @@ getLastSavedCoursesFromUser(
     }
   }
 
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: childrenForRow,
+  return Container(
+    margin: EdgeInsets.only(
+        left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+    height: 0.12 * heightOfScreen,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: childrenForRow,
+    ),
   );
 }
 

@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../avatar.dart';
-import '../courses/category.dart';
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -44,7 +43,7 @@ Card getCardForCourse(
     color: primaryColor,
     borderOnForeground: true,
     shape: RoundedRectangleBorder(
-        side: BorderSide(color: tertiaryColor, width: 1.0),
+        side: BorderSide(color: primaryColor, width: 2.0),
         borderRadius: BorderRadius.circular(15.0)),
     child: InkWell(
       splashColor: secondaryColor,
@@ -56,41 +55,38 @@ Card getCardForCourse(
       child: SizedBox(
         height: heightOfCard,
         width: widthOfCard,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Stack(children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  isCompleted
-                      ? Icon(
-                          CupertinoIcons.checkmark_alt_circle_fill,
-                          color: secondaryColor,
-                        )
-                      : SizedBox(
-                          width: 0,
-                        ),
-                  isTemplate
-                      ? Icon(CupertinoIcons.bookmark, color: secondaryColor)
-                      : SaveButton(isFilled: isSaved, courseID: courseID),
-                ],
+              isCompleted
+                  ? Icon(
+                      CupertinoIcons.checkmark_alt_circle_fill,
+                      color: secondaryColor,
+                    )
+                  : SizedBox(
+                      width: 0,
+                    ),
+              isTemplate
+                  ? Icon(CupertinoIcons.bookmark, color: secondaryColor)
+                  : SaveButton(isFilled: isSaved, courseID: courseID),
+            ],
+          ),
+          Align(
+            alignment: Alignment.bottomLeft,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 0.07 * widthOfCard,
+                bottom: heightOfCard * 0.12,
+                right: 0.07 * widthOfCard,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        left: 0.07 * widthOfCard,
-                        bottom: heightOfCard * 0.12,
-                        right: 0.07 * widthOfCard),
-                    child: Text('$title', style: getNormalTextStyleWhite()),
-                    // Align(
-                    //     alignment: Alignment.center,
-                    //     child: Text('$title', style: getNormalTextStyleWhite())),
-                  ),
-                ],
-              ),
-            ]),
+              child: Text('$title', style: getNormalTextStyleWhite()),
+              // Align(
+              //     alignment: Alignment.center,
+              //     child: Text('$title', style: getNormalTextStyleWhite())),
+            ),
+          ),
+        ]),
       ),
     ),
   );
