@@ -119,9 +119,9 @@ class _UsernameFormState extends State<UsernameForm> {
             context,
             HomePage.routeName,
           );
-        }
-      });
-    }
+        }});
+      }
+    };
 
     return Form(
       key: _formKey,
