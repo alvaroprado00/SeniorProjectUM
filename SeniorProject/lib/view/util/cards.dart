@@ -1,12 +1,13 @@
 import 'package:cyber/controller/active_user_controller.dart';
+import 'package:cyber/globals.dart';
 import 'package:cyber/view/courses/course_description.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cyber/globals.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'components.dart';
+
 import '../avatar.dart';
+import 'components.dart';
 import 'functions.dart';
 import 'k_colors.dart';
 import 'k_styles.dart';
@@ -179,7 +180,7 @@ Card getCardForCategory(
     color: quaternaryColor,
     borderOnForeground: false,
     shape: new RoundedRectangleBorder(
-        side: new BorderSide(color: tertiaryColor, width: 1.0),
+        side: new BorderSide(color: primaryColor, width: 1.0),
         borderRadius: BorderRadius.circular(15.0)),
     child: InkWell(
       splashColor: secondaryColor,
@@ -206,12 +207,12 @@ Card getCardForCategory(
  * to be specified.
  */
 
-Card getCardForNotification(
-    {required String username,
-      required String nameOfCourse,
-      required double widthOfCard,
-      required double heightOfCard,
-    }) {
+Card getCardForNotification({
+  required String username,
+  required String nameOfCourse,
+  required double widthOfCard,
+  required double heightOfCard,
+}) {
   return Card(
     color: primaryColor,
     borderOnForeground: true,
@@ -250,13 +251,14 @@ Card getCardForNotification(
   );
 }
 
-getNotificationTile({required String username,
+getNotificationTile({
+  required String username,
   required String message,
-  required String badgeImage,}) {
+  required String badgeImage,
+}) {
   return ListTile(
     tileColor: quinaryColor,
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
     leading: Avatar(nameOfAvatar: username, size: widthOfScreen * 0.1),
     title: RichText(
       text: TextSpan(
