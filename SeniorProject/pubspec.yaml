@@ -62,9 +62,10 @@ dev_dependencies:
   build_runner:
 
 flutter_icons:
-  image_path: assets/images/logoNoTextBetter.png
+  image_path: assets/images/iconGrid.png
   android: true
   ios: true
+  remove_alpha_ios: true
 
 flutter_native_splash:
 
