@@ -147,7 +147,7 @@ class AdminDashboardPage extends StatelessWidget {
                 height: 0.02 * heightOfScreen,
               ),
               Image.asset(
-                'assets/images/logoNoTextBetter.png',
+                'assets/images/IconGrid.png',
                 width: 0.5 * widthOfScreen,
                 height: 0.2 * heightOfScreen,
               ),
