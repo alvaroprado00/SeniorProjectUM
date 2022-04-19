@@ -201,14 +201,7 @@ class ResumeCourseContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: 0.05 * heightOfScreen,
-                ),
-                Text('Resume Course', style: getNormalTextStyleBlue()),
-                Divider(
-                  color: primaryColor,
-                  thickness: 2,
-                ),
+                SubtitleDivider(subtitle: 'Resume Course'),
                 ContainerForCourse(
                     percentage: ((currentCourse.progress.length) /
                             (snapshot.data.numberOfQuestions) *
