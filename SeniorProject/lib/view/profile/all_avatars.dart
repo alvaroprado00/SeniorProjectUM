@@ -28,41 +28,36 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
         leading: getBackButton(context: context),
         backgroundColor: tertiaryColor,
       ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
-              child: SubtitleDivider(
-                subtitle: 'Collected',
-              ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+            child: SubtitleDivider(
+              subtitle: 'Collected',
             ),
-            SizedBox(
-              height: 0.01 * heightOfScreen,
+          ),
+          SizedBox(
+            width: widthOfScreen,
+            height: 0.5 * heightOfScreen,
+            child: SingleChildScrollView(
+              child: Obx(() => getAvatars(
+                  userAvatars: controller.collectedAvatars.value,
+                  size: 0.11 * heightOfScreen)),
             ),
-            SizedBox(
-              width: widthOfScreen,
-              height: 0.5 * heightOfScreen,
-              child: SingleChildScrollView(
-                child: Obx(() => getAvatars(
-                    userAvatars: controller.collectedAvatars.value,
-                    size: 0.11 * heightOfScreen)),
-              ),
+          ),
+          SizedBox(
+            height: 0.05 * heightOfScreen,
+          ),
+          Container(
+            width: widthOfScreen,
+            child: Image.asset(
+              'assets/images/robohash.png',
             ),
-            SizedBox(
-              height: 0.05 * heightOfScreen,
-            ),
-            Container(
-              width: widthOfScreen,
-              child: Image.asset(
-                'assets/images/robohash.png',
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -138,6 +133,8 @@ class AvatarDialog extends GetView<ActiveUserController> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Text(
         'Avatar',
         style: getSubheadingStyleBlue(),
@@ -153,8 +150,19 @@ class AvatarDialog extends GetView<ActiveUserController> {
             height: 0.05 * heightOfScreen,
           ),
           Text(
-            'Avatar ID: ${avatarName}',
-            style: getNormalTextStyleBlue(),
+            'IDENTIFIER',
+            style: TextStyle(
+                color: secondaryColor,
+                fontFamily: fontFamily,
+                fontSize: 16,
+                fontWeight: FontWeight.w400),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              '${avatarName}',
+              style: getSubheadingStyleBlue(),
+            ),
           ),
         ],
       ),

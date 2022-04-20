@@ -239,17 +239,20 @@ class LevelProgress extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-              height: 0.01 * heightOfScreen,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: LinearProgressIndicator(
-                  value: (userLevel.xpEarnedInLevel /
-                      userLevel.xpAvailableInLevel),
-                  valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
-                  backgroundColor: primaryColor,
-                ),
-              )),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+            child: Container(
+                height: 0.01 * heightOfScreen,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: LinearProgressIndicator(
+                    value: (userLevel.xpEarnedInLevel /
+                        userLevel.xpAvailableInLevel),
+                    valueColor: AlwaysStoppedAnimation<Color>(secondaryColor),
+                    backgroundColor: primaryColor,
+                  ),
+                )),
+          ),
           Stack(
             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -339,7 +342,10 @@ class ProfileSection extends GetView<ActiveUserController> {
             subtitle: typeOfSection == TypeOfSection.Courses
                 ? "My Courses"
                 : "My ${typeOfSectionToString[typeOfSection]}"),
-        widgetToShow,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: widgetToShow,
+        ),
         SizedBox(
           height: 0.03 * heightOfScreen,
         ),
@@ -419,7 +425,7 @@ getLastAvatarsFromUser({required List<String> avatars}) {
   if (avatars.length < 4) {
     for (int i = 0; i < (4 - avatars.length); i++) {
       childrenForRow
-          .add(getCircle(color: quinaryColor, size: 0.1 * heightOfScreen));
+          .add(getCircle(color: quinaryColor, size: 0.09 * heightOfScreen));
     }
   }
 
@@ -477,8 +483,6 @@ getLastSavedCoursesFromUser(
   }
 
   return Container(
-    margin: EdgeInsets.only(
-        left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
     height: 0.12 * heightOfScreen,
     child: ListView(
       scrollDirection: Axis.horizontal,

@@ -116,7 +116,7 @@ class _LogInPageState extends State<LogInPage> {
                       controller: _controllerEmail,
                       validator: validatorForEmptyTextField,
                       decoration: getInputDecoration(
-                          hintText: 'email',
+                          hintText: 'Email',
                           icon: Icon(
                             Icons.email,
                             color: secondaryColor,

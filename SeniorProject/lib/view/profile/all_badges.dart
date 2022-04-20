@@ -75,8 +75,12 @@ class BadgesFromCategory extends StatelessWidget {
             subtitle: categoryToString[category]!,
           ),
         ),
-        BadgesContent(
-          category: category,
+        Padding(
+          padding: EdgeInsets.only(
+              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+          child: BadgesContent(
+            category: category,
+          ),
         )
       ],
     );
@@ -159,12 +163,9 @@ getRowOfBadges(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(
-          height: heightOfScreen * 0.05,
-        ),
         Text(
           'No badges earned in ${categoryToString[category]!}',
-          style: getSubheadingStyleBlue(),
+          style: getNormalTextStyleBlue(),
         ),
       ],
     );
@@ -209,6 +210,7 @@ Widget getIconButtonForBadge(
     width: size,
     height: size,
     child: IconButton(
+      splashColor: secondaryColor,
       onPressed: () {
         showDialog(
             context: context,
@@ -220,7 +222,7 @@ Widget getIconButtonForBadge(
       icon: Icon(
         FontAwesomeIconsMap[badge.picture],
         color: secondaryColor,
-        size: 0.4 * size,
+        size: 24,
       ),
     ),
   );
@@ -237,6 +239,8 @@ class BadgeDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Text(
         nameOfCourse,
         style: getSubheadingStyleBlue(),
@@ -247,13 +251,24 @@ class BadgeDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
+          SizedBox(height: heightOfScreen * 0.02),
           getContainerForBadge(
-              nameOfIcon: badge.picture, size: 0.3 * heightOfScreen),
+              nameOfIcon: badge.picture, size: 0.25 * heightOfScreen),
           SizedBox(height: heightOfScreen * 0.05),
           Text(
-            'Earned: ${badge.timeEarnedToString()}',
-            style: getNormalTextStyleBlue(),
-            textAlign: TextAlign.center,
+            'EARNED',
+            style: TextStyle(
+                color: secondaryColor,
+                fontFamily: fontFamily,
+                fontSize: 0.03 * widthOfScreen,
+                fontWeight: FontWeight.w400),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text(
+              '${badge.timeEarnedToString()}',
+              style: getNormalTextStyleBlue(),
+            ),
           ),
         ],
       ),

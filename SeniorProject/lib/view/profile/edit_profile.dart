@@ -52,15 +52,15 @@ class EditProfilePage extends StatelessWidget {
                 SubtitleDivider(subtitle: 'Username'),
                 UsernameForm(),
                 SizedBox(
-                  height: 0.05 * heightOfScreen,
+                  height: 0.03 * heightOfScreen,
                 ),
                 PasswordSection(),
                 SizedBox(
-                  height: 0.05 * heightOfScreen,
+                  height: 0.03 * heightOfScreen,
                 ),
                 EmailSection(),
                 SizedBox(
-                  height: 0.05 * heightOfScreen,
+                  height: 0.08 * heightOfScreen,
                 ),
               ],
             ),
@@ -138,9 +138,6 @@ class UsernameForm extends GetView<ActiveUserController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: 0.01 * heightOfScreen,
-            ),
             Obx(() => TextFormField(
                   validator: validatorForEmptyTextField,
                   controller: _controllerUsername,
@@ -152,7 +149,7 @@ class UsernameForm extends GetView<ActiveUserController> {
                       )),
                 )),
             SizedBox(
-              height: 0.03 * heightOfScreen,
+              height: 0.02 * heightOfScreen,
             ),
             SizedBox(
               height: getHeightOfLargeButton(),
@@ -178,7 +175,6 @@ class PasswordSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SubtitleDivider(subtitle: 'Password'),
-        SizedBox(height: heightOfScreen * 0.03),
         SizedBox(
           height: getHeightOfLargeButton(),
           width: getWidthOfLargeButton(),
@@ -208,16 +204,18 @@ class EmailSection extends GetView<ActiveUserController> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SubtitleDivider(subtitle: 'Email'),
-        SizedBox(height: heightOfScreen * 0.03),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Icon(
-              Icons.mail,
-              color: secondaryColor,
+            Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Icon(
+                Icons.mail,
+                color: secondaryColor,
+              ),
             ),
             SizedBox(
-              width: 0.1 * widthOfScreen,
+              width: 0.05 * widthOfScreen,
             ),
             Obx(() => Text(
                   controller.email.value,
@@ -246,7 +244,8 @@ class AlertDialogUsername extends StatelessWidget {
 
   final String newUsername;
 
-  final ActiveUserController activeUserController = Get.find<ActiveUserController>();
+  final ActiveUserController activeUserController =
+      Get.find<ActiveUserController>();
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

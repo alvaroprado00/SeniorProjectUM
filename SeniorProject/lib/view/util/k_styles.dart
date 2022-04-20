@@ -133,6 +133,14 @@ TextStyle getSmallTextStyle() {
       fontWeight: FontWeight.w400);
 }
 
+TextStyle getSmallTextStyleBlue() {
+  return TextStyle(
+      color: primaryColor,
+      fontFamily: fontFamily,
+      fontSize: 0.04 * widthOfScreen,
+      fontWeight: FontWeight.w400);
+}
+
 ButtonStyle yellowButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(secondaryColor),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

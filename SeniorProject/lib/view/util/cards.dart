@@ -50,6 +50,7 @@ Card getCardForCourse(
         borderRadius: BorderRadius.circular(15.0)),
     child: InkWell(
       splashColor: secondaryColor,
+      borderRadius: BorderRadius.circular(15.0),
       onTap: isTemplate
           ? () {
               print('This is a template');
@@ -184,12 +185,13 @@ Card getCardForCategory(
 
   return Card(
     color: quaternaryColor,
-    borderOnForeground: false,
+    borderOnForeground: true,
     shape: new RoundedRectangleBorder(
         side: new BorderSide(color: primaryColor, width: 1.0),
         borderRadius: BorderRadius.circular(15.0)),
     child: InkWell(
       splashColor: secondaryColor,
+      borderRadius: BorderRadius.circular(15.0),
       onTap: isTemplate
           ? () {
               print('Does nothing');

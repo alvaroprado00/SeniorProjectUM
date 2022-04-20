@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
 import '../../controller/group_controller.dart';
 import '../util/k_values.dart';
 
@@ -19,35 +20,46 @@ class GroupCreated extends GetView<ActiveUserController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: tertiaryColor,
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: Text('Group Created!', style: getHeadingStyleBlue(),),
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: tertiaryColor,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text(
+          'Success',
+          style: getSubheadingStyleBlue(),
         ),
-        body: StreamBuilder(
-          stream: _groupController.getGroupByCode(groupCode),
-          builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-            if(snapshot.hasData) {
-              Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
-              return GroupSuccess(createdGroup: createdGroup,controller: controller,);
-            }
-            else {
-              return Center(
-                child: Container(
-                  child: CircularProgressIndicator(color: primaryColor,),
+      ),
+      body: StreamBuilder(
+        stream: _groupController.getGroupByCode(groupCode),
+        builder: (context,
+            AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+          if (snapshot.hasData) {
+            Group createdGroup =
+                Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+            return GroupSuccess(
+              createdGroup: createdGroup,
+              controller: controller,
+            );
+          } else {
+            return Center(
+              child: Container(
+                child: CircularProgressIndicator(
+                  color: primaryColor,
                 ),
-              );
-            }
-          },
-        ),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
 
 class GroupSuccess extends StatelessWidget {
-  const GroupSuccess({Key? key, required this.createdGroup, required this.controller}) : super(key: key);
+  const GroupSuccess(
+      {Key? key, required this.createdGroup, required this.controller})
+      : super(key: key);
   final Group createdGroup;
   final ActiveUserController controller;
 
@@ -58,7 +70,7 @@ class GroupSuccess extends StatelessWidget {
     Widget getGroupCode({required String groupCode}) {
       return ElevatedButton(
         onPressed: () {
-          Clipboard.setData(ClipboardData(text: groupCode)).then((_){
+          Clipboard.setData(ClipboardData(text: groupCode)).then((_) {
             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text(
                 'Group Code copied to clipboard!',
@@ -68,12 +80,11 @@ class GroupSuccess extends StatelessWidget {
                 ),
               ),
               backgroundColor: secondaryColor,
-            )
-            );
+            ));
           });
         },
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,14 +94,8 @@ class GroupSuccess extends StatelessWidget {
                 color: secondaryColor,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                child: Text(
-                  groupCode,
-                  style: const TextStyle(
-                    color: primaryColor,
-                    fontSize: 28,
-                  ),
-                ),
+                padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                child: Text(groupCode, style: getSubheadingStyleBlue()),
               ),
               const Icon(
                 Icons.copy,
@@ -100,16 +105,21 @@ class GroupSuccess extends StatelessWidget {
           ),
         ),
         style: ButtonStyle(
-          shape: MaterialStateProperty.all<OutlinedBorder>(RoundedRectangleBorder(borderRadius: BorderRadius.circular(36.0))),
-          backgroundColor: MaterialStateProperty.all<Color>(Color(0xFFD5D5D5)),
-        ),
+            elevation: MaterialStateProperty.all(0),
+            backgroundColor: MaterialStateProperty.all(quinaryColor),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ))),
       );
     }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(height: heightOfScreen * 0.03,),
+        SizedBox(
+          height: heightOfScreen * 0.03,
+        ),
         Container(
           height: heightOfScreen * 0.28,
           width: getWidthOfLargeButton(),
@@ -146,18 +156,21 @@ class GroupSuccess extends StatelessWidget {
             style: getNormalTextStyleBlue(),
           ),
         ),
-        SizedBox(height: heightOfScreen * 0.05,),
+        SizedBox(
+          height: heightOfScreen * 0.05,
+        ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 0.0, left: 16.0, right: 16.0),
           child: Text(
             "Group Code",
             textAlign: TextAlign.center,
             style: getSubheadingStyleBlue(),
           ),
         ),
-        getGroupCode(groupCode: createdGroup.groupCode),
         Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+          padding: const EdgeInsets.only(
+              top: 8.0, bottom: 24.0, left: 24.0, right: 24.0),
           child: Text(
             "Users can join the group with the group code. Tap on the group code to copy and share.",
             style: TextStyle(
@@ -168,12 +181,18 @@ class GroupSuccess extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
         ),
-        SizedBox(height: heightOfScreen * 0.07,),
+        getGroupCode(groupCode: createdGroup.groupCode),
+        SizedBox(
+          height: heightOfScreen * 0.07,
+        ),
         SizedBox(
           height: getHeightOfLargeButton(),
           width: getWidthOfLargeButton(),
           child: ElevatedButton(
-            child: Text("Done", style: getNormalTextStyleWhite(),),
+            child: Text(
+              "Done",
+              style: getNormalTextStyleWhite(),
+            ),
             style: blueButtonStyle,
             onPressed: () {
               Navigator.of(context).pop(context);

@@ -355,6 +355,9 @@ class CategoryCards extends StatelessWidget {
                 isTemplate: false),
           ],
         ),
+        SizedBox(
+          height: 10,
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
