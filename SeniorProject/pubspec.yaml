@@ -62,7 +62,7 @@ dev_dependencies:
   build_runner:
 
 flutter_icons:
-  image_path: assets/images/iconGrid1.png
+  image_path: assets/images/iconGrid1.jpg
   android: true
   ios: true
   remove_alpha_ios: true
