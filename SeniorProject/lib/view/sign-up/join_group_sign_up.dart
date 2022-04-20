@@ -125,7 +125,9 @@ class _GroupFormState extends State<GroupForm> {
                 )),
             Padding(
                 padding: EdgeInsets.only(
-                    left: widthOfScreen * 0.07, right: widthOfScreen * 0.07),
+                    left: widthOfScreen * 0.07,
+                    right: widthOfScreen * 0.07,
+                    bottom: 0.06 * heightOfScreen),
                 child: Text(
                   'Don\'t worry you can join one later or create one of your own.',
                   style: getSmallTextStyle(),

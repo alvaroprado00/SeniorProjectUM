@@ -24,9 +24,7 @@ class SignUpEmailPage extends StatelessWidget {
         ),
         backgroundColor: Theme.of(context).colorScheme.background,
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: EmailForm(),
-          ),
+          child: EmailForm(),
         ),
       ),
     );
@@ -76,9 +74,9 @@ class _EmailFormState extends State<EmailForm> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Spacer(),
             Padding(
               padding: EdgeInsets.only(
-                  top: 0.27 * heightOfScreen,
                   bottom: 0.05 * heightOfScreen,
                   left: 0.03 * widthOfScreen,
                   right: 0.03 * widthOfScreen),
@@ -87,20 +85,19 @@ class _EmailFormState extends State<EmailForm> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                  bottom: 0.35 * heightOfScreen,
-                  left: 0.03 * widthOfScreen,
-                  right: 0.03 * widthOfScreen),
+                  left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
               child: TextFormField(
                 validator: validatorForEmail,
                 controller: _controllerEmail,
                 decoration: getInputDecoration(
-                    hintText: 'email',
+                    hintText: 'Email',
                     icon: Icon(
                       Icons.email,
                       color: secondaryColor,
                     )),
               ),
             ),
+            Spacer(),
             SizedBox(
                 height: getHeightOfLargeButton(),
                 width: getWidthOfLargeButton(),
@@ -116,6 +113,9 @@ class _EmailFormState extends State<EmailForm> {
                 numberOfCircles: 5,
               ),
             ),
+            SizedBox(
+              height: 10,
+            )
           ],
         ));
   }

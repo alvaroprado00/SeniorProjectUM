@@ -43,7 +43,7 @@ class _TextFormFieldForPasswordState extends State<TextFormFieldForPassword> {
           contentPadding: EdgeInsets.only(
               top: 0.08 * widthOfScreen, left: 0.08 * widthOfScreen),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(10),
             borderSide: const BorderSide(color: tertiaryColor, width: 1.0),
           ),
           prefixIcon: Icon(
@@ -242,9 +242,11 @@ IconButton getExitButtonAdmin({required BuildContext context}) {
                               'Yes',
                               style: getNormalTextStyleBlue(),
                             ),
-                            onPressed: (){
-                              Navigator.of(context)
-                                  .pushNamedAndRemoveUntil(HomePage.routeName, (Route<dynamic> route) => false);                            },
+                            onPressed: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  HomePage.routeName,
+                                  (Route<dynamic> route) => false);
+                            },
                           ),
                         ),
                       ],
@@ -357,7 +359,7 @@ getSaveCurrentCourseButton({required BuildContext context}) {
           style: getNormalTextStyleBlue(),
         ),
         onPressed: () async {
-          await activeUserController.updateCurrentCourse().then((value){
+          await activeUserController.updateCurrentCourse().then((value) {
             Navigator.pushNamedAndRemoveUntil(
                 context, HomePage.routeName, (r) => false);
           });
@@ -592,4 +594,3 @@ getContainerForBadge({required String nameOfIcon, required double size}) {
     ),
   );
 }
-

@@ -45,7 +45,8 @@ Card getCardForCourse(
     color: primaryColor,
     borderOnForeground: true,
     shape: RoundedRectangleBorder(
-        side: BorderSide(color: primaryColor, width: 2.0),
+        side: BorderSide(
+            color: isTemplate ? secondaryColor : primaryColor, width: 2.0),
         borderRadius: BorderRadius.circular(15.0)),
     child: InkWell(
       splashColor: secondaryColor,
@@ -70,7 +71,11 @@ Card getCardForCourse(
                       width: 0,
                     ),
               isTemplate
-                  ? Icon(CupertinoIcons.bookmark, color: secondaryColor)
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child:
+                          Icon(CupertinoIcons.bookmark, color: secondaryColor),
+                    )
                   : SaveButton(isFilled: isSaved, courseID: courseID),
             ],
           ),
@@ -114,7 +119,8 @@ class SaveButton extends StatefulWidget {
 class _SaveButtonState extends State<SaveButton> {
   @override
   Widget build(BuildContext context) {
-    ActiveUserController activeUserController = Get.find<ActiveUserController>();
+    ActiveUserController activeUserController =
+        Get.find<ActiveUserController>();
 
     return IconButton(
       onPressed: () {
@@ -251,11 +257,12 @@ Card getCardForNotification({
   );
 }
 
-getNotificationTile({required BuildContext context,
-  required String username,
-  required String message,
-  required String badgeImage,
-  required String courseID}) {
+getNotificationTile(
+    {required BuildContext context,
+    required String username,
+    required String message,
+    required String badgeImage,
+    required String courseID}) {
   return ListTile(
     tileColor: quinaryColor,
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),

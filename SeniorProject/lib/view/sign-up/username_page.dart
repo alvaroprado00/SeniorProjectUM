@@ -107,19 +107,20 @@ class _UsernameFormState extends State<UsernameForm> {
             //it couldnt be added to the Auth DB
             message = value;
 
-          SnackBar snBar = SnackBar(
-            content: Text(
-              message,
-              style: getNormalTextStyleBlue(),
-            ),
-            backgroundColor: secondaryColor,
-          );
-          ScaffoldMessenger.of(context).showSnackBar(snBar);
-          Navigator.pushNamed(
-            context,
-            HomePage.routeName,
-          );
-        }});
+            SnackBar snBar = SnackBar(
+              content: Text(
+                message,
+                style: getNormalTextStyleBlue(),
+              ),
+              backgroundColor: secondaryColor,
+            );
+            ScaffoldMessenger.of(context).showSnackBar(snBar);
+            Navigator.pushNamed(
+              context,
+              HomePage.routeName,
+            );
+          }
+        });
       }
     };
 
@@ -165,6 +166,7 @@ class _UsernameFormState extends State<UsernameForm> {
                   )),
             ),
           ),
+          Spacer(),
           SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),
