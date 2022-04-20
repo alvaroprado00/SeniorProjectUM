@@ -18,40 +18,49 @@ class GroupsHome extends StatelessWidget {
   GroupsHome({Key? key}) : super(key: key);
 
   static final String routeName = '/GroupHome';
-  ActiveUserController userController = Get.find<ActiveUserController>(); // Rather Controller controller = Controller();
+  ActiveUserController userController = Get.find<
+      ActiveUserController>(); // Rather Controller controller = Controller();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: tertiaryColor,
+      appBar: AppBar(
+          centerTitle: false,
+          elevation: 0,
+          backgroundColor: tertiaryColor,
+          title: Text.rich(TextSpan(children: [
+            TextSpan(
+                text: 'Cyber',
+                style: TextStyle(
+                    color: secondaryColor,
+                    fontFamily: fontFamily,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w700)),
+            TextSpan(
+                text: ' Community',
+                style: TextStyle(
+                    color: primaryColor,
+                    fontFamily: fontFamily,
+                    fontSize: 36,
+                    fontWeight: FontWeight.w400)),
+          ]))),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: const EdgeInsets.only(bottom: 5.0),
-              child: Image.asset(
-                'assets/images/group_home_banner.png',
-                width: widthOfScreen,
+              padding: EdgeInsets.only(
+                  top: 16,
+                  left: 0.06 * widthOfScreen,
+                  right: 0.06 * widthOfScreen,
+                  bottom: 24),
+              child: Text(
+                'We find value in community learning. By joining groups you can share your badges with your friends. You can also create new groups and share the code with select people.',
+                style: getSmallTextStyleGrey(),
               ),
             ),
-            // Padding(
-            //   padding: EdgeInsets.only(
-            //       left: 0.05 * widthOfScreen,
-            //       right: 0.03 * widthOfScreen,
-            //       top: 50),
-            //   child: Align(
-            //     alignment: Alignment.centerLeft,
-            //     child: Text(
-            //       'Community',
-            //       style: TextStyle(
-            //           color: primaryColor,
-            //           fontFamily: fontFamily,
-            //           fontSize: 36,
-            //           fontWeight: FontWeight.w400),
-            //     ),
-            //   ),
-            // ),
             Padding(
               padding: EdgeInsets.only(
                   left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
@@ -262,11 +271,12 @@ class _JoinGroupState extends State<JoinGroup> {
                     userController
                         .updateUserGroups(groupCode: _controllerJoin.text)
                         .whenComplete(() {
-                          userController.update();
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => JoinPopup(groupCode: _controllerJoin.text),
-                          );
+                      userController.update();
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) =>
+                            JoinPopup(groupCode: _controllerJoin.text),
+                      );
                     }).catchError((e) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text(
@@ -322,20 +332,21 @@ class JoinPopup extends StatelessWidget {
       ),
       content: StreamBuilder(
           stream: _groupController.getGroupByCode(groupCode),
-          builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-            if(snapshot.hasData) {
-              Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+          builder: (context,
+              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+            if (snapshot.hasData) {
+              Group createdGroup =
+                  Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
               Get.put(
-                ActiveGroupController(
-                  inGroupCode: createdGroup.groupCode,
-                  inGroupName: createdGroup.groupName,
-                  inGroupAdmin: createdGroup.groupAdmin,
-                  inDateCreated: createdGroup.dateCreated,
-                  inGroupMembers: createdGroup.groupMembers,
-                  inGroupImageURL: createdGroup.groupImageURL,
-                ),
-                tag: createdGroup.groupCode
-              );
+                  ActiveGroupController(
+                    inGroupCode: createdGroup.groupCode,
+                    inGroupName: createdGroup.groupName,
+                    inGroupAdmin: createdGroup.groupAdmin,
+                    inDateCreated: createdGroup.dateCreated,
+                    inGroupMembers: createdGroup.groupMembers,
+                    inGroupImageURL: createdGroup.groupImageURL,
+                  ),
+                  tag: createdGroup.groupCode);
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,

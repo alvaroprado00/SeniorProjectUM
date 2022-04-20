@@ -36,7 +36,7 @@ class MultipleChoiceQuestion extends Question {
   }
 
   String getSolutionAsString() {
-    return 'The correct option is ${numberToOptionLetter[rightOption]}: ${options[rightOption]}';
+    return 'Answer: ${numberToOptionLetter[rightOption]}  ${options[rightOption]}';
   }
 
   factory MultipleChoiceQuestion.fromJson(Map<String, dynamic> json) {

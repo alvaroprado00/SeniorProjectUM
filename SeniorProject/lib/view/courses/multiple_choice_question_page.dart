@@ -109,7 +109,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                   height: 0.05 * heightOfScreen,
                 ),
                 Text(
-                  'Choose the correct answer.',
+                  'Choose the correct option.',
                   style: getNormalTextStyleBlueItalicBold(),
                 ),
                 Spacer(),

@@ -11,32 +11,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-
 import '../../config/fixed_values.dart';
 import 'k_values.dart';
 
-Function nextQuestion=(BuildContext context) async {
-
-  if(globals.activeCourse!.numberOfQuestions>=globals.activeQuestionNum!){
+Function nextQuestion = (BuildContext context) async {
+  if (globals.activeCourse!.numberOfQuestions >= globals.activeQuestionNum!) {
     //I get the question in the new-course
-    Question q= globals.activeCourse!.questions[globals.activeQuestionNum!-1];
+    Question q =
+        globals.activeCourse!.questions[globals.activeQuestionNum! - 1];
 
     //Once I have the first question I check what type of question it is
     //to navigate to the appropriate page
 
-    if(q.typeOfQuestion==TypeOfQuestion.multipleChoice){
-      Navigator.pushNamedAndRemoveUntil(context, MultipleChoiceQuestionPage.routeName, (r) => false, arguments: q);
-    }else{
-      Navigator.pushNamedAndRemoveUntil(context, FillInTheBlanksQuestionPage.routeName, (r) => false, arguments: q);
+    if (q.typeOfQuestion == TypeOfQuestion.multipleChoice) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, MultipleChoiceQuestionPage.routeName, (r) => false,
+          arguments: q);
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, FillInTheBlanksQuestionPage.routeName, (r) => false,
+          arguments: q);
     }
-
-  }else{
-    ActiveUserController activeUserController = Get.find<ActiveUserController>();
-    final SaveCompletedCourseArgs args= await activeUserController.saveCompletedCourse();
-    Navigator.pushNamedAndRemoveUntil(context, Overview.routeName, (r) => false, arguments: args);
+  } else {
+    ActiveUserController activeUserController =
+        Get.find<ActiveUserController>();
+    final SaveCompletedCourseArgs args =
+        await activeUserController.saveCompletedCourse();
+    Navigator.pushNamedAndRemoveUntil(context, Overview.routeName, (r) => false,
+        arguments: args);
   }
-
-
 };
 
 /**
@@ -44,9 +47,10 @@ Function nextQuestion=(BuildContext context) async {
  */
 String? validatorForEmptyTextField(value) {
   if (value == null || value.isEmpty) {
-    return 'Please enter some text.';
+    return 'Enter some text.';
+  } else {
+    return null;
   }
-  return null;
 }
 
 /**
@@ -55,21 +59,24 @@ String? validatorForEmptyTextField(value) {
  */
 String? validatorForPassword(value) {
   if (value == null || value.isEmpty) {
-    return 'Please enter some text';
-  }else if(value.length<6){
-    return 'Password should be at least 6 char long';
+    return 'Enter some text.';
+  } else if (value.length < 6) {
+    return 'Password should be at least 6 characters long.';
   }
   return null;
 }
+
 /**
  * Validator for TextFormField. It verifies the value is not empty
  */
-String? validatorForEmail(String? val){
-  if (val==null|| val.isEmpty) {
-    return 'Field is required';
-  }else if(!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(val)){
-    return 'Please use a valid email';
-  }else{
+String? validatorForEmail(String? val) {
+  if (val == null || val.isEmpty) {
+    return 'Field is required.';
+  } else if (!RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(val)) {
+    return 'Please use a valid email.';
+  } else {
     return null;
   }
 }
@@ -92,11 +99,10 @@ String? validatorForURL(value) {
  * the value is a int between 0 and 1000
  */
 String? validatorForExp(value) {
-  value=int.tryParse(value);
-  if (value == null ) {
+  value = int.tryParse(value);
+  if (value == null) {
     return 'Number';
-
-  }else if(value<0 || value >1000){
+  } else if (value < 0 || value > 1000) {
     return '[0-1000]';
   }
   return null;
@@ -142,16 +148,18 @@ String? getRandomEncouragingMessage() {
 }
 
 String? getRandomUpdateMessage(String courseName) {
-  return updateMessages[Random().nextInt(updateMessages.length - 1)].toString() + courseName + ". " + getRandomEncouragingMessage().toString();
+  return updateMessages[Random().nextInt(updateMessages.length - 1)]
+          .toString() +
+      courseName +
+      ". " +
+      getRandomEncouragingMessage().toString();
 }
-
 
 /**
  * Function that returns a random string of the length specified
  */
 String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-  length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
-
+    length, (_) => chars.codeUnitAt(Random().nextInt(chars.length))));
 
 String getDateCreatedForGroup() {
   DateTime today = DateTime.now();
@@ -166,10 +174,9 @@ String? groupCodeValidator(val) {
   String groupCodePattern = r'(^([a-z0-9]{8})$)';
   RegExp regex = new RegExp(groupCodePattern);
   if (val.length == 0) {
-    return "Group Codes must be 8 digits long";
-  }
-  else if (!regex.hasMatch(val)) {
-    return "Please enter a valid Group Code";
+    return "Group Codes must be 8 digits long.";
+  } else if (!regex.hasMatch(val)) {
+    return "Please enter a valid Group Code.";
   }
   return null;
 }

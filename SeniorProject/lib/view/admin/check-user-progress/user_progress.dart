@@ -114,70 +114,64 @@ class _UserProgressContentState extends State<UserProgressContent> {
       }
     };
 
-    return Padding(
-      padding: EdgeInsets.only(
-          left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 0.03 * heightOfScreen,
-            ),
-            Text(
-              'Enter a username to view their progress.',
-              style: getNormalTextStyleWhite(),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 0.03 * heightOfScreen,
-            ),
-            Form(
-                key: _formKey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: 0.75 * widthOfScreen,
-                      child: TextFormField(
-                        validator: validatorForEmptyTextField,
-                        controller: _controllerUsername,
-                        decoration: getInputDecoration(
-                          hintText: 'Username',
-                          icon: Icon(
-                            Icons.person,
-                            color: secondaryColor,
-                          ),
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 0.03 * heightOfScreen,
+          ),
+          Text(
+            'Enter a username to view progress.',
+            style: getNormalTextStyleWhite(),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(
+            height: 0.03 * heightOfScreen,
+          ),
+          Form(
+              key: _formKey,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 0.75 * widthOfScreen,
+                    child: TextFormField(
+                      validator: validatorForEmptyTextField,
+                      controller: _controllerUsername,
+                      decoration: getInputDecoration(
+                        hintText: 'Username',
+                        icon: Icon(
+                          Icons.person,
+                          color: secondaryColor,
                         ),
                       ),
                     ),
-                    Container(
-                      padding: EdgeInsets.all(2),
-                      decoration: BoxDecoration(
-                          color: quaternaryColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child: IconButton(
-                          onPressed: formFunction,
-                          icon: Icon(
-                            Icons.search,
-                            color: secondaryColor,
-                          )),
-                    ),
-                  ],
-                )),
-            _userSearched
-                ? ContentForUser(
-                    users: widget.users,
-                    username: _username,
-                    isValid: _userValid)
-                : SizedBox(
-                    width: 0,
-                    height: 0,
                   ),
-          ],
-        ),
+                  Container(
+                    padding: EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                        color: quaternaryColor,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: IconButton(
+                        onPressed: formFunction,
+                        icon: Icon(
+                          Icons.search,
+                          color: secondaryColor,
+                        )),
+                  ),
+                ],
+              )),
+          _userSearched
+              ? ContentForUser(
+                  users: widget.users, username: _username, isValid: _userValid)
+              : SizedBox(
+                  width: 0,
+                  height: 0,
+                ),
+        ],
       ),
     );
   }
@@ -207,11 +201,14 @@ class ContentForUser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isValid
-        ? UserOverview(
-            user: users
-                .where((element) =>
-                    element.username.toLowerCase() == username.toLowerCase())
-                .first)
+        ? Stack(children: [
+            UserOverview(
+                user: users
+                    .where((element) =>
+                        element.username.toLowerCase() ==
+                        username.toLowerCase())
+                    .first),
+          ])
         : Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -243,68 +240,88 @@ class UserOverview extends StatelessWidget {
   final UserCustom user;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: 0.1 * heightOfScreen,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              user.isAdmin ? 'Admin' : 'User',
-              style: getSubheadingStyleYellow(),
-            ),
-            Text(
-              user.email,
-              style: TextStyle(
-                  fontFamily: 'Roboto', fontSize: 10, color: tertiaryColor),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 0.03 * heightOfScreen,
-        ),
-        Container(
-            child: Avatar(
-                nameOfAvatar: user.profilePictureActive,
-                size: 0.2 * heightOfScreen),
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: secondaryColor)),
-        SizedBox(
-          height: 0.03 * heightOfScreen,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              user.username,
-              style: getSubheadingStyleWhite(),
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              'Level ${user.level.levelNumber}',
-              style: getSubheadingStyleWhite(),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 0.05 * heightOfScreen,
-        ),
-        ProgressIndicator(
-            label: 'Courses Saved', num: user.coursesSaved.length),
-        ProgressIndicator(
-            label: 'Courses Completed', num: user.completedCourses.length),
-        ProgressIndicator(
-            label: 'Badges Earned', num: user.collectedBadges.length),
-        ProgressIndicator(
-            label: 'Avatars Collected', num: user.collectedAvatars.length),
-      ],
+    return Container(
+      margin: EdgeInsets.only(top: 30, right: 24, left: 24, bottom: 30),
+      padding: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
+      decoration: BoxDecoration(
+          border: Border.all(color: secondaryColor),
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                user.isAdmin
+                    ? Icons.admin_panel_settings
+                    : CupertinoIcons.person_crop_circle,
+                size: 48,
+                color: secondaryColor,
+              ),
+              Container(
+                alignment: Alignment.center,
+                height: 48,
+                width: 48,
+                decoration: BoxDecoration(
+                    border: Border.all(color: secondaryColor),
+                    borderRadius: BorderRadius.all(Radius.circular(24))),
+                child: Text(
+                  '${user.level.levelNumber}',
+                  style: getSubheadingStyleWhite(),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 0.03 * heightOfScreen,
+          ),
+          Container(
+              child: Avatar(
+                  nameOfAvatar: user.profilePictureActive,
+                  size: 0.2 * heightOfScreen),
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: secondaryColor)),
+          SizedBox(
+            height: 0.03 * heightOfScreen,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                user.username,
+                style: getHeadingStyleWhite(),
+                textAlign: TextAlign.center,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  user.email,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'Roboto',
+                      fontSize: 16,
+                      color: secondaryColor),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 0.05 * heightOfScreen,
+          ),
+          ProgressIndicator(
+              label: 'Courses Saved', num: user.coursesSaved.length),
+          ProgressIndicator(
+              label: 'Courses Completed', num: user.completedCourses.length),
+          ProgressIndicator(
+              label: 'Badges Earned', num: user.collectedBadges.length),
+          ProgressIndicator(
+              label: 'Avatars Collected', num: user.collectedAvatars.length),
+        ],
+      ),
     );
   }
 }

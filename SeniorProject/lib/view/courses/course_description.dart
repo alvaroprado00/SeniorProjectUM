@@ -188,11 +188,15 @@ class CourseDescriptionContent extends StatelessWidget {
               child: SubtitleDivider(subtitle: 'Key Outcomes'),
             ),
             Padding(
-              padding: EdgeInsets.only(
-                  left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
-              child: getGreyTextHolderContainer(
-                  child: getContentForOutcomes(outcomes: course.outcomes)),
-            ),
+                padding: EdgeInsets.only(
+                    left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+                child: getGreyTextHolderContainer(
+                  child: Padding(
+                      padding: EdgeInsets.only(
+                        top: 0.01 * heightOfScreen,
+                      ),
+                      child: getContentForOutcomes(outcomes: course.outcomes)),
+                )),
             Padding(
               padding: EdgeInsets.only(
                   left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/model/group.dart';
+import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,7 @@ class GroupCreated extends GetView<ActiveUserController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: tertiaryColor,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: tertiaryColor,
@@ -114,92 +116,106 @@ class GroupSuccess extends StatelessWidget {
       );
     }
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          height: heightOfScreen * 0.03,
-        ),
-        Container(
-          height: heightOfScreen * 0.28,
-          width: getWidthOfLargeButton(),
-          child: Image.network(
-            createdGroup.groupImageURL,
-            fit: BoxFit.fitHeight,
-          ),
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            createdGroup.groupName,
-            style: getHeadingStyleBlue(),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: Icon(
-            CupertinoIcons.calendar,
-            size: widthOfScreen * 0.07,
-            color: secondaryColor,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Text(
-            "Created ${today.day.toString()} ${months[(today.month) - 1]} ${today.year.toString()}",
-            textAlign: TextAlign.center,
-            style: getNormalTextStyleBlue(),
-          ),
-        ),
-        SizedBox(
-          height: heightOfScreen * 0.05,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-              top: 8.0, bottom: 0.0, left: 16.0, right: 16.0),
-          child: Text(
-            "Group Code",
-            textAlign: TextAlign.center,
-            style: getSubheadingStyleBlue(),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(
-              top: 8.0, bottom: 24.0, left: 24.0, right: 24.0),
-          child: Text(
-            "Users can join the group with the group code. Tap on the group code to copy and share.",
-            style: TextStyle(
-              fontFamily: 'Roboto',
-              fontSize: 15,
-              color: primaryColor,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            margin: EdgeInsets.only(left: 24, right: 24, top: 16, bottom: 0),
+            height: heightOfScreen * 0.28,
+            width: getWidthOfLargeButton(),
+            child: Image.network(
+              createdGroup.groupImageURL,
+              fit: BoxFit.fitHeight,
             ),
-            textAlign: TextAlign.center,
+            clipBehavior: Clip.hardEdge,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
           ),
-        ),
-        getGroupCode(groupCode: createdGroup.groupCode),
-        SizedBox(
-          height: heightOfScreen * 0.07,
-        ),
-        SizedBox(
-          height: getHeightOfLargeButton(),
-          width: getWidthOfLargeButton(),
-          child: ElevatedButton(
+          Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Text(
-              "Done",
-              style: getNormalTextStyleWhite(),
+              createdGroup.groupName,
+              style: getHeadingStyleBlue(),
+              textAlign: TextAlign.center,
             ),
-            style: blueButtonStyle,
-            onPressed: () {
-              Navigator.of(context).pop(context);
-            },
           ),
-        ),
-      ],
+          Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: secondaryColor),
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            padding: EdgeInsets.only(left: 24, right: 24, top: 8, bottom: 16),
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Icon(
+                  CupertinoIcons.calendar,
+                  size: widthOfScreen * 0.07,
+                  color: secondaryColor,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12.0),
+                child: Text(
+                  "FOUNDED",
+                  textAlign: TextAlign.center,
+                  style: getNormalTextStyleYellowBold(),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Text(
+                  "${today.day.toString()} ${months[(today.month) - 1]} ${today.year.toString()}",
+                  textAlign: TextAlign.center,
+                  style: getSubheadingStyleBlue(),
+                ),
+              ),
+            ]),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                left: 0.03 * widthOfScreen,
+                right: 0.03 * widthOfScreen,
+                top: 16),
+            child: SubtitleDivider(subtitle: 'Group Code'),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(bottom: 24.0, left: 24.0, right: 24.0),
+            child: Text(
+              "Users can join the group with the group code. Tap on the group code to copy and share.",
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 15,
+                color: primaryColor,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          getGroupCode(groupCode: createdGroup.groupCode),
+          SizedBox(
+            height: heightOfScreen * 0.03,
+          ),
+          SizedBox(
+            height: getHeightOfLargeButton(),
+            width: getWidthOfLargeButton(),
+            child: ElevatedButton(
+              child: Text(
+                "Done",
+                style: getNormalTextStyleWhite(),
+              ),
+              style: blueButtonStyle,
+              onPressed: () {
+                Navigator.of(context).pop(context);
+              },
+            ),
+          ),
+          SizedBox(
+            height: heightOfScreen * 0.07,
+          ),
+        ],
+      ),
     );
   }
 }

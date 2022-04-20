@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_overlay/loading_overlay.dart';
-import 'dart:io';
+
 import '../../controller/active_group_controller.dart';
 import '../util/functions.dart';
 import '../util/k_colors.dart';
@@ -23,7 +25,6 @@ class EditGroup extends StatefulWidget {
 }
 
 class _EditGroupState extends State<EditGroup> {
-
   late TextEditingController nameController;
   final ImagePicker _picker = ImagePicker();
   final ImageCropper _cropper = ImageCropper();
@@ -48,7 +49,8 @@ class _EditGroupState extends State<EditGroup> {
     return new AlertDialog(
       title: Padding(
         padding: const EdgeInsets.only(top: 8.0),
-        child: Text('Add image from...',
+        child: Text(
+          'Add image from...',
           style: TextStyle(
             color: primaryColor,
             fontSize: 20,
@@ -61,10 +63,15 @@ class _EditGroupState extends State<EditGroup> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0,),
+            padding: const EdgeInsets.only(
+              top: 8.0,
+              bottom: 8.0,
+            ),
             child: ElevatedButton(
               onPressed: () async {
-                var _newImage = await _picker.pickImage(source: ImageSource.gallery,);
+                var _newImage = await _picker.pickImage(
+                  source: ImageSource.gallery,
+                );
                 setState(() {
                   cameraImage = _newImage;
                   Navigator.of(context).pop(context);
@@ -88,7 +95,11 @@ class _EditGroupState extends State<EditGroup> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.add_photo_alternate_outlined, color: tertiaryColor, size: widthOfScreen * 0.1,),
+                    child: Icon(
+                      Icons.add_photo_alternate_outlined,
+                      color: tertiaryColor,
+                      size: widthOfScreen * 0.1,
+                    ),
                   ),
                 ],
               ),
@@ -96,10 +107,15 @@ class _EditGroupState extends State<EditGroup> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0,),
+            padding: const EdgeInsets.only(
+              top: 8.0,
+              bottom: 8.0,
+            ),
             child: ElevatedButton(
               onPressed: () async {
-                var _newImage = await _picker.pickImage(source: ImageSource.camera,);
+                var _newImage = await _picker.pickImage(
+                  source: ImageSource.camera,
+                );
                 setState(() {
                   cameraImage = _newImage;
                   Navigator.of(context).pop(context);
@@ -113,7 +129,8 @@ class _EditGroupState extends State<EditGroup> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text("Camera",
+                    child: Text(
+                      "Camera",
                       style: TextStyle(
                         color: tertiaryColor,
                         fontSize: 18,
@@ -122,7 +139,11 @@ class _EditGroupState extends State<EditGroup> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Icon(Icons.camera_alt, color: tertiaryColor, size: widthOfScreen * 0.1,),
+                    child: Icon(
+                      Icons.camera_alt,
+                      color: tertiaryColor,
+                      size: widthOfScreen * 0.1,
+                    ),
                   ),
                 ],
               ),
@@ -136,9 +157,10 @@ class _EditGroupState extends State<EditGroup> {
           onPressed: () {
             Navigator.of(context).pop(context);
           },
-          child: Text("Close",style: getNormalTextStyleBlue()),
+          child: Text("Close", style: getNormalTextStyleBlue()),
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.transparent),
             elevation: MaterialStateProperty.all<double>(0.0),
           ),
         ),
@@ -147,7 +169,7 @@ class _EditGroupState extends State<EditGroup> {
   }
 
   Future<void> _cropImage() async {
-    if(cameraImage != null) {
+    if (cameraImage != null) {
       groupImage = (await _cropper.cropImage(
         sourcePath: cameraImage!.path,
         maxHeight: (heightOfScreen * 0.25).toInt(),
@@ -181,7 +203,7 @@ class _EditGroupState extends State<EditGroup> {
         ),
       ))!;
     }
-    if(groupImage != null) {
+    if (groupImage != null) {
       setState(() {
         groupImage = groupImage;
       });
@@ -190,13 +212,18 @@ class _EditGroupState extends State<EditGroup> {
 
   @override
   Widget build(BuildContext context) {
-    final ActiveGroupController activeGroupController = Get.find<ActiveGroupController>(tag: widget.groupCode);
+    final ActiveGroupController activeGroupController =
+        Get.find<ActiveGroupController>(tag: widget.groupCode);
 
     return LoadingOverlay(
       isLoading: changingImage,
       child: Scaffold(
+        backgroundColor: tertiaryColor,
         appBar: AppBar(
-          title: Text("Create Group", style: getHeadingStyleBlue(),),
+          title: Text(
+            "Edit Group",
+            style: getSubheadingStyleBlue(),
+          ),
           centerTitle: true,
           leading: getBackButton(context: context),
           backgroundColor: tertiaryColor,
@@ -209,14 +236,24 @@ class _EditGroupState extends State<EditGroup> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SubtitleDivider(subtitle: 'Change Group Name'),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 16.0, right: 16.0),
+                padding: EdgeInsets.only(
+                    left: 0.03 * widthOfScreen,
+                    right: 0.03 * widthOfScreen,
+                    top: 16),
+                child: SubtitleDivider(
+                  subtitle: 'Change Name',
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 0, bottom: 0, left: 16.0, right: 16.0),
                 child: TextFormField(
                   controller: nameController,
                   validator: validatorForEmptyTextField,
                   decoration: getInputDecoration(
-                    hintText: '${activeGroupController.groupName.value.toString()}',
+                    hintText:
+                        '${activeGroupController.groupName.value.toString()}',
                     icon: const Icon(
                       Icons.group,
                       color: secondaryColor,
@@ -224,43 +261,153 @@ class _EditGroupState extends State<EditGroup> {
                   ),
                 ),
               ),
-              SizedBox(height: heightOfScreen * 0.03,),
-              SubtitleDivider(subtitle: 'Change Group Image'),
-              cameraImage != null ? Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Container(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        height: heightOfScreen * 0.28,
-                        width: getWidthOfLargeButton(),
-                        child: groupImage != null ? Image.file(
-                          groupImage!,
-                          fit: BoxFit.fitWidth,
-                        ) : Image.file(
-                          File(cameraImage!.path),
-                          fit: BoxFit.fitWidth,
-                        ),
-                        clipBehavior: Clip.hardEdge,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20.0),
+              SizedBox(
+                height: heightOfScreen * 0.01,
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: 0.03 * widthOfScreen,
+                    right: 0.03 * widthOfScreen,
+                    top: 16),
+                child: SubtitleDivider(
+                  subtitle: 'Change Image',
+                ),
+              ),
+              cameraImage != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: heightOfScreen * 0.28,
+                              width: getWidthOfLargeButton(),
+                              child: groupImage != null
+                                  ? Image.file(
+                                      groupImage!,
+                                      fit: BoxFit.fitWidth,
+                                    )
+                                  : Image.file(
+                                      File(cameraImage!.path),
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                              clipBehavior: Clip.hardEdge,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) =>
+                                            _buildPopupDialog(context),
+                                      );
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 8.0, bottom: 8.0),
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.add_photo_alternate_outlined,
+                                            color: primaryColor,
+                                            size: widthOfScreen * 0.1,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Text(
+                                              "Change",
+                                              style: TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Roboto',
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    style: yellowButtonStyle,
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      _cropImage();
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 8.0,
+                                        bottom: 8.0,
+                                        left: 4.0,
+                                        right: 4.0,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Icon(
+                                            Icons.crop,
+                                            color: primaryColor,
+                                            size: widthOfScreen * 0.1,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(2.0),
+                                            child: Text(
+                                              "Crop",
+                                              style: TextStyle(
+                                                color: primaryColor,
+                                                fontSize: 14,
+                                                fontFamily: 'Roboto',
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    style: yellowButtonStyle,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(
+                          bottom: 16.0, left: 16.0, right: 16.0),
+                      child: Column(
+                        children: [
+                          Container(
+                            height: heightOfScreen * 0.28,
+                            width: getWidthOfLargeButton(),
+                            child: Image.network(
+                                activeGroupController.groupImageURL.value
+                                    .toString(),
+                                fit: BoxFit.fitWidth),
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: ElevatedButton(
                               onPressed: () {
                                 showDialog(
                                   context: context,
-                                  builder: (BuildContext context) => _buildPopupDialog(context),
+                                  builder: (BuildContext context) =>
+                                      _buildPopupDialog(context),
                                 );
                               },
                               child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                                padding: const EdgeInsets.only(
+                                    top: 8.0, bottom: 8.0),
                                 child: Column(
                                   children: [
                                     Icon(
@@ -270,7 +417,8 @@ class _EditGroupState extends State<EditGroup> {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(2.0),
-                                      child: Text("Change",
+                                      child: Text(
+                                        "Change",
                                         style: TextStyle(
                                           color: primaryColor,
                                           fontSize: 14,
@@ -283,107 +431,36 @@ class _EditGroupState extends State<EditGroup> {
                               ),
                               style: yellowButtonStyle,
                             ),
-                            ElevatedButton(
-                              onPressed: () {
-                                _cropImage();
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0, left: 4.0, right: 4.0,),
-                                child: Column(
-                                  children: [
-                                    Icon(
-                                      Icons.crop,
-                                      color: primaryColor,
-                                      size: widthOfScreen * 0.1,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Text("Crop",
-                                        style: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 14,
-                                          fontFamily: 'Roboto',
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              style: yellowButtonStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ) : Padding(
-                padding: const EdgeInsets.only(bottom: 16.0, left: 16.0, right: 16.0),
-                child: Column(
-                  children: [
-                    Container(
-                      height: heightOfScreen * 0.28,
-                      width: getWidthOfLargeButton(),
-                      child: Image.network(activeGroupController.groupImageURL.value.toString(), fit: BoxFit.fitWidth),
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) => _buildPopupDialog(context),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                          child: Column(
-                            children: [
-                              Icon(
-                                Icons.add_photo_alternate_outlined,
-                                color: primaryColor,
-                                size: widthOfScreen * 0.1,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(2.0),
-                                child: Text("Change",
-                                  style: TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 14,
-                                    fontFamily: 'Roboto',
-                                  ),
-                                ),
-                              ),
-                            ],
                           ),
-                        ),
-                        style: yellowButtonStyle,
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              cameraImage != null ? SizedBox(height: heightOfScreen * 0.03,) : SizedBox(height: heightOfScreen * 0.07),
+              cameraImage != null
+                  ? SizedBox(
+                      height: heightOfScreen * 0.03,
+                    )
+                  : SizedBox(height: heightOfScreen * 0.07),
               Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
+                padding:
+                    const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
                 child: SizedBox(
                   height: getHeightOfLargeButton(),
                   width: getWidthOfLargeButton(),
                   child: ElevatedButton(
                     onPressed: () {
                       changingImage = true;
-                      if(nameController.value.text != null && nameController.value.text.isNotEmpty) {
-                        activeGroupController.updateGroupName(inGroupName: nameController.text);
-                        if(groupImage != null && groupImage!.path.isNotEmpty) {
-                          activeGroupController.updateGroupImage(groupImage: groupImage!);
+                      if (nameController.value.text != null &&
+                          nameController.value.text.isNotEmpty) {
+                        activeGroupController.updateGroupName(
+                            inGroupName: nameController.text);
+                        if (groupImage != null && groupImage!.path.isNotEmpty) {
+                          activeGroupController.updateGroupImage(
+                              groupImage: groupImage!);
                           setState(() {
                             changingImage = false;
                             Navigator.of(context).pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
                               content: Text(
                                 'Group Info Updated!',
                                 style: TextStyle(
@@ -394,10 +471,10 @@ class _EditGroupState extends State<EditGroup> {
                               backgroundColor: secondaryColor,
                             ));
                           });
-                        }
-                        else {
+                        } else {
                           Navigator.of(context).pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
                             content: Text(
                               'Group Name Updated!',
                               style: TextStyle(
@@ -408,13 +485,15 @@ class _EditGroupState extends State<EditGroup> {
                             backgroundColor: secondaryColor,
                           ));
                         }
-                      }
-                      else if(groupImage != null && groupImage!.path.isNotEmpty) {
-                        activeGroupController.updateGroupImage(groupImage: groupImage!);
+                      } else if (groupImage != null &&
+                          groupImage!.path.isNotEmpty) {
+                        activeGroupController.updateGroupImage(
+                            groupImage: groupImage!);
                         setState(() {
                           changingImage = true;
                           Navigator.of(context).pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
                             content: Text(
                               'Group Image Updated!',
                               style: TextStyle(

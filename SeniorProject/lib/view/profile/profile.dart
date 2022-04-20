@@ -95,8 +95,8 @@ class ProfilePageContent extends GetView<ActiveUserController> {
           actions: [
             IconButton(
               color: secondaryColor,
-              iconSize: 32,
-              icon: Icon(CupertinoIcons.pencil_circle),
+              iconSize: 24,
+              icon: Icon(CupertinoIcons.settings),
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => EditProfilePage()));
@@ -383,9 +383,26 @@ getLastBadgesFromUser({required List<Badge> badges}) {
 
   List<Widget> childrenForRow = [];
 
-  for (int i = 0; i < badges.length; i++) {
-    childrenForRow.add(getContainerForBadge(
-        nameOfIcon: badges[i].picture, size: 0.1 * heightOfScreen));
+  if (badges.length == 1) {
+    for (int i = 0; i < 1; i++) {
+      childrenForRow.add(getContainerForBadge(
+          nameOfIcon: badges[i].picture, size: 0.1 * heightOfScreen));
+    }
+  } else if (badges.length == 2) {
+    for (int i = 0; i < 2; i++) {
+      childrenForRow.add(getContainerForBadge(
+          nameOfIcon: badges[i].picture, size: 0.1 * heightOfScreen));
+    }
+  } else if (badges.length == 3) {
+    for (int i = 0; i < 3; i++) {
+      childrenForRow.add(getContainerForBadge(
+          nameOfIcon: badges[i].picture, size: 0.1 * heightOfScreen));
+    }
+  } else {
+    for (int i = 0; i < 4; i++) {
+      childrenForRow.add(getContainerForBadge(
+          nameOfIcon: badges[i].picture, size: 0.1 * heightOfScreen));
+    }
   }
 
   //In case that there are not 3 badges we add grey circles
@@ -393,7 +410,7 @@ getLastBadgesFromUser({required List<Badge> badges}) {
   if (badges.length < 4) {
     for (int i = 0; i < (4 - badges.length); i++) {
       childrenForRow
-          .add(getCircle(color: quinaryColor, size: 0.1 * heightOfScreen));
+          .add(getCircle(color: quinaryColor, size: 0.09 * heightOfScreen));
     }
   }
 

@@ -112,9 +112,9 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
 
         await futureToExecute(courseID: _selectedCourseID!).then((val) {
           message =
-              'Successful update. New course: ${widget.coursesMap[_selectedCourseID]!}';
+              'Update was successful. Course: ${widget.coursesMap[_selectedCourseID]!}';
         }).catchError((error) {
-          message = 'Update was not successful.';
+          message = 'Update was unsuccessful.';
         });
       } else {
         message = 'This course is already selected.';
@@ -128,8 +128,8 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
         ),
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
-      Navigator.pushNamedAndRemoveUntil(context, HomePage.routeName, (r) => false);
-
+      Navigator.pushNamedAndRemoveUntil(
+          context, HomePage.routeName, (r) => false);
     };
 
     return Column(
@@ -157,9 +157,6 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
                 thumbColor: quinaryColor,
                 child: SingleChildScrollView(child: getButtons()))),
         SizedBox(
-          height: 0.08 * heightOfScreen,
-        ),
-        SizedBox(
           height: getHeightOfLargeButton(),
           width: getWidthOfLargeButton(),
           child: ElevatedButton(
@@ -185,7 +182,7 @@ class _CoursesInCategoryState extends State<CoursesInCategory> {
           style: getSubheadingStyleWhite(),
         ),
         leading: Padding(
-          padding: EdgeInsets.only(left: 0.18 * widthOfScreen),
+          padding: EdgeInsets.only(left: 0.1 * widthOfScreen),
           child: Radio<String>(
             fillColor:
                 MaterialStateColor.resolveWith((states) => secondaryColor),
@@ -221,4 +218,3 @@ class PickACourseArgs {
       required String this.idOfCourse,
       required bool this.isFeatured});
 }
-

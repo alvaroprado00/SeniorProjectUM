@@ -24,6 +24,11 @@ class _QuestionFeedbackState extends State<QuestionFeedback> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      actionsAlignment: MainAxisAlignment.center,
+      buttonPadding: EdgeInsets.only(top: 2, bottom: 20, left: 20),
+      contentPadding: EdgeInsets.only(top: 20, left: 24, right: 24, bottom: 20),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       content: learnMore
           ? getLearnMoreContent(longFeedBack: widget.args.longFeedback)
           : getFeedback(
@@ -81,10 +86,8 @@ Widget getLearnMoreContent({required String longFeedBack}) {
         style: getSubheadingStyleBlue(),
       ),
       Divider(
-        indent: 0.01 * widthOfScreen,
-        endIndent: 0.01 * widthOfScreen,
-        color: primaryColor,
-        thickness: 0.002 * widthOfScreen,
+        color: quinaryColor,
+        thickness: 1,
       ),
       SizedBox(
           height: 0.2 * heightOfScreen,
@@ -114,7 +117,7 @@ Widget getFeedback({required bool isRight, required String shortFeeback}) {
                   width: widthOfScreen * 0.05,
                 ),
                 Text(
-                  'Right',
+                  'Correct',
                   style: TextStyle(
                       fontSize: 24,
                       fontFamily: fontFamily,
@@ -131,7 +134,7 @@ Widget getFeedback({required bool isRight, required String shortFeeback}) {
                   width: widthOfScreen * 0.05,
                 ),
                 Text(
-                  'Wrong',
+                  'Incorrect',
                   style: TextStyle(
                       fontSize: 24,
                       fontFamily: fontFamily,
@@ -141,16 +144,14 @@ Widget getFeedback({required bool isRight, required String shortFeeback}) {
               ],
       ),
       Divider(
-        indent: 0.01 * widthOfScreen,
-        endIndent: 0.01 * widthOfScreen,
-        color: primaryColor,
-        thickness: 0.002 * widthOfScreen,
+        color: quinaryColor,
+        thickness: 1,
       ),
       getCirclesProgressBarForCourseProgression(
           answers: globals.userProgress,
           numberOfCircles: globals.activeCourse!.numberOfQuestions),
       SizedBox(
-        height: 0.05 * heightOfScreen,
+        height: 0.02 * heightOfScreen,
       ),
       Text(
         shortFeeback,
