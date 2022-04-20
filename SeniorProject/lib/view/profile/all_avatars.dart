@@ -101,7 +101,7 @@ class AvatarButton extends StatelessWidget {
   final String avatarName;
   final double size;
 
-  ActiveUserController activeUserController = Get.find();
+  ActiveUserController activeUserController = Get.find<ActiveUserController>();
 
   @override
   Widget build(BuildContext context) {

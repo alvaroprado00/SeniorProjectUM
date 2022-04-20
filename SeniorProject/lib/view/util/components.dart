@@ -1,5 +1,4 @@
 import 'package:cyber/controller/active_user_controller.dart';
-import 'package:cyber/view/admin/dashboard/admin_dashboard.dart';
 import 'package:cyber/view/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -347,7 +346,7 @@ getExitCourseButton({required BuildContext context}) {
 getSaveCurrentCourseButton({required BuildContext context}) {
   //We get an instance of our activeUserController
 
-  ActiveUserController activeUserController = Get.find();
+  ActiveUserController activeUserController = Get.find<ActiveUserController>();
   return SizedBox(
     height: getHeightOfSmallButton(),
     width: getWidthOfSmallButton(),

@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/group_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'dart:io';
-
 import '../globals.dart';
 
 class ActiveGroupController extends GetxController {
@@ -66,6 +66,16 @@ class ActiveGroupController extends GetxController {
       fieldValue: newImageURL,
     );
     this.groupImageURL.value = newImageURL;
+    update();
+  }
+
+  removeCurrentUserFromGroup() {
+    ActiveUserController activeUserController = Get.find<ActiveUserController>();
+    this.groupMembers.value.remove(activeUser!.username);
+    GroupController.removeCurrentUserFromGroup(groupCode: groupCode.value.toString());
+    activeUserController.removeUserFromGroup(groupCode: groupCode.value.toString());
+    activeUserController.update();
+    update();
   }
 
 }

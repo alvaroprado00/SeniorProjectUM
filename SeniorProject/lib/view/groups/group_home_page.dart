@@ -18,8 +18,7 @@ class GroupsHome extends StatelessWidget {
   GroupsHome({Key? key}) : super(key: key);
 
   static final String routeName = '/GroupHome';
-  ActiveUserController userController = Get.put(
-      ActiveUserController()); // Rather Controller controller = Controller();
+  ActiveUserController userController = Get.find<ActiveUserController>(); // Rather Controller controller = Controller();
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +215,7 @@ class JoinGroup extends StatefulWidget {
 class _JoinGroupState extends State<JoinGroup> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _controllerJoin = new TextEditingController();
-  ActiveUserController userController = Get.put(ActiveUserController());
+  ActiveUserController userController = Get.find<ActiveUserController>();
 
   //When the widget is created we initialize the text form fields controllers
   @override
@@ -263,11 +262,11 @@ class _JoinGroupState extends State<JoinGroup> {
                     userController
                         .updateUserGroups(groupCode: _controllerJoin.text)
                         .whenComplete(() {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            JoinPopup(groupCode: _controllerJoin.text),
-                      );
+                          userController.update();
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => JoinPopup(groupCode: _controllerJoin.text),
+                          );
                     }).catchError((e) {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                         content: Text(
@@ -313,6 +312,7 @@ class JoinPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new AlertDialog(
+      alignment: Alignment.center,
       title: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Text(
@@ -322,11 +322,20 @@ class JoinPopup extends StatelessWidget {
       ),
       content: StreamBuilder(
           stream: _groupController.getGroupByCode(groupCode),
-          builder: (context,
-              AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
-            if (snapshot.hasData) {
-              Group createdGroup =
-                  Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+          builder: (context, AsyncSnapshot<DocumentSnapshot<Map<String, dynamic>>> snapshot) {
+            if(snapshot.hasData) {
+              Group createdGroup = Group.fromJson(snapshot.data?.data() as Map<String, dynamic>);
+              Get.put(
+                ActiveGroupController(
+                  inGroupCode: createdGroup.groupCode,
+                  inGroupName: createdGroup.groupName,
+                  inGroupAdmin: createdGroup.groupAdmin,
+                  inDateCreated: createdGroup.dateCreated,
+                  inGroupMembers: createdGroup.groupMembers,
+                  inGroupImageURL: createdGroup.groupImageURL,
+                ),
+                tag: createdGroup.groupCode
+              );
               return Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,

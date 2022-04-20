@@ -246,7 +246,7 @@ class AlertDialogUsername extends StatelessWidget {
 
   final String newUsername;
 
-  final ActiveUserController activeUserController = Get.find();
+  final ActiveUserController activeUserController = Get.find<ActiveUserController>();
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

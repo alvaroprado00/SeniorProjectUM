@@ -443,7 +443,7 @@ getLastSavedCoursesFromUser(
     );
   }
 
-  final ActiveUserController controller = Get.find();
+  final ActiveUserController controller = Get.find<ActiveUserController>();
 
   List<Widget> childrenForRow = [];
 

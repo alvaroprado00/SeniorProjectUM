@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed circularprogress indicator on group info page for members">
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/util/k_values.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/util/k_values.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -145,7 +147,49 @@
       <option name="project" value="LOCAL" />
       <updated>1650176633280</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Fixed the delete group and leave group functions, added popup dialogs, and added to join and create group features">
+      <created>1650183296078</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1650183296078</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Changed the delete and leave group functions again and added functionality to the group create page">
+      <created>1650210943561</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1650210943561</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Changed the removeCurrentUserFromGroup and deleteGroup function in the active group controller and group controller.">
+      <created>1650295660283</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1650295660283</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Fixed Getx Controllers and added go_to_course feature for messages and fixed overflow as well as some variables.">
+      <created>1650319321322</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1650319321322</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Changed circularprogress indicator on group info page for members">
+      <created>1650319649536</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1650319649536</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Changed circularprogress indicator on group info page for members">
+      <created>1650319810094</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1650319810094</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -172,6 +216,11 @@
     <MESSAGE value="Changed the Notifications messages and the delete and leave group functions" />
     <MESSAGE value="deleted unused code" />
     <MESSAGE value="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added GetX controller for groups and fixed data flow between group pages. GetX Controller only controls the general group information and changes to the names and images of each group." />
+    <MESSAGE value="Fixed the delete group and leave group functions, added popup dialogs, and added to join and create group features" />
+    <MESSAGE value="Changed the delete and leave group functions again and added functionality to the group create page" />
+    <MESSAGE value="Changed the removeCurrentUserFromGroup and deleteGroup function in the active group controller and group controller." />
+    <MESSAGE value="Fixed Getx Controllers and added go_to_course feature for messages and fixed overflow as well as some variables." />
+    <MESSAGE value="Changed circularprogress indicator on group info page for members" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed circularprogress indicator on group info page for members" />
   </component>
 </project>

@@ -159,7 +159,7 @@ class CategoryContent extends StatelessWidget {
 
     //I get an instance of the activeUserController
 
-    ActiveUserController activeUserController = Get.find();
+    ActiveUserController activeUserController = Get.find<ActiveUserController>();
 
     //If no courses in category, notify user
     if (coursesInCategory.isEmpty) {

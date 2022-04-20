@@ -303,7 +303,7 @@ getNewSection(
 }
 
 getContentForCurrentCourse() {
-  ActiveUserController activeUserController = Get.find();
+  ActiveUserController activeUserController = Get.find<ActiveUserController>();
 
   return Obx(() => getNewSection(
       sectionName: 'Your progress',
@@ -317,7 +317,7 @@ getContentForCurrentCourse() {
 }
 
 getContentForCompletedCourse() {
-  ActiveUserController activeUserController = Get.find();
+  ActiveUserController activeUserController = Get.find<ActiveUserController>();
 
   return Obx(() => getNewSection(
       sectionName: 'Best Attempt',

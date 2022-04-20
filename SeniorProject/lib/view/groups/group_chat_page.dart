@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/group_controller.dart';
 import 'package:cyber/model/custom_notification.dart';
 import 'package:cyber/view/groups/group_info_page.dart';
@@ -14,9 +15,12 @@ import '../util/k_values.dart';
 class ChatPage extends StatelessWidget {
   ChatPage({Key? key, required this.groupCode}) : super(key: key);
 
+  static final routeName = '/ChatPage';
+
   final String groupCode;
   final List<CustomNotification> groupMessages = [];
   final GroupController _groupController = new GroupController();
+  final ActiveUserController userController = Get.find<ActiveUserController>();
 
   @override
   Widget build(BuildContext context) {
@@ -109,9 +113,11 @@ class GroupNotifs extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
                 child: getNotificationTile(
+                  context: context,
                   username: groupMessages[i].userName.toString(),
                   badgeImage: groupMessages[i].badge.picture.toString(),
                   message: groupMessages[i].message.toString(),
+                  courseID: groupMessages[i].badge.courseID.toString(),
                 ),
               );
             },

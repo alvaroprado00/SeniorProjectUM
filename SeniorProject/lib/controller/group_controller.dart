@@ -1,12 +1,16 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/config/k_collection_names_firebase.dart';
+import 'package:cyber/controller/active_group_controller.dart';
+import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/model/custom_notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:async';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:path_provider/path_provider.dart';
 
 class GroupController {
@@ -19,19 +23,6 @@ class GroupController {
 
     return file;
   }
-
-  // Future<bool> checkGroupCode(groupCode) async {
-  //   var group = FirebaseFirestore.instance
-  //       .collection("groupCollection")
-  //       .doc(groupCode)
-  //       .get();
-  //   if() {
-  //     return true;
-  //   }
-  //   else {
-  //     return false;
-  //   }
-  // }
 
   Future addGroup(groupMap, groupCode) async {
     return FirebaseFirestore.instance
@@ -106,14 +97,29 @@ class GroupController {
 
   static deleteGroup({required String groupCode}) {
     String uid = FirebaseAuth.instance.currentUser!.uid;
-    FirebaseFirestore.instance
-        .collection(userCollectionName)
-        .doc(uid)
-        .update({"userGroups" : FieldValue.arrayRemove([groupCode])});
-    return FirebaseFirestore.instance
+    ActiveUserController activeUserController = Get.find<ActiveUserController>();
+    var users = FirebaseFirestore.instance
+        .collection(userCollectionName);
+    var group = FirebaseFirestore.instance
         .collection("groupCollection")
-        .doc(groupCode)
-        .delete();
+        .doc(groupCode);
+    users.where('userGroups', arrayContains: groupCode).get().then((value) {
+      for(DocumentSnapshot val in value.docs) {
+        users.doc(val.id)
+            .update({"userGroups" : FieldValue.arrayRemove([groupCode])});
+      }
+    });
+    group.collection('groupNotifications').get().then((value) {
+      for(DocumentSnapshot val in value.docs) {
+        group.collection('groupNotifications').doc(val.id).delete();
+      }
+    });
+    group.delete();
+    if(Get.isRegistered<ActiveGroupController>(tag: groupCode)) {
+      Get.find<ActiveGroupController>(tag: groupCode).dispose();
+    }
+    activeUserController.removeUserFromGroup(groupCode: groupCode);
+    activeUserController.update();
   }
 
   static Future groupNameExists({required String groupCode, required String groupName}){
