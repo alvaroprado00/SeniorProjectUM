@@ -159,7 +159,8 @@ class CategoryContent extends StatelessWidget {
 
     //I get an instance of the activeUserController
 
-    ActiveUserController activeUserController = Get.find<ActiveUserController>();
+    ActiveUserController activeUserController =
+        Get.find<ActiveUserController>();
 
     //If no courses in category, notify user
     if (coursesInCategory.isEmpty) {
@@ -168,9 +169,12 @@ class CategoryContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(height: 0.05 * heightOfScreen),
-          Text(
-            'No courses in category',
-            style: getSubheadingStyleBlue(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              'No courses in category',
+              style: getSubheadingStyleBlue(),
+            ),
           )
         ],
       );
@@ -200,11 +204,14 @@ class CategoryContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 0.05 * heightOfScreen),
-          Text(
-            'No courses completed/saved in the category',
-            style: getSubheadingStyleBlue(),
-            textAlign: TextAlign.center,
+          SizedBox(height: 0.01 * heightOfScreen),
+          Padding(
+            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+            child: Text(
+              'No courses completed or saved',
+              style: getNormalTextStyleBlue(),
+              textAlign: TextAlign.center,
+            ),
           )
         ],
       );
