@@ -185,10 +185,10 @@ Card getCardForCategory(
 
   return Card(
     color: quaternaryColor,
+    elevation: 0,
     borderOnForeground: true,
-    shape: new RoundedRectangleBorder(
-        side: new BorderSide(color: primaryColor, width: 1.0),
-        borderRadius: BorderRadius.circular(15.0)),
+    shape:
+        new RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
     child: InkWell(
       splashColor: secondaryColor,
       borderRadius: BorderRadius.circular(15.0),
@@ -320,10 +320,10 @@ getNotificationTile(
  */
 getCourseCardPlaceHolder() {
   return Container(
-    width: 0.4 * widthOfScreen,
+    width: 0.42 * widthOfScreen,
     height: 0.12 * heightOfScreen,
     decoration: BoxDecoration(
         color: quinaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10))),
+        borderRadius: BorderRadius.all(Radius.circular(15))),
   );
 }

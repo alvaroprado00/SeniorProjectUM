@@ -85,9 +85,12 @@ Widget getLearnMoreContent({required String longFeedBack}) {
         'Explained',
         style: getSubheadingStyleBlue(),
       ),
-      Divider(
-        color: quinaryColor,
-        thickness: 1,
+      Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Divider(
+          color: quinaryColor,
+          thickness: 1,
+        ),
       ),
       SizedBox(
           height: 0.2 * heightOfScreen,
@@ -109,13 +112,13 @@ Widget getFeedback({required bool isRight, required String shortFeeback}) {
         mainAxisAlignment: MainAxisAlignment.start,
         children: isRight
             ? [
-                Icon(
-                  Icons.check_rounded,
-                  color: Colors.green,
-                ),
-                SizedBox(
-                  width: widthOfScreen * 0.05,
-                ),
+                // Icon(
+                //   Icons.check_rounded,
+                //   color: Colors.green,
+                // ),
+                // SizedBox(
+                //   width: widthOfScreen * 0.05,
+                // ),
                 Text(
                   'Correct',
                   style: TextStyle(
@@ -126,13 +129,13 @@ Widget getFeedback({required bool isRight, required String shortFeeback}) {
                 )
               ]
             : [
-                Icon(
-                  Icons.clear_rounded,
-                  color: Colors.red,
-                ),
-                SizedBox(
-                  width: widthOfScreen * 0.05,
-                ),
+                // Icon(
+                //   Icons.clear_rounded,
+                //   color: Colors.red,
+                // ),
+                // SizedBox(
+                //   width: widthOfScreen * 0.05,
+                // ),
                 Text(
                   'Incorrect',
                   style: TextStyle(

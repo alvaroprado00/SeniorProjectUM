@@ -106,20 +106,23 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              alignment: Alignment.center,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: LinearProgressIndicator(
-                    color: secondaryColor,
-                    value: (question.number.toDouble() /
-                        globals.activeCourse!.numberOfQuestions.toDouble()),
-                  )),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 0.02 * widthOfScreen, right: 0.02 * widthOfScreen),
+              child: Container(
+                alignment: Alignment.center,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: LinearProgressIndicator(
+                      color: secondaryColor,
+                      value: (question.number.toDouble() /
+                          globals.activeCourse!.numberOfQuestions.toDouble()),
+                    )),
+              ),
             ),
-            SizedBox(
-              height: 0.05 * heightOfScreen,
+            Spacer(
+              flex: 2,
             ),
-
             //Here comes the text of the question
 
             Padding(
@@ -132,19 +135,15 @@ class FillInTheBlanksQuestionPage extends StatelessWidget {
             SizedBox(
               height: 0.05 * heightOfScreen,
             ),
-            Text(
-              'Fill In The Blanks.',
-              style: getNormalTextStyleBlueItalicBold(),
+            Spacer(
+              flex: 2,
             ),
-
-            Spacer(),
-
             //Options offered to the user
 
             getOptions(options: question.options),
 
             Spacer(
-              flex: 2,
+              flex: 1,
             ),
             //Button to submit the info
             SizedBox(
@@ -220,7 +219,7 @@ class _ButtonForOptionState extends State<ButtonForOption> {
               }
             });
           },
-          style: _isSelected ? yellowButtonStyle : greyButtonStyle,
+          style: _isSelected ? yellowButtonStyle : transparentButtonStyle,
           child: _isSelected
               ? Text(
                   (blankCounter - 1).toString(),
@@ -271,17 +270,12 @@ class BlankSpace extends StatelessWidget {
       height: 0.027 * heightOfScreen,
       child: (Text(
         number.toString(),
-        style: getNormalTextStyleBlue(),
+        style: getNormalTextStyleYellowBold(),
         textAlign: TextAlign.center,
       )),
       decoration: BoxDecoration(
-        color: secondaryColor,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(40.0),
-          bottomRight: Radius.circular(40.0),
-          topLeft: Radius.circular(40.0),
-          bottomLeft: Radius.circular(40.0),
-        ),
+        // color: secondaryColor,
+        border: Border(bottom: BorderSide(width: 1, color: primaryColor)),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../featured-recommended/new_featured_page.dart';
@@ -136,76 +137,93 @@ class AdminDashboardPage extends StatelessWidget {
                 ),
               ],
             ),*/
-        child: Padding(
-          padding: EdgeInsets.only(
-              left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 0.02 * heightOfScreen,
-              ),
-              Image.asset(
-                'assets/images/IconGrid.png',
-                width: 0.5 * widthOfScreen,
-                height: 0.2 * heightOfScreen,
-              ),
-              SizedBox(
-                height: 0.03 * heightOfScreen,
-              ),
-              Text(
-                'What do you want to do?',
-                style: getSubheadingStyleWhite(),
-              ),
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              Divider(
-                color: secondaryColor,
-                thickness: 2,
-                indent: 0.03 * widthOfScreen,
-                endIndent: 0.03 * widthOfScreen,
-              ),
-              SizedBox(
-                height: 0.04 * heightOfScreen,
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                    0.03 * widthOfScreen, 0, 0.03 * widthOfScreen, 0),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      ButtonToNavigate(
-                          text: 'Add Course', route: NewCoursePage.routeName),
-                      SizedBox(
-                        height: 0.03 * heightOfScreen,
-                      ),
-                      ButtonToNavigate(
-                          text: 'Delete Course',
-                          route: DeleteCoursePage.routeName),
-                      SizedBox(
-                        height: 0.03 * heightOfScreen,
-                      ),
-                      ButtonToNavigate(
-                          text: 'Recommended Course',
-                          route: UpdateRecommendedCoursePage.routeName),
-                      SizedBox(
-                        height: 0.03 * heightOfScreen,
-                      ),
-                      ButtonToNavigate(
-                          text: 'Featured Course',
-                          route: UpdateFeaturedCoursePage.routeName),
-                      SizedBox(
-                        height: 0.03 * heightOfScreen,
-                      ),
-                      ButtonToNavigate(
-                          text: 'User Progress',
-                          route: UserProgressPage.routeName),
-                    ]),
-              )
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.only(
+                left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 0.03 * heightOfScreen,
+                ),
+                Icon(
+                  Icons.admin_panel_settings_outlined,
+                  color: secondaryColor,
+                  size: 32,
+                ),
+                // Image.asset(
+                //   'assets/images/IconGrid.png',
+                //   width: 0.5 * widthOfScreen,
+                //   height: 0.2 * heightOfScreen,
+                // ),
+                SizedBox(
+                  height: 0.03 * heightOfScreen,
+                ),
+                Text(
+                  'CHOOSE AN OPTION',
+                  style: getNormalTextStyleYellowBold(),
+                ),
+
+                SizedBox(
+                  height: 0.03 * heightOfScreen,
+                ),
+                Divider(
+                  color: secondaryColor,
+                  thickness: 1,
+                  indent: 0.03 * widthOfScreen,
+                  endIndent: 0.03 * widthOfScreen,
+                ),
+                SizedBox(
+                  height: 0.03 * heightOfScreen,
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(
+                      0.03 * widthOfScreen, 0, 0.03 * widthOfScreen, 0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        ButtonToNavigate(
+                            text: 'Add Course', route: NewCoursePage.routeName),
+                        SizedBox(
+                          height: 0.03 * heightOfScreen,
+                        ),
+                        ButtonToNavigate(
+                            text: 'Delete Course',
+                            route: DeleteCoursePage.routeName),
+                        SizedBox(
+                          height: 0.03 * heightOfScreen,
+                        ),
+                        ButtonToNavigate(
+                            text: 'Recommended Course',
+                            route: UpdateRecommendedCoursePage.routeName),
+                        SizedBox(
+                          height: 0.03 * heightOfScreen,
+                        ),
+                        ButtonToNavigate(
+                            text: 'Featured Course',
+                            route: UpdateFeaturedCoursePage.routeName),
+                        SizedBox(
+                          height: 0.03 * heightOfScreen,
+                        ),
+                        ButtonToNavigate(
+                            text: 'User Progress',
+                            route: UserProgressPage.routeName),
+                      ]),
+                ),
+                SizedBox(
+                  height: 0.03 * heightOfScreen,
+                ),
+                Divider(
+                  color: secondaryColor,
+                  thickness: 1,
+                  indent: 0.03 * widthOfScreen,
+                  endIndent: 0.03 * widthOfScreen,
+                ),
+              ],
+            ),
           ),
         ),
       ),

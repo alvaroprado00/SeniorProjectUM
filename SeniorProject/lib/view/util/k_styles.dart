@@ -163,6 +163,15 @@ ButtonStyle greyButtonStyle = ButtonStyle(
       borderRadius: BorderRadius.circular(10.0),
     )));
 
+ButtonStyle transparentButtonStyle = ButtonStyle(
+    elevation: MaterialStateProperty.all(0),
+    backgroundColor: MaterialStateProperty.all(Colors.transparent),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+        RoundedRectangleBorder(
+      side: BorderSide(color: quinaryColor, width: 1),
+      borderRadius: BorderRadius.circular(10.0),
+    )));
+
 ButtonStyle blueButtonStyle = ButtonStyle(
     backgroundColor: MaterialStateProperty.all(primaryColor),
     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

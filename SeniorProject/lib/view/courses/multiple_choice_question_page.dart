@@ -24,9 +24,9 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
 
     void Function() submitMultipleChoiceFunction = () {
       int i = 0;
-      int optSelected = 0;
+      int optSelected = 5;
       //With this loop I get what option the user has selected
-      for (bool selected in ToggleButtonOptions.isSelected) {
+      for (bool selected in ToggleButtonOptions.isSelectedNew) {
         if (selected) {
           optSelected = i;
         }
@@ -49,6 +49,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                 args: FeedbackArguments(isRight, question.longFeedback,
                     question.getSolutionAsString()));
           });
+      optSelected = 5;
     };
 
     return Scaffold(
@@ -59,7 +60,7 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                 left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Stack(
                   alignment: Alignment.center,
@@ -84,38 +85,38 @@ class MultipleChoiceQuestionPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(20.0),
-                      child: LinearProgressIndicator(
-                        color: secondaryColor,
-                        value: (question.number.toDouble() /
-                            globals.activeCourse!.numberOfQuestions.toDouble()),
-                      )),
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: 0.02 * widthOfScreen, right: 0.02 * widthOfScreen),
+                  child: Container(
+                    alignment: Alignment.center,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
+                        child: LinearProgressIndicator(
+                          color: secondaryColor,
+                          value: (question.number.toDouble() /
+                              globals.activeCourse!.numberOfQuestions
+                                  .toDouble()),
+                        )),
+                  ),
                 ),
-                SizedBox(
-                  height: 0.05 * heightOfScreen,
+                Spacer(
+                  flex: 2,
                 ),
-                getGreyTextHolderContainer(
-                    child: Padding(
+                Padding(
                   padding: EdgeInsets.all(0.02 * widthOfScreen),
                   child: Text(
                     question.description,
                     style: getNormalTextStyleBlue(),
+                    textAlign: TextAlign.start,
                   ),
-                )),
-                SizedBox(
-                  height: 0.05 * heightOfScreen,
                 ),
-                Text(
-                  'Choose the correct option.',
-                  style: getNormalTextStyleBlueItalicBold(),
-                ),
-                Spacer(),
-                ToggleButtonOptions(options: question.options),
                 Spacer(
                   flex: 2,
+                ),
+                ToggleButtonOptions(options: question.options),
+                Spacer(
+                  flex: 1,
                 ),
                 SizedBox(
                     height: getHeightOfLargeButton(),
@@ -139,7 +140,8 @@ class ToggleButtonOptions extends StatefulWidget {
   ToggleButtonOptions({required List<String> this.options});
 
   final List<String> options;
-  static List<bool> isSelected = [true, false, false, false];
+  static List<bool> isSelected = [false, false, false, false];
+  static List<bool> isSelectedNew = List.generate(4, (index) => false);
 
   @override
   _ToggleButtonOptionsState createState() => _ToggleButtonOptionsState();
@@ -149,22 +151,50 @@ class _ToggleButtonOptionsState extends State<ToggleButtonOptions> {
   @override
   Widget build(BuildContext context) {
     return ToggleButtons(
-      children: getWidgetsForOptions(widget.options),
-      isSelected: ToggleButtonOptions.isSelected,
-      //borderRadius: BorderRadius.circular(15),
-      fillColor: secondaryColor,
+      //children: getWidgetsForOptions(widget.options, isSelectedNew),
+      children: [
+        ButtonForOption(
+          text: widget.options[0],
+          order: 0,
+          isSelectedNew: ToggleButtonOptions.isSelectedNew[0],
+        ),
+        ButtonForOption(
+          text: widget.options[1],
+          order: 1,
+          isSelectedNew: ToggleButtonOptions.isSelectedNew[1],
+        ),
+        ButtonForOption(
+          text: widget.options[2],
+          order: 2,
+          isSelectedNew: ToggleButtonOptions.isSelectedNew[2],
+        ),
+        ButtonForOption(
+          text: widget.options[3],
+          order: 3,
+          isSelectedNew: ToggleButtonOptions.isSelectedNew[3],
+        )
+      ],
+      isSelected: ToggleButtonOptions.isSelectedNew,
+      selectedColor: secondaryColor,
+      borderRadius: BorderRadius.circular(15),
+      fillColor: Colors.transparent,
+      splashColor: Colors.transparent,
       renderBorder: false,
       direction: Axis.vertical,
       onPressed: (int index) {
         setState(() {
           for (int buttonIndex = 0;
-              buttonIndex < ToggleButtonOptions.isSelected.length;
+              //buttonIndex < ToggleButtonOptions.isSelected.length;
+              buttonIndex < ToggleButtonOptions.isSelectedNew.length;
               buttonIndex++) {
             if (buttonIndex == index) {
-              ToggleButtonOptions.isSelected[buttonIndex] = true;
-              optionSelected = buttonIndex;
+              ToggleButtonOptions.isSelectedNew[buttonIndex] =
+                  !ToggleButtonOptions.isSelectedNew[buttonIndex];
+              //ToggleButtonOptions.isSelected[buttonIndex] = true;
+              // optionSelected = buttonIndex;
             } else {
-              ToggleButtonOptions.isSelected[buttonIndex] = false;
+              ToggleButtonOptions.isSelectedNew[buttonIndex] = false;
+              // ToggleButtonOptions.isSelected[buttonIndex] = false;
             }
           }
         });
@@ -173,29 +203,50 @@ class _ToggleButtonOptionsState extends State<ToggleButtonOptions> {
   }
 }
 
-List<Widget> getWidgetsForOptions(List<String> options) {
+List<Widget> getWidgetsForOptions(
+    List<String> options, List<bool> isSelectedNew) {
   List<Widget> optionButtons = [];
 
   int i = 0;
   for (String option in options) {
-    optionButtons.add(ButtonForOption(text: option, order: i));
+    optionButtons.add(ButtonForOption(
+      text: option,
+      order: i,
+      isSelectedNew: isSelectedNew[i],
+    ));
     i++;
   }
   return optionButtons;
 }
 
-class ButtonForOption extends StatelessWidget {
-  const ButtonForOption({required String this.text, required int this.order});
+class ButtonForOption extends StatefulWidget {
+  const ButtonForOption(
+      {required String this.text,
+      required int this.order,
+      bool this.isSelectedNew = false});
 
   final String text;
   final int order;
+  final bool isSelectedNew;
+
+  @override
+  State<ButtonForOption> createState() => _ButtonForOptionState();
+}
+
+class _ButtonForOptionState extends State<ButtonForOption> {
+  bool pressAttention = false;
 
   @override
   Widget build(BuildContext context) {
     return Container(
         width: 0.94 * widthOfScreen,
+        margin: EdgeInsets.only(bottom: 8),
         //height: 0.1*heightOfScreen,
-
+        //color: pressAttention ? Colors.transparent : secondaryColor,
+        decoration: BoxDecoration(
+            color: widget.isSelectedNew ? secondaryColor : Colors.transparent,
+            border: Border.all(color: quinaryColor),
+            borderRadius: BorderRadius.all(Radius.circular(20))),
         child: Padding(
           padding: EdgeInsets.only(
               top: 0.05 * widthOfScreen,
@@ -205,7 +256,7 @@ class ButtonForOption extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                numberToOptionLetter[order] ?? 'X',
+                numberToOptionLetter[widget.order] ?? 'X',
                 style: getNormalTextStyleBlue(),
               ),
               SizedBox(
@@ -213,7 +264,7 @@ class ButtonForOption extends StatelessWidget {
               ),
               Expanded(
                   child: Text(
-                text,
+                widget.text,
                 style: getNormalTextStyleBlue(),
               )),
             ],

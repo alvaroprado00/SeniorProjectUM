@@ -2,6 +2,7 @@ import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/view/profile/category_courses.dart';
 import 'package:cyber/view/util/cards.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,23 +37,23 @@ class AllCoursesPage extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                height: 0.05 * heightOfScreen,
+                height: 0.02 * heightOfScreen,
               ),
               UserProgress(),
               SizedBox(
-                height: 0.05 * heightOfScreen,
+                height: 0.02 * heightOfScreen,
               ),
               CategoryCardsForUser(category: Category.info),
               SizedBox(
-                height: 0.05 * heightOfScreen,
+                height: 0.02 * heightOfScreen,
               ),
               CategoryCardsForUser(category: Category.web),
               SizedBox(
-                height: 0.05 * heightOfScreen,
+                height: 0.02 * heightOfScreen,
               ),
               CategoryCardsForUser(category: Category.socialMedia),
               SizedBox(
-                height: 0.05 * heightOfScreen,
+                height: 0.02 * heightOfScreen,
               ),
               CategoryCardsForUser(category: Category.devices),
               SizedBox(
@@ -168,12 +169,11 @@ class CategoryContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 0.05 * heightOfScreen),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: Text(
               'No courses in category',
-              style: getSubheadingStyleBlue(),
+              style: getNormalTextStyleBlue(),
             ),
           )
         ],
@@ -192,7 +192,7 @@ class CategoryContent extends StatelessWidget {
             isSaved: activeUserController.isSaved(courseID: key),
             context: context,
             title: value,
-            widthOfCard: 0.4 * widthOfScreen,
+            widthOfCard: 0.42 * widthOfScreen,
             heightOfCard: 0.12 * heightOfScreen,
             isTemplate: false)));
       }
@@ -204,9 +204,8 @@ class CategoryContent extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 0.01 * heightOfScreen),
           Padding(
-            padding: const EdgeInsets.only(left: 12.0, right: 12.0),
+            padding: const EdgeInsets.all(16.0),
             child: Text(
               'No courses completed or saved',
               style: getNormalTextStyleBlue(),
@@ -232,9 +231,10 @@ class CategoryContent extends StatelessWidget {
         context: context));
 
     return Wrap(
-      alignment: WrapAlignment.center,
+      alignment: WrapAlignment.spaceEvenly,
       runSpacing: 15,
-      spacing: 0.1 * widthOfScreen,
+      spacing: 0.04 * widthOfScreen,
+      runAlignment: WrapAlignment.start,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: childrenOfRow,
     );
@@ -249,7 +249,7 @@ class CategoryContent extends StatelessWidget {
       required Map<String, String> coursesInCategory,
       required String categoryName}) {
     return Container(
-      width: 0.4 * widthOfScreen,
+      width: 0.42 * widthOfScreen,
       height: 0.12 * heightOfScreen,
       decoration: BoxDecoration(
           color: quinaryColor,
@@ -261,8 +261,8 @@ class CategoryContent extends StatelessWidget {
                   coursesInCategory: coursesInCategory,
                   category: categoryName));
         },
-        icon:
-            Icon(Icons.add, color: secondaryColor, size: 0.06 * heightOfScreen),
+        icon: Icon(CupertinoIcons.add,
+            color: secondaryColor, size: 0.06 * heightOfScreen),
       ),
     );
   }

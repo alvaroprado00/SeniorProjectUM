@@ -44,7 +44,7 @@ enum Category {
 Map<Category, String> categoryToString = {
   Category.socialMedia: 'Social Media',
   Category.devices: 'Devices',
-  Category.info: 'Info',
+  Category.info: 'Information',
   Category.web: 'Web',
 };
 
@@ -69,5 +69,17 @@ Map<String, IconData> stringToBadgeIcon = {
   'key': FontAwesomeIcons.key,
 };
 
-const List months = ['January', 'February', 'March', 'April', 'May','June','July','August','September','October','November','December'];
-
+const List months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December'
+];

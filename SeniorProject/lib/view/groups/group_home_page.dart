@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cyber/controller/active_group_controller.dart';
 import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/group_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -31,19 +32,19 @@ class GroupsHome extends StatelessWidget {
           backgroundColor: tertiaryColor,
           title: Text.rich(TextSpan(children: [
             TextSpan(
-                text: 'Cyber',
+                text: 'Cyber ',
                 style: TextStyle(
                     color: secondaryColor,
                     fontFamily: fontFamily,
                     fontSize: 36,
                     fontWeight: FontWeight.w700)),
             TextSpan(
-                text: ' Community',
+                text: 'Community',
                 style: TextStyle(
                     color: primaryColor,
                     fontFamily: fontFamily,
                     fontSize: 36,
-                    fontWeight: FontWeight.w400)),
+                    fontWeight: FontWeight.w200)),
           ]))),
       body: SingleChildScrollView(
         child: Column(
@@ -73,7 +74,7 @@ class GroupsHome extends StatelessWidget {
               padding: EdgeInsets.only(
                   left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
               child: SubtitleDivider(
-                subtitle: 'Join',
+                subtitle: 'Join Group',
               ),
             ),
             JoinGroup(),
@@ -81,7 +82,7 @@ class GroupsHome extends StatelessWidget {
               padding: EdgeInsets.only(
                   left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
               child: SubtitleDivider(
-                subtitle: 'Create',
+                subtitle: 'Create Group',
               ),
             ),
             Padding(
@@ -96,7 +97,7 @@ class GroupsHome extends StatelessWidget {
                     Navigator.pushNamed(context, CreateGroup.routeName);
                   },
                   child: Text(
-                    'Create Group',
+                    'Begin',
                     style: getNormalTextStyleWhite(),
                   ),
                   style: blueButtonStyle,
@@ -202,7 +203,7 @@ class GroupTile extends StatelessWidget {
                 trailing: Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Icon(
-                    Icons.arrow_forward_ios,
+                    CupertinoIcons.chevron_right,
                     color: primaryColor,
                     size: widthOfScreen * 0.07,
                   ),
@@ -304,7 +305,7 @@ class _JoinGroupState extends State<JoinGroup> {
                     ));
                   }
                 },
-                child: Text('Join Group', style: getNormalTextStyleWhite()),
+                child: Text('Join', style: getNormalTextStyleWhite()),
                 style: blueButtonStyle,
               )),
         ),

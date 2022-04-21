@@ -188,15 +188,14 @@ class CourseDescriptionContent extends StatelessWidget {
               child: SubtitleDivider(subtitle: 'Key Outcomes'),
             ),
             Padding(
-                padding: EdgeInsets.only(
-                    left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
-                child: getGreyTextHolderContainer(
-                  child: Padding(
-                      padding: EdgeInsets.only(
-                        top: 0.01 * heightOfScreen,
-                      ),
-                      child: getContentForOutcomes(outcomes: course.outcomes)),
-                )),
+              padding: EdgeInsets.only(
+                  left: 0.05 * widthOfScreen, right: 0.05 * widthOfScreen),
+              child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 0.0 * heightOfScreen,
+                  ),
+                  child: getContentForOutcomes(outcomes: course.outcomes)),
+            ),
             Padding(
               padding: EdgeInsets.only(
                   left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
@@ -350,17 +349,40 @@ class FeaturedButton extends StatelessWidget {
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
-                backgroundColor: quaternaryColor,
+                backgroundColor: tertiaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
                 // title: Text('Featured!', style: getSubheadingStyleYellow(), textAlign: TextAlign.center,),
-
-                content: Image.asset(
-                  'assets/images/doubleXPnew.png',
-                  width: 0.25 * widthOfScreen,
-                  height: 0.3 * heightOfScreen,
+                title: Text(
+                  'FEATURED',
+                  style: getNormalTextStyleYellowBold(),
+                  textAlign: TextAlign.center,
                 ),
+
+                content: Container(
+                  padding: EdgeInsets.all(0),
+                  //height: 0.2 * heightOfScreen,
+                  child: Text(
+                    "Featured courses earn you double points which help you level up faster. Watch out for new featured courses every week.",
+                    style: getSmallTextStyleGrey(),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                actionsAlignment: MainAxisAlignment.center,
+                actions: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(context);
+                    },
+                    child: Text("OK", style: getNormalTextStyleBlue()),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
+                      elevation: MaterialStateProperty.all<double>(0.0),
+                    ),
+                  ),
+                ],
               );
             });
       },
