@@ -95,11 +95,6 @@ class _CreateGroupState extends State<CreateGroup> {
                   cameraImage = _newImage;
                   Navigator.of(context).pop();
                   _cropImage();
-                  if (groupImage != null) {
-                    setState(() {
-                      groupImage = groupImage;
-                    });
-                  }
                 });
               },
               child: Row(
@@ -137,12 +132,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 setState(() {
                   cameraImage = _newImage;
                   Navigator.of(context).pop();
-                  //_cropImage();
-                  if (groupImage != null) {
-                    setState(() {
-                      groupImage = groupImage;
-                    });
-                  }
+                  _cropImage();
                 });
               },
               child: Row(
