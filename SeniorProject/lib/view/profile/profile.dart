@@ -65,28 +65,6 @@ class ProfilePageContent extends GetView<ActiveUserController> {
   Widget build(BuildContext context) {
     //Here I define the functions to be executed in the buttons
 
-    void Function() signOut = () {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialogCustom(
-              todo: controller.signOut,
-              isDelete: false,
-            );
-          });
-    };
-
-    void Function() deleteAccount = () {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialogCustom(
-              todo: controller.delete,
-              isDelete: true,
-            );
-          });
-    };
-
     return Scaffold(
         backgroundColor: tertiaryColor,
         appBar: AppBar(
@@ -176,28 +154,7 @@ class ProfilePageContent extends GetView<ActiveUserController> {
                     SizedBox(
                       height: 0.05 * heightOfScreen,
                     ),
-                    SubtitleDivider(subtitle: "My Account"),
-                    SizedBox(
-                        height: getHeightOfLargeButton(),
-                        width: getWidthOfLargeButton(),
-                        child: ElevatedButton(
-                          onPressed: signOut,
-                          child:
-                              Text('Sign Out', style: getNormalTextStyleBlue()),
-                          style: yellowButtonStyle,
-                        )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                        height: getHeightOfLargeButton(),
-                        width: getWidthOfLargeButton(),
-                        child: ElevatedButton(
-                          onPressed: deleteAccount,
-                          child: Text('Delete Account',
-                              style: getNormalTextStyleWhite()),
-                          style: blueButtonStyle,
-                        )),
+
                     SizedBox(
                       height: 0.07 * heightOfScreen,
                     )

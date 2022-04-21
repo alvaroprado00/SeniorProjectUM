@@ -322,12 +322,15 @@ class JoinPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       alignment: Alignment.center,
       title: Padding(
-        padding: const EdgeInsets.only(top: 8.0),
+        padding: EdgeInsets.only(top: 8.0),
         child: Text(
-          'Successfully Joined',
-          style: getHeadingStyleBlue(),
+          'SUCCESS',
+          style: getNormalTextStyleYellowBold(),
+          textAlign: TextAlign.center,
         ),
       ),
       content: StreamBuilder(
@@ -355,11 +358,11 @@ class JoinPopup extends StatelessWidget {
                     backgroundImage: NetworkImage(
                       createdGroup.groupImageURL,
                     ),
-                    radius: widthOfScreen * 0.1,
+                    radius: widthOfScreen * 0.25,
                     backgroundColor: primaryColor,
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(6.0),
+                    padding: const EdgeInsets.only(top: 24.0),
                     child: Text(
                       createdGroup.groupName,
                       style: getSubheadingStyleBlue(),
@@ -380,7 +383,7 @@ class JoinPopup extends StatelessWidget {
           onPressed: () {
             Navigator.of(context).pop(context);
           },
-          child: Text("Close", style: getNormalTextStyleBlue()),
+          child: Text("Done", style: getNormalTextStyleBlue()),
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all<Color>(Colors.transparent),

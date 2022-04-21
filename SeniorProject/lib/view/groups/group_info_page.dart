@@ -76,42 +76,11 @@ class GroupInfo extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 30.0, right: 23.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Icon(
-                        Icons.group,
-                        color: secondaryColor,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 34.0),
-                        child: Text(
-                          'Username',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            color: primaryColor,
-                            fontFamily: 'Roboto',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
                   padding: EdgeInsets.only(
-                      left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
-                  child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                          widthOfScreen * 0.01,
-                          heightOfScreen * 0.00,
-                          widthOfScreen * 0.01,
-                          heightOfScreen * 0.01),
-                      child: Divider(
-                        thickness: 1,
-                        color: quinaryColor,
-                      )),
+                      top: 24,
+                      left: 0.03 * widthOfScreen,
+                      right: 0.03 * widthOfScreen),
+                  child: SubtitleDivider(subtitle: 'Members'),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0, right: 8.0),
@@ -354,30 +323,41 @@ class MemberTile extends StatelessWidget {
             ),
             title: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                groupMember.data!.username,
-                style: getNormalTextStyleBlueBold(),
-              ),
+              child: Text(groupMember.data!.username,
+                  style: groupAdmin == userName
+                      ? getNormalTextStyleYellowBold()
+                      : getNormalTextStyleBlue()),
             ),
             trailing: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  groupAdmin == userName
-                      ? Text(
-                          "Admin",
-                          style: getNormalTextStyleYellowBold(),
-                        )
-                      : SizedBox(
-                          width: 0.01,
-                          height: 0.01,
-                        ),
                   Padding(
                     padding: EdgeInsets.only(left: 8.0),
-                    child: Text(
-                      "Level ${groupMember.data!.level.levelNumber.toString()}",
-                      style: getNormalTextStyleBlue(),
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(left: 12, right: 12),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: secondaryColor),
+                          borderRadius: BorderRadius.all(Radius.circular(24))),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            CupertinoIcons.star_fill,
+                            color: secondaryColor,
+                            size: 20,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              '${groupMember.data!.level.levelNumber.toString()}',
+                              style: getSubheadingStyleYellow(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

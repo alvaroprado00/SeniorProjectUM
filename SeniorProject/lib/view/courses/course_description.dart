@@ -350,13 +350,14 @@ class FeaturedButton extends StatelessWidget {
             barrierDismissible: true,
             builder: (BuildContext context) {
               return AlertDialog(
+                backgroundColor: quaternaryColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 // title: Text('Featured!', style: getSubheadingStyleYellow(), textAlign: TextAlign.center,),
 
                 content: Image.asset(
-                  'assets/images/doubleXP.png',
+                  'assets/images/doubleXPnew.png',
                   width: 0.25 * widthOfScreen,
                   height: 0.3 * heightOfScreen,
                 ),

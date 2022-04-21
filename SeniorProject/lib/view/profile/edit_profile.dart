@@ -4,6 +4,8 @@ import 'package:cyber/view/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../globals.dart';
+import '../main.dart';
 import '../util/components.dart';
 import '../util/functions.dart';
 import '../util/k_colors.dart';
@@ -60,7 +62,11 @@ class EditProfilePage extends StatelessWidget {
                 ),
                 EmailSection(),
                 SizedBox(
-                  height: 0.08 * heightOfScreen,
+                  height: 0.03 * heightOfScreen,
+                ),
+                SignOutDeleteContent(),
+                SizedBox(
+                  height: 0.02 * heightOfScreen,
                 ),
               ],
             ),
@@ -68,6 +74,62 @@ class EditProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class SignOutDeleteContent extends GetView<ActiveUserController> {
+  const SignOutDeleteContent({Key? key});
+  @override
+  Widget build(BuildContext context) {
+    void Function() signOut = () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialogCustom(
+              todo: controller.signOut,
+              isDelete: false,
+            );
+          });
+    };
+
+    void Function() deleteAccount = () {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialogCustom(
+              todo: controller.delete,
+              isDelete: true,
+            );
+          });
+    };
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SubtitleDivider(subtitle: "My Account"),
+          SizedBox(
+              height: getHeightOfLargeButton(),
+              width: getWidthOfLargeButton(),
+              child: ElevatedButton(
+                onPressed: signOut,
+                child: Text('Sign Out', style: getNormalTextStyleBlue()),
+                style: yellowButtonStyle,
+              )),
+          SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+              height: getHeightOfLargeButton(),
+              width: getWidthOfLargeButton(),
+              child: ElevatedButton(
+                onPressed: deleteAccount,
+                child: Text('Delete Account', style: getNormalTextStyleWhite()),
+                style: blueButtonStyle,
+              )),
+          SizedBox(
+            height: 0.07 * heightOfScreen,
+          )
+        ]);
   }
 }
 
@@ -292,6 +354,70 @@ class AlertDialogUsername extends StatelessWidget {
           },
           child: Text(
             'Confirm',
+            style: getNormalTextStyleYellow(),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class AlertDialogCustom extends StatelessWidget {
+  const AlertDialogCustom(
+      {Key? key,
+      required Future Function() this.todo,
+      required bool this.isDelete})
+      : super(key: key);
+
+  final Future Function() todo;
+  final bool isDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      title: Text(
+        'Are you sure?',
+        style: getSubheadingStyleBlue(),
+      ),
+      content: Text(
+        isDelete
+            ? "This action cannot be undone."
+            : "${activeUser!.username} will sign out.",
+        style: getNormalTextStyleBlue(),
+      ),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'Cancel'),
+          child: Text(
+            'Cancel',
+            style: getNormalTextStyleBlue(),
+          ),
+        ),
+        TextButton(
+          onPressed: () async {
+            String message = '';
+            await todo().then((value) {
+              message = value;
+            }).catchError((onError) {
+              message = onError;
+            });
+
+            var snackBar = SnackBar(
+              backgroundColor: secondaryColor,
+              content: Text(
+                message,
+                style: getNormalTextStyleWhite(),
+              ),
+            );
+
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Navigator.pushNamed(context, HomePage.routeName);
+          },
+          child: Text(
+            isDelete ? "Delete" : 'Sign Out',
             style: getNormalTextStyleYellow(),
           ),
         ),
