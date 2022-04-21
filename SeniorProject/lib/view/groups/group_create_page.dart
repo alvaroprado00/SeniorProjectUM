@@ -95,11 +95,6 @@ class _CreateGroupState extends State<CreateGroup> {
                   cameraImage = _newImage;
                   Navigator.of(context).pop();
                   _cropImage();
-                  if (groupImage != null) {
-                    setState(() {
-                      groupImage = groupImage;
-                    });
-                  }
                 });
               },
               child: Row(
@@ -136,13 +131,8 @@ class _CreateGroupState extends State<CreateGroup> {
                 );
                 setState(() {
                   cameraImage = _newImage;
-                  Navigator.of(context).pop();
-                  //_cropImage();
-                  if (groupImage != null) {
-                    setState(() {
-                      groupImage = groupImage;
-                    });
-                  }
+                  Navigator.of(context).pop(context);
+                  _cropImage();
                 });
               },
               child: Row(
@@ -228,55 +218,55 @@ class _CreateGroupState extends State<CreateGroup> {
 
   @override
   Widget build(BuildContext context) {
-    void Function() goToCreatePage = () {
-      if (_formKey.currentState!.validate()) {
-        GroupController.uploadImage(groupCode, groupImage!).then((value) {
-          setState(() {
-            gettingImage = true;
-            String imageUrl = value;
-            imageURLForController = value;
-            newGroup = new Group(
-              groupCode: groupCode,
-              groupName: _controllerJoin.text,
-              groupAdmin: activeUser!.username,
-              dateCreated: getDateCreatedForGroup().toString(),
-              groupMembers: [
-                activeUser!.username,
-              ],
-              groupImageURL: imageUrl,
-            ).toJson();
-            Get.put(
-              ActiveGroupController(
-                inGroupCode: groupCode,
-                inGroupName: _controllerJoin.text,
-                inGroupAdmin: activeUser!.username,
-                inDateCreated: getDateCreatedForGroup().toString(),
-                inGroupMembers: [
-                  activeUser!.username,
-                ],
-                inGroupImageURL: imageURLForController,
-              ),
-              tag: groupCode,
-            );
-            _groupController.addGroup(newGroup, groupCode).whenComplete(() {
-              setState(() {
-                GroupController.initNotifications(groupCode: groupCode);
-                gettingImage = false;
-                UserController.addGroupCodeToUser(groupCode: [groupCode]);
-                activeUserController.updateUserGroups(groupCode: groupCode);
-                print(activeUserController.userGroups.toString());
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => GroupCreated(
-                              groupCode: groupCode,
-                            )));
-              });
-            });
-          });
-        });
-      }
-    };
+    // void Function() goToCreatePage = () {
+    //   if (_formKey.currentState!.validate()) {
+    //     GroupController.uploadImage(groupCode, groupImage!).then((value) {
+    //       setState(() {
+    //         gettingImage = true;
+    //         String imageUrl = value;
+    //         imageURLForController = value;
+    //         newGroup = new Group(
+    //           groupCode: groupCode,
+    //           groupName: _controllerJoin.text,
+    //           groupAdmin: activeUser!.username,
+    //           dateCreated: getDateCreatedForGroup().toString(),
+    //           groupMembers: [
+    //             activeUser!.username,
+    //           ],
+    //           groupImageURL: imageUrl,
+    //         ).toJson();
+    //         Get.put(
+    //           ActiveGroupController(
+    //             inGroupCode: groupCode,
+    //             inGroupName: _controllerJoin.text,
+    //             inGroupAdmin: activeUser!.username,
+    //             inDateCreated: getDateCreatedForGroup().toString(),
+    //             inGroupMembers: [
+    //               activeUser!.username,
+    //             ],
+    //             inGroupImageURL: imageURLForController,
+    //           ),
+    //           tag: groupCode,
+    //         );
+    //         _groupController.addGroup(newGroup, groupCode).whenComplete(() {
+    //           setState(() {
+    //             GroupController.initNotifications(groupCode: groupCode);
+    //             gettingImage = false;
+    //             UserController.addGroupCodeToUser(groupCode: [groupCode]);
+    //             activeUserController.updateUserGroups(groupCode: groupCode);
+    //             print(activeUserController.userGroups.toString());
+    //             Navigator.pushReplacement(
+    //                 context,
+    //                 MaterialPageRoute(
+    //                     builder: (context) => GroupCreated(
+    //                           groupCode: groupCode,
+    //                         )));
+    //           });
+    //         });
+    //       });
+    //     });
+    //   }
+    // };
 
     return LoadingOverlay(
       isLoading: gettingImage,
@@ -488,12 +478,62 @@ class _CreateGroupState extends State<CreateGroup> {
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
                     child: ElevatedButton(
+                      child: Text(
+                        'Create',
+                        style: getNormalTextStyleWhite(),
+                      ),
                       style: blueButtonStyle,
                       onPressed: () async {
                         groupCode = uuid.v4().substring(0, 8);
                         if (groupImage != null) {
-                          goToCreatePage;
-                        } else {
+                          if (_formKey.currentState!.validate()) {
+                            GroupController.uploadImage(groupCode, groupImage!)
+                              .then((value) {
+                                setState(() {
+                                  gettingImage = true;
+                                  String imageUrl = value;
+                                  imageURLForController = value;
+                                  newGroup = new Group(
+                                    groupCode: groupCode,
+                                    groupName: _controllerJoin.text,
+                                    groupAdmin: activeUser!.username,
+                                    dateCreated: getDateCreatedForGroup().toString(),
+                                    groupMembers: [
+                                      activeUser!.username,
+                                    ],
+                                    groupImageURL: imageUrl,
+                                  ).toJson();
+
+                                  Get.put(
+                                    ActiveGroupController(
+                                      inGroupCode: groupCode,
+                                      inGroupName: _controllerJoin.text,
+                                      inGroupAdmin: activeUser!.username,
+                                      inDateCreated: getDateCreatedForGroup().toString(),
+                                      inGroupMembers: [
+                                        activeUser!.username,
+                                      ],
+                                      inGroupImageURL: imageURLForController,
+                                    ),
+                                    tag: groupCode,
+                                  );
+                                  _groupController.addGroup(newGroup, groupCode).whenComplete(() {
+
+                                    setState(() {
+                                      GroupController.initNotifications(groupCode: groupCode);
+                                      gettingImage = false;
+                                      UserController.addGroupCodeToUser(groupCode: [groupCode]);
+                                      activeUserController.updateUserGroups(groupCode: groupCode);
+                                      print(activeUserController.userGroups.toString());
+                                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GroupCreated(groupCode: groupCode,)));
+                                    });
+
+                                  });
+                                });
+                            });
+                          };
+                        }
+                        else {
                           File defaultImage;
                           _groupController
                               .getImageFileFromAssets("default_chat_banner.png")
@@ -560,10 +600,6 @@ class _CreateGroupState extends State<CreateGroup> {
                           });
                         }
                       },
-                      child: Text(
-                        'Create',
-                        style: getNormalTextStyleWhite(),
-                      ),
                     ),
                   ),
                 )
