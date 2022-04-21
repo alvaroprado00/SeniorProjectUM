@@ -181,8 +181,8 @@ class _EditGroupState extends State<EditGroup> {
           aspectRatioLockEnabled: true,
           aspectRatioPickerButtonHidden: true,
           hidesNavigationBar: false,
-          showCancelConfirmationDialog: false,
-          showActivitySheetOnDone: true,
+          showCancelConfirmationDialog: true,
+          showActivitySheetOnDone: false,
           rotateButtonsHidden: false,
           resetButtonHidden: false,
         ),
@@ -485,10 +485,9 @@ class _EditGroupState extends State<EditGroup> {
                             backgroundColor: secondaryColor,
                           ));
                         }
-                      } else if (groupImage != null &&
-                          groupImage!.path.isNotEmpty) {
-                        activeGroupController.updateGroupImage(
-                            groupImage: groupImage!);
+                      }
+                      else if(groupImage != null) {
+                        activeGroupController.updateGroupImage(groupImage: groupImage!);
                         setState(() {
                           changingImage = true;
                           Navigator.of(context).pop(context);
