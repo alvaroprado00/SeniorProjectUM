@@ -191,8 +191,12 @@ class DeleteGroup extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(
-        "Are you sure you want to delete this group? All data will be lost.",
-        style: getNormalTextStyleBlueBold(),
+        "Are you sure?",
+        style: getSubheadingStyleBlue(),
+      ),
+      content: Text(
+        "All data will be lost.",
+        style: getNormalTextStyleBlue(),
       ),
       actions: [
         ElevatedButton(
@@ -211,7 +215,7 @@ class DeleteGroup extends StatelessWidget {
             GroupController.deleteGroup(groupCode: groupCode);
             Navigator.of(context).pop();
           },
-          child: Text("Yes", style: getNormalTextStyleBlue()),
+          child: Text("Yes", style: getNormalTextStyleYellow()),
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all<Color>(Colors.transparent),
@@ -233,9 +237,15 @@ class LeaveGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Text(
-        "Are you sure you want to leave this group? You will no longer be able to see group members and group notifications.",
-        style: getNormalTextStyleBlueBold(),
+        "Are you sure? ",
+        style: getSubheadingStyleBlue(),
+      ),
+      content: Text(
+        "You will no longer be able to see group members and group notifications.",
+        style: getNormalTextStyleBlue(),
       ),
       actions: [
         ElevatedButton(
@@ -260,7 +270,7 @@ class LeaveGroup extends StatelessWidget {
             }
             Navigator.of(context).pop();
           },
-          child: Text("Yes", style: getNormalTextStyleBlue()),
+          child: Text("Yes", style: getNormalTextStyleYellow()),
           style: ButtonStyle(
             backgroundColor:
                 MaterialStateProperty.all<Color>(Colors.transparent),
