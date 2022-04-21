@@ -200,7 +200,7 @@ class _CreateGroupState extends State<CreateGroup> {
           aspectRatioPickerButtonHidden: true,
           hidesNavigationBar: false,
           showCancelConfirmationDialog: false,
-          showActivitySheetOnDone: true,
+          showActivitySheetOnDone: false,
           rotateButtonsHidden: false,
           resetButtonHidden: false,
         ),
