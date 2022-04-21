@@ -187,7 +187,8 @@ class _CreateGroupState extends State<CreateGroup> {
 
   Future<void> _cropImage() async {
     if (cameraImage != null) {
-      _cropper.cropImage(
+      _cropper
+          .cropImage(
         sourcePath: cameraImage!.path,
         maxHeight: (heightOfScreen * 0.25).toInt(),
         maxWidth: getWidthOfLargeButton().toInt(),
@@ -200,7 +201,7 @@ class _CreateGroupState extends State<CreateGroup> {
           aspectRatioPickerButtonHidden: true,
           hidesNavigationBar: false,
           showCancelConfirmationDialog: false,
-          showActivitySheetOnDone: true,
+          showActivitySheetOnDone: false,
           rotateButtonsHidden: false,
           resetButtonHidden: false,
         ),
@@ -219,7 +220,8 @@ class _CreateGroupState extends State<CreateGroup> {
           initAspectRatio: CropAspectRatioPreset.ratio16x9,
           lockAspectRatio: true,
         ),
-      ).then((value) {
+      )
+          .then((value) {
         setState(() {
           groupImage = value as File;
         });
@@ -229,7 +231,6 @@ class _CreateGroupState extends State<CreateGroup> {
 
   @override
   Widget build(BuildContext context) {
-
     void Function() goToCreatePage = () {
       if (_formKey.currentState!.validate()) {
         GroupController.uploadImage(groupCode, groupImage!).then((value) {
@@ -502,7 +503,8 @@ class _CreateGroupState extends State<CreateGroup> {
                               .then((value) {
                             setState(() {
                               defaultImage = value;
-                              GroupController.uploadImage(groupCode, defaultImage)
+                              GroupController.uploadImage(
+                                      groupCode, defaultImage)
                                   .then((value) {
                                 setState(() {
                                   gettingImage = true;
