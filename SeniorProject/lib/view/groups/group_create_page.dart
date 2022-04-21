@@ -94,7 +94,7 @@ class _CreateGroupState extends State<CreateGroup> {
                 setState(() {
                   cameraImage = _newImage;
                   Navigator.of(context).pop();
-                  // _cropImage();
+                  _cropImage();
                   if (groupImage != null) {
                     setState(() {
                       groupImage = groupImage;
@@ -229,6 +229,7 @@ class _CreateGroupState extends State<CreateGroup> {
 
   @override
   Widget build(BuildContext context) {
+
     void Function() goToCreatePage = () {
       if (_formKey.currentState!.validate()) {
         GroupController.uploadImage(groupCode, groupImage!).then((value) {
@@ -263,6 +264,9 @@ class _CreateGroupState extends State<CreateGroup> {
               setState(() {
                 GroupController.initNotifications(groupCode: groupCode);
                 gettingImage = false;
+                UserController.addGroupCodeToUser(groupCode: [groupCode]);
+                activeUserController.updateUserGroups(groupCode: groupCode);
+                print(activeUserController.userGroups.toString());
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
@@ -271,13 +275,11 @@ class _CreateGroupState extends State<CreateGroup> {
                             )));
               });
             });
-            UserController.addGroupCodeToUser(groupCode: [groupCode]);
-            activeUserController.updateUserGroups(groupCode: groupCode);
-            print(activeUserController.userGroups.toString());
           });
         });
       }
     };
+
     return LoadingOverlay(
       isLoading: gettingImage,
       child: Scaffold(
@@ -479,8 +481,11 @@ class _CreateGroupState extends State<CreateGroup> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 10.0),
+                  padding: const EdgeInsets.only(
+                    left: 16.0,
+                    right: 16.0,
+                    top: 10.0,
+                  ),
                   child: SizedBox(
                     height: getHeightOfLargeButton(),
                     width: getWidthOfLargeButton(),
@@ -497,8 +502,7 @@ class _CreateGroupState extends State<CreateGroup> {
                               .then((value) {
                             setState(() {
                               defaultImage = value;
-                              GroupController.uploadImage(
-                                      groupCode, defaultImage)
+                              GroupController.uploadImage(groupCode, defaultImage)
                                   .then((value) {
                                 setState(() {
                                   gettingImage = true;

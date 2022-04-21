@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed iOS image crop settings">
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed crop image code for group create">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" afterDir="false" />
     </list>
@@ -204,7 +204,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650501427338</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Changed crop image code for group create">
+      <created>1650568867840</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1650568867841</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -238,6 +245,7 @@
     <MESSAGE value="Changed circularprogress indicator on group info page for members" />
     <MESSAGE value="Changed the way that ActiveUserController is obtained in group home in order to update the pages," />
     <MESSAGE value="Changed iOS image crop settings" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed iOS image crop settings" />
+    <MESSAGE value="Changed crop image code for group create" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed crop image code for group create" />
   </component>
 </project>
