@@ -228,7 +228,6 @@ class _CreateGroupState extends State<CreateGroup> {
 
   @override
   Widget build(BuildContext context) {
-
     void Function() goToCreatePage = () {
       if (_formKey.currentState!.validate()) {
         GroupController.uploadImage(groupCode, groupImage!).then((value) {
@@ -501,7 +500,8 @@ class _CreateGroupState extends State<CreateGroup> {
                               .then((value) {
                             setState(() {
                               defaultImage = value;
-                              GroupController.uploadImage(groupCode, defaultImage)
+                              GroupController.uploadImage(
+                                      groupCode, defaultImage)
                                   .then((value) {
                                 setState(() {
                                   gettingImage = true;
