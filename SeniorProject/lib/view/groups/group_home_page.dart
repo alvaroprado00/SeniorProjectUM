@@ -18,7 +18,7 @@ class GroupsHome extends StatelessWidget {
   GroupsHome({Key? key}) : super(key: key);
 
   static final String routeName = '/GroupHome';
-  ActiveUserController userController = Get.find<ActiveUserController>(); // Rather Controller controller = Controller();
+  ActiveUserController userController = Get.put(ActiveUserController()); // Rather Controller controller = Controller();
 
   @override
   Widget build(BuildContext context) {

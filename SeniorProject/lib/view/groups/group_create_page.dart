@@ -452,17 +452,17 @@ class _CreateGroupState extends State<CreateGroup> {
                                   setState(() {
                                     GroupController.initNotifications(groupCode: groupCode);
                                     gettingImage = false;
+                                    UserController.addGroupCodeToUser(groupCode: [groupCode]);
+                                    activeUserController.updateUserGroups(groupCode: groupCode);
+                                    print(activeUserController.userGroups.toString());
                                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => GroupCreated(groupCode: groupCode,)));
                                   });
                                 });
                               });
                             });
-                            });
                           });
-                        }
-                        UserController.addGroupCodeToUser(groupCode: [groupCode]);
-                        activeUserController.updateUserGroups(groupCode: groupCode);
-                        print(activeUserController.userGroups.toString());
+                        });
+                      }
                     },
                     child: Text(
                       'Create Group',
