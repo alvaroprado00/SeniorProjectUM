@@ -11,9 +11,11 @@ import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_colors.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
+
 import '../util/functions.dart';
 import 'category_progress.dart';
 
@@ -56,15 +58,18 @@ class ContentForOverview extends GetView<ActiveUserController> {
   final int balanceXP;
 
   sendUserMessage(BuildContext context) {
-
     CustomNotification notif = new CustomNotification(
       userName: controller.username.toString(),
-      badge: Badge(courseID: activeCourse!.id.toString(), picture: activeCourse!.badgeIcon.toString(), timeEarned: DateTime.now()),
+      badge: Badge(
+          courseID: activeCourse!.id.toString(),
+          picture: activeCourse!.badgeIcon.toString(),
+          timeEarned: DateTime.now()),
       dateSent: DateTime.now(),
       message: getRandomUpdateMessage(activeCourse!.title).toString(),
     );
 
-    GroupController.addNotification(notif: notif, groupCodes: controller.userGroups.toList());
+    GroupController.addNotification(
+        notif: notif, groupCodes: controller.userGroups.toList());
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -131,12 +136,21 @@ class ContentForOverview extends GetView<ActiveUserController> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
-                    '${getQuestionsRightFromProgress(progress: userProgress).toString()}/${activeCourse!.numberOfQuestions.toString()}',
+                    '${getQuestionsRightFromProgress(progress: userProgress).toString()} of ${activeCourse!.numberOfQuestions.toString()}',
                     style: getHeadingStyleBlue(),
                   ),
-                  Text(
-                    '+ ${balanceXP.toString()} XP',
-                    style: getHeadingStyleBlue(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        CupertinoIcons.arrowtriangle_up_fill,
+                        color: Colors.green,
+                      ),
+                      Text(
+                        ' ${balanceXP.toString()} XP',
+                        style: getHeadingStyleBlue(),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -150,8 +164,8 @@ class ContentForOverview extends GetView<ActiveUserController> {
                 height: heightOfScreen * 0.05,
               ),
               earnedBadge
-                  ?
-                  sendUserMessage(context) : SizedBox(
+                  ? sendUserMessage(context)
+                  : SizedBox(
                       height: 0.1 * heightOfScreen,
                     ),
               Row(

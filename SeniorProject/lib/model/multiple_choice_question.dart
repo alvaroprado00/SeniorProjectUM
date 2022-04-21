@@ -1,5 +1,6 @@
 import 'package:cyber/model/question.dart';
 import 'package:cyber/view/util/k_values.dart';
+import 'package:flutter/cupertino.dart';
 
 class MultipleChoiceQuestion extends Question {
   String description;
@@ -36,7 +37,11 @@ class MultipleChoiceQuestion extends Question {
   }
 
   String getSolutionAsString() {
-    return 'Answer: ${numberToOptionLetter[rightOption]}  ${options[rightOption]}';
+    return '${numberToOptionLetter[rightOption]}  ${options[rightOption]}';
+  }
+
+  Text getSolutionAsStringNew() {
+    return Text.rich(TextSpan(text: '${numberToOptionLetter[rightOption]}'));
   }
 
   factory MultipleChoiceQuestion.fromJson(Map<String, dynamic> json) {

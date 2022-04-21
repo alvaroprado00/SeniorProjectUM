@@ -105,7 +105,7 @@ Widget getLearnMoreContent({required String longFeedBack}) {
 
 Widget getFeedback({required bool isRight, required String shortFeeback}) {
   return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
+    mainAxisAlignment: MainAxisAlignment.center,
     mainAxisSize: MainAxisSize.min,
     children: [
       Row(
@@ -154,11 +154,19 @@ Widget getFeedback({required bool isRight, required String shortFeeback}) {
           answers: globals.userProgress,
           numberOfCircles: globals.activeCourse!.numberOfQuestions),
       SizedBox(
-        height: 0.02 * heightOfScreen,
+        height: 0.01 * heightOfScreen,
+      ),
+      Padding(
+        padding: EdgeInsets.only(bottom: 8),
+        child: Text(
+          'ANSWER',
+          style: getNormalTextStyleYellowBold(),
+        ),
       ),
       Text(
         shortFeeback,
         style: getNormalTextStyleBlue(),
+        textAlign: TextAlign.center,
       ),
     ],
   );
