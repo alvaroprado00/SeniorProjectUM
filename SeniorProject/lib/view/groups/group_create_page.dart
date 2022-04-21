@@ -187,7 +187,7 @@ class _CreateGroupState extends State<CreateGroup> {
 
   Future<void> _cropImage() async {
     if (cameraImage != null) {
-      _cropper.cropImage(
+      groupImage = await _cropper.cropImage(
         sourcePath: cameraImage!.path,
         maxHeight: (heightOfScreen * 0.25).toInt(),
         maxWidth: getWidthOfLargeButton().toInt(),
@@ -219,10 +219,9 @@ class _CreateGroupState extends State<CreateGroup> {
           initAspectRatio: CropAspectRatioPreset.ratio16x9,
           lockAspectRatio: true,
         ),
-      ).then((value) {
-        setState(() {
-          groupImage = value as File;
-        });
+      );
+      setState(() {
+        groupImage = groupImage;
       });
     }
   }
