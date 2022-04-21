@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed the way that ActiveUserController is obtained in group home in order to update the pages,">
+    <list default="true" id="35dffa22-70b8-4e42-96eb-ff8ae2d817ac" name="Default Changelist" comment="Changed iOS image crop settings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_edit_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_edit_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/SeniorProject/lib/view/groups/group_create_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +197,14 @@
       <option name="project" value="LOCAL" />
       <updated>1650500593110</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Changed iOS image crop settings">
+      <created>1650501427338</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1650501427338</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -230,6 +237,7 @@
     <MESSAGE value="Fixed Getx Controllers and added go_to_course feature for messages and fixed overflow as well as some variables." />
     <MESSAGE value="Changed circularprogress indicator on group info page for members" />
     <MESSAGE value="Changed the way that ActiveUserController is obtained in group home in order to update the pages," />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed the way that ActiveUserController is obtained in group home in order to update the pages," />
+    <MESSAGE value="Changed iOS image crop settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed iOS image crop settings" />
   </component>
 </project>
