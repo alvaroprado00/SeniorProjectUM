@@ -21,15 +21,16 @@ class OverviewDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Text(
-        isBadge ? 'You earned a new Badge!' : 'Level UP!',
+        isBadge ? 'Badge' : 'Level UP!',
         style: getSubheadingStyleBlue(),
         textAlign: TextAlign.center,
       ),
       content: isBadge ? BadgeContent() : LevelUpContent(),
       insetPadding: EdgeInsets.all(10),
       actionsAlignment: MainAxisAlignment.center,
-
     );
   }
 }
