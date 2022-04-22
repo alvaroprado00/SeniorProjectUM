@@ -24,7 +24,7 @@ class CategoryBadges extends GetView<ActiveUserController> {
         backgroundColor: tertiaryColor,
         elevation: 0,
         title: Text(
-          'My Badges',
+          categoryToString[args.category]!,
           style: getSubheadingStyleBlue(),
         ),
         leading: getBackButton(context: context),
@@ -38,10 +38,6 @@ class CategoryBadges extends GetView<ActiveUserController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              SubtitleDivider(subtitle: categoryToString[args.category]!),
               SizedBox(
                 height: 0.03 * heightOfScreen,
               ),
@@ -77,7 +73,7 @@ Widget getAllBadges(
       childrenOfRow.add(getIconButtonForBadge(
           badge: b,
           nameOfCourse: coursesInCategory[b.courseID]!,
-          size: 0.12 * heightOfScreen,
+          size: 0.1 * heightOfScreen,
           context: context));
     }
   }
@@ -93,7 +89,7 @@ Widget getAllBadges(
 
   return Wrap(
     children: childrenOfRow,
-    spacing: 0.045*widthOfScreen,
+    spacing: 0.045 * widthOfScreen,
     runSpacing: 6,
   );
 }

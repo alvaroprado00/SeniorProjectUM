@@ -25,7 +25,7 @@ class CategoryCourses extends GetView<ActiveUserController> {
         backgroundColor: tertiaryColor,
         elevation: 0,
         title: Text(
-          'My Courses',
+          args.category,
           style: getSubheadingStyleBlue(),
         ),
         leading: getBackButton(context: context),
@@ -37,12 +37,8 @@ class CategoryCourses extends GetView<ActiveUserController> {
               left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 0.05 * heightOfScreen,
-              ),
-              SubtitleDivider(subtitle: args.category),
               SizedBox(
                 height: 0.03 * heightOfScreen,
               ),

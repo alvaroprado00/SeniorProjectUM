@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/k_styles.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -47,14 +48,17 @@ class _EditGroupState extends State<EditGroup> {
 
   Widget _buildPopupDialog(BuildContext context) {
     return new AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Padding(
         padding: const EdgeInsets.only(top: 8.0),
         child: Text(
-          'Add image from...',
+          'SELECT OPTION',
           style: TextStyle(
-            color: primaryColor,
-            fontSize: 20,
-          ),
+              color: secondaryColor,
+              fontFamily: fontFamily,
+              fontSize: 16,
+              fontWeight: FontWeight.w400),
           textAlign: TextAlign.center,
         ),
       ),
@@ -85,20 +89,14 @@ class _EditGroupState extends State<EditGroup> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Image Gallery",
-                      style: TextStyle(
-                        color: tertiaryColor,
-                        fontSize: 18,
-                      ),
-                    ),
+                    child: Text("Library", style: getNormalTextStyleWhite()),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
-                      Icons.add_photo_alternate_outlined,
+                      CupertinoIcons.photo,
                       color: tertiaryColor,
-                      size: widthOfScreen * 0.1,
+                      size: 32,
                     ),
                   ),
                 ],
@@ -129,20 +127,14 @@ class _EditGroupState extends State<EditGroup> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Camera",
-                      style: TextStyle(
-                        color: tertiaryColor,
-                        fontSize: 18,
-                      ),
-                    ),
+                    child: Text("Camera", style: getNormalTextStyleWhite()),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
-                      Icons.camera_alt,
+                      CupertinoIcons.camera,
                       color: tertiaryColor,
-                      size: widthOfScreen * 0.1,
+                      size: 32,
                     ),
                   ),
                 ],
@@ -242,7 +234,7 @@ class _EditGroupState extends State<EditGroup> {
                     right: 0.03 * widthOfScreen,
                     top: 16),
                 child: SubtitleDivider(
-                  subtitle: 'Change Name',
+                  subtitle: 'Edit Name',
                 ),
               ),
               Padding(
@@ -270,7 +262,7 @@ class _EditGroupState extends State<EditGroup> {
                     right: 0.03 * widthOfScreen,
                     top: 16),
                 child: SubtitleDivider(
-                  subtitle: 'Change Image',
+                  subtitle: 'Edit Image',
                 ),
               ),
               cameraImage != null
@@ -317,7 +309,7 @@ class _EditGroupState extends State<EditGroup> {
                                       child: Column(
                                         children: [
                                           Icon(
-                                            Icons.add_photo_alternate_outlined,
+                                            CupertinoIcons.photo,
                                             color: primaryColor,
                                             size: widthOfScreen * 0.1,
                                           ),
@@ -335,7 +327,7 @@ class _EditGroupState extends State<EditGroup> {
                                         ],
                                       ),
                                     ),
-                                    style: yellowButtonStyle,
+                                    style: greyButtonStyle,
                                   ),
                                   ElevatedButton(
                                     onPressed: () {
@@ -485,9 +477,9 @@ class _EditGroupState extends State<EditGroup> {
                             backgroundColor: secondaryColor,
                           ));
                         }
-                      }
-                      else if(groupImage != null) {
-                        activeGroupController.updateGroupImage(groupImage: groupImage!);
+                      } else if (groupImage != null) {
+                        activeGroupController.updateGroupImage(
+                            groupImage: groupImage!);
                         setState(() {
                           changingImage = true;
                           Navigator.of(context).pop(context);

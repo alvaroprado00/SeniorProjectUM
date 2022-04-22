@@ -24,13 +24,26 @@ class OverviewDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Text(
-        isBadge ? 'COURSE' : 'LEVEL UP',
+        isBadge ? 'COURSE' : 'AVATAR UNLOCKED',
         style: getNormalTextStyleYellowBold(),
         textAlign: TextAlign.center,
       ),
       content: isBadge ? BadgeContent() : LevelUpContent(),
       insetPadding: EdgeInsets.all(10),
       actionsAlignment: MainAxisAlignment.center,
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pop(context);
+          },
+          child: Text("CLOSE", style: getNormalTextStyleBlue()),
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all<Color>(Colors.transparent),
+            elevation: MaterialStateProperty.all<double>(0.0),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -51,7 +64,7 @@ class LevelUpContent extends GetView<ActiveUserController> {
         Padding(
           padding: EdgeInsets.only(top: 20, bottom: 8),
           child: Text(
-            'AVATAR ID',
+            'UNIQUE ID',
             style: getNormalTextStyleYellowBold(),
           ),
         ),

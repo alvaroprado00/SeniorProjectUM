@@ -105,7 +105,6 @@ class BadgesContent extends GetView<ActiveUserController> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 0.05 * heightOfScreen),
                 Text(
                   'No courses in category',
                   style: getNormalTextStyleBlue(),
@@ -176,7 +175,7 @@ getRowOfBadges(
   if (numberOfBadges < 3) {
     for (int i = 0; i < (3 - numberOfBadges); i++) {
       childrenOfRow
-          .add(getCircle(color: quinaryColor, size: 0.1 * heightOfScreen));
+          .add(getCircle(color: quinaryColor, size: 0.09 * heightOfScreen));
     }
   }
 
@@ -184,16 +183,20 @@ getRowOfBadges(
 
   childrenOfRow.add(getIconButtonShowMore(
       context: context,
-      size: 0.1 * heightOfScreen,
+      size: 0.09 * heightOfScreen,
       todo: () {
         Navigator.pushNamed(context, CategoryBadges.routeName,
             arguments: CategoryBadgesArgs(
                 coursesInCategory: coursesInCategory, category: category));
       }));
 
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceAround,
-    children: childrenOfRow,
+  return Padding(
+    padding: EdgeInsets.only(
+        left: 0.03 * widthOfScreen, right: 0.03 * widthOfScreen),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: childrenOfRow,
+    ),
   );
 }
 
@@ -251,17 +254,11 @@ class BadgeDialog extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: heightOfScreen * 0.02),
           getContainerForBadge(
               nameOfIcon: badge.picture, size: 0.25 * heightOfScreen),
-          SizedBox(height: heightOfScreen * 0.05),
-          Text(
-            'EARNED',
-            style: TextStyle(
-                color: secondaryColor,
-                fontFamily: fontFamily,
-                fontSize: 0.03 * widthOfScreen,
-                fontWeight: FontWeight.w400),
+          Padding(
+            padding: const EdgeInsets.only(top: 24, bottom: 8),
+            child: Text('EARNED', style: getNormalTextStyleYellowBold()),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
@@ -287,7 +284,7 @@ getIconButtonShowMore(
         height: size,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: primaryColor,
+          color: quaternaryColor,
         ),
         child: IconButton(
             onPressed: todo,

@@ -111,7 +111,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     child: Icon(
                       CupertinoIcons.photo,
                       color: tertiaryColor,
-                      size: widthOfScreen * 0.1,
+                      size: 32,
                     ),
                   ),
                 ],

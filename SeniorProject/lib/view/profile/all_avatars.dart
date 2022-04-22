@@ -29,7 +29,7 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
         backgroundColor: tertiaryColor,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
@@ -45,12 +45,10 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
             child: SingleChildScrollView(
               child: Obx(() => getAvatars(
                   userAvatars: controller.collectedAvatars.value,
-                  size: 0.11 * heightOfScreen)),
+                  size: 0.1 * heightOfScreen)),
             ),
           ),
-          SizedBox(
-            height: 0.05 * heightOfScreen,
-          ),
+          Spacer(),
           Container(
             width: widthOfScreen,
             child: Image.asset(
@@ -76,8 +74,9 @@ class AllAvatarsPage extends GetView<ActiveUserController> {
     }
 
     return Wrap(
-      runSpacing: 10,
-      spacing: 5,
+      alignment: WrapAlignment.center,
+      runSpacing: 15,
+      spacing: 1,
       children: childrenOfRow,
     );
   }

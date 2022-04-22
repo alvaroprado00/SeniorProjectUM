@@ -420,8 +420,9 @@ getLastSavedCoursesFromUser(
   if (coursesSaved.isEmpty) {
     return Center(
       child: Text(
-        'Your last 2 saved courses will appear here',
+        'Your completed and saved courses will appear here.',
         style: getNormalTextStyleBlue(),
+        textAlign: TextAlign.center,
       ),
     );
   }

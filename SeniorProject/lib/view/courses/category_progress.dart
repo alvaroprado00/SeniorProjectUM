@@ -69,16 +69,10 @@ class CategoryProgressContent extends GetView<ActiveUserController> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SubtitleDivider(subtitle: 'Progress'),
-            SizedBox(
-              height: 0.01 * heightOfScreen,
-            ),
+            SubtitleDivider(subtitle: 'Category Progress'),
             Obx(() => getProgressInCategory(
                 coursesInCategory: categoryCourses,
                 userCompletedCourses: controller.completedCourses.value)),
-            SizedBox(
-              height: 0.02 * heightOfScreen,
-            ),
             SizedBox(
               height: getHeightOfLargeButton(),
               width: getWidthOfLargeButton(),
@@ -109,27 +103,33 @@ getProgressInCategory(
   bool isCompleted = false;
   coursesInCategory.forEach((key, value) {
     for (CompletedCourse cc in userCompletedCourses) {
-
       if (cc.courseID == key) {
         isCompleted = true;
       }
     }
-    childrenOfColumn.add(Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(width: 5),
-        getCircle(
-            color: isCompleted ? secondaryColor : quaternaryColor, size: 15),
-        Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20),
-          child: Text(
-            value,
-            style: getSubheadingStyleBlue(),
+    childrenOfColumn.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(width: 5),
+          getCircle(
+              color: isCompleted ? secondaryColor : quinaryColor, size: 15),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 20,
+              right: 20,
+            ),
+            child: Text(
+              value,
+              style: getSubheadingStyleBlue(),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ));
-    isCompleted=false;
+    isCompleted = false;
   });
 
   return SizedBox(
