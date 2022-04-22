@@ -24,8 +24,8 @@ class OverviewDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       title: Text(
-        isBadge ? 'Badge' : 'Level UP!',
-        style: getSubheadingStyleBlue(),
+        isBadge ? 'COURSE' : 'LEVEL UP',
+        style: getNormalTextStyleYellowBold(),
         textAlign: TextAlign.center,
       ),
       content: isBadge ? BadgeContent() : LevelUpContent(),
@@ -48,11 +48,15 @@ class LevelUpContent extends GetView<ActiveUserController> {
         Obx(() => Avatar(
             nameOfAvatar: controller.collectedAvatars.value.last,
             size: 0.2 * heightOfScreen)),
-        SizedBox(
-          height: 0.05 * heightOfScreen,
+        Padding(
+          padding: EdgeInsets.only(top: 20, bottom: 8),
+          child: Text(
+            'AVATAR ID',
+            style: getNormalTextStyleYellowBold(),
+          ),
         ),
         Obx(() => Text(
-              'Avatar ID:${controller.collectedAvatars.value.last}',
+              '${controller.collectedAvatars.value.last}',
               style: getNormalTextStyleBlue(),
             )),
       ],
@@ -73,12 +77,13 @@ class BadgeContent extends GetView<ActiveUserController> {
         Obx(() => getContainerForBadge(
             nameOfIcon: controller.collectedBadges.value.last.picture,
             size: 0.2 * heightOfScreen)),
-        SizedBox(
-          height: 0.05 * heightOfScreen,
-        ),
-        Text(
-          'Course: ${activeCourse!.title}',
-          style: getNormalTextStyleBlue(),
+        Padding(
+          padding:
+              const EdgeInsets.only(top: 20, bottom: 8, right: 16, left: 16),
+          child: Text(
+            '${activeCourse!.title}',
+            style: getSubheadingStyleBlue(),
+          ),
         ),
       ],
     );

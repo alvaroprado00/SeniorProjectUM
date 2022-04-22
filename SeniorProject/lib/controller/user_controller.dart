@@ -23,11 +23,11 @@ class UserController {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        return 'No user found for that email.';
+        return 'No user found with that email.';
       } else if (e.code == 'wrong-password') {
-        return 'Wrong password provided for that user.';
+        return 'Wrong password provided.';
       } else if (e.code == 'invalid-email') {
-        return 'Wrong email format';
+        return 'Wrong email format.';
       } else {
         return e.code.toString();
       }
@@ -40,13 +40,12 @@ class UserController {
    */
   static Future addUserToAuthAndFirestore(
       {required UserCustom u, required String password}) async {
-
     //Before creating the user in any DB we check if the userName is in use
     //Because if you dont check that you will end up creating a user in
     //Auth with no corresponding user in Firestore
 
-    bool usernameInUse= await userNameExists(username:u.username);
-    if(usernameInUse){
+    bool usernameInUse = await userNameExists(username: u.username);
+    if (usernameInUse) {
       return 'Username already in use';
     }
 
@@ -61,21 +60,20 @@ class UserController {
       //If we succeed in creating the user in the Auth DB, then we create the entry for the other info in the separate collection
       // That separate collection is were we will have our custom info of the user
 
-      return addUserToFireStore(
-          userCustom: u, userId: userCredential.user!.uid).then((value) {
-            return value;
-      }).catchError((error){
-        print ('Adding user to Firestore error');
+      return addUserToFireStore(userCustom: u, userId: userCredential.user!.uid)
+          .then((value) {
+        return value;
+      }).catchError((error) {
+        print('Adding user to Firestore error');
         throw Exception('Adding user to Firestore error');
       });
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'The password provided is too weak.';
       } else if (e.code == 'email-already-in-use') {
-        return 'The account already exists for that email.';
-      }else if(e.code == 'invalid-email'){
-        return 'Invalid email format';
+        return 'An account already exists for that email.';
+      } else if (e.code == 'invalid-email') {
+        return 'Invalid email format.';
       }
     } catch (e) {
       print(e);
@@ -87,7 +85,7 @@ class UserController {
    * The document created will be named with the userId from the AuthDB
    */
   static Future<dynamic> addUserToFireStore(
-      {required UserCustom userCustom, required String userId}) async{
+      {required UserCustom userCustom, required String userId}) async {
     // Call the user's CollectionReference
     CollectionReference users =
         FirebaseFirestore.instance.collection(userCollectionName);
@@ -105,29 +103,26 @@ class UserController {
   /**
    * Method to check if a username provided as param exists in the collection
    */
-  static Future userNameExists({required String username}){
+  static Future userNameExists({required String username}) {
     CollectionReference usersRef =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
 
     return usersRef.get().then((querySnapshot) {
-
       for (int i = 0; i < querySnapshot.size; i++) {
         //For each document in the questions collection I create a UserCustom
         Map<String, dynamic> json =
-        querySnapshot.docs[i].data() as Map<String, dynamic>;
+            querySnapshot.docs[i].data() as Map<String, dynamic>;
 
-        if(json['username'].toLowerCase()==username.toLowerCase()){
+        if (json['username'].toLowerCase() == username.toLowerCase()) {
           return true;
         }
       }
       return false;
-
     }).catchError((error) {
       print('Error checking if username exists');
-      throw Exception('Error checking if username exists');
+      throw Exception('Error checking if username exists.');
     });
   }
-
 
   static Future getActiveUser() {
     CollectionReference users =
@@ -142,7 +137,7 @@ class UserController {
       return UserCustom.fromJson(json);
     }).catchError((error) {
       print('Failed to get User: ${error.toString()}');
-      throw Exception('Error getting active user');
+      throw Exception('Error getting active user.');
     });
   }
 
@@ -163,29 +158,27 @@ class UserController {
 
     return addUserToFireStore(userCustom: activeUser!, userId: uidOfActiveUser);
   }
-  
+
   /**
    * Method to get a List with all the users in the Database
    */
-  static Future getAllUsers(){
+  static Future getAllUsers() {
     CollectionReference usersRef =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
 
-    List<UserCustom> users=[];
+    List<UserCustom> users = [];
 
     return usersRef.get().then((querySnapshot) {
-
       for (int i = 0; i < querySnapshot.size; i++) {
         //For each document in the questions collection I create a UserCustom
         Map<String, dynamic> json =
-        querySnapshot.docs[i].data() as Map<String, dynamic>;
+            querySnapshot.docs[i].data() as Map<String, dynamic>;
         users.add(UserCustom.fromJson(json));
       }
       return users;
-
     }).catchError((error) {
       print('Failed to get users');
-      throw Exception('Error getting list of users');
+      throw Exception('Error getting list of users.');
     });
   }
 
@@ -205,7 +198,6 @@ class UserController {
         print('Password changed for active user');
         return true;
       }).catchError((error) {
-
         //Since I have just reauthenticated the user the
         //only possible error ir weak password
         print('Error when updating password');
@@ -221,83 +213,79 @@ class UserController {
    * Method to sign out the active user
    */
   static Future signOutUser() async {
-    try{
+    try {
       await FirebaseAuth.instance.signOut();
       return 'Signed out';
-
-    } on FirebaseAuthException catch(e){
+    } on FirebaseAuthException catch (e) {
       print('Error in the sign out');
-      return 'Error in the sign out';
+      return 'Error when signing out.';
     }
-
   }
 
 /**
  * Method to delete the account of the active user
  */
-static Future deleteActiveUser() async {
-  try {
-
-    await deleteUserFromFirestore(userID: FirebaseAuth.instance.currentUser!.uid);
-    await FirebaseAuth.instance.currentUser!.delete();
-    return 'Success';
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'requires-recent-login') {
-      print('The user must reauthenticate before this operation can be executed.');
-      return 'User must reauthenticate before';
+  static Future deleteActiveUser() async {
+    try {
+      await deleteUserFromFirestore(
+          userID: FirebaseAuth.instance.currentUser!.uid);
+      await FirebaseAuth.instance.currentUser!.delete();
+      return 'Success';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'requires-recent-login') {
+        print(
+            'The user must reauthenticate before this operation can be executed.');
+        return 'User must reauthenticate before';
+      }
+    } on Exception catch (e) {
+      print('Error deleting account');
+      return 'Error deleting the account';
     }
-  } on Exception catch(e){
-    print('Error deleting account');
-    return 'Error deleting the account';
   }
-}
 
   /**
    * Method to delete user from the user collection
    */
-static Future deleteUserFromFirestore({required String userID}){
-
-  CollectionReference users =
-  FirebaseFirestore.instance.collection(userCollectionName);
-  return users.doc(userID).delete();
-}
+  static Future deleteUserFromFirestore({required String userID}) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection(userCollectionName);
+    return users.doc(userID).delete();
+  }
 
   /**
    * Method to update any field in the user
    */
-  static Future updateSimpleUserField({required String nameOfField, required dynamic field}){
-  CollectionReference users =
-  FirebaseFirestore.instance.collection(userCollectionName);
+  static Future updateSimpleUserField(
+      {required String nameOfField, required dynamic field}) {
+    CollectionReference users =
+        FirebaseFirestore.instance.collection(userCollectionName);
 
-  //I get the id of the active user
-  String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
+    //I get the id of the active user
+    String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
 
-  //Access specific entry and set info
-  return users.doc(uidOfActiveUser).update({
-    nameOfField:field,
-  }).then((value) {
-    print("Updated field ${nameOfField}");
-    return true;
-  }).catchError((error) {
-    print("Error updating field ${nameOfField}");
-    return false;
-  });
-
+    //Access specific entry and set info
+    return users.doc(uidOfActiveUser).update({
+      nameOfField: field,
+    }).then((value) {
+      print("Updated field ${nameOfField}");
+      return true;
+    }).catchError((error) {
+      print("Error updating field ${nameOfField}");
+      return false;
+    });
   }
-
 
   /**
    * Method to update the username. Since we have to check if it already
    * exists, I made a separate method
    */
-  static Future updateUsername(
-      {required String newUsername}) async {
+  static Future updateUsername({required String newUsername}) async {
     CollectionReference users =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
 
-    bool exists=await userNameExists(username: newUsername);
+    bool exists = await userNameExists(username: newUsername);
 
-    if(exists){
+    if (exists) {
       return 'Username already exists';
     }
 
@@ -306,7 +294,7 @@ static Future deleteUserFromFirestore({required String userID}){
 
     //Access specific entry and set info
     return users.doc(uidOfActiveUser).update({
-      'username':newUsername,
+      'username': newUsername,
     }).then((value) {
       print("Updated username");
       return true;
@@ -324,7 +312,7 @@ static Future deleteUserFromFirestore({required String userID}){
   static Future updateComplexListUserField(
       {required String nameOfField, required dynamic field}) {
     CollectionReference users =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
 
     //I get the id of the active user
     String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
@@ -341,11 +329,10 @@ static Future deleteUserFromFirestore({required String userID}){
     });
   }
 
-
   static Future updateComplexUserField(
       {required String nameOfField, required dynamic field}) {
     CollectionReference users =
-    FirebaseFirestore.instance.collection(userCollectionName);
+        FirebaseFirestore.instance.collection(userCollectionName);
 
     //I get the id of the active user
     String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
@@ -363,28 +350,29 @@ static Future deleteUserFromFirestore({required String userID}){
   }
 
   static Future addGroupCodeToUser({required List<String> groupCode}) async {
-    CollectionReference users = await FirebaseFirestore
-        .instance.collection(userCollectionName);
+    CollectionReference users =
+        await FirebaseFirestore.instance.collection(userCollectionName);
 
     String uidOfActiveUser = FirebaseAuth.instance.currentUser!.uid;
 
-    return users.doc(uidOfActiveUser).update({"userGroups": FieldValue.arrayUnion(groupCode)});
+    return users
+        .doc(uidOfActiveUser)
+        .update({"userGroups": FieldValue.arrayUnion(groupCode)});
   }
 
-  static Future<UserCustom> getUserByUserName({required String userName}){
+  static Future<UserCustom> getUserByUserName({required String userName}) {
     var user = FirebaseFirestore.instance
-      .collection(userCollectionName)
-      .where("username", isEqualTo: userName)
-      .get().then((value) {
-        Map<String, dynamic> json = value.docs.single.data();
+        .collection(userCollectionName)
+        .where("username", isEqualTo: userName)
+        .get()
+        .then((value) {
+      Map<String, dynamic> json = value.docs.single.data();
 
-        return UserCustom.fromJson(json);
-      })
-      .catchError((error) {
-        print('Failed to get User: ${error.toString()}');
-        throw Exception('Error getting active user');
-      });
+      return UserCustom.fromJson(json);
+    }).catchError((error) {
+      print('Failed to get User: ${error.toString()}');
+      throw Exception('Error getting active user');
+    });
     return user;
   }
-
 }
