@@ -295,18 +295,20 @@ class _EditGroupState extends State<EditGroup> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            _buildPopupDialog(context),
-                                      );
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 8.0, bottom: 8.0),
+                                  Container(
+                                    height: 0.1 * heightOfScreen,
+                                    width: 0.4 * widthOfScreen,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              _buildPopupDialog(context),
+                                        );
+                                      },
                                       child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Icon(
                                             CupertinoIcons.photo,
@@ -315,53 +317,39 @@ class _EditGroupState extends State<EditGroup> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.all(2.0),
-                                            child: Text(
-                                              "Change",
-                                              style: TextStyle(
-                                                color: primaryColor,
-                                                fontSize: 14,
-                                                fontFamily: 'Roboto',
-                                              ),
-                                            ),
+                                            child: Text("Change",
+                                                style: getSmallTextStyleBlue()),
                                           ),
                                         ],
                                       ),
+                                      style: greyButtonStyle,
                                     ),
-                                    style: greyButtonStyle,
                                   ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      _cropImage();
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 8.0,
-                                        bottom: 8.0,
-                                        left: 4.0,
-                                        right: 4.0,
-                                      ),
+                                  Container(
+                                    height: 0.1 * heightOfScreen,
+                                    width: 0.4 * widthOfScreen,
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        _cropImage();
+                                      },
                                       child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Icon(
-                                            Icons.crop,
+                                            CupertinoIcons.crop,
                                             color: primaryColor,
                                             size: widthOfScreen * 0.1,
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.all(2.0),
-                                            child: Text(
-                                              "Crop",
-                                              style: TextStyle(
-                                                color: primaryColor,
-                                                fontSize: 14,
-                                                fontFamily: 'Roboto',
-                                              ),
-                                            ),
+                                            child: Text("Crop",
+                                                style: getSmallTextStyleBlue()),
                                           ),
                                         ],
                                       ),
+                                      style: yellowButtonStyle,
                                     ),
-                                    style: yellowButtonStyle,
                                   ),
                                 ],
                               ),
@@ -389,39 +377,34 @@ class _EditGroupState extends State<EditGroup> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(12.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      _buildPopupDialog(context),
-                                );
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 8.0, bottom: 8.0),
+                            child: Container(
+                              height: 0.1 * heightOfScreen,
+                              width: 0.4 * widthOfScreen,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        _buildPopupDialog(context),
+                                  );
+                                },
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Icon(
-                                      Icons.add_photo_alternate_outlined,
+                                      CupertinoIcons.photo,
                                       color: primaryColor,
                                       size: widthOfScreen * 0.1,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(2.0),
-                                      child: Text(
-                                        "Change",
-                                        style: TextStyle(
-                                          color: primaryColor,
-                                          fontSize: 14,
-                                          fontFamily: 'Roboto',
-                                        ),
-                                      ),
+                                      child: Text("Change",
+                                          style: getSmallTextStyleBlue()),
                                     ),
                                   ],
                                 ),
+                                style: greyButtonStyle,
                               ),
-                              style: yellowButtonStyle,
                             ),
                           ),
                         ],
