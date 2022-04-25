@@ -1,43 +1,43 @@
 PODS:
-  - cloud_firestore (3.1.12):
-    - Firebase/Firestore (= 8.14.0)
+  - cloud_firestore (3.1.13):
+    - Firebase/Firestore (= 8.15.0)
     - firebase_core
     - Flutter
-  - Firebase/Auth (8.14.0):
+  - Firebase/Auth (8.15.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 8.14.0)
-  - Firebase/CoreOnly (8.14.0):
-    - FirebaseCore (= 8.14.0)
-  - Firebase/Firestore (8.14.0):
+    - FirebaseAuth (~> 8.15.0)
+  - Firebase/CoreOnly (8.15.0):
+    - FirebaseCore (= 8.15.0)
+  - Firebase/Firestore (8.15.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 8.14.0)
-  - Firebase/Messaging (8.14.0):
+    - FirebaseFirestore (~> 8.15.0)
+  - Firebase/Messaging (8.15.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 8.14.0)
-  - Firebase/Storage (8.14.0):
+    - FirebaseMessaging (~> 8.15.0)
+  - Firebase/Storage (8.15.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (~> 8.14.0)
-  - firebase_auth (3.3.14):
-    - Firebase/Auth (= 8.14.0)
+    - FirebaseStorage (~> 8.15.0)
+  - firebase_auth (3.3.15):
+    - Firebase/Auth (= 8.15.0)
     - firebase_core
     - Flutter
-  - firebase_core (1.14.1):
-    - Firebase/CoreOnly (= 8.14.0)
+  - firebase_core (1.15.0):
+    - Firebase/CoreOnly (= 8.15.0)
     - Flutter
-  - firebase_messaging (11.2.13):
-    - Firebase/Messaging (= 8.14.0)
+  - firebase_messaging (11.2.14):
+    - Firebase/Messaging (= 8.15.0)
     - firebase_core
     - Flutter
-  - firebase_storage (10.2.12):
-    - Firebase/Storage (= 8.14.0)
+  - firebase_storage (10.2.13):
+    - Firebase/Storage (= 8.15.0)
     - firebase_core
     - Flutter
-  - FirebaseAuth (8.14.0):
+  - FirebaseAuth (8.15.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
     - GoogleUtilities/Environment (~> 7.7)
     - GTMSessionFetcher/Core (~> 1.5)
-  - FirebaseCore (8.14.0):
+  - FirebaseCore (8.15.0):
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
@@ -46,20 +46,20 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/Logger (~> 7.7)
     - nanopb (~> 2.30908.0)
-  - FirebaseFirestore (8.14.0):
-    - FirebaseFirestore/AutodetectLeveldb (= 8.14.0)
-  - FirebaseFirestore/AutodetectLeveldb (8.14.0):
+  - FirebaseFirestore (8.15.0):
+    - FirebaseFirestore/AutodetectLeveldb (= 8.15.0)
+  - FirebaseFirestore/AutodetectLeveldb (8.15.0):
     - FirebaseFirestore/Base
     - FirebaseFirestore/WithLeveldb
-  - FirebaseFirestore/Base (8.14.0)
-  - FirebaseFirestore/WithLeveldb (8.14.0):
+  - FirebaseFirestore/Base (8.15.0)
+  - FirebaseFirestore/WithLeveldb (8.15.0):
     - FirebaseFirestore/Base
   - FirebaseInstallations (8.15.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - PromisesObjC (< 3.0, >= 1.2)
-  - FirebaseMessaging (8.14.0):
+  - FirebaseMessaging (8.15.0):
     - FirebaseCore (~> 8.0)
     - FirebaseInstallations (~> 8.0)
     - GoogleDataTransport (~> 9.1)
@@ -68,7 +68,7 @@ PODS:
     - GoogleUtilities/Reachability (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - nanopb (~> 2.30908.0)
-  - FirebaseStorage (8.14.0):
+  - FirebaseStorage (8.15.0):
     - FirebaseCore (~> 8.0)
     - GTMSessionFetcher/Core (~> 1.5)
   - Flutter (1.0.0)
@@ -119,7 +119,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_messaging (from `.symlinks/plugins/firebase_messaging/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
-  - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.14.0`)
+  - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.15.0`)
   - Flutter (from `Flutter`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
@@ -156,7 +156,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
-    :tag: 8.14.0
+    :tag: 8.15.0
   Flutter:
     :path: Flutter
   image_cropper:
@@ -173,22 +173,22 @@ EXTERNAL SOURCES:
 CHECKOUT OPTIONS:
   FirebaseFirestore:
     :git: https://github.com/invertase/firestore-ios-sdk-frameworks.git
-    :tag: 8.14.0
+    :tag: 8.15.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: 6894050fe57f80e72d84d5d6c57392f3d1615c19
-  Firebase: 7e8fe528c161b9271d365217a74c16aaf834578e
-  firebase_auth: db3557d178b86a0d2ccdb7a878a1d1c2fe70de4e
-  firebase_core: cdef02fcf55872191eb0568d4c31a7a700e38582
-  firebase_messaging: 57f89047ec0084a4049e253ce84cea39becadad4
-  firebase_storage: 4a9711df9392778a9f8641d5ce4cb7a228c0472c
-  FirebaseAuth: c5fde343630090253d3af7e2d35697b414b40202
-  FirebaseCore: b84a44ee7ba999e0f9f76d198a9c7f60a797b848
+  cloud_firestore: a7a94d8f25b77b84533eb8bd5627437a0cdb49f0
+  Firebase: 5f8193dff4b5b7c5d5ef72ae54bb76c08e2b841d
+  firebase_auth: 0624c0e2e1c0732209286f99cdacfe2b985a3c61
+  firebase_core: fa19947d8db1c0a62d8872c45039b3113829cd2e
+  firebase_messaging: 16a1bcf72818ff3cb9d77c1bbfabb67997fbda47
+  firebase_storage: e66af08f2f440d0582731c800d93065092edc517
+  FirebaseAuth: 3e73bf8abf4fbb40f8b421f361f4cc48ee57388c
+  FirebaseCore: 5743c5785c074a794d35f2fff7ecc254a91e08b1
   FirebaseCoreDiagnostics: 92e07a649aeb66352b319d43bdd2ee3942af84cb
-  FirebaseFirestore: dc1455307e2478af30dcd4c3020ba52654c6b62d
+  FirebaseFirestore: cb361b7f8f225a225c9f11b8d42066baebb1630c
   FirebaseInstallations: 40bd9054049b2eae9a2c38ef1c3dd213df3605cd
-  FirebaseMessaging: 5ebc42d281567658a2cb72b9ef3506e4a1a1a6e4
-  FirebaseStorage: 32ab036ce11eb7e94c279a238a65efa24f81593d
+  FirebaseMessaging: 5e5118a2383b3531e730d974680954c679ca0a13
+  FirebaseStorage: 8019af461599b2c3bc61c6a5dbdfa3d2de66a4d9
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
@@ -202,6 +202,6 @@ SPEC CHECKSUMS:
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
-PODFILE CHECKSUM: 0267dbdcd6828d1c781944c6d981dd6250730d59
+PODFILE CHECKSUM: 703c9a8b2811d1256f0afad79ffda3ed40b98271
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
