@@ -44,7 +44,7 @@ enum Category {
 Map<Category, String> categoryToString = {
   Category.socialMedia: 'Social Media',
   Category.devices: 'Devices',
-  Category.info: 'Information',
+  Category.info: 'Info',
   Category.web: 'Web',
 };
 
