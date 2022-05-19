@@ -108,7 +108,7 @@ class _TextFormState extends State<TextForm> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 0.22 * heightOfScreen),
+            SizedBox(height: 0.22*heightOfScreen,),
             Text(
               'Enter the text. Place an X where the blank must appear. Maximum of 3 Blanks.',
               style: getNormalTextStyleWhite(),
@@ -135,13 +135,12 @@ class _TextFormState extends State<TextForm> {
                 maxLines: 5,
               ),
             ),
-
-          Spacer(),
+            SizedBox(height: 0.32*heightOfScreen,),
           getNextButton(todo: addText, large: true),
-          SizedBox(height: 0.04 * heightOfScreen),
-          getCirclesProgressBar(position: 1, numberOfCircles: 3),
-          SizedBox(height: 0.01 * heightOfScreen),
-        ],)
+            SizedBox(height: 0.04*heightOfScreen,),
+            getCirclesProgressBar(position: 1, numberOfCircles: 3),
+            SizedBox(height: 0.01*heightOfScreen,),
+        ],),
       ),
     );
   }

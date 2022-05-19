@@ -105,34 +105,36 @@ class _FeedbackFormState extends State<FeedbackForm> {
 
     return Form(
       key: _formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(height: 0.22 * heightOfScreen),
-          Text(
-            'Enter long feedback.',
-            style: getNormalTextStyleWhite(),
-            textAlign: TextAlign.center,
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: 0.025 * heightOfScreen,
-                left: 0.03 * widthOfScreen,
-                right: 0.03 * widthOfScreen),
-            child: TextFormField(
-              validator: validatorForEmptyTextField,
-              controller: _controllerFeedback,
-              decoration: inputDecorationForLongText,
-              maxLines: 5,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: 0.22 * heightOfScreen),
+            Text(
+              'Enter long feedback.',
+              style: getNormalTextStyleWhite(),
+              textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(height: 0.33 * heightOfScreen),
-          getAddQuestionButton(todo: addQuestionToCourse),
-          SizedBox(height: 0.04 * heightOfScreen),
-          getCirclesProgressBar(position: 3, numberOfCircles: 3),
-          SizedBox(height: 0.01 * heightOfScreen),
-        ],
+            Padding(
+              padding: EdgeInsets.only(
+                  top: 0.025 * heightOfScreen,
+                  left: 0.03 * widthOfScreen,
+                  right: 0.03 * widthOfScreen),
+              child: TextFormField(
+                validator: validatorForEmptyTextField,
+                controller: _controllerFeedback,
+                decoration: inputDecorationForLongText,
+                maxLines: 5,
+              ),
+            ),
+            SizedBox(height: 0.33 * heightOfScreen),
+            getAddQuestionButton(todo: addQuestionToCourse),
+            SizedBox(height: 0.04 * heightOfScreen),
+            getCirclesProgressBar(position: 3, numberOfCircles: 3),
+            SizedBox(height: 0.01 * heightOfScreen),
+          ],
+        ),
       ),
     );
   }
