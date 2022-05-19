@@ -1,5 +1,5 @@
 import 'package:cyber/controller/active_user_controller.dart';
-import 'package:cyber/view/main.dart';
+import 'package:cyber/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

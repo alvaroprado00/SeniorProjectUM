@@ -1,5 +1,5 @@
 import 'package:cyber/controller/user_controller.dart';
-import 'package:cyber/view/main.dart';
+import 'package:cyber/main.dart';
 import 'package:cyber/view/sign-up/email_page.dart';
 import 'package:cyber/view/util/components.dart';
 import 'package:cyber/view/util/functions.dart';

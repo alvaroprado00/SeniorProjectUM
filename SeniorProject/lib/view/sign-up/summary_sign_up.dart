@@ -1,4 +1,4 @@
-import 'package:cyber/view/main.dart';
+import 'package:cyber/main.dart';
 import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';

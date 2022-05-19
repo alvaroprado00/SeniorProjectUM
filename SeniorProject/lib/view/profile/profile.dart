@@ -2,7 +2,7 @@ import 'package:cyber/controller/active_user_controller.dart';
 import 'package:cyber/controller/course_controller.dart';
 import 'package:cyber/globals.dart';
 import 'package:cyber/view/avatar.dart';
-import 'package:cyber/view/main.dart';
+import 'package:cyber/main.dart';
 import 'package:cyber/view/profile/all_avatars.dart';
 import 'package:cyber/view/profile/all_badges.dart';
 import 'package:cyber/view/profile/all_courses.dart';

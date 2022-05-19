@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../controller/course_controller.dart';
-import '../../main.dart';
+import '../../../main.dart';
 import '../../util/components.dart';
 import '../../util/k_colors.dart';
 import '../../util/k_styles.dart';

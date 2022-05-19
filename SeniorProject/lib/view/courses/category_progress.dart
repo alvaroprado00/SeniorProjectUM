@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../model/completed_course.dart';
-import '../main.dart';
+import '../../main.dart';
 
 class CategoryProgress extends StatelessWidget {
   const CategoryProgress({Key? key}) : super(key: key);

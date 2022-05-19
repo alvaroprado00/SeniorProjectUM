@@ -35,16 +35,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'admin/featured-recommended/new_featured_page.dart';
-import 'admin/new-course/new_fill_blanks_page_blanks.dart';
-import 'admin/new-course/new_fill_blanks_page_text.dart';
-import 'admin/new-course/new_multiple_choice_page_description.dart';
-import 'admin/new-course/new_multiple_choice_page_options.dart';
-import 'courses/category.dart';
-import 'courses/fill_in_the_blanks_question_page.dart';
-import 'courses/overview.dart';
-import 'dashboard/dashboard.dart';
-import 'log_in_page.dart';
+import 'view/admin/featured-recommended/new_featured_page.dart';
+import 'view/admin/new-course/new_fill_blanks_page_blanks.dart';
+import 'view/admin/new-course/new_fill_blanks_page_text.dart';
+import 'view/admin/new-course/new_multiple_choice_page_description.dart';
+import 'view/admin/new-course/new_multiple_choice_page_options.dart';
+import 'view/courses/category.dart';
+import 'view/courses/fill_in_the_blanks_question_page.dart';
+import 'view/courses/overview.dart';
+import 'view/dashboard/dashboard.dart';
+import 'view/log_in_page.dart';
 
 void main() {
   //WidgetsFlutterBinding.ensureInitialized();
@@ -95,19 +95,6 @@ class MyApp extends StatelessWidget {
       title: 'Cyber',
       initialRoute: '/',
       debugShowCheckedModeBanner: false,
-      /*
-      onGenerateRoute: (settings) {
-        if (settings.name == "/someRoute") {
-          return PageRouteBuilder(
-              settings: settings, // Pass this to make popUntil(), pushNamedAndRemoveUntil(), works
-              pageBuilder: (_, __, ___) => SomePage(),
-              transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c)
-          );
-        }
-        // Unknown route
-        return MaterialPageRoute(builder: (_) => UnknownPage());
-      },
-      */
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const HomePage(),

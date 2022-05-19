@@ -8,7 +8,7 @@ import 'package:cyber/view/util/k_styles.dart';
 import 'package:cyber/view/util/k_values.dart';
 import 'package:flutter/material.dart';
 
-import '../../main.dart';
+import '../../../main.dart';
 import 'new_fill_blanks_page_text.dart';
 import 'new_multiple_choice_page_description.dart';
 

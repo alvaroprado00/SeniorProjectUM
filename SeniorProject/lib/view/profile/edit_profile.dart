@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../globals.dart';
-import '../main.dart';
+import '../../main.dart';
 import '../util/components.dart';
 import '../util/functions.dart';
 import '../util/k_colors.dart';
